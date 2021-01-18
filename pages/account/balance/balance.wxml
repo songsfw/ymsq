@@ -1,0 +1,25 @@
+<!-- pages/user/user.wxml -->
+<view class="hd">
+  <view class="flex {{selected?'on':''}}" bind:tap="select">
+    <text>筛选</text>
+    <text class="arrow-bottom"></text>
+  </view>
+</view>
+<view class="tags flex flex-wrp" wx:if="{{selected}}">
+  <view wx:for="{{type}}" data-index="{{index}}" class="{{item.selected?'on':''}}" bind:tap="selectItem" data-id="{{item.tag_id}}">{{item.tag_name}}</view>
+</view>
+<view class="list">
+  <block wx:for="{{list}}">
+    <view class="item flex" wx:for="{{item}}" wx:for-item="action">
+      <view>
+        <view class="tit">{{action.action_desc}}</view>
+        <text>{{action.create_time}}</text>
+      </view>
+      <view class="money">{{action.num}}元</view>
+    </view>
+  </block>
+  <view wx:if="{{noMoreData && list[0].length==0}}" class="more-btn">暂无数据</view>
+  <view wx:elif="{{noMoreData}}" class="more-btn">我可是有底线的</view>
+  
+</view>
+<view class="mask" wx:if="{{selected}}"></view>

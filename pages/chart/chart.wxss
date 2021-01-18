@@ -1,0 +1,43 @@
+/* pages/user/user.wxss */
+view{font-size:12px}
+image{width: 100%;height: 100%}
+page{padding-bottom: 200rpx;background: #F6F6F6;height: auto;}
+
+.pro-box{margin:20rpx 24rpx;border-radius: 8rpx;background-color: #fff;padding:0 18rpx;}
+.pro-box .hd{line-height: 46px;border-bottom: 1px solid #F6F6F6;align-items: center;}
+.checkbox{position: relative; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
+.checkbox view{position: absolute;left: 0;top: 0; display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
+.checkbox.on view{display: block;}
+.pro-box .hd text{font-size: 16px;font-weight: bold;}
+.pro-list{padding: 26rpx 0;}
+.pro-list .item:last-child{margin-bottom: 0;}
+.pro-info .pic{width: 180rpx;height: 180rpx;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4rpx;}
+.pro-info .checkbox{margin-right: 20rpx;}
+.item{align-items: center;margin-bottom: 40rpx;}
+.item .tit{font-size: 15px;color: #222;margin-bottom: 8px;}
+.item .tag{margin-bottom: 10px;    display: flex;
+    flex-wrap: wrap;}
+.item .tag text{background: #F6F6F6;color: #aaa;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin:0 5px 5px 0; }
+.item .price{justify-content: space-between;align-items: center;}
+.item .price .num{font-size: 13px;color: #FA603D;}
+.item .price .num text{font-size: 16px;}
+.item .price .add{width:44rpx;height: 44rpx;color: #FA603D;
+    font-size: 22px;}
+
+.set-chart text,
+.set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}
+.set-chart .count{color: #333;}
+
+.logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
+
+.option{background: #fff; position: fixed;left: 0;bottom:100rpx; width: 100%;border-bottom: 1px solid #ccc;height:100rpx;z-index: 10000;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
+
+.option .select text{font-size: 14px;color: #999;}
+.option .price{align-items: center;}
+.option .price view{font-size: 13px;}
+.option .price .num{color: #FA603D;}
+.option .price .num text{font-size:16px;}
+.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;}
+
+.tips{line-height: 20px;color: #FA603D; background: #fff;margin: 24rpx;border-radius: 8rpx;padding: 24rpx;align-items: center;}
+.tips text{margin-right: 10rpx;}

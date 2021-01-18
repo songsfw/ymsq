@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<navBar hasReturn="{{true}}"></navBar>
+<view class="topBar flex {{scrollTop>158 ? 'changebg' : ' '}}" style="top:{{fixedTop}}px">
+  <view class='flex search flex-1'>
+    <view class='flex flex-1'>
+      <image src='/image/search.png'></image>
+      <input placeholder="输入影院或电影名称" class='flex-1' value='{{initvalue}}' auto-focus bindinput='search' bindconfirm="toListPage" confirm-type='搜索' /> 
+    </view>
+  </view>
+  <view class='cancle-btn' bindtap='cancle'>取消</view>
+</view>
+<view class='main-content'>
+  <view class='flex history'><text>搜索历史</text><image src='/image/icon-del.png' class='icon-del' bindtap="delHistory"></image></view>
+    <view class='flex history' wx:if="{{schvalue}}"><text bindtap='toListPage' class='flex-1'>{{schvalue}}</text></view>
+    <block wx:for="{{schvalueArr}}" wx:key ="index" wx:if="{{schvalueArr}}">
+      <view class='flex history'><text bindtap='toListPage' data-val='{{item}}' class='flex-1'>{{item}}</text></view>
+    </block>
+</view>
+

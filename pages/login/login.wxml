@@ -1,0 +1,20 @@
+<!-- login.wxml -->
+
+<view class="auth-wp">
+  <view class='auth-content'>
+    <view class='logo'>
+      <!-- <image src="{{userInfo.photo}}" wx:if="{{userInfo.photo}}"></image> -->
+      <image src="/image/icon-logo.png"></image>
+    </view>
+    <view class="txt">
+      <view>为了更好的体验</view>
+      <view>需要申请获取您的微信公开信息（头像、昵称等）</view>
+    </view>
+    <view class='getWXAuth'>
+      <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
+        获取授权
+      </button>
+      <navigator wx:else url="/pages/index/index" open-type="switchTab">授权失败，返回首页</navigator>
+    </view>
+  </view>
+</view>

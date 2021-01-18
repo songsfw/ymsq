@@ -1,0 +1,96 @@
+<!-- index.wxml -->
+<wxs module="filter" src="../../utils/tools.wxs"></wxs>
+<view class="menu">
+  <view class="main flex">
+    <block wx:for="{{menu}}" wx:for-index="index">
+      <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}</view>
+    </block>
+  </view>
+  <scroll-view class="sub" scroll-x="{{true}}">
+    <view class="flex">
+      <block wx:for="{{tags}}" wx:for-index="index">
+        <text data-id="{{index}}" class="{{currentTag==index?'on':''}}" bind:tap="selectTag">{{tags[index]}}</text>
+      </block>
+    </view>
+  </scroll-view>
+</view>
+<!--面包-->
+<view class="pro-box" wx:if="{{currentTab=='1'}}">
+  <block wx:if="{{count!=0}}">
+    <view class="listItemwp flex">
+      
+      <block wx:for="{{proList}}" wx:for-index="idx">
+        <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
+          <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
+            <view class="pic"><image src="{{pro.img}}" mode="aspectFill"></image></view>
+            <view class="info">
+              <view class="tit">{{pro.name}}</view>
+              <view class="tags text-overflow">
+                <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
+              </view>
+              <view class="price flex">
+                <block wx:if="{{stock[pro.meal_id]==0}}">
+                  <view class="num sold-out">售罄</view>
+                </block>
+                <block wx:else>
+                  <view class="num">￥<text>{{pro.price}}</text></view>
+                </block>
+                <view class="add iconfont icon-add" catch:tap="addChart" data-idx="{{itemIdx}}" data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}"></view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </block>
+    </view>
+  </block>
+  <block wx:if="{{proList==null}}">
+    <view class="nodata">
+      <image src="../../image/no-data.png"></image>
+      <view>加载中...</view>
+    </view>
+  </block>
+  <block wx:if="{{count==0}}">
+    <view class="nodata">
+      <image src="../../image/no-data.png"></image>
+      <view>暂无数据</view>
+    </view>
+  </block>
+</view>
+<!--蛋糕-->
+<view class="pro-box" wx:if="{{currentTab=='2'}}">
+  <block wx:if="{{count!=0}}">
+    <view class="listItemwp flex">
+      <block wx:for="{{proList}}" wx:for-index="idx">
+        <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
+          <navigator class="item" url="/pages/cakeInfo/cakeInfo?proId={{pro.spu_id}}">
+            <view class="pic"><image src="{{pro.img}}" mode="aspectFill"></image></view>
+            <view class="info">
+              <view class="tit">{{pro.name}}</view>
+              <view class="tags text-overflow">
+                <text wx:for="{{pro.tags}}" wx:for-index="index" wx:if="{{index<3}}" wx:for-item="tag">{{tag}}</text>
+              </view>
+              <view class="price flex">
+                <view class="num">￥<text>{{pro.price}}</text></view>
+                
+                <view class="add iconfont icon-add" catch:tap="addChart" data-idx="{{itemIdx}}" data-id="{{pro.sku}}"></view>
+              </view>
+            </view>
+          </navigator>
+        </block>
+      </block>
+    </view>
+  </block>
+  <block wx:if="{{proList==null}}">
+    <view class="nodata">
+      <image src="../../image/no-data.png"></image>
+      <view>加载中...</view>
+    </view>
+  </block>
+  <block wx:if="{{count==0}}">
+    <view class="nodata">
+      <image src="../../image/no-data.png"></image>
+      <view>暂无数据</view>
+    </view>
+  </block>
+</view>
+<view wx:if="{{noMoreData && count!=0}}" class="more-btn">我可是有底线的</view>

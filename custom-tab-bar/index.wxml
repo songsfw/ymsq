@@ -1,0 +1,11 @@
+<view class="tab-bar" style="padding-bottom:{{btmHolder||0}}px">
+  <block wx:for="{{list}}" wx:key="index">
+    <view class="tabitem" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+      <!-- <view class="iconfont {{item.icon}}" style="color: {{selected === index ? selectedColor : color}}"></view> -->
+      <image src="{{selected === index?item.selectedIconPath:item.icon}}" class="iconfont animate {{selected === index?'bounce':''}}"></image>
+      <view class="txt" style="color: {{selected === index ? selectedColor : color}}">
+        {{item.text}}
+      </view>
+    </view>
+  </block>
+</view>

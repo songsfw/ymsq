@@ -1,0 +1,27 @@
+<!-- pages/user/user.wxml -->
+<view class="card">
+  <view class="hd flex">
+    <view class="icon-logo">
+      <image src="../../../image/icon-logo.png"></image>
+    </view>
+    <view class="info flex-1">
+      <view>原麦山丘</view>
+      <text class="color-b">可用余额:{{show?balance:"******"}}元</text>
+    </view>
+    <view class="show" bindtap="changeMoney">
+      <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+      <text class="iconfont icon-eye2" wx:else></text>
+    </view>
+  </view>
+  <view class="card-info">
+    <view class="card-code">NO.{{card_no}}</view>
+    <view class="card-code-img">
+      <canvas canvas-id="barcode"></canvas>
+    </view>
+    <view class="num">{{pay_code}}</view>
+    <view class="txt">扫码付款</view>
+  </view>
+</view>
+<view class="fixedBtn">
+  <view class="btn" bindtap="toAccount">余额充值</view>
+</view>

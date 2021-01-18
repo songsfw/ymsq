@@ -1,0 +1,9 @@
+<view class='swiper-container'>
+  <view class='swiper-wrapper scroll-view_H' bindtouchmove="touchmove" animation="{{animationData}}" bindtransitionend='animationend' bindtouchstart="touchstart">
+    <view class='movie-item' wx:for='{{movies}}' wx:key='{{item.film.filmId}}' data-movieid='{{item.film.filmId}}' data-movieidx="{{index}}" bindtap='selectMovie' id='item{{index}}'>
+      <view class='post {{movie.film.filmId==item.film.filmId?"select":""}}'>
+        <image class="img" src='{{item.film.pic}}'></image>
+      </view>
+    </view>
+  </view>
+</view>

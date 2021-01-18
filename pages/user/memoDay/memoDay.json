@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "纪念日",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "pop-panel": "/components/pop-panel/pop-panel"
+  }
+}

@@ -1,0 +1,95 @@
+/* pages/user/user.wxss */
+view{font-size:12px}
+image{width: 100%;height: 100%}
+page{background: #F6F6F6;}
+.bannerBg{position: fixed;left: 0;top:0;width: 100%;height: 586rpx;z-index: -1;overflow:hidden;}
+.bannerBg image{width: 750rpx;height:100%;}
+
+.account{height:314rpx;text-align: center;color: #fff;}
+
+.navwrap .return .arrow-left:after{border-color: #000}
+
+.option{margin-top: 58rpx;justify-content: center;}
+.option .btn{width: 154rpx;height: 60rpx; line-height: 60rpx;border: 1px solid #fff;text-align: center;font-size: 26rpx;border-radius: 30rpx;background: none;color: #fff;}
+.option .btn-light{background: #fff;color: #C1996B;margin-left: 40rpx;}
+
+.account .txt{position: relative;padding: 40rpx 0 46rpx 0;font-size: 36rpx;}
+.account .txt view{font-size: 36rpx;}
+.account .txt text{font-size: 40rpx;margin-right: 16rpx;vertical-align: text-bottom;}
+
+.pro-list{padding: 0 24rpx;background: #F6F6F6;}
+.pro-list navigator,
+.pro-list .pic{width: 702rpx;height: 420rpx;}
+
+.pro-list navigator{position: relative;margin-bottom:40rpx;}
+.pro-list .title{height: 78rpx;margin-bottom: 22rpx;}
+.pro-list .info{position: absolute;width: 100%; left:0 ;top: 0;height: 100%; padding:50rpx 40rpx;z-index: 2;background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.46) 150%);box-sizing: border-box;}
+.pro-list .h3{margin-top: 0;}
+
+.share{background: #fff;margin: 0 24rpx;padding: 64rpx 20rpx;align-items: center;border-radius: 8rpx;}
+.share image{width: 124rpx;height: 80rpx;flex-shrink: 0;margin-right: 20rpx;}
+.share-btn{width: 94rpx;height: 52rpx;line-height: 52rpx;text-align: center;border-radius: 26rpx;margin-left: 46rpx;font-size: 26rpx;}
+.share .tit{font-size: 30rpx;line-height: 1;}
+.share .tip{font-size: 28rpx;color: #999;}
+.main-tit{height: 120rpx;text-align: center;line-height: 120rpx;background-color: #F6F6F6;}
+.main-tit image{width: 180rpx;height: 30rpx;}
+
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
+.pop-panel .close:after,
+.pop-panel .close::before{border-color: #999;}
+.pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
+.pop-con{height: 500rpx;}
+
+.coupon-panel .hd{height: 50px;line-height: 50px; color: #666;font-size: 14px;text-align: center;}
+.coupon-panel .hd view{position: relative;}
+.coupon-panel .hd view:after{content: ""; display: none; position: absolute;left: 50%;transform: translateX(-50%);bottom: 5px;width:45px;height: 3px;background-color: #C1996B ;}
+.coupon-panel .hd view.on{color: #C1996B;font-size: 15px;}
+.coupon-panel .hd view.on:after{display: block;}
+.coupon-box{background: #F6F6F6;padding: 20rpx 24rpx;box-sizing: border-box;height: 100%;}
+.coupon-box .list{height: 100%;}
+
+.coupon-box .item .tips{align-items: top; color: #999;}
+.coupon-box .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
+.coupon-box .item .tips.show .txt{height: auto;}
+.coupon-box .item .tips .txt{height:16px;overflow: hidden;font-size: 12px;}
+.coupon-box .item .tips .arrow-bottom{margin-left: 32rpx;}
+.coupon-box .item .tips .arrow-bottom:after{border-color: #ccc;border-width: 1px;}
+.coupon-box .item .border view{height: 0;border-top: 1px dashed #ccc;}
+.coupon-box .item .border:after,
+.coupon-box .item .border:before{content: "";position: absolute;left: -15rpx;top:4rpx;width: 30rpx;height: 30rpx;border-radius: 50%;background-color: #F6F6F6;}
+.coupon-box .item .border:before{left: auto;right: -15rpx;}
+.coupon-box .card{padding-top:20rpx ;}
+.coupon-box .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
+.coupon-box .item{position: relative; border-radius:8rpx ;background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;overflow: hidden;}
+.coupon-box .item .tag{position: absolute;right: 0;top: 0;background: rgba(100, 191, 0,.1);color:#64BF00;font-size: 11px;padding: 6px;line-height: 1;}
+.coupon-box .item .tag1{background: rgba(245, 34, 45, .1);color: #F5222D;}
+.coupon-box .item .name{font-size: 16px;}
+
+.coupon-num{position: relative; width: 92px;flex-shrink: 0;height: 77px;align-items: center;overflow: hidden;}
+.coupon-num .txt{position: absolute;left: 0;width: 100%;z-index: 2;text-align: center;color: #FFE8CB;}
+.coupon-num .txt .num{font-size:18px;}
+.coupon-num .txt .num text{font-size: 30px}
+.coupon-num .txt>text{font-size: 11px;}
+.coupon-info{margin-left: 32rpx;}
+.coupon-info .tit{font-size: 16px;}
+.coupon-info .date{font-size: 11px;color: #999;margin: 3px 0 10px 0;}
+.coupon-info .txt{font-size: 11px;color: #C1996B;justify-content: space-between;align-items: center;}
+.coupon-info .btn{width:64px;height: 26px;line-height: 26px;border-radius: 13px;font-size: 14px;flex-shrink: 0;margin-left:46rpx ;}
+
+.coupon-box .checkbox{position: relative;margin-top:30px; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
+.coupon-box .checkbox view{ display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
+
+.confirm-btn{    margin: 24rpx;
+  width: auto;}
+
+.post-panel{width: 600rpx;height: 1090rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;}
+.post-panel image{border-radius: 20rpx;}
+.post-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+.post-panel .close:after,
+.post-panel .close::before{background-color: #fff;}
+
+.desc{margin-top: 40rpx;}
+.desc .h3{font-size: 13px;text-align: left;margin-bottom: 10rpx;}
+.desc .txt view{font-size: 13px;color: #C1996B;}

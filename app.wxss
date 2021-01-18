@@ -1,0 +1,188 @@
+@import "/font/iconfont.wxss";
+/**app.wxss**/
+page{background:#fff;font-size:24rpx;color: #222;height: 100%;box-sizing: border-box;}
+image{width: 100%;height: 100%;}
+.wrap{box-sizing: border-box;height: 100%;}
+.flex{display:flex;}
+.flex-wrp{display:flex;flex-wrap:wrap;}
+.flex-1{flex: 1}
+.flex-2{flex: 2}
+.flex-center{display:flex;align-items: center;}
+.contain{height: 100%;}
+/*单箭头*/
+.arrow-top,
+.arrow-right,
+.arrow-bottom,
+.arrow-left{position: relative; display:block;width:12px;height:12px;}
+
+.arrow-top:after,
+.arrow-right:after,
+.arrow-bottom:after,
+.arrow-left:after{content:"";position:absolute;width:10px;height:10px;left:50%;top:50%;border:2px solid #5c5c5c;-webkit-transform:translate(-50%,-50%) rotate(45deg);transform:translate(-50%,-50%) rotate(45deg);border-left:0;border-bottom:0;box-sizing: border-box;}
+
+/*单箭头向左*/
+.arrow-left:after{border:2px solid #5c5c5c;border-right:0;border-top:0}
+/*单箭头向上*/
+.arrow-top:after{border:2px solid #5c5c5c;border-right:0;border-bottom:0}
+/*单箭头向下*/
+.arrow-bottom:after{border:2px solid #5c5c5c;border-left:0;border-top:0;top:30%;}
+
+/*三角*/
+.triangle-top,.triangle-right,.triangle-bottom,.triangle-left{ width:0; height:0;border: 6px solid #000;}
+
+.triangle-top{border-color:#000 transparent transparent transparent;transform: translateY(3px)}
+.triangle-right{border-color:transparent #000 transparent transparent}
+.triangle-bottom{border-color:transparent transparent #000 transparent}
+.triangle-left{border-color:transparent transparent transparent #000}
+
+/*-关闭图标-*/
+.icon-close{position: relative;display:inline-block; width: 30px;height: 30px}
+.icon-close:after,
+.icon-close:before{content:"";display:block;width:50%;height: 1px;background:#666;position: absolute;left:24%;top:50%;}
+.icon-close:after{transform: rotate(45deg);}
+.icon-close:before{transform: rotate(-45deg);}
+
+.icon-arrow{width:32rpx;height: 32rpx;margin-left: 16rpx}
+
+.check-icon {
+display: block;
+width: 18px;
+height: 18px;
+border-radius: 50%;
+position: relative;
+margin-right: 5px;
+box-sizing: border-box;
+}
+  
+.check-icon:before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 6px;
+      border: 1px solid #fff;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      border-top: 0;
+      border-right: 0;
+      top: 3px;
+      left: 3px;
+}
+/*--文字溢出省略--*/
+.text-overflow {overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+
+image{max-width: 100%}
+
+.color-b{color: #C1996B !important}
+.color-strong{color:#FCA100 !important}
+.wrap-all{padding: 10px;}
+
+.item{box-sizing: border-box}
+
+.col-2 .item{width: 50%;}
+.col-3 .item{width: 33.33%;}
+
+.btn{width: 100%;height:88rpx;line-height: 88rpx;background:#C1996B;border-radius:44rpx;color: #fff;text-align: center;font-size: 30rpx}
+.fixedBtn{position: fixed;padding: 24rpx;box-sizing: border-box; left: 0;bottom: 0; width:100%;}
+.btn.unuse{opacity: .5;}
+
+.more-btn{text-align: center;padding: 30rpx 0;font-size: 24rpx;color: #999;}
+.more-btn .icon-arrow-btm{font-size: 16rpx;vertical-align:middle;}
+.noMore{text-align: center;color: #cccccd;margin:50rpx 0 }
+.noMore text{margin: 0 20rpx;display: inline-block}
+
+.checkbox{color: #999;}
+.checkbox navigator {display: inline-block;text-decoration: underline;color: #479ef8;margin-top:20rpx}
+.fwtk .wx-checkbox-input {
+      margin-right: 15rpx;
+      width: 25rpx;
+      height: 25rpx;
+      background: #f5f5f5  !important;
+      border-radius: 4rpx;
+      box-sizing: border-box;
+      border-color: #ccc !important;
+      position: relative;
+      top: -4rpx;
+}
+.fwtk .wx-checkbox-input::before {
+      width: 25rpx;
+      height: 25rpx;
+      background: #f5f5f5;
+      border-color: #ccc !important;
+      border-radius: 4rpx;
+      box-sizing: border-box;
+}
+.fwtk .wx-checkbox-input.wx-checkbox-input-checked {
+      background: #f5f5f5;
+      border-color:#ccc !important;
+      box-sizing: border-box;
+}
+.fwtk .wx-checkbox-input.wx-checkbox-input-checked::before {
+      font-size: 25rpx;
+      color: #333;
+}
+
+.refresh-block{width: 100%;text-align: center;height: 40px;line-height: 40px;background: #fff;justify-content:center;align-items:center;}
+.refresh-block image{width:20px;height: 20px; }
+
+.footer{text-align: center;font-size: 12px;color: #999;padding: 30rpx 0;background: #fff;}
+.nodata{text-align: center;}
+
+.upmotion{animation: uplist .3s;}
+@keyframes uplist{
+0% {
+      transform: translateY(30rpx);
+      opacity: .3;
+}
+100% {
+      transform: translateY(0);
+      opacity: 1;
+}
+}
+.animate{
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both
+}
+.bounce{
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom
+}
+@keyframes bounce {
+0%,20%,53%,to {
+      -webkit-animation-timing-function: cubic-bezier(.215,.61,.355,1);
+      animation-timing-function: cubic-bezier(.215,.61,.355,1);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0)
+}
+
+40%,43% {
+      -webkit-animation-timing-function: cubic-bezier(.755,.05,.855,.06);
+      animation-timing-function: cubic-bezier(.755,.05,.855,.06);
+      -webkit-transform: translate3d(0,-10px,0) scaleY(1.1);
+      transform: translate3d(0,-10px,0) scaleY(1.1)
+}
+
+70% {
+      -webkit-animation-timing-function: cubic-bezier(.755,.05,.855,.06);
+      animation-timing-function: cubic-bezier(.755,.05,.855,.06);
+      -webkit-transform: translate3d(0,-5px,0) scaleY(1.05);
+      transform: translate3d(0,-5px,0) scaleY(1.05)
+}
+
+80% {
+      -webkit-transition-timing-function: cubic-bezier(.215,.61,.355,1);
+      transition-timing-function: cubic-bezier(.215,.61,.355,1);
+      -webkit-transform: translateZ(0) scaleY(.95);
+      transform: translateZ(0) scaleY(.95)
+}
+
+90% {
+      -webkit-transform: translate3d(0,-4px,0) scaleY(1.02);
+      transform: translate3d(0,-4px,0) scaleY(1.02)
+}
+}

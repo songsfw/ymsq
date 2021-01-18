@@ -1,0 +1,43 @@
+<!-- index.wxml -->
+<wxs module="filter" src="../../utils/tools.wxs"></wxs>
+<view class="banner">
+  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}">
+    <block wx:for="{{proInfo.banner}}" wx:for-index="index">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" mode="aspectFill" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class="proInfo">
+  <view class="price flex">
+    <view>￥<text>{{proInfo.price}}</text></view>
+    <view class="tag">最快次日达</view>
+  </view>
+  <view class="tit">{{proInfo.name}} <text wx:if="{{proInfo.free_delivery}}">免邮</text></view>
+  <view class="desc">{{proInfo.selling_point}}</view>
+  <view class="tags flex"><text wx:for="{{proInfo.tags}}">{{item}}</text></view>
+</view>
+
+<view class="content">
+  <view class="tips flex">
+    <view class="tit">温馨提示</view>
+    <view class="txt flex-1">
+      <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
+      <!-- <view><text>◉</text>若作为TOP1的升级版，所有的用心都藏在内
+  馅里，一口咬下去的满足只有尝过才知道。</view> -->
+    </view>
+  </view>
+</view>
+<view class="option flex">
+  <navigator class="home" open-type="switchTab" url="/pages/index/index">
+    <view class="iconfont icon-home"></view>
+    <text >首页</text>
+  </navigator>
+  <navigator class="cart" open-type="switchTab" url="/pages/chart/chart">
+    <view class="iconfont icon-chart"></view>
+    <text >购物车</text>
+  </navigator>
+  <view class="btn add-btn" bind:tap="addCart">加入购物车</view>
+  <view class="btn buy-btn" bind:tap="buyToCart">立即购买</view>
+</view>

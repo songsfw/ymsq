@@ -1,0 +1,35 @@
+/**index.wxss**/
+view{font-size:12px}
+page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: auto;}
+.wrap{padding:0 26rpx;}
+.wrap-all{padding: 10px;}
+
+.item{box-sizing: border-box}
+.proInfo{padding: 0 20rpx 46rpx 20rpx;background: #fff;margin-bottom: 20rpx;}
+.proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;}
+.proInfo .tit text{background: #64C000;color:#fff;line-height: 18px;border-radius:4px;padding: 0 10rpx;font-size: 12px;}
+.proInfo .desc{color: #666;}
+.proInfo .tags{margin-top: 30rpx;}
+.proInfo .tags text{background: #FFE42A;height: 22px;line-height: 22px;border-radius: 11px;padding: 0 20rpx;margin:0 20rpx 20rpx 0;flex-shrink: 0;}
+.banner{width: 750rpx;height: 750rpx;}
+.banner swiper{width: 100%;height: 100%;}
+.option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 16rpx 20rpx 16rpx 0;box-sizing: border-box;background: #fff;
+    box-shadow: 0px -4px 10px 0px rgba(102, 102, 102, 0.05);align-items: center;}
+
+.price{justify-content: space-between;padding: 28rpx 0;color: #C1996B;align-items: center;}
+.price view{font-size: 14px;}
+.price view text{font-size: 25px;}
+.price .tag{font-size: 12px;border: 1px solid #C1996B;line-height: 1;padding:2px 5px ;border-radius: 8rpx;height: 17px;box-sizing: border-box;}
+.tips{background-color: #fff;padding: 30rpx 24rpx;margin-bottom: 20rpx;}
+.tips .tit{width:54px;flex-shrink: 0;font-size: 13px;margin-right: 30rpx}
+.tips .txt{color: #FA603D;font-size: 13px}
+.tips .txt view{margin-bottom: 20rpx}
+.tips .txt text{margin-right:10px ;}
+.tips .txt view:last-child{margin-bottom: 0}
+.option .home .iconfont,
+.option .cart .iconfont{font-size: 40rpx;color: #222;}
+.option .home,
+.option .cart{width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
+.option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;border-radius: 40rpx;}
+.option .add-btn{margin: 0 20rpx;background: linear-gradient(270deg, #E0B27D 0%, #C1996B 100%);}
+.option .buy-btn{margin-right: 20rpx;background: linear-gradient(90deg, #FFA153 0%, #F52222 100%);}

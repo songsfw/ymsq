@@ -1,0 +1,7 @@
+<!--pages/customer/paySuccess/paySuccess.wxml-->
+<view class="container">
+  <view class="bg">
+    <canvas class="myCanvas" canvas-id="myCanvas" style="width:622rpx;height:876rpx"></canvas>
+    <view class='save' bindtap='save'>保存图片到手机后分享</view>
+  </view>
+</view>

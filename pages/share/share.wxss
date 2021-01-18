@@ -1,0 +1,18 @@
+/* pages/customer/paySuccess/paySuccess.wxss */
+.container {
+  padding: 30rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+.bg {
+  width: 100%;
+   height: 100%;
+   position: fixed;
+   top: 0;
+   left: 0;
+   background: rgba(0,0,0,0.5)
+ }
+ .myCanvas {
+   margin: 30rpx auto;
+ }
+.save{margin: 0 auto;width: 50%;text-align: center; background: #E60012;color: #fff;height: 80rpx;line-height: 80rpx;border-radius: 40rpx;}

@@ -1,0 +1,64 @@
+<!-- pages/user/user.wxml -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
+<view class="innerwrap">
+  <view class="item flex">
+    <text>小额免密支付</text>
+    <switch checked="{{free_secret==1?true:false}}" bindchange="switch" color="#C1996B" />
+  </view>
+  <view class="item flex">
+    <text>免密金额</text>
+    <picker bindchange="bindSelect" value="{{index}}" range="{{list}}" class="flex-1">
+      <view class="picker">{{free_amount || "请选择金额"}}</view>
+    </picker>
+  </view>
+  <view class="item flex">
+    <view><text>余额支付密码</text><text class="tag" wx:if="{{status}}">已设置</text></view>
+    <view class="edit">
+      <text wx:if="{{status==0}}" bind:tap="changePwd">未设置</text>
+      <text wx:else bind:tap="changePwd">修改</text>
+    </view>
+  </view>
+</view>
+<!-- <view class="fixedBtn">
+  <view class="btn" bindtap="save">保存</view>
+</view> -->
+<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}" class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="close" unuse="{{unuse}}">
+  <view slot="setPwd" wx:if="{{step==1}}">
+    <view class="inputxt flex">
+      <text style="width:50px">密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="pwdInput" password placeholder="请输入6位数字密码" />
+    </view>
+    <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
+  </view>
+  <view slot="setNewPwd" wx:if="{{step==2}}">
+    <block wx:if="{{pwd_set==1}}">
+      <view class="inputxt flex">
+        <text>旧密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" password placeholder="请输入6位数字密码" />
+      </view>
+      <view class="inputxt flex">
+        <text>新密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" password placeholder="请输入6位数字密码" />
+      </view>
+    </block>
+    <block wx:else>
+      <view class="inputxt flex">
+        <text>密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
+      </view>
+      <view class="inputxt flex">
+        <text>确认密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
+      </view>
+    </block>
+    
+  </view>
+  <view slot="verify" class="verify"  wx:if="{{step==3}}">
+    <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>
+    <view class="inputxt flex">
+      <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder="请输入验证码" />
+    </view>
+    <view class="get-code color-b" bind:tap="getCode" wx:if="{{!isSend}}"><text>{{tips}}</text></view>
+    <view class="get-code color-b" wx:else><text>{{second}}</text></view>
+  </view>
+</pop-panel>

@@ -1,0 +1,27 @@
+/* pages/user/user.wxss */
+view{font-size:12px}
+image{width: 100%;height: 100%}
+page{padding-bottom: 100rpx;}
+.bannerBg{position: fixed;left: 0;top:0;width: 100%;height: 562rpx;z-index: -1;overflow:hidden;}
+.bannerBg image{width: 750rpx;height:100%;}
+
+.user-top{position: relative;align-items: center;}
+.photo{width: 140rpx;height: 140rpx;border-radius: 50%;border: 1px solid #E4E4E4;margin-left: 52rpx;margin-right: 20rpx;}
+.qrCode{width: 60rpx;height: 60rpx;margin-right:64rpx ;}
+.name .tit{font-size: 36rpx;font-weight: bold;}
+.level{color: #FF7D06;font-size: 11px;}
+.ym-pay{margin-top: 48rpx;justify-content: space-around;text-align: center;}
+.ym-pay .data{font-size:44rpx;color: #C1996B;}
+.ym-pay text{font-size: 28rpx;color:#000;}
+.vipcard{width: 688rpx;height:98rpx;margin:40rpx 32rpx 0 30rpx;
+  border-radius: 24rpx 24rpx 0px 0px;overflow: hidden;}
+
+.menu{padding:60rpx 48rpx 48rpx 48rpx;justify-content: space-around;text-align: center;font-size:28rpx;color: #333;border-bottom: 20rpx solid #F6F6F6;background-color: #fff;}
+.menu>view{position: relative;}
+.menu>view .tag{position: absolute;right:-8px;top: -8px; color: #fff;width: 20px;height: 20px;border-radius: 50%;line-height: 20px;text-align: center; background-color: #f5222d;}
+.menu .iconfont{font-size: 50rpx;margin-bottom: 10rpx;}
+.option{padding: 0 36rpx;background-color: #fff;}
+.option .flex{height: 98rpx;line-height: 98rpx;border-bottom: 1px solid #eee;}
+.option .iconfont{margin-right:30rpx ;}
+.logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
+.order{border-left: 2px solid #e9e9e9;padding-left: 46rpx;}

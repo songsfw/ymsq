@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "原麦山丘",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar"
+  }
+}

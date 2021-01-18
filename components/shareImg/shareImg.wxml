@@ -1,0 +1,6 @@
+<!--pages/shareImg/shareImg.wxml-->
+<view wx:if="{{show}}">
+  <canvas canvas-id="myCanvas" class='canvas'/>
+  <view class='close' bindtap='close'><image src='/image/close.png'></image></view>
+  <view class='save' bindtap='save'>保存</view>
+</view>

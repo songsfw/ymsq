@@ -1,0 +1,86 @@
+<view class="tips flex"><text class="iconfont icon-notice"></text> <text >面包与蛋糕需分开支付</text></view>
+<view class="pro-box" wx:if="{{breadLi.length>0}}">
+  <view class="hd flex">
+    <view class="checkbox {{noallBread?'':'on'}}" bind:tap="selectAll" data-type="1">
+      <view class="iconfont icon-check"></view>
+    </view>
+    <text>面包</text>
+  </view>
+  <view class="pro-list">
+    <view class="item flex" wx:for="{{breadLi}}">
+      <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+        <view class="iconfont icon-check"></view>
+      </view>
+      <view class="pro-info flex flex-1">
+        <view class="pic">
+          <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+        </view>
+        <view class="txt flex-1">
+          <view class="tit">{{item.sku_name}}</view>
+          <!-- <view class="tag">
+            <text>111</text>
+          </view> -->
+          <view class="price flex">
+            <view class="num">￥<text>{{item.sku_price}}</text></view>
+            <view class="set-chart flex">
+              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" bind:tap="minusNum" data-type="1" data-idx="{{index}}"></text>
+              <text class="count">{{item.sku_number}}</text>
+              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" bind:tap="plusNum" data-type="1" data-idx="{{index}}"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="pro-box" wx:if="{{cakeLi.length>0}}">
+  <view class="hd flex">
+    <view class="checkbox {{noallCake?'':'on'}}" bind:tap="selectAll" data-type="2">
+      <view class="iconfont icon-check"></view>
+    </view>
+    <text>蛋糕</text>
+  </view>
+  <view class="pro-list">
+    <view class="item flex" wx:for="{{cakeLi}}">
+      <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+        <view class="iconfont icon-check"></view>
+      </view>
+      <view class="pro-info flex flex-1">
+        <view class="pic">
+          <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+        </view>
+        <view class="txt flex-1">
+          <view class="tit">{{item.sku_name}} {{item.sku_unit}}</view>
+          <view class="tag flex-wrap">
+            <text>{{item.size}}</text>
+            <text>{{item.edible}}</text>
+          </view>
+          <view class="price flex">
+            <view class="num">￥<text>{{item.sku_price}}</text></view>
+            <view class="set-chart flex">
+              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" bind:tap="minusNum" data-type="2" data-idx="{{index}}"></text>
+              <text class="count">{{item.sku_number}}</text>
+              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" bind:tap="plusNum" data-type="2" data-idx="{{index}}"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="logo">
+  <image src="../../image/logo.png"></image>
+</view>
+
+<view class="option flex">
+  <!-- <view class="select flex-center">
+    <view class="checkbox">
+      <view class="iconfont icon-check"></view>
+    </view>
+    <text>全选</text>
+  </view> -->
+  <view class="price flex">
+    <view class="flex-center"><text>合计:</text><view class="num">￥<text>{{totalPrice}}</text></view></view>
+    <view class="buy-btn" bind:tap="getOrder">结算</view>
+  </view>
+</view>

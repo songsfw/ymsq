@@ -1,0 +1,10 @@
+page{border-top: 1px solid #F6F6F6;}
+
+.card{width: 638rpx;height: 366rpx;margin: 32rpx auto;
+box-shadow: 0px 4px 24px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}
+.inputxt{display: flex; border-bottom: 1px solid #F6F6F6;height: 49px;line-height: 49px;border-bottom: 1px solid #E9E9E9;align-items: center;padding-left:30rpx;}
+.inputxt>text{display: block;width:77px ; color: #333;font-size: 14px;}
+.inputxt input{height: 100%;}
+.inputxt .icon{width: 49px;height: 49px;text-align: center;line-height: 49px;color: #C1996B;}
+.form{padding:0 24rpx;margin-top:90rpx ;}
+.tips{padding: 26rpx 50rpx;color: #999;font-size: 12px;}

@@ -1,0 +1,32 @@
+<!-- pages/user/user.wxml -->
+<view class="bg">
+  <image src="../../../image/card.png"></image>
+</view>
+<view class="info">
+  <view class="tit">选择充值金额</view>
+  <view class="">当前余额:￥<text>{{money}}</text></view>
+</view>
+<view class="money-box">
+  <view class="item flex {{item.checked?'checked':''}}" bind:tap="setDefault" wx:for="{{chargeList}}" data-idx="{{index}}" data-id="{{item.recharge_id}}" wx:key="recharge_id">
+    <view class="money">
+      <view class="num">￥<text>{{item.money}}</text></view>
+      <view class="tag">
+        {{item.desc1}}
+        <text>{{item.desc2}}</text>
+        {{item.promotion_name}}{{item.promotion_num}}
+      </view>
+    </view>
+    <view class="check">
+      <text class="check-icon"></text>
+    </view>
+  </view>
+</view>
+<view class="flex policy" bind:tap="getRead">
+  <view class="check {{read?'checked':''}}">
+    <text class="check-icon"></text>
+  </view>
+  <view class="flex-1">我已阅读并同意<navigator url="">《原麦山丘会员章程》</navigator></view>
+</view>
+<view class="fixedBtn">
+  <view class="btn" bindtap="charge">立即充值</view>
+</view>

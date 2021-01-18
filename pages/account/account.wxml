@@ -1,0 +1,38 @@
+<!-- pages/user/user.wxml -->
+<navBar navType="transparent" hasReturn title="余额" titColor="#fff"></navBar>
+<view class="bannerBg">
+  <image src="../../image/card.png"></image>
+</view>
+<view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
+  <scroll-view scroll-y="true" class="contain">
+    <view class="account">
+      <view class="txt">
+        <view>我的账户余额 (元)</view>
+        <view class="show" bindtap="changeMoney">
+          <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+          <text class="iconfont icon-eye2" wx:else></text>
+        </view>
+      </view>
+      <view class="money">{{show?money:"******"}}</view>
+      <navigator url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信充值</navigator>
+    </view>
+    <view class="option">
+      <navigator class="flex" url="/pages/account/cashcharge/cashcharge">
+        <text>现金卡充值</text>
+        <view class="iconfont icon-arrow-r"></view>
+      </navigator>
+      <navigator url="/pages/account/balance/balance" class="flex">
+        <text>余额明细</text>
+        <view class="iconfont icon-arrow-r"></view>
+      </navigator>
+      <navigator url="/pages/user/address/address" class="flex">
+        <text>账户余额设置</text>
+        <view class="iconfont icon-arrow-r"></view>
+      </navigator>
+      <view class="flex">
+        <text>使用规则</text>
+        <view class="iconfont icon-arrow-r"></view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

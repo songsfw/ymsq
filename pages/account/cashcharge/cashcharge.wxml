@@ -1,0 +1,23 @@
+<!-- pages/user/user.wxml -->
+<view class="card">
+  <image src="../../../image/card1.png" />
+</view>
+<view class="form">
+  <view class="inputxt">
+    <text>卡号</text>
+    <input placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
+    <view class="icon iconfont icon-scan" bind:tap="scan"></view>
+  </view>
+  <view class="inputxt">
+    <text>卡密码</text>
+    <input placeholder="请输入现金卡密码" maxlength='6' password="{{!show}}" type="number" class="flex-1" bindinput="inputPwd" />
+    <view class="icon" bindtap="changeShow">
+      <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+      <text class="iconfont icon-eye2" wx:else></text>
+    </view>
+  </view>
+</view>
+<view class="tips">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
+<view class="fixedBtn">
+  <view class="btn" bindtap="chashCharge">{{use==1?'确定':'充值'}}</view>
+</view>

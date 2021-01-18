@@ -1,0 +1,75 @@
+@keyframes modalSlideInCenter {
+  from {
+    transform: translate(-50%, 0%);
+  }
+
+  to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes modalSlideInBottom {
+  from {
+    transform: translate(-50%, 150%);
+  }
+
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+@keyframes modalSlideInTop {
+  from {
+    transform: translate(-50%, -150%);
+  }
+
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+.animation-top {
+  animation: modalSlideInTop 0.4s ease;
+  animation-fill-mode: forwards;
+}
+.animation-bottom {
+  animation: modalSlideInBottom 0.4s ease;
+  animation-fill-mode: forwards;
+}
+.animation-center {
+  animation: modalSlideInCenter 0.4s ease;
+  animation-fill-mode: forwards;
+}
+
+.popPanel{ position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%); padding: 40rpx; width: 630rpx; z-index: 101;border-radius: 16rpx;overflow: hidden;background: #fff;box-sizing: border-box;}
+
+.pop-body{padding: 20rpx;}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.pop-title {
+  text-align: center;
+  font-size: 17px;
+  padding-top: 30rpx;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.pop-option {
+  justify-content: space-around;
+  margin-top: 50rpx;
+}
+
+.pop-option .btn{height:80rpx;line-height: 80rpx;background:#C1996B;border-radius:440px;color: #fff;text-align: center;font-size: 30rpx}
+
+.close-btn{position: absolute;right:4px;top:4px;}
+.cancle-btn{margin-right:30rpx;}

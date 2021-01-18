@@ -1,0 +1,32 @@
+page{background: #F6F6F6;}
+.tips{background: rgba(252, 215, 140, .1);height: 36px;line-height: 36px;font-size: 13px;color: #FF7D06;padding: 0 24rpx;margin-bottom: 24rpx;justify-content: space-between;}
+.card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
+.card .hd image{width: 44rpx;height: 40rpx;margin-right: 20rpx;}
+.item{margin: 0 24rpx 18rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 0 20rpx;}
+.input-box{padding: 14px 0;border-bottom: 1px solid #F6F6F6;font-size: 14px;}
+.item .input-box:last-child{border: none;}
+.item .tit{margin-right: 16px;}
+.tips-panel .popPanel{overflow: initial;top: 40%;}
+.popPanel .txt{max-height: 200px;overflow-y: scroll; line-height: 1.8;font-size: 13px;}
+.popPanel .pop-close{    left: 50%;
+  bottom: -50px;
+  top: auto;
+  transform: translateX(-50%);
+  border: 1px solid #fff;
+  border-radius: 50%;}
+  .popPanel .icon-close:before,
+  .popPanel .icon-close:after{background-color: #fff;}
+
+.date-panel{position: fixed;left: 0;bottom: 0;transform: translateY(100%); width: 100%;z-index: 11;background: #fff;
+  border-radius: 16rpx 16rpx 0 0;overflow: hidden;transition: all .3s ease-in;}
+.date-panel.on{transform: translateY(0)}
+.date-panel .opt-btn view{width: 50%;height:50px;text-align: center;font-size: 14px;color: #666;line-height: 50px;}
+.date-panel .hd{height: 50px;line-height: 50px;padding: 0 24rpx;font-size: 15px;justify-content: space-between;align-items: center;}
+.switch{align-items: center;border-radius: 15px;overflow: hidden;height: 30px;line-height: 30px;}
+.switch view{background: #999;color: #fff;padding:0 10px;}
+.switch view.on{background: #C1996B;}
+picker-view{width: 100%; height: 150px;}
+.picker-view{height: 50px;background: #fff;z-index: 0;}
+picker-view view{color: #C1996B;}
+.date-mask{position: fixed;left: 0;top: 0;width: 100%;height: 100%;
+  background: rgba(0, 0, 0, 0.3);z-index: 0;}

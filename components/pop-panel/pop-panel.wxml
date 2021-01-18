@@ -1,0 +1,16 @@
+<view class="mask" catchtouchstart="touchMask" wx:if="{{popShow}}">
+</view>
+<view class="popPanel {{'animation-' + position}}" style="width:{{width}}" wx:if="{{popShow}}">
+  <view class="pop-title" wx:if="{{title}}">{{ title }}</view>
+  <view class="pop-body" wx:if="{{showbody}}">
+    <slot name="txt"></slot>
+    <slot name="setPwd"></slot>
+    <slot name="setNewPwd"></slot>
+    <slot name="verify"></slot>
+  </view>
+  <view class="pop-option flex" wx:if="{{showConfirm || showCancel}}">
+    <view class="btn cancle-btn flex-1" bind:tap="cancel" wx:if="{{showCancel}}">{{cancelText}}</view>
+    <view class="btn confirm-btn flex-1 {{unuse?'unuse':''}}" bind:tap="confirm" wx:if="{{showConfirm}}">{{confirmText}}</view>
+  </view>
+  <view class="pop-close close-btn icon-close" bind:tap="close"></view>
+</view>

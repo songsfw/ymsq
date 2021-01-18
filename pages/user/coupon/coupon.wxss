@@ -1,0 +1,41 @@
+page{background: #F6F6F6;padding-top: 48px;}
+.item .tips{align-items: center; color: #999;}
+.item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
+.item .tips .txt{height:16px;overflow: hidden;}
+.item .tips .arrow-bottom{margin-left: 32rpx;}
+.item .tips .arrow-bottom:after{border-color: #ccc;border-width: 1px;}
+.item .border view{height: 0;border-top: 1px dashed #ccc;}
+.item .border:after,
+.item .border:before{content: "";position: absolute;left: -15rpx;top:4rpx;width: 30rpx;height: 30rpx;border-radius: 50%;background-color: #F6F6F6;}
+.item .border:before{left: auto;right: -15rpx;}
+.card{padding-top:20rpx ;}
+.card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
+.item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;overflow: hidden;}
+.item .tag{position: absolute;right: 0;top: 0;background: rgba(250, 96, 61,.1);color:#F87D1C;font-size: 11px;padding: 6px;line-height: 1;}
+.item .tit{margin-right: 16px;}
+.coupon-num{position: relative; width: 92px;flex-shrink: 0;height: 77px;align-items: center;}
+.coupon-num .txt{position: absolute;left: 0;width: 100%;z-index: 2;text-align: center;color: #FFE8CB;}
+.coupon-num .txt .num{font-size:18px;}
+.coupon-num .txt .num text{font-size: 30px}
+.coupon-num .txt>text{font-size: 11px;}
+.coupon-info{margin-left: 32rpx;}
+.coupon-info .tit{font-size: 16px;}
+.coupon-info .date{font-size: 11px;color: #999;margin: 3px 0 10px 0;}
+.coupon-info .txt{font-size: 11px;color: #C1996B;justify-content: space-between;align-items: center;}
+.coupon-info .btn{width:64px;height: 26px;line-height: 26px;border-radius: 13px;font-size: 14px;flex-shrink: 0;margin-left:46rpx ;}
+.tips-panel .popPanel{overflow: initial;top: 40%;}
+.popPanel .txt{max-height: 200px;overflow-y: scroll; line-height: 1.8;font-size: 13px;}
+.popPanel .pop-close{    left: 50%;
+  bottom: -50px;
+  top: auto;
+  transform: translateX(-50%);
+  border: 1px solid #fff;
+  border-radius: 50%;}
+  .popPanel .icon-close:before,
+  .popPanel .icon-close:after{background-color: #fff;}
+
+.menu{position: fixed;left: 0;top: 0;width: 100%;background-color: #fff;height:48px;line-height: 48px;z-index: 10;}
+.menu>view{position: relative; flex: 1;text-align: center;font-size:14px;color: #666;}
+.menu>view text{position: absolute;left: 50%;bottom: 0;transform: translateX(-50%);width:42px;height: 0;background: #c1996b; transition: height .1s ease-in;}
+.menu>view.on view{color: #c1996b;}
+.menu>view.on text{height: 3px;}

@@ -1,0 +1,17 @@
+<!-- components/navBar/navBar.wxml -->
+<view class='navBarWrap {{ios ? "ios" : "android"}} {{navType? navType : "light"}}'  id="navBar">
+  <view class="navBar {{isFold?'fold':''}}" style="padding-top:{{statusHeight}}px">
+    <view class="flex navwrap" style="{{navWarpStyle}}">
+      <view class="searchBox flex" wx:if="{{hasAddress}}">
+          <view class='city flex' bindtap="toSelectCity">
+            <view class="icon"><image src="../../image/icon-local.png"></image></view>
+            <view class="citytxt">送至：{{cityName.address}}</view>
+          </view>
+      </view>
+      <view class="return" wx:if="{{hasReturn}}" bindtap="return">
+        <view class="arrow-left"></view>
+      </view>
+      <view wx:if="{{title}}" style="color:{{titColor}}" class="title">{{title}}</view>
+    </view>
+  </view>
+</view>

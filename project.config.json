@@ -1,0 +1,155 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": true,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.14.4",
+  "appid": "wxd9b25591aa9a3954",
+  "projectname": "%E5%8E%9F%E9%BA%A6%E5%B1%B1%E4%B8%98",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "首页",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "地址",
+          "pathName": "pages/user/address/address",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "免密支付",
+          "pathName": "pages/user/freePay/freePay",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "账户",
+          "pathName": "pages/account/account",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "添加地址",
+          "pathName": "pages/user/selectAdd/selectAdd",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "优惠券",
+          "pathName": "pages/user/coupon/coupon",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "纪念日",
+          "pathName": "pages/user/memoDay/memoDay",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "充值卡",
+          "pathName": "pages/account/cashcharge/cashcharge",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "详情",
+          "pathName": "pages/proInfo/proInfo",
+          "query": "proId=1866601",
+          "scene": null
+        },
+        {
+          "name": "购物车",
+          "pathName": "pages/chart/chart",
+          "query": "orderCode=1000210115002230",
+          "scene": null
+        },
+        {
+          "name": "结算",
+          "pathName": "pages/chart/payOrder/payOrder",
+          "query": "type=1",
+          "scene": null
+        },
+        {
+          "name": "支付成功",
+          "pathName": "pages/chart/paySuccess/paySuccess",
+          "query": "orderCode=1000210115002230",
+          "scene": null
+        },
+        {
+          "name": "订单",
+          "pathName": "pages/user/order/order",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

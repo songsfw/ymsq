@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "支付成功",
+  "backgroundTextStyle": "dark",
+  "backgroundColorBottom":"#fff",
+  "navigationBarTextStyle":"black",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar"
+  }
+}

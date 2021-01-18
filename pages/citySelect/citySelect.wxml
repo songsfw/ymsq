@@ -1,0 +1,47 @@
+<navBar hasReturn="{{true}}" title="选择城市"></navBar>
+<view class='container'>
+  <!-- 头部搜索框 -->
+  <view class='search-city' style="top:{{fixedTop}}px">
+    <input placeholder='城市/拼音' class='search-input' bindinput='search' placeholder-class="phcolor"></input>
+    <view class='iconfont icon-search'></view>
+  </view>
+  <view class="current-local flex"><view class='iconfont icon-local'></view>当前定位城市 <text bindtap='selectCity' data-city='{{userLocation}}'>{{userLocation.cityName}}</text></view>
+  <view class='citylist-content hot-city visited-city' wx:if="{{visitied.length>0}}">
+      <view class='section-title'>最近访问</view>
+      <view class="flex-wrp">
+        <view class='section-item' wx:for="{{visitied}}" bindtap='selectCity' data-city="{{item}}">{{item.cityName}}</view>
+      </view>
+  </view>
+  <view class='citylist-content hot-city'>
+      <view class='section-title'>热门城市</view>
+      <view class="flex-wrp">
+        <view class='section-item' data-city="{{item}}" bindtap='selectCity' wx:for="{{hotCity}}" wx:key="item.id">{{item.cityName}}</view>
+      </view>
+  </view>
+  <!-- 搜索为空时显示所有城市列表 -->
+  <block wx:if='{{!!!searchValue}}'>
+    <view class='citylist-content'>
+      <view wx:for='{{citylist}}' wx:for-item='section' wx:key='{{section.title}}' data-title='{{section.title}}' class='section'>
+        <view class='section-title'>{{section.title}}</view>
+        <view class='section-body'>
+          <view wx:for='{{section.items}}' wx:for-item='city' wx:key='{{city.id}}' class='section-item' bindtap='selectCity' data-city='{{city}}'>{{city.cityName}}</view>
+        </view>
+      </view>
+    </view>
+    <!-- 右侧导航栏 -->
+    <view class='citylist-nav' id='test' catchtouchmove='handleTouchmove' bindtouchstart='handleTouchstart' bindtouchend='handleTouchend'>
+      <view wx:for='{{citylist}}' wx:key='{{item.title}}' class='citylist-nav-item' bindtap='navSelect' data-index='{{index}}'>{{item.title}}</view>
+    </view>
+  </block>
+  <!-- 搜索条件不为空时显示搜索结果列表 -->
+  <block wx:else>
+    <view class='result-box'>
+      <block wx:if='{{result.length}}'>
+        <view wx:for='{{result}}' wx:for-item='city' data-city="{{city}}" wx:key='{{city.id}}' bindtap='selectCity' class='result-item'>{{city.cityName}}</view>
+      </block>
+      <block wx:else>
+        <view >没有找到相关内容</view>
+      </block>
+    </view>
+  </block>
+</view>

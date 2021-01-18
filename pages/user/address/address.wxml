@@ -1,0 +1,19 @@
+<!-- pages/user/user.wxml -->
+<view class="address-list">
+  <view class="item flex " wx:for="{{address}}" style="transform:translateX(-{{item.txtStyle}}rpx)" wx:for-index="index" bind:tap="selectAdd" data-id="{{item.id}}">
+    <view class="info flex-1" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" data-index='{{index}}'>
+      <view class="name flex">
+        <text>{{item.name}}</text>
+        <text>{{item.mobile}}</text>
+        <view class="tag" wx:if="{{item.is_default=='1'}}">默认</view>
+      </view>
+      <view class="address">{{item.address}} {{item.address_detail}}</view>
+    </view>
+    <view class="edit iconfont icon-edit" bind:tap="toAdddata" data-type="1" data-idx ="{{index}}"></view>
+    <view class="option flex">
+      <view class="set-def" bind:tap="setDefAddress" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
+      <view class="del" data-id="{{item.id}}" catch:tap="delAddress">删除</view>
+    </view>
+  </view>
+</view>
+<view class="fixedBtn"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
