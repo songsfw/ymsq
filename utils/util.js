@@ -204,22 +204,6 @@ function toFixed(num, s) {
   des = parseInt(des, 10) / times
   return des + ''
 }
-//乘积保留小数位
-// const accMul = function (arg1, arg2, fix) {
-//   if (!parseInt(fix) == fix) {
-//     return;
-//   }
-//   var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
-//   try { m += s1.split(".")[1].length } catch (e) { }
-//   try { m += s2.split(".")[1].length } catch (e) { }
-//   if (m > fix) {
-//     return (Math.round(Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m - fix)) / Math.pow(10, fix));
-//   } else if (m <= fix) {
-//     return (Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)).toFixed(fix);
-//   } else {
-//     return (arg1 * arg2).toFixed(fix);
-//   }
-// }
 
 const loadImg = function (url) {
   return new Promise((resolve, reject) => {

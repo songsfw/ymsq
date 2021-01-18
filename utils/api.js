@@ -46,7 +46,7 @@ const getIndexInfo = (data) => {
 
 //获取会员卡
 const getVipCard = () => {
-  return POST(baseUrl + "/user/user-card ").then(res => returnData(res))
+  return POST(baseUrl + "/user/user-card").then(res => returnData(res))
 }
 
 //用户地址列表
