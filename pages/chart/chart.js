@@ -118,12 +118,12 @@ Page({
   },
   //改变商品数量
   minusNum(e){
-    let skuid = e.currentTarget.dataset.skuid,index=e.currentTarget.dataset.idx,type=e.currentTarget.dataset.type
-    this.addChart("minus",skuid,index,type)
+    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type
+    this.addChart("minus",skuid,type)
   },
   plusNum(e){
-    let skuid = e.currentTarget.dataset.skuid,index=e.currentTarget.dataset.idx,type=e.currentTarget.dataset.type
-    this.addChart("plus",skuid,index,type)
+    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type
+    this.addChart("plus",skuid,type)
   },
   //改变商品数量
   minusFitting:util.debounce(function(){
@@ -163,69 +163,47 @@ Page({
       pop:"fittings-panel"
     })
   },
-  addChart(option,skuid,index,type){
-    let {cakeLi,breadLi,curProId,city_id}=this.data
-    let currPro,currNum
-    if(type=="1"){
-      currPro = breadLi[index]
-    }
-    if(type=="2"){
-      currPro = cakeLi[index]
-    }
-    this.setData({
-      currPro:currPro
-    })
-    currNum = parseInt(currPro.sku_number)
-    if(skuid!=curProId){
-      proNum=0
-      this.setData({
-        curProId:skuid
-      })
-    }
+  addChart:util.debounce(function(option,skuid,type){
+    let {city_id}=this.data
+
     if(option=="plus"){
-      proNum++
+      //proNum++
+      proNum=1
     }
     if(option=="minus"){
-      proNum--
+      //proNum--
+      proNum=-1
     }
 
-    if (timer){
-      clearTimeout(timer);
+    let data = {
+      city_id: city_id,
+      type:type,
+      tab_id:skuid,
+      number:proNum
     }
-
-    timer = setTimeout(()=>{
-      
-      console.log(this.data.curProId);
-      let data = {
-        city_id: city_id,
-        type:type,
-        tab_id:skuid,
-        number:proNum
+    //proNum=0
+    console.log(data);
+    api.setChart(data).then(res => {
+      console.log(res);
+      if(!res){
+        wx.showToast({
+          icon:"none",
+          title:'加入购物车失败'
+        })
+        return
       }
-      proNum=0
-      console.log(data);
-      api.setChart(data).then(res => {
-        console.log(res);
-        if(!res){
-          wx.showToast({
-            icon:"none",
-            title:'加入购物车失败'
-          })
-          return
-        }
-        if(res.status=="2001"){
-          wx.showToast({
-            icon:"none",
-            title:"商品不存在或已下架"
-          })
-        }else{
-          this.getChartData()
-        }
-        
-      })
+      if(res.status=="2001"){
+        wx.showToast({
+          icon:"none",
+          title:"商品不存在或已下架"
+        })
+      }else{
+        this.getChartData()
+      }
       
-    },300)
-  },
+    })
+      
+  }),
   getChartData(){
     let data = {
       city_id:this.data.city_id
