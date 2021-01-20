@@ -1,3 +1,4 @@
+const { getUserLocation } = require('../../../utils/api.js')
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let delivery=10,mai=0,coupon=0,card=0,thirdCard=0
@@ -8,16 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    stype: "0",
+    is_ziti: "0",
     proNum: 2,
     showAll: false,
-    address: {
-      name: null,
-      mobile: null,
-      address: null,
-      address_detail: null,
-      is_default: 0
-    },
     selectDate: 0,
     selectTime: -1,
     payQueue : [10,0,0,0,0],
@@ -35,6 +29,7 @@ Page({
 
     ziti:"0",
 
+    delivertTip:"满减免邮费不能与优惠券同时使用",
 
     poptitle:"请输入设置的余额密码",
     status:0,
@@ -131,10 +126,13 @@ Page({
     })
   },
   selectType(e) {
-    let stype = e.currentTarget.dataset.stype
+    let ziti = e.currentTarget.dataset.stype
+    let delivertTip = ziti=='1'?'自提无配送费':'满减免邮费不能与优惠券同时使用'
     this.setData({
-      stype: stype
+      ziti: ziti,
+      delivertTip:delivertTip
     })
+    this.initOrderPrice()
   },
   showPop(e) {
     
@@ -213,27 +211,34 @@ Page({
       selectTime: selectTime,
     })
   },
-  selectAdd() {
-    let { address, type } = this.data
-    console.log(address)
-    //未提交情况下保存未填完信息
-    wx.setStorageSync('address', JSON.stringify(address))
-    wx.redirectTo({
-      url: "/pages/user/selectAdd/selectAdd?type=" + type
-    })
-  },
+
   inputRemark: util.debounce(function (e) {
     this.setData({
       error:false,
       remark: e.detail.value
     })
   }, 500),
+  selectAdd(e){
+    if(this.data.ziti=='1'){
+      wx.showToast({
+        icon:"none",
+        title:"暂不能选择自提点"
+      })
+      return
+    }
+    let source = e.currentTarget.dataset.source
+    wx.navigateTo({
+      url:'/pages/user/address/address?source='+source
+    })
+  },
   initOrderData() {
-    let { stype, type,city_id } = this.data
+    let addressInfo = wx.getStorageSync("addressInfo")
+        addressInfo = JSON.parse(addressInfo)
+    let { is_ziti, type } = this.data
     
     let data = {
-      city_id: city_id,
-      is_ziti: stype
+      city_id: addressInfo.city_id,
+      is_ziti: is_ziti
     }
     if (type == "1") {
       //面包
@@ -252,11 +257,10 @@ Page({
           price: cart_data.price,
           total_price:cart_data.total_price
         }
-        let useBalance = res.balance_config.free_secret == '1' ? true : false;
+
         let hasMai = res.jinmai.can
         this.setData({
           hasMai:hasMai,
-          useBalance:useBalance,
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
@@ -272,6 +276,7 @@ Page({
         })
         this.initOrderPrice()
       })
+      
     } else {
       //蛋糕
       api.getOrderCake(data).then(res => {
@@ -289,20 +294,20 @@ Page({
           price: cart_data.price,
           total_price:cart_data.total_price
         }
-        let useBalance = res.balance_config.free_secret == '1' ? true : false;
+
         let hasMai = res.jinmai.can
         this.setData({
           hasMai:hasMai,
-          useBalance:useBalance,
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
-          delivery:cart_data.delivery,
+          delivery:res.delivery,
           cart_data: newcart_data,
           proList:cart_data.detail,
           couponList:cart_data.promotion_info,
+          couponNum:cart_data.promotion_info.length,
           unableCouponList:cart_data.promotion_info_unable,
           couponPrice:cart_data.promotion_price
         })
@@ -315,7 +320,7 @@ Page({
     let { cart_data, jinmai, hasDelivery,
       hasMai,
       useCoupon,
-      payQueue} = this.data
+      payQueue,is_ziti,ziti} = this.data
     let newPayQueue = payQueue.slice(0)
     
     //有麦点减去麦点抵扣
@@ -326,22 +331,32 @@ Page({
     }
     newPayQueue[1]=mai
     
-    if(useCoupon){
-      if(cart_data.free_type==1){
-        hasDelivery=false
+    if(is_ziti==1 && ziti=='1'){
+      hasDelivery=false
+
+      if(useCoupon){
+        coupon = this.data.usedCouponPrice
       }else{
-        hasDelivery=true
+        coupon = 0
       }
-      coupon = this.data.usedCouponPrice
     }else{
-      if(cart_data.free_type==1){
-        hasDelivery=false
+      if(useCoupon){
+        if(cart_data.free_type==1){
+          hasDelivery=false
+        }else{
+          hasDelivery=true
+        }
+        coupon = this.data.usedCouponPrice
       }else{
-        hasDelivery=true
+        if(cart_data.free_type==1){
+          hasDelivery=false
+        }else{
+          hasDelivery=true
+        }
+        coupon = 0
       }
-      coupon = 0
     }
-    
+
     //无运费减去运费
     if (!hasDelivery) { //免邮-减去邮费
       //1 单品免邮，可与优惠券同用  2 满减免邮  0 
@@ -385,37 +400,18 @@ Page({
     this.setBalancePrice()
   },
   switch(e) {
-    let free_secret = this.data.balanceInfo.free_secret
     let useBalance = this.data.useBalance
-    if(free_secret=="1"){
-      if(useBalance){
-        this.setData({
-          useBalance: false
-        })
-      }else{
-        this.setData({
-          useBalance: true
-        })
-      }
-      this.setBalancePrice()
+    if(useBalance){
+      this.setData({
+        useBalance: false
+      })
+    }else{
+      this.setData({
+        useBalance: true
+      })
     }
-    if(free_secret=="0"){
-      if(useBalance){
-        this.setData({
-          useBalance: false
-        })
-        this.setBalancePrice()
-      }else{
-        this.setData({
-          popShow:true,
-          poptitle:"请输入设置的余额密码",
-          step:1
-        })
-        
-      }
-    }
-    
-    
+    this.setBalancePrice()
+
     //this.setBalancePrice()
   },
   //抵余额扣与否  
@@ -482,10 +478,23 @@ Page({
       payQueue:newPayQueue
     })
   },
+
   submmitOrder(){
-    let {cart_data,address,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,balanceInfo,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance}=this.data
-    // let useBalance = balanceInfo.free_secret
+    let {cart_data,addressInfo,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,balanceInfo,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance}=this.data
+
+    let {free_secret,free_amount} = balanceInfo
     let balance_price = useBalance=="1" ? preUseBalancePrice : 0
+    free_amount = parseFloat(free_amount)
+    preUseBalancePrice = parseFloat(preUseBalancePrice)
+
+    if(useBalance && (free_secret=="0" || free_amount < preUseBalancePrice)){
+      this.setData({
+        popShow:true,
+        poptitle:"请输入设置的余额密码",
+        step:1
+      })
+      return
+    }
 
     console.log(payQueue)
     
@@ -504,23 +513,14 @@ Page({
       })
       return
     }
-    // if(!remark){
-    //   wx.showToast({
-    //     icon:"none",
-    //     title:"请填写订单备注"
-    //   })
-    //   this.setData({
-    //     error:true
-    //   })
-    //   return
-    // }
+    console.log(addressInfo)
     let deliveryPrice = payQueue[0] == 0 ? cart_data.default_delivery : 0
     let data = {
-      address_id:address.addressInfo.id,
+      address_id:addressInfo.id,
       delivery_date:selectDateTxt,
       delivery_time:selectTimeTxt,
       cart_type:type,
-      remark:remark,
+      remark:remark || '',
       stock_type:stock_type,
       delivery_type:delivery.delivery_type,
       delivery_price:deliveryPrice,
@@ -528,7 +528,7 @@ Page({
       point_price:payQueue[1],
     }
     if(ziti!="0"){
-      data.name = address.addressInfo.name
+      data.name = addressInfo.name
     }
     if(useCoupon){
       data.promotion_price=payQueue[2]
@@ -546,69 +546,71 @@ Page({
     }
     console.log(data)
 
-    // api.submmitOrder(data).then(res=>{
-    //   console.log(res)
-    //   if(!res){
-    //     wx.showToast({
-    //       icon:"error",
-    //       title:"提交订单失败，刷新页面"
-    //     })
-    //     return
-    //   }
-    //   let order_code = res.orderCode
-    //   if(res.callPay){
-    //     let jsApiParameters = res.jsApiParameters
-    //     let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
-    //     wx.showToast({
-    //       icon:"loading",
-    //       title:"提交订单成功，发起支付"
-    //     })
+    api.submmitOrder(data).then(res=>{
+      console.log(res)
+      if(!res){
+        wx.showToast({
+          icon:"error",
+          title:"提交订单失败，刷新页面"
+        })
+        return
+      }
+      let order_code = res.orderCode
+      if(res.callPay){
+        let jsApiParameters = res.jsApiParameters
+        let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
+        wx.showToast({
+          icon:"loading",
+          title:"提交订单成功，发起支付"
+        })
 
-    //     wx.requestPayment({
-    //       timeStamp: timeStamp,
-    //       nonceStr: nonceStr,
-    //       package: jsApiParameters.package,
-    //       signType: signType,
-    //       paySign: paySign,
-    //       success(payres) {
-    //         console.log(payres);
-    //         wx.showToast({
-    //           title: '支付成功',
-    //           icon: 'none',
-    //           duration: 1000,
-    //           success: function () {
-    //             setTimeout(function () {
-    //               wx.redirectTo({
-    //                 url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-    //               })
-    //             }, 1000)
-    //           }
-    //         })
+        wx.requestPayment({
+          timeStamp: timeStamp,
+          nonceStr: nonceStr,
+          package: jsApiParameters.package,
+          signType: signType,
+          paySign: paySign,
+          success(payres) {
+            console.log(payres);
+            wx.showToast({
+              title: '支付成功',
+              icon: 'none',
+              duration: 1000,
+              success: function () {
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+                  })
+                }, 1000)
+              }
+            })
   
-    //       },
-    //       fail(res) {
-    //         console.log(res)
-    //         wx.showToast({
-    //           title: "支付失败",
-    //           icon: 'none',
-    //           duration: 2000
-    //         })
-    //       }
-    //     })
-    //   }else{
-    //     wx.showToast({
-    //       icon:"success",
-    //       title:"支付成功"
-    //     })
-    //     setTimeout(function () {
-    //       wx.redirectTo({
-    //         url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-    //       })
-    //     }, 2000)
-    //   }
-    // })
+          },
+          fail(res) {
+            console.log(res)
+            wx.showToast({
+              title: "支付失败",
+              icon: 'none',
+              duration: 2000
+            })
+            wx.redirectTo({
+              url:'/pages/user/order/order?type=1'
+            })
+          }
+        })
+      }else{
+        wx.showToast({
+          icon:"success",
+          title:"支付成功"
+        })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+          })
+        }, 2000)
+      }
+    })
   },
-
   pwdInput(e){
     var val = e.detail.value
     if(val.length==6){
@@ -776,10 +778,9 @@ Page({
         }
 
         let data = {
-          action:1,
           password:val
         }
-        api.changeFreePay(data).then(res=>{
+        api.verifyPwd(data).then(res=>{
           console.log(res);
           
           if(res.status=='1016'){
@@ -788,12 +789,7 @@ Page({
               icon: 'none',
               duration: 2000
             })
-          }else if(res.free_secret==1){
-            wx.showToast({
-              title: "小额免密开启成功",
-              icon: 'none',
-              duration: 2000
-            })
+          }else{
             this.setData({
               popShow:false,
               useBalance:true,
@@ -910,21 +906,9 @@ Page({
     
   },
   closePanel(e){
-    let step = this.data.step
     this.setData({ 
       unuse:true
     })
-    switch (step) {
-      case 1:
-        this.setData({
-          useBalance:false
-        })
-        
-        break;
-    
-      default:
-        break;
-    }
     
   },
   changePwd(e){
@@ -940,16 +924,35 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  async getUserLocation(){
+    let local,addressInfo
+    try {
+      local = await util.getLocation()
+    } catch (error) {
+      local = error
+    }
+    let data = {
+      lng:local.longitude,
+      lat:local.latitude
+    }
+    //当前定位地址
+    addressInfo = await api.getUserLocation(data)
+    //addressInfo = addressInfo.address_info
+    this.setData({
+      is_ziti:addressInfo.address_info.is_ziti
+    })
+    console.log(addressInfo)
+  },
   onLoad: function (options) {
+    this.getUserLocation()
     let userInfo = wx.getStorageSync('userInfo')
-    let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = JSON.parse(addressInfo).city_id
+    
     let type = options.type
     util.setWatcher(this);
+
     this.setData({
       userInfo:JSON.parse(userInfo),
-      type: type,
-      city_id:city_id
+      type: type
     })
     this.initOrderData();
   },
@@ -975,8 +978,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //用户地址列表
+    let addressInfo = wx.getStorageSync("addressInfo")
+        addressInfo = JSON.parse(addressInfo)
+    if(addressInfo){
+      this.setData({
+        addressInfo:addressInfo,
+        'address.is_address':true
+      })
+    }
     
-
   },
 
   /**

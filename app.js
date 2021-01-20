@@ -1,34 +1,71 @@
 //app.js
-
+const auth = require('utils/auth.js')
+const api = require('utils/api.js')
+const util = require('utils/util.js')
 App({
   onLaunch: function (options) {
-    // let enterPage = options.path
-    // console.log(enterPage)
-    //this.Promise = this.getUserInfo()
-    // auth.getLoginInfo().then(res=>{
-    //   console.log(res);
-    //   if(res.statusCode==200){
-    //     let {openid,user_info,user_id,is_authed} = res.data.result
-    //     let userInfo = {
-    //       user_id:user_id,
-    //       is_authed:is_authed,
-    //       openid:openid,
-    //       nickname:user_info.nickname,
-    //       photo:user_info.head_url,
-    //       phone:user_info.mobile
-    //     }
-    //     wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-       
-    //   }
-    // })
     this.isAuth()
   },
-  isAuth:function() {
+  async isAuth () {
+    var is_authed,local=null
+    let userInfo = wx.getStorageSync("userInfo")
+    if(userInfo && JSON.parse(userInfo).is_authed==1){
+      is_authed = JSON.parse(userInfo).is_authed
+      return 
+    }else{
+      let loginInfo = await auth.getLoginInfo()
+      console.log(loginInfo)
+      if(loginInfo.statusCode==200){
+        is_authed = loginInfo.data.result.is_authed
+        let {openid,user_info,user_id,address_info} = loginInfo.data.result
+        userInfo = {
+          user_id:user_id,
+          is_authed:is_authed,
+          openid:openid,
+          nickname:user_info.nickname,
+          photo:user_info.head_url,
+          phone:user_info.mobile
+        }
+        console.log(address_info)
+        if(!address_info.city_id){
+          try {
+            local = await util.getLocation()
+          } catch (error) {
+            local = error
+          }
+          
+          console.log(local);
+          let data = {
+            lng:local.longitude,
+            lat:local.latitude
+          }
+          console.log(data)
+          let addressInfo = await api.getUserLocation(data)
+          console.log(addressInfo)
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
+        }else{
+          let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = user_info.default_address
+          let addressInfo = {
+            address: addresstxt,
+            id: id,
+            area_id: area_id,
+            area_name: area_name,
+            city_id: old_city_id,
+            city_name: city_name,
+            address_detail:address_detail,
+            is_default:is_default,
+            mobile:mobile,
+            name:name
+          }
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+        }
+        wx.setStorageSync("userInfo", JSON.stringify(userInfo))
+      }
+    }
+    
     wx.getSetting({
       success: res => {
-        let userInfo = wx.getStorageSync("userInfo")
         
-        var is_authed = userInfo ? JSON.parse(userInfo).is_authed :'0'
         if (!res.authSetting['scope.userInfo'] || is_authed !=1) {
           // 未授权跳授权页
           wx.navigateTo({
@@ -75,16 +112,10 @@ App({
     } else {
       this.globalData.isShare = false
     };
+    if ((options.scene == 1001 || options.scene == 1012) && options.path == 'pages/chart/paySuccess/paySuccess') {
+      this.globalData.sharePoster = true
+    }
   },
-  // getSystemInfo: function () {
-  //   let t = this;
-  //   wx.getSystemInfo({
-  //     success: function (res) {
-  //       t.globalData.systemInfo = res;
-  //       t.globalData.statusBarHeight = res.statusBarHeight
-  //     }
-  //   });
-  // },
   
   globalData: {
     proType:1,

@@ -5,6 +5,7 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
+.checkbox.on{border: none;}
 .checkbox.on view{display: block;}
 .option .select text{font-size: 14px;color: #999;}
 .option .price{align-items: center;}
@@ -21,10 +22,10 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .address .tit text{margin-right: 20rpx;}
 .address .tit .tag{font-size: 11px;color: #fff; padding:0 5px; line-height: 18px; background: #C1996B;border-radius: 4px;}
 .address-txt{color:#999 ;font-size: 13px;word-break: break-all;}
-
+.inputbox .time{font-size: 15px;justify-content: flex-end;}
 .send-time{padding:34rpx 20rpx;justify-content: space-between;}
 .send-time text{font-size: 15px;}
-.send-time .time text{color: #C1996B;margin-right: 20rpx;}
+.send-time .time text,.inputbox .time text{color: #C1996B;margin-right: 20rpx;}
 .pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 100rpx;margin:0 20rpx 30rpx 20rpx;}
 .pro-info .hd view{font-size: 15px;}
 .pro-info .hd text{color: #999;font-size: 13px;}
@@ -38,9 +39,12 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pro-wp{padding-bottom: 36rpx;}
 .pro-wp .item:last-child{margin-bottom: 0;}
 .more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
-.order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
-.order-tips input{text-align: right;}
-.order-tips.on{color: #F5222D;}
+.ziti-info .inputbox{border-bottom: 1px solid #F6F6F6;}
+.inputbox{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
+.inputbox view:first-child{font-size: 15px;}
+.inputbox input{text-align: right;}
+.inputbox input::placeholder{color: #ccc;font-size: 13px;}
+.inputbox.on{color: #F5222D;}
 .pay-info{padding: 0 20rpx 40rpx 20rpx;}
 .pay-info>view{justify-content: space-between;height: 86rpx;line-height: 86rpx;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
@@ -49,7 +53,7 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pay-info .icon-arrow-r{vertical-align: middle;margin-left: 20rpx;font-size: 30rpx;}
 .pay-info .val{font-size: 13px;color: #aaa;}
 .policy{padding:30rpx 20rpx ;color: #999;}
-.policy .checkbox{border:1px solid #ccc;border-radius: 50%;margin-right: 16rpx;}
+.policy .checkbox{border-radius: 50%;margin-right: 16rpx;}
 .balance .val text{color: #F5222D;}
 .balance switch{margin-left:20rpx ;transform: scale(.8);}
 .pay-info .total-price{text-align: right;justify-content: flex-end;}
@@ -72,6 +76,8 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .time-box .date view.on{background: #fff;color: #222;}
 .time-box .time .item{border-bottom: 1px solid #F6F6F6;padding-left: 60rpx;justify-content: space-between;}
 .time-box .time .item.on{color:#C1996B;}
+.time-box .time .item .checkbox{margin-right: 2px;box-sizing: border-box;}
+.time-box .time .item.on .checkbox{border: none;}
 .time-box .time .item.on .checkbox view{display: block;}
 
 .confirm-btn{margin: 24rpx;width: auto;}
@@ -140,3 +146,4 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .verify{text-align: center;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
 .get-code{margin: 38rpx 0 0 0;}
+.add-address{text-align: center;color:#C1996B;font-size: 15px;}

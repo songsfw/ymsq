@@ -14,12 +14,13 @@ page{background: #F4F6F8;}
 .item .price{justify-content: space-between;}
 .item .price .num{font-size: 13px;color: #FA603D;}
 .item .price .num text{font-size: 18px;}
-.item .price .add{width:44rpx;height: 44rpx;color: #FA603D;
+.item .price .add{width:44rpx;height: 44rpx;color: #C1996B;
     font-size: 22px;}
 .menu{position: fixed;width: 100%;left: 0;top: 0;background: #fff;}
-.main view{position: relative; height:92rpx;line-height: 92rpx; text-align: center;font-size: 16px;}
-.main view:after{display: none; content: '';position: absolute;left: 50%; bottom: 0;width: 50px;height: 3px;background: #C1996B; transform: translateX(-50%);}
-.main view.on{color: #C1996B;}
+.main view{position: relative; height:92rpx;line-height: 92rpx; text-align: center;font-size: 16px;color: #666;}
+.main view:after{display: none; content: '';position: absolute;left: 50%; bottom:28rpx;width: 80rpx;height: 10rpx;
+    background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;z-index: -1;}
+.main view.on{color: #222;}
 .main view.on:after{display: block;}
 .sub{width: 100%;box-sizing: border-box; background: #F6F6F6;padding: 34rpx 24rpx 24rpx 24rpx;}
 .sub text{padding: 0 12px;line-height: 30px;background: #fff;border-radius: 15px;margin-right: 10px;flex-shrink: 0;font-size: 14px;}

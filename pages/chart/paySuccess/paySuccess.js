@@ -38,13 +38,6 @@ Page({
       this.setData({
         pop: pop
       })
-      
-      // api.shareOrder(data).then(res=>{
-      //   console.log(res);
-      //   if(!res){
-      //     return
-      //   }
-      // })
     }
     
   },
@@ -127,7 +120,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    if(app.globalData.sharePoster){
+      let data = {
+        order_code:this.data.order_code
+      }
+      api.shareOrder(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        this.setData({
+          'shareInfo.action':"share"
+        })
+        // wx.showToast({
+        //   icon:"success",
+        //   title:res.msg
+        // })
+      })
+    }
     
   },
 

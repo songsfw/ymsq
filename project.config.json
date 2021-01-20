@@ -23,7 +23,6 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
-    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -37,7 +36,8 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "useApiHostProcess": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.14.4",
@@ -141,12 +141,13 @@
         {
           "name": "支付成功",
           "pathName": "pages/chart/paySuccess/paySuccess",
-          "query": "orderCode=1000210115002230",
+          "query": "orderCode=1000210118002266",
           "scene": null
         },
         {
           "name": "订单",
           "pathName": "pages/user/order/order",
+          "query": "",
           "scene": null
         }
       ]

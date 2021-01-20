@@ -1,5 +1,3 @@
-const api = require('../utils/api.js')
-const app = getApp()
 Component({
   options:{
     styleIsolation:"apply-shared"

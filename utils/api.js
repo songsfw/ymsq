@@ -5,6 +5,7 @@ var isLogin = 0
 const returnData = res=>{
   if(res.statusCode == 200){
     let data = res.data
+    console.log(data)
     if(data.status==0){
       var result = data.result
       return result
@@ -181,8 +182,8 @@ const setChart = (data) => {
   return POST(baseUrl+"/cart/add",data).then(res => returnData(res))
 }
 //购物车数据
-const getChartData = () => {
-  return POST(baseUrl+"/cart/list").then(res => returnData(res))
+const getChartData = (data) => {
+  return POST(baseUrl+"/cart/list",data).then(res => returnData(res))
 }
 
 //选中/不选
@@ -253,6 +254,7 @@ const getCakeProInfo = (data) => {
 }
 
 const getUserLocation = (data) => {
+  console.log(data)
   return POST(baseUrl+"/home/get-city",data).then(res => returnData(res))
 }
 
@@ -274,6 +276,15 @@ const cancleOrder = (params) => {
   console.log(JSON.stringify(params))
   return POST(baseUrl + "/order/cancel-order", params).then(res => returnData(res))
 }
+
+//添加配件
+const addFittings = (params) => {
+  console.log(JSON.stringify(params))
+  return POST(baseUrl + "/cart/add-fittings", params).then(res => returnData(res))
+}
+
+
+
 
 const submitOrder = (params) => {
   console.log(JSON.stringify(params))
@@ -331,5 +342,6 @@ module.exports = {
   getCakeProInfo,
   orderList,
   getOrderInfo,
-  cancleOrder
+  cancleOrder,
+  addFittings
 }

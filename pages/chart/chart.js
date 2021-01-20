@@ -16,12 +16,26 @@ Page({
     allBread:false,
     allCake:false,
     totalPrice:0,
-    cakeEmpty:true,
-    breadEmpty:true
+    btmHolder:0,
+    fittings:false,
+    pop: 0,
+    skuNum:0
+  },
+  showPop(e) {
+    let pop = e.currentTarget.dataset.pop
+    this.setData({
+      pop: pop
+    })
+  },
+  close() {
+    this.setData({
+      pop: 0
+    })
   },
   getSelectedPro(){
     let {type,cakeLi,breadLi}=this.data
     let selectedBread=null,selectedCake=null,totalPrice=0
+    let fittings = type==1 ? false : true
     function getSelected(type) {
       return pro => pro.is_selected == type;
     }
@@ -32,15 +46,7 @@ Page({
           selectedBread.forEach(item=>{
             totalPrice += parseFloat(util.floatObj().multiply(item.sku_number,item.sku_price,2))
           })
-          this.setData({
-            breadEmpty:false
-          })
-        }else{
-          this.setData({
-            breadEmpty:true
-          })
         }
-        
         break;
       case "2":
         selectedCake = cakeLi.filter(getSelected("1"))
@@ -48,27 +54,21 @@ Page({
           selectedCake.forEach(item=>{
             totalPrice += parseFloat(util.floatObj().multiply(item.sku_number,item.sku_price,2))
           })
-          this.setData({
-            cakeEmpty:false
-          })
-        }else{
-          this.setData({
-            cakeEmpty:true
-          })
         }
-        
         break;
       default:
         break;
     }
     totalPrice = util.formatePrice(totalPrice)
     console.log(totalPrice)
+    
     this.setData({
+      fittings:fittings,
       totalPrice:totalPrice
     })
   },
   getOrder(){
-    let {cakeEmpty,breadEmpty,type,cakeLi,breadLi}=this.data
+    let {totalPrice,type,cakeLi,breadLi}=this.data
 
     let isBread = breadLi.some(item=>{
       return item.is_selected=="1"
@@ -87,7 +87,7 @@ Page({
     let data = {
       type : type
     }
-    if(cakeEmpty&&breadEmpty){
+    if(parseFloat(totalPrice)==0){
       wx.showToast({
         icon:"none",
         title:"购物车为空"
@@ -96,6 +96,13 @@ Page({
     }
     api.commitChart(data).then(res=>{
       console.log(res)
+      if(res.status=='3011'){
+        wx.showToast({
+          icon:"none",
+          title:"购物车为空"
+        })
+        return false
+      }
       if(res){
         wx.navigateTo({
           url:"/pages/chart/payOrder/payOrder?type="+type
@@ -118,14 +125,46 @@ Page({
     let skuid = e.currentTarget.dataset.skuid,index=e.currentTarget.dataset.idx,type=e.currentTarget.dataset.type
     this.addChart("plus",skuid,index,type)
   },
+  //改变商品数量
+  minusFitting:util.debounce(function(){
+    let skuNum = this.data.skuNum
+    skuNum--
+    this.setData({
+      skuNum:skuNum
+    })
+  }),
+  addFitting:util.debounce(function(){
+    let skuNum = this.data.skuNum
+    skuNum++
+    this.setData({
+      skuNum:skuNum
+    })
+  }),
   //删除商品
   delete(){
 
   },
+  selectFittings(e){
+    
+    let id = e.currentTarget.dataset.id,
+        idx= e.currentTarget.dataset.idx
+    // let cartItem = this.data.cakeLi.some(i=>{
+    //   return i.sku_id == id && i.is_fittings==1
+    // })
+    let item = this.data.fittingsList[idx]
+    // if(cartItem){
+    //   this.setData({
+    //     skuNum:cartItem.sku_number
+    //   })
+    // }
+    this.setData({
+      
+      fitting:item,
+      pop:"fittings-panel"
+    })
+  },
   addChart(option,skuid,index,type){
-    let addressInfo = wx.getStorageSync("addressInfo")
-    let {cakeLi,breadLi,curProId}=this.data
-    let city_id = JSON.parse(addressInfo).city_id
+    let {cakeLi,breadLi,curProId,city_id}=this.data
     let currPro,currNum
     if(type=="1"){
       currPro = breadLi[index]
@@ -147,9 +186,7 @@ Page({
       proNum++
     }
     if(option=="minus"){
-      
-        proNum--
-      
+      proNum--
     }
 
     if (timer){
@@ -190,8 +227,18 @@ Page({
     },300)
   },
   getChartData(){
-    api.getChartData().then(res => {
+    let data = {
+      city_id:this.data.city_id
+    }
+    api.getChartData(data).then(res => {
       console.log(res);
+      if(res.status=='1001'){
+        wx.showToast({
+          icon:"none",
+          title:"用户未登录"
+        })
+        return
+      }
       let type="1",breadSelectedNum=0,cakeSelectedNum=0,noallBread=true,noallCake=true
       if(res){
         let breadLi = res.bread.detail,cakeLi=res.cake.detail
@@ -219,7 +266,8 @@ Page({
           noallCake:noallCake,
           type:type,
           breadLi:breadLi,
-          cakeLi:cakeLi
+          cakeLi:cakeLi,
+          fittingsList:res.fittings
         })
         this.getSelectedPro()
       }
@@ -341,19 +389,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let sysInfo = app.globalSystemInfo;
-    let fixedTop = sysInfo.navBarHeight;
+    let sysInfo = null
+
+    if(app.globalSystemInfo){
+      sysInfo = app.globalSystemInfo
+    }else{
+      sysInfo = wx.getSystemInfoSync()
+    }
+
     let safeArea = sysInfo.safeArea;
     if(sysInfo.screenHeight > safeArea.bottom){
       let btmHolder = sysInfo.screenHeight - safeArea.bottom
+      btmHolder = parseInt(btmHolder)
       this.setData({
         btmHolder:btmHolder
       })
     }
-    this.setData({
-      fixedTop
-    })
-
   },
 
 
@@ -384,13 +435,16 @@ Page({
     }
     let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let city_id = JSON.parse(addressInfo).city_id
     if(userInfo){
       userInfo = JSON.parse(userInfo)
     }
     this.setData({
-      userInfo
+      city_id:city_id || '10216',
+      userInfo:userInfo
     })
-    this.getUserCenter();
+    //this.getUserCenter();
     this.getChartData()
   },
 

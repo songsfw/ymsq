@@ -197,9 +197,10 @@ Component({
         url: '/pages/index/index'
       })
     },
-    toSelectCity(){
+    selectAdd(e){
+      let source = e.currentTarget.dataset.source
       wx.navigateTo({
-        url: '/pages/user/address/address'
+        url:'/pages/user/address/address?source='+source
       })
     }
   },

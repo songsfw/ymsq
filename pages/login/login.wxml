@@ -14,7 +14,7 @@
       <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
         获取授权
       </button>
-      <navigator wx:else url="/pages/index/index" open-type="switchTab">授权失败，返回首页</navigator>
+      <!-- <navigator wx:else url="/pages/index/index" open-type="switchTab">授权失败，返回首页</navigator> -->
     </view>
   </view>
 </view>

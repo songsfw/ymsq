@@ -51,13 +51,13 @@ Page({
   onLoad: function (options) {
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    let safeArea = sysInfo.safeArea;
-    if(sysInfo.screenHeight > safeArea.bottom){
-      let btmHolder = sysInfo.screenHeight - safeArea.bottom
-      this.setData({
-        btmHolder:btmHolder
-      })
-    }
+    // let safeArea = sysInfo.safeArea;
+    // if(sysInfo.screenHeight > safeArea.bottom){
+    //   let btmHolder = sysInfo.screenHeight - safeArea.bottom
+    //   this.setData({
+    //     btmHolder:btmHolder
+    //   })
+    // }
     this.setData({
       fixedTop
     })
@@ -90,7 +90,6 @@ Page({
         selected: 3
       })
     }
-    let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
     if(userInfo){
       userInfo = JSON.parse(userInfo)

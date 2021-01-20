@@ -20,7 +20,6 @@
     "pages/account/wxcharge/wxcharge",
     "pages/account/cashcharge/cashcharge",
     "pages/account/balance/balance",
-    "pages/payPage/payPage",
     "pages/login/login",
     "pages/chart/chart",
     "pages/chart/payOrder/payOrder",

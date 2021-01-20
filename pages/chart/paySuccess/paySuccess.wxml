@@ -12,8 +12,8 @@
         </view>
       </view>
       <view class="option flex">
-        <navigator url="" class="btn">再来一单</navigator>
-        <navigator url="" class="btn btn-light">查看详情</navigator>
+        <navigator url="/pages/index/index" open-type="switchTab" class="btn">去逛逛</navigator>
+        <navigator open-type="redirect" url="" class="btn btn-light">查看详情</navigator>
       </view>
     </view>
     <view class="share flex">
@@ -22,7 +22,7 @@
         <view class="tit">分享给朋友</view>
         <view class="tip">分享好友,可以获得一张优惠劵</view>
       </view>
-      <text class="btn share-btn" bind:tap="showPop" data-pop="showCoupon">分享</text>
+      <text class="btn share-btn" bind:tap="showPop" data-pop="showCoupon"><block wx:if="{{shareInfo.action=='share'}}">已</block>分享</text>
     </view>
     <view class="main-tit"><image src="../../../image/tit.png"></image></view>
     <view class="pro-list">

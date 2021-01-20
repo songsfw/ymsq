@@ -1,26 +1,60 @@
 <!-- chart -->
-<view class="send-type">
+<view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">
-    <text class="{{stype=='0'?'on':''}}" data-stype="0" bind:tap="selectType">商家配送</text>
-    <text class="{{stype=='1'?'on':''}}" data-stype="1" bind:tap="selectType">上门自提</text>
+    <text class="{{ziti=='0'?'on':''}}" data-stype="0" bind:tap="selectType">商家配送</text>
+    <text class="{{ziti=='1'?'on':''}}" data-stype="1" bind:tap="selectType">上门自提</text>
   </view>
 </view>
 <view class="order-wp">
-  <navigator url="/pages/user/address/address?type=1" class="address flex-center">
-    <view class="local iconfont icon-local"></view>
-    <view class="txt flex-1">
-      <view class="tit flex">
-        <text>{{address.addressInfo.name}}</text>
-        <text>{{address.addressInfo.mobile}}</text>
-        <view class="tag" wx:if="{{address.address_default}}">默认</view>
+  <view class="address flex-center" bind:tap="selectAdd" data-source="1">
+    <block wx:if="{{ziti=='1'}}">
+      <view class="local iconfont icon-local"></view>
+      <view class="txt flex-1">
+        <view class="tit flex">
+          <text>原麦山丘平谷面包工厂自提点</text>
+          <view class="tag">自提</view>
+        </view>
+        <view class="address-txt">
+          {{address.zitiAddress.address}}{{address.zitiAddress.address_detail}}
+        </view>
       </view>
-      <view class="address-txt">
-        {{address.addressInfo.address}}{{address.addressInfo.address_detail}}
+    </block>
+    <block wx:else>
+      <block wx:if="{{address.is_address || address_allow_delivery}}">
+        <view class="local iconfont icon-local"></view>
+        <view class="txt flex-1">
+          <view class="tit flex">
+            <text>{{addressInfo.name}}</text>
+            <text>{{addressInfo.mobile}}</text>
+            <view class="tag" wx:if="{{address_default}}">默认</view>
+          </view>
+          <view class="address-txt">
+            {{addressInfo.address}}{{addressInfo.address_detail}}
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="flex-1 add-address"><text class="iconfont icon-plus"></text> 选择收货地址</view>
+      </block>
+    </block>
+    
+    <view class="iconfont icon-arrow-r"></view>
+  </view>
+  <view class="ziti-info" wx:if="{{ziti=='1'}}">
+    <view class="inputbox flex-center">
+      <view>提货人</view>
+      <input class="flex-1" type="text" placeholder="请输入提货人姓名" bindinput="inputZitiName" />
+    </view>
+    <view class="inputbox flex-center" data-pop="showTime" bind:tap="showPop">
+      <view>提货时间</view>
+      <view class="time flex-center flex-1">
+        <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
+        <text wx:else>请选择自提时间</text>
+        <view class="iconfont icon-arrow-r"></view>
       </view>
     </view>
-    <view class="iconfont icon-arrow-r"></view>
-  </navigator>
-  <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop">
+  </view>
+  <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop" wx:if="{{ziti=='0'}}">
     <text class="tit">配送时间</text>
     <view class="time flex-center">
       <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
@@ -70,7 +104,7 @@
       <text class="iconfont icon-arrow-btm"></text>
     </view>
   </view>
-  <view class="order-tips flex-center {{error?'on':''}}">
+  <view class="inputbox flex-center">
     <view>订单备注</view>
     <input class="flex-1" type="text" placeholder="请输入内容" bindinput="inputRemark" />
   </view>
@@ -91,7 +125,7 @@
     </view>
     <view class="delivery-tip" wx:if="{{useCoupon}}">
       <text class="iconfont icon-notice"></text>
-      满减免邮费不能与优惠券同时使用
+      {{delivertTip}}
     </view>
     <view class="flex-center" bind:tap="showPop" data-pop="showScore" wx:if="{{pay_style.point==1}}">
       <view class="name">
@@ -138,8 +172,8 @@
       <view class="name">原麦余额</view>
       <view class="val flex-center">
         <view>
-          余额：￥{{balance}}
           <text wx:if="{{useBalance}}">使用￥{{preUseBalancePrice}}</text>
+          <view wx:else>余额：￥{{balance}}</view>
         </view>
         <switch checked="{{useBalance}}" bindchange="switch" color="#C1996B" />
       </view>
@@ -278,7 +312,7 @@
   <view class="icon-close close" bind:tap="close"></view>
   <view class="tit flex">
     <text>麦点</text>
-    <view>使用规则</view>
+    <!-- <view>使用规则</view> -->
   </view>
   <view class="pop-con">
     <view class="mai-info flex">

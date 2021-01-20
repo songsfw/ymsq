@@ -1,12 +1,12 @@
-.tab-bar{position: fixed;left: 0;bottom: 0;width: 100%;display: flex;height: 100rpx; justify-content: space-around;box-shadow: 0px -10px 18px 0px rgba(0, 0, 0, 0.04);background: #fff;}
-.tabitem{flex: 1;text-align: center;display: flex;flex-direction: column;justify-content: center;padding-top: 12rpx;}
-.tabitem .iconfont{position: relative;width: 50rpx;height: 50rpx;margin: 0 auto;color: #666;font-size: 44rpx;margin-bottom: 5rpx;}
+.tab-bar{position: fixed;left: 0;bottom: 0;width: 100%;display: flex;height: 50px; justify-content: space-around;box-shadow: 0px -10px 18px 0px rgba(0, 0, 0, 0.04);background: #fff;}
+.tabitem{flex: 1;text-align: center;display: flex;flex-direction: column;justify-content: center;padding-top: 6px;}
+.tabitem .iconfont{position: relative;width: 25px;height: 25px;margin: 0 auto;color: #666;font-size: 22px;margin-bottom: 3px;}
 .tabitem .iconfont::before{vertical-align: text-top;}
-.tabitem .txt{font-size: 24rpx;}
-.icon-logo{position: relative; width: 88rpx;height: 88rpx;margin: -45rpx auto 5rpx auto;}
+.tabitem .txt{font-size: 12px;}
+.icon-logo{position: relative; width: 44px;height: 44px;margin: -22px auto 3px auto;}
 .icon-photo{vertical-align: bottom;border-radius: 50%;}
-.hasOrder:after{content: "";position: absolute;right: 0;top: 0;width: 18rpx;height: 18rpx;background-color: #EF344B;border-radius: 50%;animation: breath 2s linear infinite;}
-.tab-toScore .circle{content: '';position: absolute;width: 88rpx;height: 88rpx;border: 1rpx solid #EF344B;border-radius: 50%;left: 50%;margin-left: -44rpx;
+.hasOrder:after{content: "";position: absolute;right: 0;top: 0;width: 9px;height: 9px;background-color: #EF344B;border-radius: 50%;animation: breath 2s linear infinite;}
+.tab-toScore .circle{content: '';position: absolute;width: 44px;height: 44px;border: 1rpx solid #EF344B;border-radius: 50%;left: 50%;margin-left: -22px;
 animation: circleMotion 1.3s linear infinite;opacity: .5;box-sizing: border-box;}
 
 @keyframes breath{

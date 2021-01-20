@@ -75,9 +75,6 @@ Page({
   freshData: function () {
     
   },
-  initData: function () {
-    this.getIndexInfo()
-  },
 
   onPageScroll: util.throttle(function (e) {
     //debounce()
@@ -197,9 +194,10 @@ Page({
     
     if(!userInfo){
       wx.showToast({
-        icon:"error",
-        title:"登录失败，刷新页面"
+        icon:"none",
+        title:"未登录"
       })
+      return
     }else{
       userInfo = JSON.parse(userInfo)
     }

@@ -3,7 +3,7 @@
   <view class="navBar {{isFold?'fold':''}}" style="padding-top:{{statusHeight}}px">
     <view class="flex navwrap" style="{{navWarpStyle}}">
       <view class="searchBox flex" wx:if="{{hasAddress}}">
-          <view class='city flex' bindtap="toSelectCity">
+          <view class='city flex' bind:tap="selectAdd" data-source="1">
             <view class="icon"><image src="../../image/icon-local.png"></image></view>
             <view class="citytxt">送至：{{cityName.address}}</view>
           </view>

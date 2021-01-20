@@ -221,14 +221,22 @@ Page({
     this.getProList();
   },
   onLoad: function () {
-    let sysInfo = app.globalSystemInfo;
-    let safeArea = sysInfo.safeArea;
-    if(sysInfo.screenHeight > safeArea.bottom){
-      let btmHolder = sysInfo.screenHeight - safeArea.bottom
-      this.setData({
-        btmHolder:btmHolder
-      })
-    }
+    // let sysInfo = null
+
+    // if(app.globalSystemInfo){
+    //   sysInfo = app.globalSystemInfo
+    // }else{
+    //   sysInfo = wx.getSystemInfoSync()
+    // }
+
+    // let safeArea = sysInfo.safeArea;
+    // if(sysInfo.screenHeight > safeArea.bottom){
+    //   let btmHolder = sysInfo.screenHeight - safeArea.bottom
+    //   btmHolder = parseInt(btmHolder)
+    //   this.setData({
+    //     btmHolder:btmHolder
+    //   })
+    // }
     //util.setWatcher(this);
   },
   watch:{

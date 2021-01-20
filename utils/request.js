@@ -27,12 +27,12 @@ function hideLoading() {
 };
 
 const request = (method,url,data,needToken=true)=>{
-
+  let timestamp = (new Date()).valueOf()
   let queryString = "";
   let defData = {
     app_id:WITHWHEAT_APPID,
-    debug:'',
-    platform:'wxxcx'
+    platform:'wxxcx',
+    timestamp:timestamp
   }
   if(needToken){
     var userInfo = wx.getStorageSync("userInfo")

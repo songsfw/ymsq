@@ -8,7 +8,8 @@ Page({
     startX: 0, //开始坐标
     startY: 0,
     page: 1,
-    address: []
+    address: [],
+    source:0
   },
   touchE: function (e) {
     // console.log(e);
@@ -150,24 +151,45 @@ Page({
         })
       }
 
-      wx.stopPullDownRefresh() //停止下拉刷新
+      //wx.stopPullDownRefresh() //停止下拉刷新
     })
   },
   selectAdd(e){
-    let id = e.currentTarget.dataset.id
-    wx.navigateBack({
-      delta: 1
-    })
+    let idx = e.currentTarget.dataset.idx
+    let {source,address:addressLi} = this.data
+    if(source!=0){
+      let selectAddress = addressLi[idx]
+      let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
+      console.log(addresstxt)
+      console.log(selectAddress)
+      let addressInfo = {
+        address: addresstxt,
+        id: id,
+        area_id: area_id,
+        area_name: area_name,
+        city_id: old_city_id,
+        city_name: city_name,
+        address_detail:address_detail,
+        is_default:is_default,
+        mobile:mobile,
+        name:name
+      }
+      wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+      wx.navigateBack({
+        delta: 1
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let type = options.type
+    let source = options.source || -1
     //选择地址
-    if(type==1){
-      
-    }
+    //source 1 下单页
+    this.setData({
+      source:source
+    })
   },
 
   /**

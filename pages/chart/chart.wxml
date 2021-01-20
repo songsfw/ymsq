@@ -67,12 +67,38 @@
       </view>
     </view>
   </view>
+
+  <view class="fittings" wx:if="{{fittings}}">
+    <view class="hd"><text>加购配件</text></view>
+    <scroll-view scroll-x="{{true}}">
+      <view class="flex list">
+        <view class="item" wx:for="{{fittingsList}}" catch:tap="selectFittings" data-idx="{{index}}" data-id="{{pro.meal_id}}">
+          <view class="pic"><image src="{{item.img}}"></image></view>
+          <view class="tit">{{item.name}}</view>
+          <view class="price flex">
+            <view class="num">￥<text>{{item.price}}</text></view>
+            <view class="add iconfont icon-add"></view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="info flex">
+      <view class="tit">配件说明</view>
+      <view class="txt flex-1">
+        <view><text>◉</text> 每磅标配餐具5人/份</view>
+        <view><text>◉</text> 赠送一支工艺蜡烛</view>
+        <view><text>◉</text> 若不填写巧克力牌，则为默认（happy birthday!）</view>
+        <view style="color:#FA603D"><text>◉</text> 所有蛋糕不包含生日帽和数字蜡烛，如有需要请自行购买</view>
+      </view>
+    </view>
+  </view>
 </view>
 <view class="logo">
   <image src="../../image/logo.png"></image>
 </view>
 
-<view class="option flex">
+<view class="option flex" style="bottom:{{50+btmHolder}}px">
   <!-- <view class="select flex-center">
     <view class="checkbox">
       <view class="iconfont icon-check"></view>
@@ -84,3 +110,30 @@
     <view class="buy-btn" bind:tap="getOrder">结算</view>
   </view>
 </view>
+
+
+<view class="pop-panel score-panel" style="bottom:{{50+btmHolder}}px" wx:if="{{pop=='fittings-panel'}}">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="info flex">
+      <view class="pic"><image src="{{fitting.img}}" ></image></view>
+      <view class="h3 flex">
+        <view class="tit">{{fitting.name}}</view>
+        <view class="price"><text>￥</text>{{fitting.price}}</view>
+      </view>
+    </view>
+    <view class="h4"><text>选择规格</text></view>
+    <view></view>
+    <view class="h4 flex">
+      <text>购买数量</text>
+      <view class="set-chart flex">
+        <text class="iconfont icon-minus" data-skuid="{{fitting.sku_id}}" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>
+        <text class="count">{{skuNum}}</text>
+        <text class="iconfont icon-plus" data-skuid="{{fitting.sku_id}}" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
+      </view>
+    </view>
+    <view class="confirm-btn btn" bind:tap="confirmSore">确定</view>
+  </view>
+  
+</view>
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
