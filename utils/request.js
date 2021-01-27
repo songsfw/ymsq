@@ -4,27 +4,27 @@ var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 
 // loading配置，请求次数统计
-function startLoading() {
-  wx.showLoading({ title: '加载中' })
-}
-function endLoading() {
-  wx.hideLoading();
-}
-// 声明一个对象用于存储请求个数
-var requestCount = 0;
-function showLoading() {
-  if (requestCount === 0) {
-    startLoading();
-  }
-  requestCount++;
-};
-function hideLoading() {
-  if (requestCount <= 0) return;
-  requestCount--;
-  if (requestCount === 0) {
-    endLoading();
-  }
-};
+// function startLoading() {
+//   wx.showLoading({ title: '加载中' })
+// }
+// function endLoading() {
+//   wx.hideLoading();
+// }
+// // 声明一个对象用于存储请求个数
+// var requestCount = 0;
+// function showLoading() {
+//   if (requestCount === 0) {
+//     startLoading();
+//   }
+//   requestCount++;
+// };
+// function hideLoading() {
+//   if (requestCount <= 0) return;
+//   requestCount--;
+//   if (requestCount === 0) {
+//     endLoading();
+//   }
+// };
 
 const request = (method,url,data,needToken=true)=>{
   let timestamp = (new Date()).valueOf()
@@ -57,7 +57,7 @@ const request = (method,url,data,needToken=true)=>{
     // if(!sign && needToken){
     //   return false
     // }
-    showLoading()
+    //showLoading()
     wx.request({
       url:url,
       method: method,
@@ -67,7 +67,7 @@ const request = (method,url,data,needToken=true)=>{
       data: defData,
       success: function (res) {
         resolve(res)
-        hideLoading()
+        //hideLoading()
       },
       fail: function (res) {
         wx.showModal({
@@ -76,7 +76,7 @@ const request = (method,url,data,needToken=true)=>{
           showCancel: false
         })
         reject(res)
-        hideLoading()
+        //hideLoading()
       }
     })
   })

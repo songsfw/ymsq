@@ -150,7 +150,10 @@ Page({
     }
     Object.assign(oldAddress,address)
     console.log(oldAddress);
+    let btmHolder = wx.getStorageSync('btmHolder')
+    
     this.setData({
+      btmHolder:btmHolder||0,
       type:type,
       address:oldAddress,
     })

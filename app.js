@@ -4,14 +4,20 @@ const api = require('utils/api.js')
 const util = require('utils/util.js')
 App({
   onLaunch: function (options) {
-    this.isAuth()
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+      success (res) {
+        console.log('显示loading')
+      }
+    })
+    this.init()
   },
-  async isAuth () {
+  async init(){
     var is_authed,local=null
     let userInfo = wx.getStorageSync("userInfo")
     if(userInfo && JSON.parse(userInfo).is_authed==1){
       is_authed = JSON.parse(userInfo).is_authed
-      return 
     }else{
       let loginInfo = await auth.getLoginInfo()
       console.log(loginInfo)
@@ -55,17 +61,16 @@ App({
             address_detail:address_detail,
             is_default:is_default,
             mobile:mobile,
-            name:name
+            name:name,
+            is_ziti:address_info.is_ziti
           }
           wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         }
         wx.setStorageSync("userInfo", JSON.stringify(userInfo))
       }
     }
-    
     wx.getSetting({
       success: res => {
-        
         if (!res.authSetting['scope.userInfo'] || is_authed !=1) {
           // 未授权跳授权页
           wx.navigateTo({
@@ -81,9 +86,10 @@ App({
         })
       }
     })
-
+    await this.getBtmHolder()
+    wx.hideLoading()
   },
-  //Promise:null,
+
   // getUserInfo(){
   //   return new Promise(function(resolve,reject){
   //     auth.getLoginInfo().then(res=>{
@@ -104,6 +110,18 @@ App({
   //     })
   //   })
   // },
+  getBtmHolder(){
+    return new Promise(function(resolve,reject){
+      wx.getSystemInfo({
+        success: function (res) {
+          let safeArea = res.safeArea;
+          let btmHolder = res.screenHeight - safeArea.bottom
+          wx.setStorageSync('btmHolder',btmHolder)
+          resolve(btmHolder)
+        }
+      });
+    })
+  },
   onShow(options) {
     console.log(options);
     // 判断是否由分享进入小程序
@@ -112,13 +130,13 @@ App({
     } else {
       this.globalData.isShare = false
     };
-    if ((options.scene == 1001 || options.scene == 1012) && options.path == 'pages/chart/paySuccess/paySuccess') {
+    if ((options.scene == 1001 || options.scene == 1012 || options.scene == 1017) && options.path == 'pages/chart/paySuccess/paySuccess') {
       this.globalData.sharePoster = true
     }
   },
   
   globalData: {
-    proType:1,
+    proType:null,
     isShare: false,
     userInfo: null,
     cityId:null,

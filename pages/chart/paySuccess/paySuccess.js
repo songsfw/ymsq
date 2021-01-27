@@ -108,7 +108,12 @@ Page({
       }
     })
   },
-
+  toPro(e){
+    let url = e.currentTarget.dataset.url;
+    wx.navigateTo({
+      url:"/pages/proInfo/proInfo?proId="+url
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

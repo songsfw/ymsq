@@ -4,14 +4,18 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item .hd .date{color: #999;line-height: 18px;}
 .item .hd .status{color: #C1996B;}
 .option{justify-content:flex-end;align-items: center;padding: 0 20rpx;}
-.option view{margin-left: 12px;}
+.option navigator{margin-left: 12px;}
 .option .btn{width: 77px;height: 30px;line-height: 30px;text-align: center;border-radius:15px;font-size: 14px;}
 .option .time{color: #999;font-size: 14px;}
 .btn1{background: #fff;color: #222;border: 1px solid #ccc;}
-.pic-box{align-items: center;background: #F6F6F6;padding:16px 10px;margin-bottom: 15px;justify-content: space-between;}
-.pic-box image{width: 120rpx;height: 120rpx;border-radius:8rpx ;margin-right: 10rpx;}
-.count{color: #999;font-size: 13px;}
-.count text{vertical-align: middle;font-size: 12px;}
+.pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
+.pic-box .pic{position: relative; width: 120rpx;height: 120rpx;border-radius:8rpx ;margin-right: 20rpx;overflow: hidden;flex-shrink: 0;}
+.pic-box .pic1{width: 100%;}
+.pic-box .pic1>view{justify-content: space-between;flex-direction: column;}
+.pic-box .pic1 .num{color: #999;}
+.pic-box .pic1 .h3{font-size: 14px;}
+.pic-box .count{position: absolute;right: 0;bottom: 0;background: rgba(0, 0, 0, .4);line-height: 1; color: #fff;font-size: 22rpx;border-radius: 8rpx 0 0 0 ;padding: 4rpx 6rpx;}
+
 .total{text-align: right;padding: 0 24rpx;margin-bottom: 20px;}
 .total text{font-size: 16px;}
 .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
@@ -23,7 +27,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item .border:before{content: "";position: absolute;left: -15rpx;top:4rpx;width: 30rpx;height: 30rpx;border-radius: 50%;background-color: #F6F6F6;}
 .item .border:before{left: auto;right: -15rpx;}
 .card{padding-top:20rpx ;}
-.item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 30rpx 0;overflow: hidden;}
+.item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:16rpx ;background: #fff;padding: 30rpx 0;overflow: hidden;}
 .item .tag{position: absolute;right: 0;top: 0;background: rgba(250, 96, 61,.1);color:#F87D1C;font-size: 11px;padding: 6px;line-height: 1;}
 .item .tit{margin-right: 16px;}
 .coupon-num{position: relative; width: 92px;flex-shrink: 0;height: 77px;align-items: center;}
@@ -49,6 +53,6 @@ page{background: #F6F6F6;padding-top: 48px;}
 
 .menu{position: fixed;left: 0;top: 0;width: 100%;background-color: #fff;height:48px;line-height: 48px;z-index: 10;}
 .menu>view{position: relative; flex: 1;text-align: center;font-size:14px;color: #666;}
-.menu>view text{position: absolute;left: 50%;bottom: 0;transform: translateX(-50%);width:42px;height: 0;background: #c1996b; transition: height .1s ease-in;}
+.menu>view text{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 0;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;z-index: -1;transition: height .2s linear;}
 .menu>view.on view{color: #c1996b;}
-.menu>view.on text{height: 3px;}
+.menu>view.on text{display: block;height: 10rpx;}

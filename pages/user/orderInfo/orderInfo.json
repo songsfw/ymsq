@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单结算",
+  "navigationBarTitleText": "订单详情",
   "backgroundTextStyle": "dark",
   "usingComponents": {
     "pop-panel": "/components/pop-panel/pop-panel"

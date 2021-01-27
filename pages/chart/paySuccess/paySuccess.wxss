@@ -18,10 +18,10 @@ page{background: #F6F6F6;}
 .account .txt text{font-size: 40rpx;margin-right: 16rpx;vertical-align: text-bottom;}
 
 .pro-list{padding: 0 24rpx;background: #F6F6F6;}
-.pro-list navigator,
+.pro-list>view,
 .pro-list .pic{width: 702rpx;height: 420rpx;}
 
-.pro-list navigator{position: relative;margin-bottom:40rpx;}
+.pro-list view{position: relative;margin-bottom:40rpx;}
 .pro-list .title{height: 78rpx;margin-bottom: 22rpx;}
 .pro-list .info{position: absolute;width: 100%; left:0 ;top: 0;height: 100%; padding:50rpx 40rpx;z-index: 2;background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.46) 150%);box-sizing: border-box;}
 .pro-list .h3{margin-top: 0;}

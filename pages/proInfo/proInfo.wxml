@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <view class="banner">
-  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}">
+  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}" indicator-dots>
     <block wx:for="{{proInfo.banner}}" wx:for-index="index">
       <swiper-item>
         <image src="{{item}}" class="slide-image" mode="aspectFill" />
@@ -29,7 +29,7 @@
     </view>
   </view>
 </view>
-<view class="option flex">
+<view class="option flex" style="padding-bottom:{{btmHolder}}px">
   <navigator class="home" open-type="switchTab" url="/pages/index/index">
     <view class="iconfont icon-home"></view>
     <text >首页</text>
@@ -38,6 +38,31 @@
     <view class="iconfont icon-chart"></view>
     <text >购物车</text>
   </navigator>
-  <view class="btn add-btn" bind:tap="addCart">加入购物车</view>
-  <view class="btn buy-btn" bind:tap="buyToCart">立即购买</view>
+  <view class="btn add-btn" data-action="0" bind:tap="showPop" data-pop="bread-panel">加入购物车</view>
+  <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="bread-panel">立即购买</view>
 </view>
+
+<view class="pop-panel score-panel" style="bottom:{{50+view}}px" wx:if="{{pop=='bread-panel'}}">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="info flex">
+      <view class="pic"><image src="{{proInfo.image}}" mode="scaleToFill"></image></view>
+      <view class="h3 flex">
+        <view class="tit">{{proInfo.name}}</view>
+        <view class="price"><text>￥</text>{{proInfo.price}}</view>
+      </view>
+    </view>
+    <view class="h4 flex">
+      <text>购买数量</text>
+      <view class="set-chart flex">
+        <text class="iconfont icon-minus" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>
+        <text class="count">{{skuNum}}</text>
+        <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
+      </view>
+    </view>
+    <view class="confirm-btn btn" bind:tap="confirmBread" data-id="{{proInfo.id}}">确定</view>
+  </view>
+  
+</view>
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+<view style="height:{{60+btmHolder}}px"></view>

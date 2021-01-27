@@ -2,7 +2,7 @@ page{padding-top:550rpx;}
 .citytxt{font-size: 28rpx;height: 100%;}
 
 .map{position: absolute; width: 100%;height: 450rpx;left: 0;top: 100rpx;}
-.hd{position: fixed;left: 0;top: 0;width: 100%; height:100rpx;line-height: 100rpx;background-color: #fff;align-items: center;overflow: hidden;z-index: 10;}
+.hd{position: fixed;left: 0;top: 0;width: 100%; height:100rpx;line-height: 100rpx;background-color: #fff;align-items: center;overflow: hidden;z-index: 201;}
 .city{width: 150rpx;height: 100%; text-align: center;align-items: center;margin-right: 26rpx;}
 .search{position: relative;}
 .search input{ width: 554rpx;height: 66rpx;background-color: #f6f6f6;border-radius: 33rpx;padding-left: 78rpx;box-sizing: border-box;}
@@ -15,7 +15,7 @@ page{padding-top:550rpx;}
 .local{width: 80rpx;height:80rpx;position: absolute;right: 20rpx;bottom: 20rpx;}
 .center-local{width: 60rpx;height:60rpx;position: absolute;left:50% ;top:50%;margin: -30rpx 0 0 -30rpx;}
 .nodata{text-align: center;margin: 50rpx auto;width:60rpx;height: 60rpx ;}
-.suggestion{position: absolute;left: 0;top: 0; height: 100%;padding-top:100rpx;box-sizing: border-box; width:100%;background-color: #fff;z-index: 2;}
+.suggestion{position: absolute;left: 0;top: 0; height: 100%;padding-top:100rpx;box-sizing: border-box; width:100%;background-color: #fff;z-index: 200;}
 .suggestion-scroll{height: 100%;}
 .suggestion-scroll .item{padding: 20rpx 0;margin: 0 24rpx; border-bottom: 1px solid #f6f6f6;}
 .suggestion-scroll view{color: #aaa;font-size: 13px;}

@@ -1,0 +1,26 @@
+<!-- pages/user/user.wxml -->
+<navBar hasReturn navType="transparent" title="麦点" titColor="#fff"></navBar>
+<view class="bg">
+  <image src="../../../image/card.png"></image>
+</view>
+<view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
+  <scroll-view scroll-y="true" class="contain">
+    <view class="info">
+      <view class="tit">我的麦点</view>
+      <view class="score">{{point}}</view>
+    </view>
+    <view class="money-box">
+      <view class="h3">麦点明细</view>
+      <view class="item flex"  wx:for="{{pointList}}">
+        <view class="">
+          <view class="tit">{{item.title}}</view>
+          <view class="date">{{item.create_time}}</view>
+        </view>
+        <view class="price">{{item.symbol}}￥{{item.score}}</view>
+      </view>
+    </view>
+    <view class="logo">
+      <image src="../../../image/logo.png"></image>
+    </view>
+  </scroll-view>  
+</view>

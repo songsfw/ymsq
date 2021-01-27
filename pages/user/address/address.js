@@ -155,39 +155,66 @@ Page({
     })
   },
   selectAdd(e){
-    let idx = e.currentTarget.dataset.idx
-    let {source,address:addressLi} = this.data
+    let idx = e.currentTarget.dataset.idx,
+    id = e.currentTarget.dataset.id
+    let {source,address:addressLi,cartType} = this.data
+    
     if(source!=0){
-      let selectAddress = addressLi[idx]
-      let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
-      console.log(addresstxt)
-      console.log(selectAddress)
-      let addressInfo = {
-        address: addresstxt,
-        id: id,
-        area_id: area_id,
-        area_name: area_name,
-        city_id: old_city_id,
-        city_name: city_name,
-        address_detail:address_detail,
-        is_default:is_default,
-        mobile:mobile,
-        name:name
+      let  data = {
+        address_id:id,
+        cart_type:cartType
       }
-      wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
-      wx.navigateBack({
-        delta: 1
+      api.checkAddress(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        if(res.status=='4003'){
+          wx.showToast({
+            icon:"none",
+            title:res.message
+          })
+        }else{
+          let selectAddress = addressLi[idx]
+          let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
+          console.log(addresstxt)
+          console.log(selectAddress)
+          let addressInfo = {
+            address: addresstxt,
+            id: id,
+            area_id: area_id,
+            area_name: area_name,
+            city_id: old_city_id,
+            city_name: city_name,
+            address_detail:address_detail,
+            is_default:is_default,
+            mobile:mobile,
+            name:name
+          }
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          wx.navigateBack({
+            delta: 1
+          })
+        }
       })
+
+      
     }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let source = options.source || -1
+    let source = options.source || 0,
+    cartType = options.cartType || 0
+
+    let btmHolder = wx.getStorageSync('btmHolder')
+
     //选择地址
     //source 1 下单页
     this.setData({
+      btmHolder:btmHolder||0,
+      cartType:cartType,
       source:source
     })
   },

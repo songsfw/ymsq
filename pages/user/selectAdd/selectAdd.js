@@ -187,18 +187,18 @@ Page({
     let { city } = this.data, location = null
     //let polygons = this.data.polygons
     //let hasAdd
-    // if (lat && lng) {
-    //   location = `${lat},${lng}`
-    //   for(let i = 0;i<polygons.length;i++){
-    //     if(this.IsPtInPoly(lat,lng,polygons[i].points)){
-    //       hasAdd = true
-    //       this.setData({
-    //         hasAdd:true
-    //       })
-    //       break
-    //     }
-    //   }
-    // }
+    if (lat && lng) {
+      location = `${lat},${lng}`
+      //for(let i = 0;i<polygons.length;i++){
+        // if(this.IsPtInPoly(lat,lng,polygons[i].points)){
+        //   hasAdd = true
+        //   this.setData({
+        //     hasAdd:true
+        //   })
+        //   break
+        // }
+      //}
+    }
     // if(!hasAdd){
     //   this.setData({
     //     hasAdd:false

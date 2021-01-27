@@ -180,55 +180,64 @@ Page({
     })
 
   },
-  
+  getCartInfo(){
+    let data = {
+      city_id:this.data.addressInfo.city_id
+    }
+    api.getChartData(data).then(res => {
+      console.log(res);
+      this.getTabBar().setData({
+        count: res.total_num
+      })
+    })
+  },
   onShow() {
+    //自定义tabbar选中
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        count:"",
+        selected: 0
+      })
+    }
+    
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     console.log(sysInfo)
 
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")
+    let btmHolder = wx.getStorageSync('btmHolder')
+
     if(addressInfo){
       addressInfo = JSON.parse(addressInfo)
     }
     
     if(!userInfo){
-      wx.showToast({
-        icon:"none",
-        title:"未登录"
-      })
+      // wx.showToast({
+      //   icon:"none",
+      //   title:"未登录"
+      // })
       return
     }else{
       userInfo = JSON.parse(userInfo)
     }
     console.log(addressInfo)
     this.setData({
+      btmHolder:btmHolder||0,
       addressInfo:addressInfo,
       userInfo:userInfo,
       fixedTop:fixedTop
     })
 
     this.getIndexInfo();
-
-    //自定义tabbar选中
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
+    this.getCartInfo()
+    
     
     
   },
   onLoad: function (options) {
     console.log('111',wx.canIUse('scroll-view.refresher-enabled'))
-    let sysInfo = app.globalSystemInfo;
-    let safeArea = sysInfo.safeArea;
-    if(sysInfo.screenHeight > safeArea.bottom){
-      let btmHolder = sysInfo.screenHeight - safeArea.bottom
-      this.setData({
-        btmHolder:btmHolder
-      })
-    }
+
   },
 })

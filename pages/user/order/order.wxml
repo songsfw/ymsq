@@ -26,35 +26,50 @@
     <view class="item" wx:for="{{item}}" wx:for-item="order">
       <view class="flex hd">
         <view class="order-info">
-          <view class="order-code">订单编号:{{order.order_code}}</view>
+          <view class="order-code">订单编号：{{order.order_code}}</view>
           <view class="date">{{order.create_time}}</view>
         </view>
         <view class="status">{{order.status_text}}</view>
       </view>
-      <view class="pic-box flex">
-        <view class="pic">
-          <image src="{{pic.image_url}}" wx:for="{{order.detail}}" wx:for-item="pic" mode="aspectFill"></image>
+      <scroll-view scroll-x="{{true}}" class="pic-box">
+        <view class="flex">
+          <view class="pic1 flex" wx:if="{{order.detail.length==1}}">
+            <view class="pic">
+              <image src="{{order.detail[0].image_url}}" mode="aspectFill"></image>
+            </view>
+            <view class="flex">
+              <view class="h3">{{order.detail[0].name}}</view>
+              <view class="num">X{{order.detail[0].count}}</view>
+            </view>
+          </view>
+          <block wx:else>
+            <view class="pic" wx:for="{{order.detail}}" wx:for-item="pic">
+              <image src="{{pic.image_url}}" mode="aspectFill"></image>
+              <view class="count">X{{pic.count}}</view>
+            </view>
+          </block>
+          
+          
         </view>
-        <view class="count">共{{order.count}}件 <text class="iconfont icon-arrow-r"></text></view>
-      </view>
+      </scroll-view>
       <view class="total">合计：￥<text>{{order.order_price}}</text></view>
       <view class="option flex">
         
-        <block wx:if="{{order.status_text=='未支付'}}">
+        <block wx:if="{{order.status==1}}">
           <!-- <view class="time">支付时间剩余</view> -->
           <view class="btn btn1 cancel-btn" bind:tap="cancelOrder" data-code="{{order.order_code}}">取消订单</view>
           <view class="btn pay-btn" bind:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
-        <block wx:if="{{order.status_text=='已支付'}}">
+        <block wx:if="{{order.status==2}}">
           <view class="btn btn1 delivery-btn" data-code="{{order.order_code}}">查看物流</view>
-          <view class="btn pay-btn" data-code="{{order.order_code}}">再来一单</view>
+          <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
         </block>
-        <block wx:if="{{order.status_text=='已完成'}}">
-          <view class="btn btn1 delivery-btn" data-code="{{order.order_code}}">再来一单</view>
+        <block wx:if="{{order.status==3}}">
+          <navigator url="/pages/index/index" open-type="switchTab" class="btn btn1 delivery-btn">去逛逛</navigator>
           <view class="btn pay-btn" data-code="{{order.order_code}}">去评价</view>
         </block>
-        <block wx:if="{{order.status_text=='超时取消'}}">
-          <view class="btn pay-btn" data-code="{{order.order_code}}">再来一单</view>
+        <block wx:if="{{order.status==4}}">
+          <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
         </block>
       </view>
     </view>

@@ -27,15 +27,15 @@
     <view class="main-tit"><image src="../../../image/tit.png"></image></view>
     <view class="pro-list">
       <block wx:for="{{shareInfo.meal}}">
-        <navigator url="{{item.id}}" hover-class="none">
+        <view data-url="{{item.id}}" bind:tap="toPro" hover-class="none">
           <view class="pic">
             <image src="{{item.image}}"></image>
           </view>
-          <view class="info">
+          <!-- <view class="info">
             <view class="h3">{{item.name}}</view>
             <view class="txt text-overflow">{{item.selling_point}}</view>
-          </view>
-        </navigator>
+          </view> -->
+        </view>
       </block>
     </view>
   </scroll-view>

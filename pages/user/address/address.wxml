@@ -1,6 +1,6 @@
 <!-- pages/user/user.wxml -->
 <view class="address-list">
-  <view class="item flex " wx:for="{{address}}" style="transform:translateX(-{{item.txtStyle}}rpx)" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}">
+  <view class="item flex " wx:for="{{address}}" style="transform:translateX(-{{item.txtStyle}}rpx)" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}">
     <view class="info flex-1" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" data-index='{{index}}'>
       <view class="name flex">
         <text>{{item.name}}</text>
@@ -16,4 +16,5 @@
     </view>
   </view>
 </view>
-<view class="fixedBtn"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
+<view class="fixedBtn" style="padding-bottom:{{12+btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
+<view style="height:{{56+btmHolder}}px"></view>

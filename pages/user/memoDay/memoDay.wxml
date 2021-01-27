@@ -2,7 +2,7 @@
 <view class="tips flex">
   <view class="flex">
     <view class="iconfont icon-notice"></view>
-    <text>您的纪念优惠还有1次。</text>
+    <text>您的纪念优惠还有{{available_day}}次。</text>
   </view>
   <view class="rule-btn flex" bind:tap="showRule">
     <view class="iconfont icon-notice2"></view>规则
@@ -19,10 +19,12 @@
     <view class="flex input-box">
       <view class="tit">名称</view>
       <input type="text" class="flex-1" value="{{item.title}}" placeholder="请为纪念日设置名称" bindinput="inputName" data-idx = "{{index}}" />
+      
     </view>
     <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate">
       <view class="tit">日期</view>
       <view class="date">{{item.date || '请选择纪念日期'}}</view>
+      <view class="tip">{{item.type==0?'(阳历)':'(农历)'}}</view>
     </view>
   </view>
 </view>

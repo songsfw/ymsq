@@ -1,7 +1,15 @@
 <view class="tab-bar" style="padding-bottom:{{btmHolder||0}}px">
   <block wx:for="{{list}}" wx:key="index">
-    <view class="tabitem" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
-      <!-- <view class="iconfont {{item.icon}}" style="color: {{selected === index ? selectedColor : color}}"></view> -->
+    <view class="tabitem" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" wx:if="{{index==2}}">
+      <view class="iconfont">
+        <image src="{{selected === index?item.selectedIconPath:item.icon}}" class="animate {{selected === index?'bounce':''}}"></image>
+        <view class="tag" wx:if="{{count>0}}">{{count}}</view>
+      </view>
+      <view class="txt" style="color: {{selected === index ? selectedColor : color}}">
+        {{item.text}}
+      </view>
+    </view>
+    <view wx:else class="tabitem" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
       <image src="{{selected === index?item.selectedIconPath:item.icon}}" class="iconfont animate {{selected === index?'bounce':''}}"></image>
       <view class="txt" style="color: {{selected === index ? selectedColor : color}}">
         {{item.text}}

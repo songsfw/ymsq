@@ -68,40 +68,68 @@
       <text>共计{{cart_data.number}}件商品</text>
     </view>
     <view class="pro-wp">
-      <view class="item flex" wx:if="{{index<3}}" wx:for="{{proList}}">
-        <view class="pic">
-          <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
-        </view>
-        <view class="info flex-1">
-          <view class="tit">{{item.sku_name}}</view>
-          <view class="price flex">
-            <view class="num">
-              ￥
-              <text>{{item.sku_price}}</text>
-            </view>
-            <view class="count">x{{item.sku_number}}</view>
+      <view class="item" wx:if="{{index<3}}" wx:for="{{proList}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
           </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
+            <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
+              <text>{{item.size}}</text>
+              <text>{{item.edible}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">
+                ￥
+                <text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
+          <view class="h4">巧克力牌</view>
+          <input class="inputxt flex-1" type="text" placeholder="happy birthday!" maxlength="18" bindinput="inputCard" bindblur="setTxt" value="{{txtCard}}" data-cartid="{{item.cart_id}}"/>
+          <view class="iconfont icon-edit"></view>
         </view>
       </view>
-      <view class="item flex" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
-        <view class="pic">
-          <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
-        </view>
-        <view class="info flex-1">
-          <view class="tit">{{item.sku_name}}</view>
-          <view class="price flex">
-            <view class="num">
-              ￥
-              <text>{{item.sku_price}}</text>
-            </view>
-            <view class="count">x{{item.sku_number}}</view>
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
           </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
+            <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
+              <text>{{item.size}}</text>
+              <text>{{item.edible}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">
+                ￥
+                <text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
+          <view class="h4">巧克力牌</view>
+          <input class="inputxt flex-1" type="text" placeholder="happy birthday!" maxlength="9" bindinput="inputCard" />
+          <view class="iconfont icon-edit"></view>
         </view>
       </view>
     </view>
     <view class="more-pro flex-center" wx:if="{{proList.length>3 && !showAll}}" bind:tap="showAllPro">
-      <view>还有{{proList.length-3}}种商品</view>
+      <view>查看更多商品</view>
       <text class="iconfont icon-arrow-btm"></text>
+    </view>
+  </view>
+  <view class="fittings-info flex" wx:if="{{fittings_desc}}">
+    <view class="tit">配件说明</view>
+    <view class="txt flex-1">
+      <view wx:for="{{fittings_desc}}" style="{{item.marked==1?'color:#fa603d':''}}"><text>◉</text> {{item.desc}}</view>
     </view>
   </view>
   <view class="inputbox flex-center">
@@ -317,10 +345,10 @@
   <view class="pop-con">
     <view class="mai-info flex">
       <view class="">账户麦点：{{jinmai.total_point}}</view>
-      <view wx:if="{{hasMai}}">本单<text >已减￥{{jinmai.now_price}}.00</text></view>
+      <view wx:if="{{hasMai}}">本单<text >已减￥{{jinmai.now_price}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
-      <view >抵扣<text >￥{{jinmai.now_price}}.00</text>使用2000麦点</view>
+      <view >抵扣<text >￥{{jinmai.now_price}}</text>使用{{jinmai.now_point}}麦点</view>
       <view class="checkbox {{hasMai?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>
@@ -329,7 +357,6 @@
   <view class="confirm-btn btn" bind:tap="confirmSore">确定</view>
 </view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
-
 
 
 <pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}" class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="closePanel" unuse="{{unuse}}">
@@ -372,3 +399,4 @@
     <view class="get-code color-b" wx:else><text>{{second}}</text></view>
   </view>
 </pop-panel>
+<view style="height:{{50+btmHolder}}px"></view>

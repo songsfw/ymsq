@@ -25,3 +25,4 @@
 <view class="fixedBtn">
   <view class="btn" bindtap="addAddress">保存</view>
 </view>
+<view style="height:{{56+btmHolder}}px"></view>

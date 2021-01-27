@@ -1,7 +1,9 @@
 const { getUserLocation } = require('../../../utils/api.js')
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
-let delivery=10,mai=0,coupon=0,card=0,thirdCard=0
+let delivery=10,mai=0,coupon=0
+let txtCard =null,cartid=null,txt=''
+let app = getApp()
 // let payQueue = [10,0,0,0,0]
 Page({
 
@@ -37,8 +39,10 @@ Page({
     selected:0,
     step:1,
     list: [],
-    confirmText:"开启",
+    confirmText:"确定",
     unuse:true,
+    verifyed:false,
+    zitiName:''
   },
   
   closeCoupon(){
@@ -228,16 +232,14 @@ Page({
     }
     let source = e.currentTarget.dataset.source
     wx.navigateTo({
-      url:'/pages/user/address/address?source='+source
+      url:'/pages/user/address/address?source='+source+'&cartType='+this.data.type
     })
   },
   initOrderData() {
-    let addressInfo = wx.getStorageSync("addressInfo")
-        addressInfo = JSON.parse(addressInfo)
-    let { is_ziti, type } = this.data
+    let { type ,useBalance,verifyed,city_id,is_ziti} = this.data
     
     let data = {
-      city_id: addressInfo.city_id,
+      city_id: city_id,
       is_ziti: is_ziti
     }
     if (type == "1") {
@@ -259,11 +261,23 @@ Page({
         }
 
         let hasMai = res.jinmai.can
+        let balanceInfo = res.balance_config
+        let {free_secret} = balanceInfo
+
+        if(useBalance){
+          if(free_secret=="0"){
+            verifyed = false
+          }else{
+            verifyed = true
+          }
+        }
+
         this.setData({
+          verifyed:verifyed,
           hasMai:hasMai,
           address: res.address,
           balance: res.balance,
-          balanceInfo: res.balance_config,
+          balanceInfo: balanceInfo,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery:res.delivery,
@@ -278,6 +292,7 @@ Page({
       })
       
     } else {
+      txtCard = {}
       //蛋糕
       api.getOrderCake(data).then(res => {
         console.log(res);
@@ -296,8 +311,29 @@ Page({
         }
 
         let hasMai = res.jinmai.can
+        let balanceInfo = res.balance_config
+        let {free_secret} = balanceInfo
+        let detail = cart_data.detail
+
+        detail.find(item=>{
+          if(item.is_fittings==0){
+            txtCard[item.cart_id] = res.default_mcake_message
+          }
+        })
+
+        if(useBalance){
+          if(free_secret=="0"){
+            verifyed = false
+          }else{
+            verifyed = true
+          }
+        }
+
         this.setData({
           hasMai:hasMai,
+          txtCard:res.default_mcake_message,
+          fittings_desc:res.fittings_desc,
+          verifyed:verifyed,
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
@@ -393,7 +429,20 @@ Page({
     },payPrice)
     console.log(payPrice)
 
+    let free_amount = this.data.balanceInfo.free_amount,
+        {useBalance,verifyed} = this.data
+    free_amount = parseFloat(free_amount)
+    payPrice = parseFloat(payPrice)
+    if(useBalance){
+      if(free_amount < payPrice){
+        verifyed = false
+      }else{
+        verifyed = true
+      }
+    }
+
     this.setData({
+      verifyed:verifyed,
       preUseBalancePrice:payPrice,
       payPrice: payPrice
     })
@@ -403,16 +452,16 @@ Page({
     let useBalance = this.data.useBalance
     if(useBalance){
       this.setData({
-        useBalance: false
+        useBalance: false,
+        verifyed:true
       })
     }else{
       this.setData({
-        useBalance: true
+        useBalance: true,
+        verifyed:false
       })
     }
     this.setBalancePrice()
-
-    //this.setBalancePrice()
   },
   //抵余额扣与否  
   setBalancePrice(){
@@ -478,16 +527,18 @@ Page({
       payQueue:newPayQueue
     })
   },
-
-  submmitOrder(){
-    let {cart_data,addressInfo,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,balanceInfo,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance}=this.data
-
-    let {free_secret,free_amount} = balanceInfo
+  inputZitiName:util.debounce(function(e){
+    let val = e.detail.value
+    this.setData({
+      zitiName:val
+    })
+  },300),
+  submmitOrder:util.debounce(function(){
+    let {cart_data,addressInfo,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName}=this.data
     let balance_price = useBalance=="1" ? preUseBalancePrice : 0
-    free_amount = parseFloat(free_amount)
-    preUseBalancePrice = parseFloat(preUseBalancePrice)
 
-    if(useBalance && (free_secret=="0" || free_amount < preUseBalancePrice)){
+ 
+    if(!verifyed){
       this.setData({
         popShow:true,
         poptitle:"请输入设置的余额密码",
@@ -497,12 +548,11 @@ Page({
     }
 
     console.log(payQueue)
-    
     console.log(balance_price)
     if(!hasPolicy){
       wx.showToast({
         icon:"none",
-        title:"请先确定退换政策"
+        title:"请先确定购买须知"
       })
       return
     }
@@ -528,7 +578,15 @@ Page({
       point_price:payQueue[1],
     }
     if(ziti!="0"){
-      data.name = addressInfo.name
+      if(zitiName==''){
+        wx.showToast({
+          icon:"none",
+          title:"请填写提货人姓名"
+        })
+        return
+      }
+      data.ziti = '1'
+      data.name = zitiName
     }
     if(useCoupon){
       data.promotion_price=payQueue[2]
@@ -544,8 +602,13 @@ Page({
       data.third_cash_card_no = this.data.third_cash_card_no
       data.third_cash_card_pwd = this.data.third_cash_card_pwd
     }
+    if(txtCard){
+      console.log(txtCard)
+      data.message = JSON.stringify(txtCard)
+    }
+    console.log('---支付参数---')
     console.log(data)
-
+    console.log('------')
     api.submmitOrder(data).then(res=>{
       console.log(res)
       if(!res){
@@ -610,6 +673,16 @@ Page({
         }, 2000)
       }
     })
+  }),
+  inputCard:function(e){
+    txt = e.detail.value,
+    cartid = e.currentTarget.dataset.cartid
+
+  },
+  setTxt(){
+    txtCard[cartid]=txt
+    
+    console.log(txtCard)
   },
   pwdInput(e){
     var val = e.detail.value
@@ -789,11 +862,13 @@ Page({
               icon: 'none',
               duration: 2000
             })
-          }else{
+            return
+          }
+          if(res){
             this.setData({
               popShow:false,
               useBalance:true,
-              'balanceInfo.free_secret':"1"
+              verifyed:true
             })
             this.setBalancePrice()
           }
@@ -924,33 +999,42 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  async getUserLocation(){
-    let local,addressInfo
-    try {
-      local = await util.getLocation()
-    } catch (error) {
-      local = error
-    }
-    let data = {
-      lng:local.longitude,
-      lat:local.latitude
-    }
-    //当前定位地址
-    addressInfo = await api.getUserLocation(data)
-    //addressInfo = addressInfo.address_info
-    this.setData({
-      is_ziti:addressInfo.address_info.is_ziti
-    })
-    console.log(addressInfo)
-  },
+  // async getUserLocation(){
+  //   let local,addressInfo
+  //   try {
+  //     local = await util.getLocation()
+  //   } catch (error) {
+  //     local = error
+  //   }
+  //   let data = {
+  //     lng:local.longitude,
+  //     lat:local.latitude
+  //   }
+  //   //当前定位地址
+  //   addressInfo = await api.getUserLocation(data)
+  //   //addressInfo = addressInfo.address_info
+  //   console.log(addressInfo)
+  //   this.setData({
+  //     is_ziti:addressInfo.address_info.is_ziti
+  //   })
+  //   console.log(addressInfo)
+  // },
   onLoad: function (options) {
-    this.getUserLocation()
-    let userInfo = wx.getStorageSync('userInfo')
     
+    //this.getUserLocation()
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+        addressInfo = JSON.parse(addressInfo)
+        
     let type = options.type
+    let btmHolder = wx.getStorageSync('btmHolder')
+
     util.setWatcher(this);
 
     this.setData({
+      btmHolder:btmHolder||0,
+      city_id: addressInfo.city_id,
+      is_ziti: addressInfo.is_ziti,
       userInfo:JSON.parse(userInfo),
       type: type
     })
@@ -1017,11 +1101,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

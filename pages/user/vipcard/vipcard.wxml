@@ -18,10 +18,11 @@
     <view class="card-code-img">
       <canvas canvas-id="barcode"></canvas>
     </view>
-    <view class="num">{{pay_code}}</view>
+    <!-- <view class="num">{{pay_code}}</view> -->
     <view class="txt">扫码付款</view>
   </view>
 </view>
 <view class="fixedBtn">
   <view class="btn" bindtap="toAccount">余额充值</view>
 </view>
+<btmHolder defHolder="62"></btmHolder>

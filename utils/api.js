@@ -27,8 +27,15 @@ const returnData = res=>{
         isLogin=1
       }
     }else{
-      //特殊状态不能统一处理了，拿到前边处理
-      return data
+      //特殊状态统一处理
+      if(data.message){
+        wx.showToast({
+          icon:"none",
+          title:data.message
+        })
+      }
+      
+      //return "warn"
     }
   }else if(res.statusCode == 500){
     wx.showModal({
@@ -59,6 +66,11 @@ const getAddress = (data) => {
 //添加地址
 const addAddress = (data) => {
   return POST(baseUrl+"/user-address/create", data).then(res => returnData(res))
+}
+
+//验证地址
+const checkAddress = (data) => {
+  return POST(baseUrl+"/user-address/choose-address", data).then(res => returnData(res))
 }
 
 //修改地址
@@ -283,6 +295,10 @@ const addFittings = (params) => {
   return POST(baseUrl + "/cart/add-fittings", params).then(res => returnData(res))
 }
 
+//麦点
+const maidian = (params) => {
+  return POST(baseUrl + "/user-point/list", params).then(res => returnData(res))
+}
 
 
 
@@ -291,10 +307,6 @@ const submitOrder = (params) => {
   //如果需要自定义不同code对应的msg,可以不用在这调用then，去具体的方法中处理不同的code
   return POST(baseUrl + "/order/submitOrder", params)
 }
-
-
-
-
 
 module.exports = {
   getIndexInfo:getIndexInfo,
@@ -343,5 +355,7 @@ module.exports = {
   orderList,
   getOrderInfo,
   cancleOrder,
-  addFittings
+  addFittings,
+  checkAddress,
+  maidian
 }

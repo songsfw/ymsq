@@ -27,11 +27,11 @@ Page({
       },
       {
         tit:"纪念日二",
-        img:""
+        img:"../../../image/d2.png"
       },
       {
         tit:"纪念日三",
-        img:""
+        img:"../../../image/d3.png"
       },
     ],
     dateList : null

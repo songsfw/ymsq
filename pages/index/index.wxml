@@ -1,29 +1,32 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <navBar hasAddress navType="transparent" cityName="{{addressInfo}}"></navBar>
-<view class="bannerBg">
+<!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
-</view>
-<view class="notice flex" bindtap="showNotice" style="top:{{fixedTop}}px" wx:if="{{notice.length>0}}">
-  <swiper autoplay="{{playnotice}}" circular vertical>
-    <block wx:for="{{notice}}" wx:for-index="index" a>
-      <swiper-item>
-        <view class="text-overflow">{{item}}</view>
-      </swiper-item>
-    </block>
-  </swiper>
-  <image class="icon icon-top" src="../../image/icon-arrow-top.png"></image>
-  <view class="notice-panel" wx:if="{{panel=='notice'}}">
-    <block wx:for="{{notice}}" wx:for-index="index" a>
+</view> -->
+<view class="notice {{panel=='notice'?'show':''}}" bindtap="showNotice" style="top:{{fixedTop}}px" wx:if="{{notice.length>0}}">
+  <view class="txt flex" wx:if="{{panel!='notice'}}">
+    <swiper autoplay="{{playnotice}}" circular vertical>
+      <block wx:for="{{notice}}" wx:for-index="index">
+        <swiper-item>
+          <view class="text-overflow">{{item}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <text class="iconfont icon-arrow-btm"></text>
+  </view>
+  <view class="tit" wx:if="{{panel=='notice'}}">最新通知</view>
+  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="notice-panel">
+    <block wx:for="{{notice}}" wx:for-index="index">
       <view>{{item}}</view>
     </block>
-    <view class="icon-close" catch:tap="closePanel"></view>
-  </view>
+    <!-- <view class="icon-close" catch:tap="closePanel"></view> -->
+  </scroll-view>
 </view>
 <view class="wrap" style="padding-top:{{notice.length>0 ? fixedTop+28:fixedTop}}px;padding-bottom:{{btmHolder||0}}px">
   <scroll-view scroll-y="true" class="contain"  refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" bindrefresherrefresh="refresh">
     <view class="banner flex">
-      <swiper interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" bindchange="changeBg" current="{{currentSwiper}}">
+      <swiper interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" bindchange="changeBg" current="{{currentSwiper}}" indicator-dots>
         <block wx:for="{{banner}}" wx:for-index="index">
           <swiper-item>
             <view data-url="{{item.url}}" data-type="{{item.url_type}}" bind:tap="toPro">
@@ -112,6 +115,8 @@
     <view class="gotop" bindtap="gotop" wx:if="{{showGoto}}">
       <image src="../../image/icon-top.png"></image>
     </view>
+    <view style="height:{{50+btmHolder}}px"></view>
   </scroll-view>
+  
 </view>
-<view class="mask" wx:if="{{mask}}" catchtap="closePanel"></view>
+<view class="mask" style="top:{{fixedTop}}px" wx:if="{{mask}}" catchtap="closePanel"></view>

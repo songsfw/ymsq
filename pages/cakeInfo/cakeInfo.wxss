@@ -6,17 +6,17 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 
 .item{box-sizing: border-box}
 .proInfo{padding: 0 20rpx 46rpx 20rpx;background: #fff;margin-bottom: 20rpx;}
-.proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;}
+.proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;font-weight: bold;}
 .proInfo .tit text{background: #64C000;color:#fff;line-height: 18px;border-radius:4px;padding: 0 10rpx;font-size: 12px;}
 .proInfo .desc{color: #666;}
 .proInfo .tags{margin-top: 30rpx;}
 .proInfo .tags text{background: #FFE42A;height: 22px;line-height: 22px;border-radius: 11px;padding: 0 20rpx;margin:0 20rpx 20rpx 0;flex-shrink: 0;}
 .banner{width: 750rpx;height: 750rpx;}
 .banner swiper{width: 100%;height: 100%;}
-.option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 16rpx 20rpx 16rpx 0;box-sizing: border-box;background: #fff;
+.option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 0 20rpx 0 0;background: #fff;
     box-shadow: 0px -4px 10px 0px rgba(102, 102, 102, 0.05);align-items: center;z-index: 11;}
 
-.price{justify-content: space-between;padding: 28rpx 0;color: #C1996B;align-items: center;}
+.price{justify-content: space-between;padding: 28rpx 0 0 0;color: #C1996B;align-items: center;}
 .price view{font-size: 14px;}
 .price view text{font-size: 25px;}
 .price .tag{font-size: 12px;border: 1px solid #C1996B;line-height: 1;padding:2px 5px ;border-radius: 8rpx;height: 17px;box-sizing: border-box;}
@@ -33,9 +33,35 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 .option .cart{width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
 .option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;border-radius: 40rpx;}
 .option .add-btn{margin: 0 20rpx;background: linear-gradient(270deg, #E0B27D 0%, #C1996B 100%);}
-.option .buy-btn{margin-right: 20rpx;background: linear-gradient(90deg, #FFA153 0%, #F52222 100%);}
+.option .buy-btn{margin-right: 20rpx;background:#F5222D;}
 
 .detail{background: #fff;}
 .detail .tit{position: relative; text-align: center;padding: 40rpx 0;font-size: 15px;}
 .detail .tit text{background: #fff;padding: 0 26rpx;position:relative;z-index: 1;}
 .detail .tit::after{content: "";position: absolute;width:172px;height: 1px;background: #222; left: 50%;top: 50%;transform: translate(-50%,50%);}
+
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
+.pop-panel .close:after,
+.pop-panel .close::before{border-color: #999;}
+.pop-con{padding: 40rpx 40rpx 20rpx 40rpx;}
+.confirm-btn{margin-top: 100rpx;}
+.score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
+.score-panel .h3{justify-content:space-between; flex-direction: column;}
+.score-panel .tit{font-size: 16px;font-weight: bold;margin-top: 16rpx;}
+.score-panel .price{font-size: 14px;color: #FA603D;}
+
+.score-panel .h4{margin-top: 60rpx;justify-content: space-between;align-items: center;margin-bottom: 40rpx;}
+.score-panel .h4>text{font-size: 14px;color: #333;font-weight: bold;}
+.score-panel .h4 .tip{color: #4171FF;font-size: 13px;margin-left: 20rpx;}
+.score-panel .h4 .default-tip.tip{color: #999;}
+.sku-list{flex-wrap: wrap;margin-bottom: -30rpx;}
+.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;border: 1rpx solid #F6F6F6;font-size: 13px;}
+.sku-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);font-weight: bold;}
+.default-fitts{justify-content:flex-start;flex-wrap: wrap; color: #333;font-size: 13px;}
+.set-chart text,
+.set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}
+.set-chart .count{color: #333;}
+.default-fitts image{margin-right:10rpx ; width:32rpx;height: 32rpx;vertical-align: bottom;}
+.default-fitts>view{margin-bottom: 20rpx;margin-right: 40rpx;}

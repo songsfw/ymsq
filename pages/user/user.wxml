@@ -1,82 +1,86 @@
 <!-- pages/user/user.wxml -->
 <navBar navType="transparent"></navBar>
 <view class="bannerBg">
-  <image src="../../image/tit2bg.png"></image>
+  <image src="../../image/bg1.png"></image>
 </view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
-  <scroll-view scroll-y="true" class="contain" >
-  <view class="user-top flex">
-    <image class="photo" src="{{userInfo.photo}}"></image>
-    <view class="name flex-1">
-      <view class="tit">{{userInfo.nickname}}</view>
-      <view class="level">{{userLevel[user.level]}}</view>
+
+    
+    <view class="topinfo">
+      <view class="user-top flex">
+        <image class="photo" src="{{userInfo.photo}}"></image>
+        <view class="name flex-1">
+          <view class="tit">{{userInfo.nickname}}</view>
+          <view class="level level-{{user.level}}"></view>
+        </view>
+        <view class="qrCode"><image src="../../image/qr.png"></image></view>
+      </view>
+      <navigator hover-class="none" url="/pages/user/vipcard/vipcard" class="vipcard"><image src="../../image/bg3.png"></image></navigator> 
+      <view class="ym-pay flex">
+        <navigator hover-class="none" url="/pages/account/maidian/maidian" class="flex-1">
+          <view hover-class="none" class="data">{{user.point}}</view>
+          <text>麦点积分</text>
+        </navigator>
+        <navigator hover-class="none" url="/pages/account/account" class="flex-1">
+          <view class="data">{{user.balance}}</view>
+          <text>充值余额</text>
+        </navigator>
+        <navigator hover-class="none" url="/pages/user/coupon/coupon" class="flex-1">
+          <view class="data">{{user.promotion}}</view>
+          <text>优惠券</text>
+        </navigator>
+      </view>
     </view>
-    <view class="qrCode"><image src="../../image/no-dingdan.png"></image></view>
-  </view>
-  <view class="ym-pay flex">
-    <navigator>
-      <view class="data">{{user.point}}</view>
-      <text>麦点积分</text>
-    </navigator>
-    <navigator url="/pages/account/account">
-      <view class="data">{{user.balance}}</view>
-      <text>充值余额</text>
-    </navigator>
-    <navigator url="/pages/user/coupon/coupon">
-      <view class="data">{{user.promotion}}</view>
-      <text>优惠券</text>
-    </navigator>
-  </view>
-  <navigator url="/pages/user/vipcard/vipcard" class="vipcard"><image src="../../image/card.png"></image></navigator> 
+ 
   <view class="menu flex">
     <view bind:tap="toOrder" data-type="1">
       <view class="tag"wx:if="{{user.order_unpaid!=0}}">{{user.order_unpaid}}</view>
-      <view class="iconfont icon-pay1"></view>
+      <view class="icon user-pay1"></view>
       <text>待付款</text>
     </view>
     <view bind:tap="toOrder" data-type="2">
       <view class="tag">{{user.order_dispatching}}</view>
-      <view class="iconfont icon-pack"></view>
+      <view class="icon user-pack"></view>
       <text>待收货</text>
     </view>
     <view bind:tap="toOrder" data-type="3">
       <!-- <view class="tag">100</view> -->
-      <view class="iconfont icon-send"></view>
+      <view class="icon user-send"></view>
       <text>已完成</text>
     </view>
     <view class="order" bind:tap="toOrder" data-type="0">
-      <view class="iconfont icon-order"></view>
+      <view class="icon user-order"></view>
       <text>全部订单</text>
     </view>
   </view>
   <view class="option">
-    <navigator class="flex" url="/pages/user/freePay/freePay">
-      <view class="iconfont icon-pay"></view>
-      <text>免密支付</text>
-    </navigator>
-    <navigator url="/pages/user/memoDay/memoDay" class="flex">
-      <view class="iconfont icon-heart"></view>
-      <text>纪念日管理</text>
-    </navigator>
-    <navigator url="/pages/user/address/address" class="flex">
-      <view class="iconfont icon-local2"></view>
-      <text>地址管理</text>
-    </navigator>
-    <view class="flex">
-      <view class="iconfont icon-help"></view>
-      <text>常见问题</text>
-    </view>
-    <view class="flex">
-      <view class="iconfont icon-mail"></view>
-      <text>意见反馈</text>
-    </view>
-    <view class="flex" bindtap="showService">
-      <view class="iconfont icon-service"></view>
-      <text>联系客服</text>
+    <view class="tit">我的服务</view>
+    <view class="service flex">
+      <navigator hover-class="none" url="/pages/user/freePay/freePay">
+        <view class="icon user-pay"></view>
+        <text>免密支付</text>
+      </navigator>
+      <navigator hover-class="none" url="/pages/user/memoDay/memoDay">
+        <view class="icon user-heart"></view>
+        <text>纪念日管理</text>
+      </navigator>
+      <navigator hover-class="none" url="/pages/user/address/address" >
+        <view class="icon user-local2"></view>
+        <text>地址管理</text>
+      </navigator>
+      <navigator>
+        <view class="icon user-mail"></view>
+        <text>意见反馈</text>
+      </navigator>
+      <view bindtap="showService">
+        <view class="icon user-service"></view>
+        <text>联系客服</text>
+      </view>
     </view>
   </view>
-  <view class="logo">
+  <!-- <view class="logo">
     <image src="../../image/logo.png"></image>
-  </view>
-  </scroll-view>
+  </view> -->
+  <view style="height:{{50+btmHolder}}px"></view>
+
 </view>

@@ -11,6 +11,7 @@
     "pages/user/address/address",
     "pages/user/freePay/freePay",
     "pages/user/memoDay/memoDay",
+    "pages/user/orderInfo/orderInfo",
     "pages/user/adddata/adddata",
     "pages/user/selectAdd/selectAdd",
     "pages/user/vipcard/vipcard",
@@ -18,6 +19,7 @@
     "pages/account/account",
     "pages/user/coupon/coupon",
     "pages/account/wxcharge/wxcharge",
+    "pages/account/maidian/maidian",
     "pages/account/cashcharge/cashcharge",
     "pages/account/balance/balance",
     "pages/login/login",
@@ -27,7 +29,7 @@
   ],
   
   "tabBar": {
-    "custom": true,
+    "custom": false,
     "color": "#000000",
     "selectedColor": "#F73950",
     "backgroundColor": "#fff",

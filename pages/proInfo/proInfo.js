@@ -14,26 +14,82 @@ Page({
     circular: true,
     currentSwiper: 0,
 
-    noMoreData:false,
-    movies: [],
-
-    popup: false,
-    pageNum: 1,
-    nearpro:null,
     share: {
       tit: "原麦山丘",
       path: "/pages/proInfo/proInfo",
       imageUrl: ''
-    }
+    },
+    pop: 0,
+    skuNum:1
   },
   
-  toSelectSeat(e){
-    let showId = e.currentTarget.dataset.showid
-    wx.navigateTo({
-      url: '/pages/selectSeat/selectSeat?showId=' + showId
+  //改变商品数量
+  minusFitting:util.debounce(function(){
+    let skuNum = this.data.skuNum
+    if(skuNum==1){
+      this.setData({
+        skuNum:1
+      })
+      return
+    }
+    skuNum--
+    this.setData({
+      skuNum:skuNum
+    })
+  }),
+  addFitting:util.debounce(function(){
+    let skuNum = this.data.skuNum
+    skuNum++
+    this.setData({
+      skuNum:skuNum
+    })
+  }),
+  showPop(e) {
+    let pop = e.currentTarget.dataset.pop,
+        action = e.currentTarget.dataset.action
+    this.setData({
+      action:action,
+      skuNum:1,
+      pop: pop
     })
   },
+  close() {
+    this.setData({
+      pop: 0
+    })
+  },
+  confirmBread:util.debounce(function(e){
+    let proId = e.currentTarget.dataset.id
+    let {city_id,skuNum,action}=this.data
 
+    let data = {
+      city_id: city_id,
+      type:'1',
+      tab_id:proId,
+      number:skuNum
+    }
+
+    console.log(data);
+    api.setChart(data).then(res => {
+      console.log(res);
+      if(res){
+        wx.showToast({
+          icon:"none",
+          title:'加入购物车成功'
+        })
+        if(action==1){
+          wx.switchTab({
+            url:"/pages/chart/chart"
+          })
+        }
+        this.setData({
+          pop:0
+        })
+        
+      }
+      
+    })
+  },300,true),
   onShareAppMessage: function (res) {
     let {proInfo} = this.data
     return {
@@ -105,13 +161,19 @@ Page({
   },
   onLoad: function (options) {
     let proId = options.proId
-    console.log(proId)
-    
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let city_id = JSON.parse(addressInfo).city_id
     this.setData({
+      city_id:city_id,
       proId: proId
     })
     this.getProInfo()
+    let btmHolder = wx.getStorageSync('btmHolder')
 
+      this.setData({
+        btmHolder:btmHolder||0,
+      })
+    
     //this.initData()
   }
 

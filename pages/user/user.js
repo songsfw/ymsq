@@ -45,20 +45,31 @@ Page({
       url:"/pages/user/order/order?type="+type
     })
   },
+  getCartInfo(){
+    let data = {
+      city_id:this.data.city_id
+    }
+    api.getChartData(data).then(res => {
+      console.log(res);
+      wx.setTabBarBadge({ 
+        index: 2,//tabBar下标（底部tabBar的位置，从0开始）
+        text: res.total_num.toString()
+      })
+      // this.getTabBar().setData({
+      //   count: res.total_num
+      // })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    // let safeArea = sysInfo.safeArea;
-    // if(sysInfo.screenHeight > safeArea.bottom){
-    //   let btmHolder = sysInfo.screenHeight - safeArea.bottom
-    //   this.setData({
-    //     btmHolder:btmHolder
-    //   })
-    // }
+    let btmHolder = wx.getStorageSync('btmHolder')
+
     this.setData({
+      btmHolder:btmHolder||0,
       fixedTop
     })
 
@@ -83,10 +94,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     //自定义tabbar选中
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
+        count:"",
         selected: 3
       })
     }
@@ -95,9 +109,11 @@ Page({
       userInfo = JSON.parse(userInfo)
     }
     this.setData({
+      city_id,
       userInfo
     })
     this.getUserCenter();
+    this.getCartInfo()
   },
 
   /**

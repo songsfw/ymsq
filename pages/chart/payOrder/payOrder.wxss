@@ -1,4 +1,4 @@
-page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
+page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .order-wp{padding:20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
@@ -31,8 +31,15 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
 .pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}
-.pro-info .item .tit{font-size: 14px;margin-bottom: 40rpx;}
+.pro-info .item .tit{font-size: 14px;}
+.pro-info .item .info{flex-direction: column;justify-content: space-between;}
 .pro-info .price{justify-content: space-between;}
+.pro-info .item .info .tag{color: #aaa;}
+.info .tag text{margin-right: 20rpx;}
+.txt-card{margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
+.txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
+.txt-card .icon-edit{color: #C1996B;font-size: 16px;margin-right: 10px;}
+.txt-card input{margin-left: 10px;font-size: 13px;}
 .pro-info .price .num{font-size: 11px;color: #FA603D;}
 .pro-info .price .num text{font-size:14px}
 .pro-info .price .count{color: #999;}
@@ -147,3 +154,9 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
 .get-code{margin: 38rpx 0 0 0;}
 .add-address{text-align: center;color:#C1996B;font-size: 15px;}
+
+.fittings-info{margin-top: 20rpx;padding: 20rpx;}
+.fittings-info .tit{font-size: 13px;margin-right: 40rpx;}
+.fittings-info .txt{color: #666;}
+.fittings-info .txt text{color: #C1996B;}
+.fittings-info .txt view{margin-bottom:30rpx ;font-size: 13px;}

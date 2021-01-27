@@ -4,7 +4,7 @@ const api = require('../../utils/api.js')
 
 const app = getApp()
 
-let timer=null,proNum=0
+let timer=null,proNum=0,windowH,windowW,top,left
 Page({
   data: {
     curProId:-1,
@@ -20,28 +20,28 @@ Page({
       tit: "原麦山丘",
       path: "/pages/index/index",
       imageUrl: ''
-    }
+    },
+
+    hideCount: true, //角标初始是隐藏的
+    count: 0, //角标数
+    hide_good_box: true,
+    curPro: ""
   },
   switchTab: function (e) {
     var that = this;
     var currentId = e.currentTarget.dataset.tabid
     app.globalData.proType = currentId
-    if (this.data.currentTab === currentId) {
+    if (this.data.currentTab == currentId) {
       return false;
     } else {
       that.setData({
-        currentTag:'',
-        noMoreData: false,
-        proList: null,
-        currentTab: currentId,
-        pageNum: 1,
+        currentTab: currentId
       })
-      this.getProList()
-
     }
   },
   selectTag(e){
     var tagId = e.currentTarget.dataset.id
+    let currentTab = this.data.currentTab
     if (this.data.currentTag == tagId) {
       return false;
     } else {
@@ -51,18 +51,32 @@ Page({
         currentTag: tagId,
         pageNum: 1,
       })
-      this.getProList()
+      this.getProList(currentTab)
     }
   },
-  getProList: function () {
-    let {pageNum,currentTab,currentTag,city_id}=this.data
-
+  getStock(){
+    let {city_id}=this.data
     let data = {
       city_id: city_id,
-      // index: pageNum,
-      // size: 10,
+    }
+    api.getProList(data).then(res => {
+      console.log(res);
+      if(!res){
+        return false
+      }
+      let stock=res.stock
+      this.setData({
+        stock:stock,
+      })
+    })
+  },
+  getProList: function (currentTab) {
+    let {pageNum,currentTag,city_id}=this.data
+    currentTag = currentTag=='全部' ? '' : currentTag
+    let data = {
+      city_id: city_id,
       type:currentTab,
-      tag:currentTag || ''
+      tag:currentTag
     }
 
     api.getProList(data).then(res => {
@@ -75,12 +89,11 @@ Page({
         })
         return false
       }
-      let currentTab = res.choose_type,currTag = res.choose_tag
+
       let proList = res.list,count=proList.length,stock=res.stock
-      let noMoreData = count-pageNum*10 == 0
+      let noMoreData = count-pageNum*10 <= 0
       let currList = proList.slice(pageNum*10-10,pageNum*10)
       this.setData({
-        currentTab:currentTab,
         menu:res.type,
         tags:res.tags,
         noMoreData: noMoreData,
@@ -93,21 +106,21 @@ Page({
     })
 
   },
-
   freshData: function () {
-
+    let currentTab = this.data.currentTab
     this.setData({
       noMoreData: false,
       pageNum: 1,
       proList: null,
       count:null
     })
-    this.getProList()
-       
+    this.getProList(currentTab)
   },
-  addChart(e){
-    let proId = e.currentTarget.dataset.id
+  addChart:function(e){
+    let proId = e.currentTarget.dataset.id,
+        img = e.currentTarget.dataset.img
     let {currentTab,curProId,stock,city_id}=this.data
+    let curStock = parseInt(stock[proId])
     if(proId!=curProId){
       proNum=0
       this.setData({
@@ -115,17 +128,51 @@ Page({
       })
     }
     if(currentTab=="1"){
-      if(proNum<stock[proId]){
+      if(proNum<curStock){
+
+        if (!this.data.hide_good_box) return;
+        //当前点击位置的x，y坐标
+        this.finger = {};
+        var topPoint = {};
+        this.finger['x'] = e.touches["0"].clientX;
+        this.finger['y'] = e.touches["0"].clientY-20 ;
+
+        
+        if (this.finger['y'] < this.busPos['y']) {
+          topPoint['y'] = this.finger['y'] - 100;
+        } else {
+            topPoint['y'] = this.busPos['y'] - 100;
+        }
+        
+        if (this.finger['x'] < this.busPos['x']) {
+          topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
+          this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
+        } else {
+          this.finger['x'] = e.touches["0"].clientX-20;
+          this.finger['y'] = e.touches["0"].clientY-20
+            topPoint['x'] = this.finger['x']-(this.finger['x'] - this.busPos['x']) / 2 
+            this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30,true);
+        }
+
+        
+        this.startAnimation();
+
         proNum++
+
+        this.setData({
+          finger:this.finger,
+          topPoint:topPoint,
+          busPos:this.busPos,
+          curPro:img
+        })
+        
       }else{
         wx.showToast({
           icon:"none",
-          title:`库存不足`
+          title:`库存暂时不足`
         })
-        return
+        proNum = curStock
       }
-    }else{
-      proNum++
     }
 
     if (timer){
@@ -133,8 +180,6 @@ Page({
     }
 
     timer = setTimeout(()=>{
-      
-      console.log(this.data.curProId);
       let data = {
         city_id: city_id,
         type:currentTab,
@@ -145,89 +190,127 @@ Page({
       console.log(data);
       api.setChart(data).then(res => {
         console.log(res);
-        if(res.status=="2001"){
+        if(!res){
           wx.showToast({
             icon:"none",
-            title:'商品不存在或已下架'
+            title:'加入购物车失败'
           })
-        }else{
-          wx.showToast({
-            icon:"none",
-            title:'加入购物车成功'
-          })
-          //this.getProList()
         }
         
       })
-      
     },300)
-
-    
   },
+  //开始动画
+  startAnimation: function() {
+    var index = 0,
+        that = this,
+        bezier_points = that.linePos['bezier_points'];
+    this.setData({
+        hide_good_box: false,
+        bus_x: that.finger['x'],
+        bus_y: that.finger['y']
+    })
+    this.timer2 = setInterval(function() {
+        index++;
+        that.setData({
+            bus_x: bezier_points[index]['x'],
+            bus_y: bezier_points[index]['y']
+        })
+        if (index >= 29) {
+            clearInterval(that.timer2);
+            that.setData({
+                hide_good_box: true
+            })
+        }
+    }, 30);
+},
   getMoreData() {
-    let currentTab = this.data.currentTab
     let pageNum = this.data.pageNum + 1
+    let currentTab = this.data.currentTab
     this.setData({
       pageNum: pageNum
     })
-
-
-    this.getBread()
-
+    this.getProList(currentTab)
   },
   toProInfo: function (e) {
-
     let proId = e.currentTarget.dataset.proid
     wx.navigateTo({
       url: '/pages/proInfo/proInfo?proId=' + proId
     })
   },
-  toSelectCity() {
-    wx.navigateTo({
-      url: '/pages/citySelect/citySelect'
-    })
-  },
   onPullDownRefresh() {   //下拉刷新
-
     this.freshData()
   },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    if(this.data.noMoreData){
+      return false
+    }
+    this.getMoreData()
+  },
+  getCartInfo(){
+    let data = {
+      city_id:this.data.city_id
+    }
+    api.getChartData(data).then(res => {
+      console.log(res);
+      this.getTabBar().setData({
+        count: res.total_num
+      })
+    })
+  },
   onShow() {
-    let proType = app.globalData.proType
-    // api.getChartData().then(res => {
-    //   console.log(res);
-    //   this.setData({
-    //     count:res.total_num
-    //   })
-    // })
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = JSON.parse(addressInfo).city_id
-
+    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
+    let proType = app.globalData.proType || 1
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
+        count:"",
         selected: 1
       })
     }
     this.setData({
+      currentTab:proType,
+      city_id:city_id
+    })
+    this.getStock()
+    this.getCartInfo()
+  },
+  
+  onLoad: function () {
+    let sysInfo = null
+    if(app.globalSystemInfo){
+      sysInfo = app.globalSystemInfo
+    }else{
+      sysInfo = wx.getSystemInfoSync()
+    }
+    //可视窗口x,y坐标
+    console.log(sysInfo.screenHeight)
+    this.busPos = {};
+    this.busPos['x'] = sysInfo.screenWidth * .6;
+    this.busPos['y'] = sysInfo.screenHeight * .85;
+    let proType = app.globalData.proType || 1
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
+    
+    let btmHolder = wx.getStorageSync('btmHolder')
+
+    this.setData({
       city_id:city_id,
-      currentTab:proType!=1 && proType!=2 ? 1 : proType,
+      currentTab: proType,
       currentTag:'',
       noMoreData: false,
       proList: null,
       pageNum: 1,
+      btmHolder:btmHolder||0
     })
-    
-    this.getProList();
-  },
-  onLoad: function () {
-    // let sysInfo = null
+    this.getProList(proType);
 
-    // if(app.globalSystemInfo){
-    //   sysInfo = app.globalSystemInfo
-    // }else{
-    //   sysInfo = wx.getSystemInfoSync()
-    // }
+    
 
     // let safeArea = sysInfo.safeArea;
     // if(sysInfo.screenHeight > safeArea.bottom){
@@ -237,23 +320,22 @@ Page({
     //     btmHolder:btmHolder
     //   })
     // }
-    //util.setWatcher(this);
+    util.setWatcher(this);
   },
   watch:{
-    'selectCityId':function (value, oldValue){
+    'currentTab':function (value, oldValue){
+      console.log("watch");
+      console.log(value);
       if(value==oldValue){
         return
       }
-      console.log(value, oldValue);
       this.setData({
-        areaId:'',
-        selectIndex: 0,
+        currentTag:'',
+        noMoreData: false,
+        proList: null,
         pageNum: 1,
-        nearCinema:null,
-        noMoreData: false
       })
-      console.log("watch");
-      //this.getCinema({ cityId: value, areaId: '' })
+      this.getProList(value);
     }
   }
 

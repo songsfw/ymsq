@@ -15,6 +15,7 @@ Page({
     var detailInfo = e.detail
     var userDetail = detailInfo.userInfo
     console.log(e.detail);
+    let timestamp = (new Date()).valueOf()
     var openid = this.data.userInfo.openid
     if (userDetail) { //同意授权
       let data = {
@@ -22,7 +23,8 @@ Page({
         iv: detailInfo.iv,
         rawData:detailInfo.rawData,
         openid: openid,
-        uname:"wxxcx"
+        uname:"wxxcx",
+        timestamp:timestamp
       }
       auth.appLogin(data)
       .then(res=>{

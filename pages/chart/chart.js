@@ -9,6 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    startX: 0, //开始坐标
+    startY: 0,
     curProId:-1,
     userInfo:null,
     count:0,
@@ -19,7 +21,111 @@ Page({
     btmHolder:0,
     fittings:false,
     pop: 0,
-    skuNum:0
+    skuNum:1
+  },
+  touchE: function (e) {
+    // console.log(e);
+    let type = e.currentTarget.dataset.type
+    var that = this
+    if (e.changedTouches.length == 1) {
+      //手指移动结束后触摸点位置的X坐标
+      var endX = e.changedTouches[0].clientX;
+      //触摸开始与结束，手指移动的距离
+      var disX = that.data.startX - endX;
+      //如果距离小于删除按钮的1/2，不显示删除按钮
+      var txtStyle = disX > 168 / 2 ? 168 : 0;
+
+      //获取手指触摸的是哪一项
+      var index = e.currentTarget.dataset.idx;
+
+      //更新列表的状态
+      if(type=='1'){
+        that.setData({
+          ['breadLi['+index+'].txtStyle']: txtStyle
+        })
+      }
+      else{
+        that.setData({
+          ['cakeLi['+index+'].txtStyle']: txtStyle
+        })
+      }
+    }
+  },
+  //手指触摸动作开始 记录起点X坐标
+  touchstart: function (e) {
+    //开始触摸时 重置所有删除
+    // this.data.address.forEach(function (v, i) {
+    //   if (v.isTouchMove) //只操作为true的
+    //     v.isTouchMove = false;
+    // })
+    this.setData({
+      startX: e.changedTouches[0].clientX,
+      startY: e.changedTouches[0].clientY,
+      //address: this.data.address
+    })
+  },
+  //滑动事件处理
+  touchmove: function (e) {
+    let type = e.currentTarget.dataset.type
+    let txtStyle = 0
+    var that = this,
+      index = e.currentTarget.dataset.idx, //当前索引
+      startX = that.data.startX, //开始X坐标
+      startY = that.data.startY, //开始Y坐标
+      touchMoveX = e.changedTouches[0].clientX, //滑动变化坐标
+      touchMoveY = e.changedTouches[0].clientY, //滑动变化坐标
+      //获取滑动角度
+      angle = that.angle({
+        X: startX,
+        Y: startY
+      }, {
+        X: touchMoveX,
+        Y: touchMoveY
+      });
+
+      if (Math.abs(angle) > 30) return;
+      
+      if (touchMoveX < startX){
+        txtStyle = startX - touchMoveX
+        if(type=='1'){
+          that.setData({
+            ['breadLi['+index+'].txtStyle']: txtStyle
+          })
+        }
+        else{
+          that.setData({
+            ['cakeLi['+index+'].txtStyle']: txtStyle
+          })
+        }
+        
+      }
+    //更新数据
+    
+  },
+  //计算滑动角度
+  angle: function (start, end) {
+    var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+    //返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+  },
+  delPro(e){
+    let id = e.currentTarget.dataset.id
+    let data = {
+      cart_id:id
+    }
+    api.deletePro(data).then(res => {
+      console.log(res);
+      if(res){
+        this.getChartData()
+      }else{
+        wx.showToast({
+          title: '删除失败',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+    })
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
@@ -43,22 +149,25 @@ Page({
       case "1":
         selectedBread = breadLi.filter(getSelected("1"))
         if(selectedBread.length>0){
-          selectedBread.forEach(item=>{
-            totalPrice += parseFloat(util.floatObj().multiply(item.sku_number,item.sku_price,2))
-          })
+          totalPrice = selectedBread.reduce((pre,cur)=>{
+            let curPrice = util.floatObj().multiply(cur.sku_number,cur.sku_price,2)
+            return util.floatObj().add(pre,curPrice,2)
+          },0)
         }
         break;
       case "2":
         selectedCake = cakeLi.filter(getSelected("1"))
         if(selectedCake.length>0){
-          selectedCake.forEach(item=>{
-            totalPrice += parseFloat(util.floatObj().multiply(item.sku_number,item.sku_price,2))
-          })
+          totalPrice = selectedCake.reduce((pre,cur)=>{
+            let curPrice = util.floatObj().multiply(cur.sku_number,cur.sku_price,2)
+            return util.floatObj().add(pre,curPrice,2)
+          },0)
         }
         break;
       default:
         break;
     }
+    console.log(totalPrice)
     totalPrice = util.formatePrice(totalPrice)
     console.log(totalPrice)
     
@@ -67,7 +176,7 @@ Page({
       totalPrice:totalPrice
     })
   },
-  getOrder(){
+  getOrder:util.debounce(function(){
     let {totalPrice,type,cakeLi,breadLi}=this.data
 
     let isBread = breadLi.some(item=>{
@@ -115,20 +224,22 @@ Page({
       }
     })
     
-  },
+  }),
   //改变商品数量
   minusNum(e){
-    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type
-    this.addChart("minus",skuid,type)
+    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type,num = e.currentTarget.dataset.num
+    this.addChart("minus",skuid,type,num)
   },
   plusNum(e){
-    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type
-    this.addChart("plus",skuid,type)
+    let skuid = e.currentTarget.dataset.skuid,type=e.currentTarget.dataset.type,num = e.currentTarget.dataset.num
+    this.addChart("plus",skuid,type,num)
   },
   //改变商品数量
   minusFitting:util.debounce(function(){
     let skuNum = this.data.skuNum
-    skuNum--
+    if(skuNum>1){
+      skuNum--
+    }
     this.setData({
       skuNum:skuNum
     })
@@ -140,49 +251,117 @@ Page({
       skuNum:skuNum
     })
   }),
-  //删除商品
-  delete(){
+  confirmFitting:util.debounce(function(e){
+    let proId = e.currentTarget.dataset.sku
+    let {city_id,skuNum}=this.data
 
-  },
+    // let cartItem = this.data.cakeLi.find(i=>{
+    //   return i.sku_id == proId && i.is_fittings==1
+    // })
+    // if(cartItem){
+    //   let oldNum = cartItem.sku_number
+
+    //   if(parseInt(oldNum)>skuNum){
+    //     skuNum = -(oldNum - skuNum)
+    //   }else{
+    //     skuNum = skuNum - oldNum
+    //   }
+    // }
+
+    let data = {
+      city_id: city_id,
+      type:'2',
+      tab_id:proId,
+      number:skuNum
+    }
+    console.log(data);
+    api.setChart(data).then(res => {
+      console.log(res);
+      if(res.status=="2001"){
+        wx.showToast({
+          icon:"none",
+          title:'商品不存在或已下架'
+        })
+      }else{
+        wx.showToast({
+          icon:"none",
+          title:'加入购物车成功'
+        })
+        this.setData({
+          pop:0
+        })
+        //this.getProList()
+        this.getChartData()
+      }
+      
+    })
+  }),
   selectFittings(e){
     
-    let id = e.currentTarget.dataset.id,
-        idx= e.currentTarget.dataset.idx
-    // let cartItem = this.data.cakeLi.some(i=>{
+    let idx= e.currentTarget.dataset.idx
+
+    // let cartItem = this.data.cakeLi.find(i=>{
     //   return i.sku_id == id && i.is_fittings==1
     // })
     let item = this.data.fittingsList[idx]
+
     // if(cartItem){
-    //   this.setData({
-    //     skuNum:cartItem.sku_number
-    //   })
+    //   skuNum=cartItem.sku_number
+    // }else{
+    //   skuNum=1
     // }
     this.setData({
-      
+      skuNum:1,
       fitting:item,
       pop:"fittings-panel"
     })
   },
-  addChart:util.debounce(function(option,skuid,type){
+  selectFittingSku(e){
+    let sku = e.currentTarget.dataset.sku
+    this.setData({
+      'fitting.sku':sku
+    })
+  },
+  addChart:util.debounce(function(option,skuid,type,num){
+    
     let {city_id}=this.data
-
-    if(option=="plus"){
-      //proNum++
-      proNum=1
-    }
-    if(option=="minus"){
-      //proNum--
-      proNum=-1
-    }
-
     let data = {
       city_id: city_id,
       type:type,
       tab_id:skuid,
-      number:proNum
     }
-    //proNum=0
     console.log(data);
+    if(option=="plus"){
+      //proNum++
+      data.number=1
+      this.setCartNum(data)
+    }
+    if(option=="minus"){
+      if(num==1){
+        wx.showModal({
+          title: '',
+          content: '删除商品？',
+          cancleText:"取消",
+          confirmText: "删除",
+          success:res=> {
+            if (res.confirm) {
+              data.number=-1
+              this.setCartNum(data)
+            } else if (res.cancel) {
+              return
+            }
+          }
+        })
+      }else{
+        data.number=-1
+        this.setCartNum(data)
+      }
+      //proNum--
+    }
+    
+  }),
+  
+  setCartNum(data){
     api.setChart(data).then(res => {
       console.log(res);
       if(!res){
@@ -191,19 +370,11 @@ Page({
           title:'加入购物车失败'
         })
         return
-      }
-      if(res.status=="2001"){
-        wx.showToast({
-          icon:"none",
-          title:"商品不存在或已下架"
-        })
       }else{
         this.getChartData()
       }
-      
     })
-      
-  }),
+  },
   getChartData(){
     let data = {
       city_id:this.data.city_id
@@ -304,7 +475,6 @@ Page({
         })
         data.action="0"
       }
-      // totalPrice =util.accMul(breadLi[index].sku_number,breadLi[index].sku_price,2)
     }
     if(type=="2"){
       if(noallCake){
@@ -363,6 +533,17 @@ Page({
     }
     
   },
+  getCartInfo(){
+    let data = {
+      city_id:this.data.city_id
+    }
+    api.getChartData(data).then(res => {
+      console.log(res);
+      this.getTabBar().setData({
+        count: res.total_num
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -375,14 +556,12 @@ Page({
       sysInfo = wx.getSystemInfoSync()
     }
 
-    let safeArea = sysInfo.safeArea;
-    if(sysInfo.screenHeight > safeArea.bottom){
-      let btmHolder = sysInfo.screenHeight - safeArea.bottom
-      btmHolder = parseInt(btmHolder)
-      this.setData({
-        btmHolder:btmHolder
-      })
-    }
+    let btmHolder = wx.getStorageSync('btmHolder')
+
+    this.setData({
+      btmHolder:btmHolder||0
+    })
+
   },
 
 
@@ -408,6 +587,7 @@ Page({
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
+        count:"",
         selected: 2
       })
     }
@@ -424,6 +604,7 @@ Page({
     })
     //this.getUserCenter();
     this.getChartData()
+    this.getCartInfo()
   },
 
   /**
@@ -453,11 +634,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

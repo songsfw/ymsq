@@ -40,7 +40,7 @@
     "useApiHostProcess": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.14.4",
+  "libVersion": "2.13.2",
   "appid": "wxd9b25591aa9a3954",
   "projectname": "%E5%8E%9F%E9%BA%A6%E5%B1%B1%E4%B8%98",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
@@ -148,6 +148,12 @@
           "name": "订单",
           "pathName": "pages/user/order/order",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "分类",
+          "pathName": "pages/proList/proList",
+          "query": "proId=1866601",
           "scene": null
         }
       ]

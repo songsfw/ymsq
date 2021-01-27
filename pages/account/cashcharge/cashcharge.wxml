@@ -10,7 +10,7 @@
   </view>
   <view class="inputxt">
     <text>卡密码</text>
-    <input placeholder="请输入现金卡密码" maxlength='6' password="{{!show}}" type="number" class="flex-1" bindinput="inputPwd" />
+    <input placeholder="请输入现金卡密码" password="{{!show}}" type="number" class="flex-1" bindinput="inputPwd" />
     <view class="icon" bindtap="changeShow">
       <text class="iconfont icon-eye" wx:if="{{show}}"></text>
       <text class="iconfont icon-eye2" wx:else></text>
