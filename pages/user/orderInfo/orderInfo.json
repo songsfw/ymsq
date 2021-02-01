@@ -1,7 +1,9 @@
 {
   "navigationBarTitleText": "订单详情",
   "backgroundTextStyle": "dark",
+  "navigationBarTextStyle":"white",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "pop-panel": "/components/pop-panel/pop-panel"
+    "navBar": "/components/navBar/navBar"
   }
 }

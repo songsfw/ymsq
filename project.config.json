@@ -155,6 +155,24 @@
           "pathName": "pages/proList/proList",
           "query": "proId=1866601",
           "scene": null
+        },
+        {
+          "name": "配送范围",
+          "pathName": "pages/user/deliveryArea/deliveryArea",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "评论",
+          "pathName": "pages/commit/commit",
+          "query": "orderCode=1000201130001930",
+          "scene": null
+        },
+        {
+          "name": "pages/commit/commit",
+          "pathName": "pages/share/share",
+          "query": "orderCode=1000201130001930",
+          "scene": null
         }
       ]
     }

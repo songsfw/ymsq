@@ -15,7 +15,7 @@ Page({
     })
   },
   showPop(e) {
-    
+    wx,showLoading({title:"加载中..."})
     let pop = e.currentTarget.dataset.pop
     let action = this.data.shareInfo.action,
     order_code = this.data.order_code
@@ -33,6 +33,7 @@ Page({
           poster:poster,
           pop: 'showPoster'
         })
+        wx.hideLoading()
       })
     }else{
       this.setData({

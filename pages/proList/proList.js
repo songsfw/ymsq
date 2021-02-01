@@ -119,7 +119,8 @@ Page({
   addChart:function(e){
     let proId = e.currentTarget.dataset.id,
         img = e.currentTarget.dataset.img
-    let {currentTab,curProId,stock,city_id}=this.data
+    let {currentTab,curProId,stock,city_id,totalNum}=this.data
+    totalNum = parseInt(totalNum)
     let curStock = parseInt(stock[proId])
     if(proId!=curProId){
       proNum=0
@@ -158,14 +159,21 @@ Page({
         this.startAnimation();
 
         proNum++
+        totalNum++
 
         this.setData({
           finger:this.finger,
           topPoint:topPoint,
           busPos:this.busPos,
-          curPro:img
+          curPro:img,
+          totalNum
         })
-        
+
+        wx.setStorageSync("total_num",totalNum)
+        wx.setTabBarBadge({ 
+          index: 2,
+          text: totalNum.toString()
+        })
       }else{
         wx.showToast({
           icon:"none",
@@ -251,14 +259,13 @@ Page({
     this.getMoreData()
   },
   getCartInfo(){
-    let data = {
-      city_id:this.data.city_id
-    }
-    api.getChartData(data).then(res => {
-      console.log(res);
-      this.getTabBar().setData({
-        count: res.total_num
-      })
+    let total_num = wx.getStorageSync("total_num")
+    this.setData({
+      totalNum:total_num || 0
+    })
+    wx.setTabBarBadge({ 
+      index: 2,
+      text: total_num.toString() || '0'
     })
   },
   onShow() {
@@ -266,13 +273,13 @@ Page({
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     let proType = app.globalData.proType || 1
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        count:"",
-        selected: 1
-      })
-    }
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     count:"",
+    //     selected: 1
+    //   })
+    // }
     this.setData({
       currentTab:proType,
       city_id:city_id

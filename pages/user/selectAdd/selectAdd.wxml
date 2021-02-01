@@ -22,9 +22,9 @@
     </view>
   </scroll-view>
 </view>
-<map class="map" id="myMap" longitude="{{lng}}" latitude="{{lat}}" show-location bindregionchange="changeRegion">
+<map class="map" id="myMap" longitude="{{lng}}" latitude="{{lat}}" show-location bindregionchange="changeRegion" scale="{{scale}}">
   <image class="center-local animate {{moving?'bounce':''}}" src="../../../image/local.png"></image>
-  <image bind:tap="moveToLocation" class="local" src="../../../image/dingwei.png"></image>
+  <image bind:tap="moveToUserLocal" class="local" src="../../../image/dingwei.png"></image>
 </map>
 <view class="address-list">
   <scroll-view scroll-y="true" class="scroll">

@@ -6,13 +6,13 @@
     "pages/cakeInfo/cakeInfo",
     "pages/proList/proList",
     "pages/search/search",
-    "pages/share/share",
     "pages/user/user",
     "pages/user/address/address",
     "pages/user/freePay/freePay",
     "pages/user/memoDay/memoDay",
     "pages/user/orderInfo/orderInfo",
     "pages/user/adddata/adddata",
+    "pages/user/deliveryArea/deliveryArea",
     "pages/user/selectAdd/selectAdd",
     "pages/user/vipcard/vipcard",
     "pages/user/order/order",
@@ -25,13 +25,16 @@
     "pages/login/login",
     "pages/chart/chart",
     "pages/chart/payOrder/payOrder",
-    "pages/chart/paySuccess/paySuccess"
+    "pages/chart/paySuccess/paySuccess",
+    "pages/web/web",
+    "pages/commit/commit",
+    "pages/share/share"
   ],
   
   "tabBar": {
     "custom": false,
-    "color": "#000000",
-    "selectedColor": "#F73950",
+    "color": "#333333",
+    "selectedColor": "#C1996B",
     "backgroundColor": "#fff",
     "list": [{
       "pagePath": "pages/index/index",
@@ -46,7 +49,7 @@
     },{
       "pagePath": "pages/chart/chart",
       "iconPath":"image/icon-chart.png",
-      "selectedIconPath": "image/icon-chart.png",  
+      "selectedIconPath": "image/icon-chart2.png",  
       "text": "购物车"
     },{
       "pagePath": "pages/user/user",

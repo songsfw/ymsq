@@ -120,6 +120,12 @@ Page({
             block2 = components[3] && components[3].componentDetail,
             block3 = components[4] && components[4].componentDetail
 
+        wx.setStorageSync("total_num",res.cart.total_num)
+
+        wx.setTabBarBadge({
+          index: 2,
+          text: res.cart.total_num.toString() || '0'
+        })
         this.setData({
           address:address,
           notice:notice,
@@ -180,27 +186,16 @@ Page({
     })
 
   },
-  getCartInfo(){
-    let data = {
-      city_id:this.data.addressInfo.city_id
-    }
-    api.getChartData(data).then(res => {
-      console.log(res);
-      this.getTabBar().setData({
-        count: res.total_num
-      })
-    })
-  },
   onShow() {
     //自定义tabbar选中
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        count:"",
-        selected: 0
-      })
-    }
-    
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     count:"",
+    //     selected: 0
+    //   })
+    // }
+
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     console.log(sysInfo)
@@ -231,10 +226,7 @@ Page({
     })
 
     this.getIndexInfo();
-    this.getCartInfo()
-    
-    
-    
+
   },
   onLoad: function (options) {
     console.log('111',wx.canIUse('scroll-view.refresher-enabled'))

@@ -144,7 +144,7 @@
     <view class="flex-center">
       <view class="name delivery">
         配送费用
-        <text wx:if="{{cart_data.free_msg!=''}}">【{{cart_data.free_msg}}】</text>
+        <text wx:if="{{cart_data.free_msg!='' && !useCoupon}}">【{{cart_data.free_msg}}】</text>
       </view>
       <view class="val strongTxt">
         ￥<block wx:if="{{hasDelivery}}">{{cart_data.default_delivery}}</block>

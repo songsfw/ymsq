@@ -50,7 +50,7 @@ page{background: #F6F6F6;height: auto;}
 
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
 
-.option{background: #fff; position: fixed;left: 0;bottom:100rpx; width: 100%;border-bottom: 1px solid #ccc;height:100rpx;z-index: 11;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
+.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 11;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
 
 .option .select text{font-size: 14px;color: #999;}
 .option .price{align-items: center;}
@@ -79,7 +79,7 @@ page{background: #F6F6F6;height: auto;}
 .fitting-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;border: 1rpx solid #F6F6F6;font-size: 13px;}
 .fitting-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);}
 .score-panel .h4>text{font-size: 14px;color: #333;font-weight: bold;}
-.fittings{padding-bottom:36rpx ;}
+.fittings{padding-bottom:36rpx;}
 .fittings .hd{border-bottom: none;}
 .fittings scroll-view{flex-wrap: nowrap;}
 .fittings .item{width: 260rpx;flex-shrink: 0; border-radius:8rpx;background: #fff;overflow: hidden;margin-right: 20rpx;

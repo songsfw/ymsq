@@ -1,7 +1,67 @@
-<!--pages/customer/paySuccess/paySuccess.wxml-->
-<view class="container">
-  <view class="bg">
-    <canvas class="myCanvas" canvas-id="myCanvas" style="width:622rpx;height:876rpx"></canvas>
-    <view class='save' bindtap='save'>保存图片到手机后分享</view>
+<view class="hongbao-stat">
+  <block wx:if="{{step==1}}">
+    <image class="bg" src="../../image/stat3.jpg"></image>
+    <view class="bd step1">
+      <view class="photo">
+        <image src="{{avatarUrl || userInfo.head_url}}"></image>
+      </view>
+      <view class="tip">
+        <view>我买了一些好东西</view>
+        <view>获得了一个拼手气红包与你分享</view>
+      </view>
+      <view class="open-btn" bind:tap="open"><image src="../../image/icon1.png"></image></view>
+    </view>
+  </block>
+  <block wx:if="{{step==2}}">
+    <image class="bg" src="../../image/stat2.jpg"></image>
+    <view class="bd step2">
+      <view class="tit">恭喜您</view>
+      <view class="tit2">获得一个现金红包</view>
+      <view class="price">{{self_reward}}<text>元</text></view>
+      <view class="tip">已存入余额, 付款时可抵用现金</view>
+      <navigator url="/pages/proList/proList" open-type="switchTab" class="share-btn">立即使用</navigator>
+    </view>
+  </block>
+  <block wx:if="{{step==3}}">
+    <image class="bg" src="../../image/stat1.jpg"></image>
+    <view class="bd step3"></view>
+  </block>
+</view>
+<view class="block user-list">
+  <view class="hd"><image src="../../image/tit1.png" /><text >看看大家手气</text></view>
+  <view class="list">
+    <view class="item flex" wx:for="{{users}}">
+      <image src="{{item.user.head_url}}"></image>
+      <view class="txt flex-1 text-overflow">
+        <view class="tit flex-center">
+          <text class="name ">{{item.user.nickname}}</text>
+          <text class="date">{{item.create_time}}</text>
+        </view>
+        <view class="notice">{{item.remark}}</view>
+      </view>
+      <view class="price">
+        <view class="top">{{item.amount}}元<text>最佳手气</text></view>
+      </view>
+    </view>
   </view>
+</view>
+<view class="block rule">
+  <view class="hd"><image src="../../image/tit1.png" /><text style="float:none">活动规则说明</text></view>
+  <view wx:for="{{rule}}"><text>◉</text> <view>{{item}}</view></view>
+</view>
+<view class="block list-wp">
+  <view class="hd"><image src="../../image/tit1.png" /><text >原麦最受欢迎榜</text></view>
+  <scroll-view scroll-x="{{true}}" class="pic-box">
+    <view class="list flex">
+      <view class="item" wx:for="{{setmeal_data}}">
+        <view class="pic">
+          <image src="{{item.image}}" mode="aspectFill"></image>
+        </view>
+        <view class="h3">{{item.name}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<view class="logo">
+  <image src="../../image/logo.png"></image>
 </view>

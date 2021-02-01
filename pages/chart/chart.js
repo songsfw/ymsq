@@ -61,7 +61,6 @@ Page({
     this.setData({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
-      //address: this.data.address
     })
   },
   //滑动事件处理
@@ -381,16 +380,24 @@ Page({
     }
     api.getChartData(data).then(res => {
       console.log(res);
-      if(res.status=='1001'){
+      if(!res){
         wx.showToast({
           icon:"none",
-          title:"用户未登录"
+          title:"获取购物车失败，刷新页面",
+          duration:3000
         })
         return
       }
       let type="1",breadSelectedNum=0,cakeSelectedNum=0,noallBread=true,noallCake=true
       if(res){
         let breadLi = res.bread.detail,cakeLi=res.cake.detail
+
+        wx.setTabBarBadge({ 
+          index: 2,
+          text: res.total_num.toString()
+        })
+        wx.setStorageSync('total_num',res.total_num)
+        
         if(breadLi.length>0){
           breadLi.forEach(item=>{
             if(item.is_selected=="1"){
@@ -534,14 +541,10 @@ Page({
     
   },
   getCartInfo(){
-    let data = {
-      city_id:this.data.city_id
-    }
-    api.getChartData(data).then(res => {
-      console.log(res);
-      this.getTabBar().setData({
-        count: res.total_num
-      })
+    let total_num = wx.getStorageSync("total_num")
+    wx.setTabBarBadge({ 
+      index: 2,
+      text: total_num.toString()
     })
   },
   /**
@@ -584,13 +587,13 @@ Page({
    */
   onShow: function () {
     //自定义tabbar选中
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        count:"",
-        selected: 2
-      })
-    }
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     count:"",
+    //     selected: 2
+    //   })
+    // }
     let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")

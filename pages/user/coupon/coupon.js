@@ -1,5 +1,8 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+const wxbarcode = require('../../../utils/initBarCode.js')
+
+let mallLi = null,usedLi = null,shopLi = null,expiredLi=null
 Page({
 
   /**
@@ -11,8 +14,13 @@ Page({
     shopLi:null,
     usedLi:null,
     expiredLi:null,
-    pageNum:1,
-    noMoreData:false
+    card_no: '',
+    pageInfo:{
+      mall:{count:0,pageNum:1,noMoreData:true},
+      shop:{count:0,pageNum:1,noMoreData:true},
+      used:{count:0,pageNum:1,noMoreData:true},
+      expired:{count:0,pageNum:1,noMoreData:true}
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -28,52 +36,14 @@ Page({
     })
   },
   switchTab: function (e) {
-    var that = this;
     var currentId = e.currentTarget.dataset.tabid
+    let {pageInfo,mallLi,shopLi,usedLi,expiredLi} = this.data
     if (this.data.currentTab === currentId) {
       return false;
     } else {
-      switch (currentId) {
-        case "0":
-          that.setData({
-            noMoreData: false,
-            //mallLi: null,
-            currentTab: currentId,
-            pageNum: 1,
-          })
-          //this.getCoupon()
-          break;
-        case "1":
-          that.setData({
-            noMoreData: false,
-            //shopLi: null,
-            currentTab: currentId,
-            pageNum: 1,
-          })
-          //this.getHotMovie()
-          break;
-        case "2":
-          that.setData({
-            noMoreData: false,
-            //usedLi: null,
-            currentTab: currentId,
-            pageNum: 1,
-          })
-          //this.getWaitFilm()
-          break;
-        case "3":
-          that.setData({
-            noMoreData: false,
-            //expiredLi: null,
-            currentTab: currentId,
-            pageNum: 1,
-          })
-          //this.getWaitFilm()
-          break;
-        default:
-          break;
-      }
-
+      this.setData({
+        currentTab: currentId,
+      })
     }
   },
   
@@ -81,21 +51,123 @@ Page({
     api.getCoupon().then(res=>{
       console.log(res);
       if(!res) return
-      this.setData({
-        mallLi:res.mall,
-        shopLi:res.shop,
-        usedLi:res.used,
-        expiredLi:res.expired,
+      
+      let pageInfo=JSON.parse(JSON.stringify(this.data.pageInfo))
+      let obj={},currList=[]
+      Object.keys(res).map(key=>{
+        let count = res[key].length
+        let noMoreData = count-pageInfo[key].pageNum*10 <= 0
+        obj[key] = {count:count,pageNum:1,noMoreData:noMoreData}
       })
-      console.log(this.data.expiredLi)
-    })
-  },
-  showTips(){
-    this.setData({
-      tips:true
-    })
-  },
 
+      mallLi=res.mall
+      shopLi=res.shop
+      usedLi=res.used
+      expiredLi=res.expired
+
+      console.log(obj)
+      this.setData({
+        pageInfo:obj,
+        ['mallLi['+(obj.mall.pageNum-1)+']']:this.getCurrList(mallLi,1),
+        ['shopLi['+(obj.shop.pageNum-1)+']']:this.getCurrList(shopLi,1),
+        ['usedLi['+(obj.used.pageNum-1)+']']:this.getCurrList(usedLi,1),
+        ['expiredLi['+(obj.expired.pageNum-1)+']']:this.getCurrList(expiredLi,1),
+      })
+      let curShopLi = this.getCurrList(shopLi,1)
+      if(curShopLi.length>0){
+        curShopLi.forEach(item=>{
+          wxbarcode.barcode.call(this,'barcode-'+item.id, item.card_no, 660, 300);
+        })
+      }
+      
+    })
+  },
+  getCurrList(list,pageNum){
+    return list.slice(pageNum*10-10,pageNum*10)
+  },
+  showTips(e){
+    let id = e.currentTarget.dataset.id
+    let curId = this.data.curId
+    console.log(id);
+    if(id == curId){
+      this.setData({
+        curId:null,
+      })
+    }else{
+      this.setData({
+        curId:id,
+      })
+    }
+    
+  },
+  getMoreData() {
+    let pageNum,noMoreData
+    let {currentTab,pageInfo} = this.data
+    switch (currentTab) {
+      case "0":
+        pageNum = pageInfo.mall.pageNum + 1
+        if(pageInfo.mall.noMoreData){
+          return false
+        }
+        noMoreData = this.getCurrList(mallLi,pageNum).length-pageNum*10 <= 0
+        this.setData({
+          ['pageInfo.mall.pageNum']: pageNum,
+          ['pageInfo.mall.noMoreData']:noMoreData,
+          ['mallLi['+(pageNum-1)+']']:this.getCurrList(mallLi,pageNum),
+        })
+
+        break;
+      case "1":
+        pageNum = pageInfo.shop.pageNum + 1
+        if(pageInfo.shop.noMoreData){
+          return false
+        }
+        let curShopLi = this.getCurrList(shopLi,pageNum)
+        if(curShopLi.length>0){
+          curShopLi.forEach(item=>{
+            wxbarcode.barcode('barcode', item.card_no, 660, 300);
+          })
+        }
+
+        noMoreData = this.getCurrList(shopLi,pageNum).length-pageNum*10 <= 0
+        this.setData({
+          ['pageInfo.shop.pageNum']: pageNum,
+          ['pageInfo.shop.noMoreData']:noMoreData,
+          ['shopLi['+(pageNum-1)+']']:this.getCurrList(shopLi,pageNum),
+        })
+
+        break;
+      case "2":
+        pageNum = pageInfo.used.pageNum + 1
+        if(pageInfo.used.noMoreData){
+          return false
+        }
+        noMoreData = this.getCurrList(usedLi,pageNum).length-pageNum*10 <= 0
+        this.setData({
+          ['pageInfo.used.pageNum']: pageNum,
+          ['pageInfo.used.noMoreData']:noMoreData,
+          ['usedLi['+(pageNum-1)+']']:this.getCurrList(usedLi,pageNum),
+        })
+
+        break;
+      case "3":
+        pageNum = pageInfo.expired.pageNum + 1
+        if(pageInfo.expired.noMoreData){
+          return false
+        }
+        noMoreData = this.getCurrList(expiredLi,pageNum).length-pageNum*10 <= 0
+        this.setData({
+          ['pageInfo.expired.pageNum']: pageNum,
+          ['pageInfo.expired.noMoreData']:noMoreData,
+          ['expiredLi['+(pageNum-1)+']']:this.getCurrList(expiredLi,pageNum),
+        })
+
+        break;
+      default:
+        break;
+    }
+  
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -135,13 +207,13 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getMoreData()
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

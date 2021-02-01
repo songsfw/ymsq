@@ -5,15 +5,14 @@
 </view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
 
-    
     <view class="topinfo">
       <view class="user-top flex">
         <image class="photo" src="{{userInfo.photo}}"></image>
         <view class="name flex-1">
           <view class="tit">{{userInfo.nickname}}</view>
-          <view class="level level-{{user.level}}"></view>
+          <view class="iconAll level level-{{user.level}}"></view>
         </view>
-        <view class="qrCode"><image src="../../image/qr.png"></image></view>
+        <navigator url="/pages/user/vipcard/vipcard" class="qrCode"><image src="../../image/pay-code.png"></image><view>付款码</view></navigator>
       </view>
       <navigator hover-class="none" url="/pages/user/vipcard/vipcard" class="vipcard"><image src="../../image/bg3.png"></image></navigator> 
       <view class="ym-pay flex">
@@ -35,21 +34,21 @@
   <view class="menu flex">
     <view bind:tap="toOrder" data-type="1">
       <view class="tag"wx:if="{{user.order_unpaid!=0}}">{{user.order_unpaid}}</view>
-      <view class="icon user-pay1"></view>
+      <view class="iconAll user-pay1"></view>
       <text>待付款</text>
     </view>
     <view bind:tap="toOrder" data-type="2">
       <view class="tag">{{user.order_dispatching}}</view>
-      <view class="icon user-pack"></view>
+      <view class="iconAll user-pack"></view>
       <text>待收货</text>
     </view>
     <view bind:tap="toOrder" data-type="3">
       <!-- <view class="tag">100</view> -->
-      <view class="icon user-send"></view>
+      <view class="iconAll user-send"></view>
       <text>已完成</text>
     </view>
     <view class="order" bind:tap="toOrder" data-type="0">
-      <view class="icon user-order"></view>
+      <view class="iconAll user-order"></view>
       <text>全部订单</text>
     </view>
   </view>
@@ -57,30 +56,38 @@
     <view class="tit">我的服务</view>
     <view class="service flex">
       <navigator hover-class="none" url="/pages/user/freePay/freePay">
-        <view class="icon user-pay"></view>
+        <view class="iconAll user-pay"></view>
         <text>免密支付</text>
       </navigator>
       <navigator hover-class="none" url="/pages/user/memoDay/memoDay">
-        <view class="icon user-heart"></view>
+        <view class="iconAll user-heart"></view>
         <text>纪念日管理</text>
       </navigator>
       <navigator hover-class="none" url="/pages/user/address/address" >
-        <view class="icon user-local2"></view>
+        <view class="iconAll user-local2"></view>
         <text>地址管理</text>
       </navigator>
       <navigator>
-        <view class="icon user-mail"></view>
+        <view class="iconAll user-mail"></view>
         <text>意见反馈</text>
       </navigator>
       <view bindtap="showService">
-        <view class="icon user-service"></view>
+        <view class="iconAll user-service"></view>
         <text>联系客服</text>
       </view>
+      <navigator hover-class="none" url="/pages/user/deliveryArea/deliveryArea" >
+        <view class="iconAll user-area"></view>
+        <text>配送范围</text>
+      </navigator>
+      <navigator hover-class="none" url="/pages/web/web" >
+        <view class="iconAll user-store"></view>
+        <text>门店地址</text>
+      </navigator>
     </view>
   </view>
   <!-- <view class="logo">
     <image src="../../image/logo.png"></image>
   </view> -->
-  <view style="height:{{50+btmHolder}}px"></view>
+  <!-- <view style="height:{{50+btmHolder}}px"></view> -->
 
 </view>

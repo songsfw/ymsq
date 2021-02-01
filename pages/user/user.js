@@ -46,18 +46,10 @@ Page({
     })
   },
   getCartInfo(){
-    let data = {
-      city_id:this.data.city_id
-    }
-    api.getChartData(data).then(res => {
-      console.log(res);
-      wx.setTabBarBadge({ 
-        index: 2,//tabBar下标（底部tabBar的位置，从0开始）
-        text: res.total_num.toString()
-      })
-      // this.getTabBar().setData({
-      //   count: res.total_num
-      // })
+    let total_num = wx.getStorageSync("total_num")
+    wx.setTabBarBadge({ 
+      index: 2,
+      text: total_num.toString() || '0'
     })
   },
   /**

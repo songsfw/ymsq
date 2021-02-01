@@ -99,12 +99,14 @@
     </view>
   </block>
 </view>
-<view wx:if="{{noMoreData && count!=0}}" class="more-btn">我可是有底线的</view>
-<view wx:else class="more-btn">加载中...</view>
+<block wx:if='{{count!=0}}'>
+  <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
+  <view wx:else class="more-btn">加载中...</view>
+</block>
 <!-- <view class="logo">
   <image src="../../image/logo.png"></image>
 </view> -->
-<view style="height:{{50+btmHolder}}px" id="haha"></view>
+<!-- <view style="height:{{50+btmHolder}}px" id="haha"></view> -->
 
 <view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
   <image src="{{curPro}}"></image>

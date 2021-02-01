@@ -4,8 +4,7 @@
 .searchBox{align-items: center;}
 .searchBox .city{max-width:394rpx;height: 56rpx;line-height: 56rpx;align-items: center;padding-right: 38rpx;justify-content: space-between;color: #222;font-size: 30rpx;}
 
-.navBar.fold,
-.navBar.fold .navwrap{background: none;}
+
 
 .searchBox .city .arrow-bottom:after{border-color: #fff;width: 6px;height: 6px;}
 .searchBox .city .icon{flex-shrink: 0; width:32rpx;height: 36rpx;margin-right: 20rpx;}
@@ -58,3 +57,8 @@
 .navBarWrap.dark .homebtn .iconfont{color: #5c5c5c;}
 
 .navBarWrap.transparent .navBar{background: none;}
+.navBarWrap.transparent .title{display: none;}
+.navBarWrap.fold .navBar,
+.navBarWrap.fold .navBar .navwrap{background: #fff;}
+.navBarWrap.fold{border-bottom: 1px solid #F6F6F6;}
+.navBarWrap.fold .title{display: block;}

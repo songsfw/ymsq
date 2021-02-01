@@ -1,8 +1,14 @@
 page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .strongTxt{color: #F5222D !important;}
+.banner-bg{position: absolute;left: 0;width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
+
+.order-type{width: 100%;height: 180rpx;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
+.return .arrow-left:after{border-color: #333 !important;}
+.order-type .txt{font-size:18px;}
+.order-type .status{font-size:14px;margin-top: 8px;}
 .order-wp{padding:20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
-.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
+.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:50px;z-index: 20;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .checkbox.on view{display: block;}
@@ -11,8 +17,10 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .option .price view{font-size: 13px;}
 .option .price .num{color: #FA603D;}
 .option .price .num text{font-size:16px;}
-.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;}
-
+.btn{width: auto;margin-left: 10px;min-width:60px ; height: 30px;line-height: 30px;background:#fff;border-radius: 15px;padding: 0 10px;color: #222;border: 1px solid #ccc;}
+.main-btn{background: #C1996B;color: #fff;border-color: #C1996B;}
+.edit{color: #C1996B;font-size: 13px;}
+.copy-btn{margin-right: 20rpx; display: inline-block; color: #C1996B;background: #F6F6F6;width: 36px;height: 18px;line-height: 18px;border-radius: 9px;text-align: center;font-size: 12px;}
 .address{padding:40rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
@@ -28,9 +36,10 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 100rpx;margin:0 20rpx 30rpx 20rpx;}
 .pro-info .hd view{font-size: 15px;}
 .pro-info .hd text{color: #999;font-size: 13px;}
+.pro-info .info{justify-content: space-between;flex-direction: column;}
 .pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
 .pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}
-.pro-info .item .tit{font-size: 14px;margin-bottom: 40rpx;}
+.pro-info .item .tit{font-size: 14px;}
 .pro-info .price{justify-content: space-between;}
 .pro-info .price .num{font-size: 11px;color: #FA603D;}
 .pro-info .price .num text{font-size:14px}
@@ -41,7 +50,8 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
 .order-tips input{text-align: right;}
 .order-tips.on{color: #F5222D;}
-.pay-info{padding: 0 20rpx 40rpx 20rpx;}
+.pay-info{padding: 0 20rpx 20rpx 20rpx;}
+.pay-info .hd{margin:0 0 30rpx 0}
 .pay-info>view{justify-content: space-between;height: 86rpx;line-height: 86rpx;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}
@@ -57,86 +67,6 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pay-info .total-price view{font-size: 18px;color: #F5222D;}
 .pay-info .total-price view text{font-size: 14px;}
 
-.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
-.pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
-.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
-.pop-panel .close:after,
-.pop-panel .close::before{border-color: #999;}
-.pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
-.pop-con{height: 580rpx;}
-.time-box .date{width: 246rpx;height: 580rpx;background:#F6F6F6;color: #aaa;}
-.time-box .time{height: 580rpx;}
-.time-box .date view,
-.time-box .time .item{padding: 32rpx 0;text-align: center;font-size: 14px;}
-.time-box .time{padding: 0 40rpx;}
-.time-box .date view.on{background: #fff;color: #222;}
-.time-box .time .item{border-bottom: 1px solid #F6F6F6;padding-left: 60rpx;justify-content: space-between;}
-.time-box .time .item.on{color:#C1996B;}
-.time-box .time .item.on .checkbox view{display: block;}
-
-.confirm-btn{margin: 24rpx;width: auto;}
-
-.send-type{height: 55px;background-color: #fff;padding: 20rpx 0; box-sizing: border-box;border-top: 1px solid #F6F6F6;}
-.send-type view{margin: 0 auto; width: 156px;height: 36px; background: #F6F6F6;align-items: center;border-radius: 18px;overflow: hidden;padding: 0 3px;}
-.send-type text{background: #F6F6F6;height: 30px;line-height: 30px;width: 50%;border-radius: 15px;text-align: center;font-size: 13px;color: #999;}
-.send-type text.on{background: #C1996B;color: #fff;}
-.delivery text{color:#5375FD ;}
-.delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
-.delivery-tip text{vertical-align: sub;font-size: 30rpx;}
-
-.coupon-panel .hd{height: 50px;line-height: 50px; color: #666;font-size: 14px;text-align: center;}
-.coupon-panel .hd view{position: relative;}
-.coupon-panel .hd view:after{content: ""; display: none; position: absolute;left: 50%;transform: translateX(-50%);bottom: 5px;width:45px;height: 3px;background-color: #C1996B ;}
-.coupon-panel .hd view.on{color: #C1996B;font-size: 15px;}
-.coupon-panel .hd view.on:after{display: block;}
-.coupon-box{background: #F6F6F6;padding: 20rpx 24rpx;box-sizing: border-box;height: 100%;}
-.coupon-box .list{height: 100%;}
-
-.coupon-box .item .tips{align-items: top; color: #999;}
-.coupon-box .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
-.coupon-box .item .tips.show .txt{height: auto;}
-.coupon-box .item .tips .txt{height:16px;overflow: hidden;}
-.coupon-box .item .tips .arrow-bottom{margin-left: 32rpx;}
-.coupon-box .item .tips .arrow-bottom:after{border-color: #ccc;border-width: 1px;}
-.coupon-box .item .border view{height: 0;border-top: 1px dashed #ccc;}
-.coupon-box .item .border:after,
-.coupon-box .item .border:before{content: "";position: absolute;left: -15rpx;top:4rpx;width: 30rpx;height: 30rpx;border-radius: 50%;background-color: #F6F6F6;}
-.coupon-box .item .border:before{left: auto;right: -15rpx;}
-.coupon-box .card{padding-top:20rpx ;}
-.coupon-box .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
-.coupon-box .item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;overflow: hidden;}
-.coupon-box .item .tag{position: absolute;right: 0;top: 0;background: rgba(100, 191, 0,.1);color:#64BF00;font-size: 11px;padding: 6px;line-height: 1;}
-.coupon-box .item .tag1{background: rgba(245, 34, 45, .1);color: #F5222D;}
-.coupon-box .item .name{font-size: 16px;}
-
-.coupon-num{position: relative; width: 92px;flex-shrink: 0;height: 77px;align-items: center;overflow: hidden;}
-.coupon-num .txt{position: absolute;left: 0;width: 100%;z-index: 2;text-align: center;color: #FFE8CB;}
-.coupon-num .txt .num{font-size:18px;}
-.coupon-num .txt .num text{font-size: 30px}
-.coupon-num .txt>text{font-size: 11px;}
-.coupon-info{margin-left: 32rpx;}
-.coupon-info .tit{font-size: 16px;}
-.coupon-info .date{font-size: 11px;color: #999;margin: 3px 0 10px 0;}
-.coupon-info .txt{font-size: 11px;color: #C1996B;justify-content: space-between;align-items: center;}
-.coupon-info .btn{width:64px;height: 26px;line-height: 26px;border-radius: 13px;font-size: 14px;flex-shrink: 0;margin-left:46rpx ;}
-
-.coupon-box .checkbox{position: relative;margin-top:30px; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
-.coupon-box .checkbox view{ display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
-.coupon-box .checkbox.on view{display: block;}
-.score-panel .tit{justify-content: space-between;padding-right: 36px;}
-.score-panel .tit view{color: #ccc;font-size: 13px;}
-.score-panel .pop-con{padding: 30rpx;}
-.mai-info{justify-content: space-between;background: #F6F6F6;line-height: 92rpx;padding: 0 20rpx;margin-bottom: 50rpx;border-radius: 8rpx;}
-.mai-price{justify-content: space-between;}
-.mai-info text,
-.mai-price text{color:#C1996B;}
-
-
-.inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 40px;line-height: 40px;}
-.inputxt text{width:70px;}
-.inputxt input{height: 100%;}
-.changepwd{text-align: right;margin-top: 28rpx;}
-
-.verify{text-align: center;}
-.notice{color: #999;color: 14px;margin: 30rpx 0;}
-.get-code{margin: 38rpx 0 0 0;}
+.txt-card{margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
+.txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
+.txt-card .txt{margin-left: 20rpx;}

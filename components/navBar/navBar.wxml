@@ -1,6 +1,6 @@
 <!-- components/navBar/navBar.wxml -->
-<view class='navBarWrap {{ios ? "ios" : "android"}} {{navType? navType : "light"}}'  id="navBar">
-  <view class="navBar {{isFold?'fold':''}}" style="padding-top:{{statusHeight}}px">
+<view class='navBarWrap {{ios ? "ios" : "android"}} {{navType? navType : "light"}} {{isFold?"fold":""}}'  id="navBar">
+  <view class="navBar" style="padding-top:{{statusHeight}}px">
     <view class="flex navwrap" style="{{navWarpStyle}}">
       <view class="searchBox flex" wx:if="{{hasAddress}}">
           <view class='city flex' bind:tap="selectAdd" data-source="1">

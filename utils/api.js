@@ -300,7 +300,35 @@ const maidian = (params) => {
   return POST(baseUrl + "/user-point/list", params).then(res => returnData(res))
 }
 
+//配送范围
+const deliveryList = () => {
+  return POST(baseUrl + "/user-address/delivery-list").then(res => returnData(res))
+}
 
+//配送范围
+const deliveryPoints = (data) => {
+  return POST(baseUrl + "/user-address/get-points",data).then(res => returnData(res))
+}
+
+//评论
+const getComment = (data) => {
+  return POST(baseUrl + "/share/pre-order-comment",data).then(res => returnData(res))
+}
+
+//评论
+const setComment = (data) => {
+  return POST(baseUrl + "/share/order-comment",data).then(res => returnData(res))
+}
+
+//领取列表
+const hongbao = (data) => {
+  return POST(baseUrl + "/share/receive-list",data).then(res => returnData(res))
+}
+
+//领取红包
+const getHongbao = (data) => {
+  return POST(baseUrl + "/share/get-red-package",data).then(res => returnData(res))
+}
 
 const submitOrder = (params) => {
   console.log(JSON.stringify(params))
@@ -357,5 +385,11 @@ module.exports = {
   cancleOrder,
   addFittings,
   checkAddress,
-  maidian
+  maidian,
+  deliveryList,
+  deliveryPoints,
+  getComment,
+  setComment,
+  hongbao,
+  getHongbao
 }

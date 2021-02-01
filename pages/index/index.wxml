@@ -115,7 +115,7 @@
     <view class="gotop" bindtap="gotop" wx:if="{{showGoto}}">
       <image src="../../image/icon-top.png"></image>
     </view>
-    <view style="height:{{50+btmHolder}}px"></view>
+    <!-- <view style="height:{{50+btmHolder}}px"></view> -->
   </scroll-view>
   
 </view>

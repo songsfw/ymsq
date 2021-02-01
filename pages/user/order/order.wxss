@@ -4,8 +4,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item .hd .date{color: #999;line-height: 18px;}
 .item .hd .status{color: #C1996B;}
 .option{justify-content:flex-end;align-items: center;padding: 0 20rpx;}
-.option navigator{margin-left: 12px;}
-.option .btn{width: 77px;height: 30px;line-height: 30px;text-align: center;border-radius:15px;font-size: 14px;}
+.option .btn{width: 77px;height: 30px;line-height: 30px;text-align: center;border-radius:15px;font-size: 14px;margin-left: 12px;}
 .option .time{color: #999;font-size: 14px;}
 .btn1{background: #fff;color: #222;border: 1px solid #ccc;}
 .pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}

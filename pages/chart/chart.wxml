@@ -71,7 +71,8 @@
       </view>
     </view>
   </view>
-
+</view>
+<view class="pro-box">
   <view class="fittings" wx:if="{{fittings}}">
     <view class="hd"><text>加购配件</text></view>
     <scroll-view scroll-x="{{true}}">
@@ -88,11 +89,12 @@
     </scroll-view>
   </view>
 </view>
+
 <view class="logo">
   <image src="../../image/logo.png"></image>
 </view>
 
-<view class="option flex" style="bottom:{{49+btmHolder}}px">
+<view class="option flex">
   <!-- <view class="select flex-center">
     <view class="checkbox">
       <view class="iconfont icon-check"></view>
@@ -106,7 +108,7 @@
 </view>
 
 
-<view class="pop-panel score-panel" style="bottom:{{50+btmHolder}}px" wx:if="{{pop=='fittings-panel'}}">
+<view class="pop-panel score-panel" wx:if="{{pop=='fittings-panel'}}">
   <view class="icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
@@ -133,4 +135,4 @@
   
 </view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
-<view style="height:{{btmHolder+100}}px"></view>
+<view style="height:50px"></view>

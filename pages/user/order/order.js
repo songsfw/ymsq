@@ -18,9 +18,15 @@ Page({
   onLoad: function (options) {
     let type = options.type
     this.setData({
-      currentTab:type
+      currentTab:type || 0
     })
    
+  },
+  toOrder(e){
+    let code = e.currentTarget.dataset.code
+    wx.navigateTo({
+      url:"/pages/user/orderInfo/orderInfo?code="+code
+    })
   },
   switchTab: function (e) {
     var that = this;
@@ -60,6 +66,18 @@ Page({
     }
     api.cancleOrder(data).then(res=>{
       console.log(res);
+      if(res){
+        wx.showToast({
+          icon:"none",
+          title:"订单取消成功"
+        })
+        this.setData({
+          noMoreData:false,
+          page:1,
+          orderList:[]
+        })
+        this.getOrder()
+      }
     })
   },
   payOrder(e){
@@ -68,7 +86,43 @@ Page({
       order_code:code
     }
     api.payOrder(data).then(res=>{
+
       console.log(res);
+      if(res){
+        let jsApiParameters = res.jsApiParameters
+        let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
+        wx.requestPayment({
+          timeStamp: timeStamp,
+          nonceStr: nonceStr,
+          package: jsApiParameters.package,
+          signType: signType,
+          paySign: paySign,
+          success(payres) {
+            console.log(payres);
+            wx.showToast({
+              title: '支付成功',
+              icon: 'none',
+              duration: 1000,
+              success: function () {
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + code,
+                  })
+                }, 1000)
+              }
+            })
+
+          },
+          fail(res) {
+            console.log(res)
+            wx.showToast({
+              title: "支付失败",
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+      }
     })
   },
   getOrder(){

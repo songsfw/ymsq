@@ -1,0 +1,31 @@
+/**index.wxss**/
+/*--public style--*/
+view{font-size:12px}
+page{background: #fff}
+.wrap{padding:0 26rpx;}
+.wrap-all{padding: 10px;}
+
+.item{box-sizing: border-box}
+
+.col-2 .item{width: 50%;}
+.col-3 .item{width: 33.33%;}
+
+.topBar{width: 100%;color: #fff;z-index: 100;padding:20rpx 30rpx;height: 96rpx;box-sizing: border-box;transition: all .2s linear;align-items: center;justify-content: space-between}
+
+.topBar .search{color: #999;height:60rpx;line-height:60rpx;overflow: hidden;background:#F5F5F5;padding:0 10rpx;border-radius: 30rpx;align-items: center;justify-content: space-between;border:1px solid #E6E6EA}
+.topBar .search input:placeholder{color: #CBCBCB}
+.topBar .search view{align-items: center}
+.topBar .cancle-btn{width: 50px;text-align: center;margin-right: -16rpx;font-size: 24rpx; color: #333}
+.topBar .search image{width: 25rpx;height: 25rpx;vertical-align: middle}
+
+.topBar.changebg{background: #fff;color: #999}
+.topBar.changebg .triangle-top{border-top-color: #999;}
+.topBar.changebg .search{background: #E5E5E5}
+
+
+.main-content{padding-top: 96rpx;}
+.icon-del{width: 30rpx;height: 34rpx;}
+.main-content>view{height: 44px;line-height: 44px;border-bottom: 1px solid #eee;padding-left: 66rpx;background: #fff}
+.history{justify-content: space-between;align-items: center;padding-right: 48rpx;}
+.noAct{color: #ccc}
+.mask{position: fixed;left: 0;top: 0;right:0;bottom: 0;background: rgba(0,0,0,.3);z-index: 0}

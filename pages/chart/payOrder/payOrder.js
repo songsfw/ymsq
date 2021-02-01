@@ -236,11 +236,13 @@ Page({
     })
   },
   initOrderData() {
-    let { type ,useBalance,verifyed,city_id,is_ziti} = this.data
+    wx.showLoading({ title: '加载中' })
+    let { type ,useBalance,verifyed,city_id,is_ziti,address_id} = this.data
     
     let data = {
       city_id: city_id,
-      is_ziti: is_ziti
+      is_ziti: is_ziti,
+      address_id:address_id
     }
     if (type == "1") {
       //面包
@@ -419,7 +421,7 @@ Page({
       payQueue:newPayQueue
     })
     
-    
+    wx.hideLoading();
   },
   setPayPrice(payQueue){
     let payPrice = this.data.cart_data.total_price
@@ -534,7 +536,8 @@ Page({
     })
   },300),
   submmitOrder:util.debounce(function(){
-    let {cart_data,addressInfo,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName}=this.data
+    
+    let {cart_data,addressInfo,address_id,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName}=this.data
     let balance_price = useBalance=="1" ? preUseBalancePrice : 0
 
  
@@ -566,7 +569,7 @@ Page({
     console.log(addressInfo)
     let deliveryPrice = payQueue[0] == 0 ? cart_data.default_delivery : 0
     let data = {
-      address_id:addressInfo.id,
+      address_id:address_id,
       delivery_date:selectDateTxt,
       delivery_time:selectTimeTxt,
       cart_type:type,
@@ -609,7 +612,9 @@ Page({
     console.log('---支付参数---')
     console.log(data)
     console.log('------')
+    wx.showLoading({ title: '加载中' })
     api.submmitOrder(data).then(res=>{
+      wx.hideLoading();
       console.log(res)
       if(!res){
         wx.showToast({
@@ -1022,23 +1027,16 @@ Page({
   onLoad: function (options) {
     
     //this.getUserLocation()
-    let userInfo = wx.getStorageSync('userInfo')
-    let addressInfo = wx.getStorageSync("addressInfo")
-        addressInfo = JSON.parse(addressInfo)
-        
-    let type = options.type
+    let userInfo = wx.getStorageSync('userInfo')  
     let btmHolder = wx.getStorageSync('btmHolder')
 
     util.setWatcher(this);
 
     this.setData({
       btmHolder:btmHolder||0,
-      city_id: addressInfo.city_id,
-      is_ziti: addressInfo.is_ziti,
       userInfo:JSON.parse(userInfo),
-      type: type
     })
-    this.initOrderData();
+    
   },
   watch:{
     'payQueue':function (value, oldValue){
@@ -1062,16 +1060,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let pages = getCurrentPages();
+    let currentPage = pages[pages.length-1];
+    let type = currentPage.options.type
+
     //用户地址列表
     let addressInfo = wx.getStorageSync("addressInfo")
         addressInfo = JSON.parse(addressInfo)
     if(addressInfo){
       this.setData({
+        type: type,
+        is_ziti: addressInfo.is_ziti,
+        city_id: addressInfo.city_id,
+        address_id:addressInfo.id,
         addressInfo:addressInfo,
         'address.is_address':true
       })
+      
     }
-    
+    this.initOrderData();
   },
 
   /**

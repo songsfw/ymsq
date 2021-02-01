@@ -169,33 +169,27 @@ Page({
         if(!res){
           return
         }
-        if(res.status=='4003'){
-          wx.showToast({
-            icon:"none",
-            title:res.message
-          })
-        }else{
-          let selectAddress = addressLi[idx]
-          let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
-          console.log(addresstxt)
-          console.log(selectAddress)
-          let addressInfo = {
-            address: addresstxt,
-            id: id,
-            area_id: area_id,
-            area_name: area_name,
-            city_id: old_city_id,
-            city_name: city_name,
-            address_detail:address_detail,
-            is_default:is_default,
-            mobile:mobile,
-            name:name
-          }
-          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
-          wx.navigateBack({
-            delta: 1
-          })
+        let selectAddress = addressLi[idx]
+        let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
+        console.log(addresstxt)
+        console.log(selectAddress)
+        let addressInfo = {
+          address: addresstxt,
+          id: id,
+          area_id: area_id,
+          area_name: area_name,
+          city_id: old_city_id,
+          city_name: city_name,
+          address_detail:address_detail,
+          is_default:is_default,
+          mobile:mobile,
+          name:name,
+          is_ziti:res.is_ziti
         }
+        wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+        wx.navigateBack({
+          delta: 1
+        })
       })
 
       

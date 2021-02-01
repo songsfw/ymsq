@@ -66,7 +66,8 @@ Page({
       }
     ],
     cityList: [],
-    backfill: ""
+    backfill: "",
+    scale:16
   },
   IsPtInPoly(aLat, aLon, pointList) {
     /* 
@@ -113,8 +114,20 @@ Page({
       url: "/pages/user/adddata/adddata?address=" + address + "&lng=" + lng + "&lat="+lat+"&type="+type+"&city="+city+"&title="+title
     })
   },
-  moveToLocation: function () {
+  moveToUserLocal(){
     this.mapCtx.moveToLocation()
+  },
+  moveToLocation: function (lng='',lat='') {
+    this.mapCtx.moveToLocation({
+      longitude:lng,
+      latitude:lat,
+      success(res){
+        console.log(res);
+        this.setData({
+          scale:16
+        })
+      }
+    })
   },
   changeRegion: function (e) {
     console.log(e)
@@ -225,7 +238,7 @@ Page({
             lat: '39.983673',
             lng: '116.458033'
           })
-          this.getPoi('39.983673', '116.458033')
+          this.moveToLocation('116.458033','39.983673')
         } else {
           this.setData({
             cityName: cityName,
