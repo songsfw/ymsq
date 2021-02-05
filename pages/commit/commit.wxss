@@ -28,7 +28,7 @@ page{background: #F6F6F6;}
 .pop-panel .tit{text-align: center;}
 .pop-con{height: 500rpx;position: relative;z-index: 2;}
 
-.hongbao-panel{width: 646rpx;height: 814rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;text-align: center;padding-top: 190rpx;box-sizing: border-box;text-align: center;}
+.hongbao-panel{width: 646rpx;height: 814rpx;left: 50%;top: 40%;transform: translate(-50%,-50%);background: none;text-align: center;padding-top: 190rpx;box-sizing: border-box;text-align: center;}
 .hongbao-panel image{position: absolute;left: 0;top: 0;}
 .hongbao-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
 .hongbao-panel .close:after,
@@ -39,3 +39,4 @@ page{background: #F6F6F6;}
 .price text{font-size:44rpx ;}
 .tip{color: #B6120C;font-size: 24rpx;}
 .share-btn{margin: 122rpx auto 0 auto; width: 460rpx;height: 100rpx;line-height: 100rpx;border-radius: 50rpx;font-size: 40rpx;color: #AB0D03;background: linear-gradient(179deg, #FEE9CD 0%, #FFB780 100%);box-shadow: 0px 4px 16px 8px rgba(187, 37, 28, 0.57);}
+.fixedBtn{background: #fff;}

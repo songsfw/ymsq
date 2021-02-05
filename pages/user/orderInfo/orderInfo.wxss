@@ -1,4 +1,4 @@
-page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
+page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .banner-bg{position: absolute;left: 0;width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
 
@@ -8,7 +8,7 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .order-type .status{font-size:14px;margin-top: 8px;}
 .order-wp{padding:20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
-.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:50px;z-index: 20;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
+.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;z-index: 20;justify-content: flex-end;align-items: center;box-sizing: border-box;padding:10px 20rpx}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .checkbox.on view{display: block;}
@@ -21,7 +21,9 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .main-btn{background: #C1996B;color: #fff;border-color: #C1996B;}
 .edit{color: #C1996B;font-size: 13px;}
 .copy-btn{margin-right: 20rpx; display: inline-block; color: #C1996B;background: #F6F6F6;width: 36px;height: 18px;line-height: 18px;border-radius: 9px;text-align: center;font-size: 12px;}
-.address{padding:40rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
+.delivery-info{padding:42rpx 24rpx 0 24rpx;justify-content: space-between; color:#64BF00;font-size: 13px;}
+.delivery-info .iconfont{font-size: 12px;}
+.address{padding:40rpx 20rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}
@@ -37,6 +39,8 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .pro-info .hd view{font-size: 15px;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
+.pro-info .info .tag{color: #999;}
+.pro-info .info .tag text{margin-right: 20rpx;}
 .pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
 .pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}
 .pro-info .item .tit{font-size: 14px;}
@@ -70,3 +74,26 @@ page{background: #F6F6F6;padding-bottom: 100rpx;height: auto;}
 .txt-card{margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
 .txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
 .txt-card .txt{margin-left: 20rpx;}
+
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.pop-panel{ position: fixed;left: 0;top:0;width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
+.pop-panel .close:after,
+.pop-panel .close::before{border-color: #999;}
+.pop-panel .tit{text-align: center;}
+.pop-con{max-height: 500rpx;position: relative;z-index: 2;}
+.pop-con scroll-view{max-height: 500rpx;}
+.delivery-panel{width: 646rpx;left: 50%;top: 50%;transform: translate(-50%,-50%); padding: 24rpx;}
+.delivery-panel .tit{text-align: center;font-size: 16px;margin: 20rpx;}
+.delivery-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+.delivery-panel .close:after,
+.delivery-panel .close::before{background-color: #fff;}
+.delivery-panel .item{padding-bottom: 20rpx;position: relative;}
+.delivery-panel .item .txt{font-size: 14px;font-size:16px;margin-bottom: 20rpx;}
+.delivery-panel .item .time{font-size: 13px;color:#999;padding-left: 26px;}
+.delivery-panel .item:first-child .txt{color:#FA603D}
+.delivery-panel .item:first-child .txt text{font-size:20px;color: #FA603D;}
+.delivery-panel .item .txt text{position: relative; margin-right: 10px;color: #aaa;width:16px;text-align: center; z-index: 2;}
+.delivery-panel .item .txt view{overflow: hidden;}
+
+.delivery-panel .item:after{content:'';position: absolute;left: 7.5px;top: 0;width: 1px;height: 100%;background-color: #E9E9E9;}

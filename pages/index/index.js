@@ -40,6 +40,7 @@ Page({
         wx.navigateTo({
           url:"/pages/proInfo/proInfo?proId="+url
         })
+        break;
       case "4":
         app.globalData.proType = url
         wx.switchTab({
@@ -112,7 +113,7 @@ Page({
     api.getIndexInfo(data).then(res => {
       console.log(res);
       if(res){
-        let {address,notice,operate} = res
+        let {notice,operate} = res
         let components = operate[0].components
         let banner = components[0].componentDetail.imageReader,
             menu = components[1].componentDetail.imageReader,
@@ -122,12 +123,18 @@ Page({
 
         wx.setStorageSync("total_num",res.cart.total_num)
 
-        wx.setTabBarBadge({
-          index: 2,
-          text: res.cart.total_num.toString() || '0'
-        })
+        if(res.cart.total_num>0){
+          wx.setTabBarBadge({
+            index: 2,
+            text: res.cart.total_num.toString() || '0'
+          })
+        }else{
+          wx.removeTabBarBadge({
+            index: 2
+          })
+        }
+        
         this.setData({
-          address:address,
           notice:notice,
           banner,
           menu,

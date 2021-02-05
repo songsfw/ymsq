@@ -35,6 +35,7 @@
     <text >首页</text>
   </navigator>
   <navigator class="cart" open-type="switchTab" url="/pages/chart/chart">
+    <view class="num" wx:if="{{totalNum>0}}">{{totalNum}}</view>
     <view class="iconfont icon-chart"></view>
     <text >购物车</text>
   </navigator>
@@ -42,7 +43,7 @@
   <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="bread-panel">立即购买</view>
 </view>
 
-<view class="pop-panel score-panel" style="bottom:{{50+view}}px" wx:if="{{pop=='bread-panel'}}">
+<view class="pop-panel score-panel {{pop=='bread-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">

@@ -30,10 +30,13 @@ Page({
       title: '联系客服',
       content: '400-992-6632',
       showCancel:false,
-      confirmText:"知道了",
+      confirmText:"拨打",
       confirmColor:"#C1996B",
       success (res) {
         if (res.confirm) {
+          wx.makePhoneCall({
+            phoneNumber: '400-992-6632'
+          })
           console.log('用户点击确定')
         }
       }
@@ -47,10 +50,17 @@ Page({
   },
   getCartInfo(){
     let total_num = wx.getStorageSync("total_num")
-    wx.setTabBarBadge({ 
-      index: 2,
-      text: total_num.toString() || '0'
-    })
+    if(total_num>0){
+      wx.setTabBarBadge({ 
+        index: 2,
+        text: total_num.toString()
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 2
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面加载

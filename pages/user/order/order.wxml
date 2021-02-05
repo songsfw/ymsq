@@ -24,7 +24,7 @@
 <view class="card" wx:if="{{count!=0}}">
   <block wx:for="{{orderList}}">
     <view class="item" wx:for="{{item}}" wx:for-item="order">
-      <navigator hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{order.order_code}}">
+      <navigator hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{order.order_code}}&stat={{order.status}}">
         <view class="flex hd">
           <view class="order-info">
             <view class="order-code">订单编号：{{order.order_code}}</view>
@@ -62,17 +62,18 @@
           <view class="btn btn1 cancel-btn" catch:tap="cancelOrder" data-code="{{order.order_code}}">取消订单</view>
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
-        <block wx:if="{{order.status==2}}">
-          <!-- <view class="btn btn1 delivery-btn" data-code="{{order.order_code}}">查看物流</view> -->
+        <!-- <block wx:if="{{order.status==2}}">
+          <view class="btn btn1 delivery-btn" data-code="{{order.order_code}}">查看物流</view>
           <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
-        </block>
+        </block> -->
         <block wx:if="{{order.status==3}}">
-          <navigator url="/pages/index/index" open-type="switchTab" class="btn btn1 delivery-btn">去逛逛</navigator>
+          <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn btn1 delivery-btn">去逛逛</navigator> -->
+          <view class="btn btn1" bind:tap="shareOrder">分享给朋友</view>
           <navigator url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">去评价</navigator>
         </block>
-        <block wx:if="{{order.status==4}}">
+        <!-- <block wx:if="{{order.status==4}}">
           <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
-        </block>
+        </block> -->
       </view>
     </view>
   </block>

@@ -1,7 +1,7 @@
 <view class="tips flex"><text class="iconfont icon-notice"></text> <text >面包与蛋糕需分开支付</text></view>
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
-  <view class="hd flex">
-    <view class="checkbox {{noallBread?'':'on'}}" bind:tap="selectAll" data-type="1">
+  <view class="hd flex" bind:tap="selectAll" data-type="1">
+    <view class="checkbox {{noallBread?'':'on'}}">
       <view class="iconfont icon-check"></view>
     </view>
     <text>面包</text>
@@ -34,8 +34,8 @@
   </view>
 </view>
 <view class="pro-box" wx:if="{{cakeLi.length>0}}">
-  <view class="hd flex">
-    <view class="checkbox {{noallCake?'':'on'}}" bind:tap="selectAll" data-type="2">
+  <view class="hd flex" bind:tap="selectAll" data-type="2">
+    <view class="checkbox {{noallCake?'':'on'}}">
       <view class="iconfont icon-check"></view>
     </view>
     <text>蛋糕</text>
@@ -52,8 +52,8 @@
         <view class="txt flex-1 flex">
           <view class="tit">{{item.sku_name}} {{item.sku_unit}}</view>
           <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
-            <text>{{item.size}}</text>
-            <text>{{item.edible}}</text>
+            <text wx:if="{{item.size}}">{{item.size}}</text>
+            <text wx:if="{{item.edible}}">{{item.edible}}</text>
           </view>
           <view class="price flex">
             <view class="num">￥<text>{{item.sku_price}}</text></view>
@@ -65,7 +65,6 @@
           </view>
         </view>
       </view>
-
       <view class="pro-option flex">
         <view class="del" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
       </view>
@@ -73,13 +72,13 @@
   </view>
 </view>
 <view class="pro-box">
-  <view class="fittings" wx:if="{{fittings}}">
-    <view class="hd"><text>加购配件</text></view>
+  <view class="fittings" wx:if="{{fittingsList.length>0 && fittings}}">
+    <view class="hd"><text>蛋糕配件</text></view>
     <scroll-view scroll-x="{{true}}">
       <view class="flex list">
         <view class="item" wx:for="{{fittingsList}}" catch:tap="selectFittings" data-idx="{{index}}" data-id="{{item.sku}}">
           <view class="pic"><image src="{{item.img}}"></image></view>
-          <view class="tit">{{item.name}}</view>
+          <view class="tit">{{item.name}} ({{item.remark}})</view>
           <view class="price flex">
             <view class="num">￥<text>{{item.price}}</text></view>
             <view class="add iconfont icon-add"></view>

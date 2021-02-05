@@ -19,47 +19,35 @@ Page({
       address_detail: null,
       is_default: 0
     },
-    selectDate: 0,
-    selectTime: -1,
-    payQueue : [10,0,0,0,0],
+
     useCoupon: false,
     curtabid: 1,
     pop: 0,
 
-    hasDelivery:true,
-    hasMai:true,
-    hasCard:false,
-    hasThirdCard:false,
-    hasCoupon:false,
-    useBalance: true,
-    hasPolicy:true,
-
     ziti:"0",
 
-
     poptitle:"请输入设置的余额密码",
-    status:0,
-    tips:"获取验证码",
-    selected:0,
-    step:1,
-    list: [],
-    confirmText:"开启",
-    unuse:true,
+
   },
   
-  closeCoupon(){
+  close(){
     this.setData({
-      useCoupon:false,
       pop: 0
     })
   },
-
+  toComment(){
+    wx.navigateTo({
+      url:"/pages/commit/commit?orderCode="+this.data.orderCode
+    })
+  },
+  shareOrder(){
+    
+  },
   showAllPro() {
     this.setData({
       showAll: true
     })
   },
-
   selectType(e) {
     let stype = e.currentTarget.dataset.stype
     this.setData({
@@ -74,17 +62,6 @@ Page({
     })
   },
 
-  close() {
-    this.setData({
-      pop: 0
-    })
-  },
-  selectTime(e) {
-    let selectTime = e.currentTarget.dataset.idx
-    this.setData({
-      selectTime: selectTime,
-    })
-  },
   selectAdd() {
     let { address, type } = this.data
     console.log(address)
@@ -100,11 +77,7 @@ Page({
       remark: e.detail.value
     })
   }, 500),
-  showAllPro() {
-    this.setData({
-      showAll: true
-    })
-  },
+
   payOrder(e){
     let { orderCode } = this.data
     let data = {
@@ -154,13 +127,15 @@ Page({
     }
     api.cancleOrder(data).then(res=>{
       console.log(res);
-      wx.showToast({
-        icon:"none",
-        title:"订单取消成功"
-      })
-      wx.navigateBack({
-        delta: 1
-      })
+      if(res){
+        wx.showToast({
+          icon:"none",
+          title:"订单取消成功"
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      }
     })
   },
   copy(e){
@@ -172,11 +147,6 @@ Page({
           icon:"none",
           title:"复制成功"
         })
-        // wx.getClipboardData({
-        //   success (res) {
-        //     console.log(res.data) // data
-        //   }
-        // })
       }
     })
   },
@@ -186,6 +156,15 @@ Page({
         url:"/pages/user/address/address?type=1"
       })
     }
+  },
+  showDelivery(){
+    console.log("123");
+    wx.navigateTo({
+      url:'/pages/user/delivery/delivery?orderCode='+this.data.orderCode
+    })
+    // this.setData({
+    //   pop:"delivery"
+    // })
   },
   initOrderData() {
     let { orderCode } = this.data
@@ -206,6 +185,9 @@ Page({
         mobile: orderData.mobile,
         remark: orderData.remark,
         username:orderData.username,
+        dispatch_company:orderData.dispatch_company,
+        dispatch_date:orderData.dispatch_date,
+        dispatch_time: orderData.dispatch_time,
         product_price:orderData.product_price,
         balance_price:orderData.balance_price,
         weixin_price:orderData.weixin_price,
@@ -223,7 +205,8 @@ Page({
         cart_data: orderData.detail,
         status:res.status,
         is_ziti:res.is_ziti,
-        orderData:newOrderData
+        orderData:newOrderData,
+        steps:res.steps
       })
 
     })
@@ -277,37 +260,18 @@ Page({
     //this.setBalancePrice()
   },
 
-  closePanel(e){
-    let step = this.data.step
-    this.setData({ 
-      unuse:true
-    })
-    switch (step) {
-      case 1:
-        this.setData({
-          useBalance:false
-        })
-        
-        break;
-    
-      default:
-        break;
-    }
-    
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let orderCode = options.code
+    let orderCode = options.code,stat = options.stat
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
 
-
     this.setData({
+      stat:stat,
       btmHolder:btmHolder||0,
       fixedTop,
       orderCode: orderCode

@@ -67,7 +67,8 @@ Page({
     ],
     cityList: [],
     backfill: "",
-    scale:16
+    scale:16,
+    flag:false
   },
   IsPtInPoly(aLat, aLon, pointList) {
     /* 
@@ -148,6 +149,9 @@ Page({
   },
   //触发关键词输入提示事件
   getsuggest: util.debounce(function (e) {
+    if(this.data.flag){
+      return
+    }
     if (!e.detail.value) return
     let cityName = this.data.cityName
     console.log(cityName);
@@ -182,12 +186,13 @@ Page({
     });
   }, 500),
   backfill: function (e) {
-    var id = e.currentTarget.id;
+    var id = e.currentTarget.dataset.id;
     let suggestion = this.data.suggestion
     for (var i = 0; i < suggestion.length; i++) {
       if (i == id) {
         console.log(suggestion[i]);
         this.setData({
+          flag:true,
           backfill: suggestion[i].title,
           lng: suggestion[i].longitude,
           lat: suggestion[i].latitude,
@@ -398,7 +403,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

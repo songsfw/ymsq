@@ -1,4 +1,5 @@
 <!-- chart -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
 <view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">
     <text class="{{ziti=='0'?'on':''}}" data-stype="0" bind:tap="selectType">商家配送</text>
@@ -102,8 +103,8 @@
           <view class="info flex-1 flex">
             <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
             <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
-              <text>{{item.size}}</text>
-              <text>{{item.edible}}</text>
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
             </view>
             <view class="price flex">
               <view class="num">
@@ -147,8 +148,7 @@
         <text wx:if="{{cart_data.free_msg!='' && !useCoupon}}">【{{cart_data.free_msg}}】</text>
       </view>
       <view class="val strongTxt">
-        ￥<block wx:if="{{hasDelivery}}">{{cart_data.default_delivery}}</block>
-        <block wx:else>0</block>
+        ￥{{hasDelivery?cart_data.default_delivery:'0'}}
       </view>
     </view>
     <view class="delivery-tip" wx:if="{{useCoupon}}">
@@ -222,7 +222,7 @@
   <view class="flex-1">配送当天无法修改任何信息(过敏者慎用)
 收货后，非质量问题不予退换</view>
 </view>
-<view class="option flex-center">
+<view class="option flex-center" style="padding-bottom:{{btmHolder}}px">
   <view class="flex-center">
     <text>合计:</text>
     <view class="num">￥<text>{{payPrice}}</text>
@@ -368,27 +368,14 @@
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
   <view slot="setNewPwd" wx:if="{{step==2}}">
-    <block wx:if="{{pwd_set==1}}">
-      <view class="inputxt flex">
-        <text>旧密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" password placeholder="请输入6位数字密码" />
-      </view>
-      <view class="inputxt flex">
-        <text>新密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" password placeholder="请输入6位数字密码" />
-      </view>
-    </block>
-    <block wx:else>
-      <view class="inputxt flex">
-        <text>密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
-      </view>
-      <view class="inputxt flex">
-        <text>确认密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
-      </view>
-    </block>
-    
+    <view class="inputxt flex">
+      <text>密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
+    </view>
+    <view class="inputxt flex">
+      <text>确认密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
+    </view>
   </view>
   <view slot="verify" class="verify"  wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>

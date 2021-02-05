@@ -1,0 +1,37 @@
+<view class="order-info">
+  <view class="flex hd">
+    <view class="order-code">订单编号：{{orderCode}}</view>
+  </view>
+  <scroll-view scroll-x="{{true}}" class="pic-box">
+    <view class="flex">
+      <view class="pic1 flex" wx:if="{{info.order_info.detail.length==1}}">
+        <view class="pic">
+          <image src="{{info.order_info.detail[0].image_url}}" mode="aspectFill"></image>
+        </view>
+        <view class="flex">
+          <view class="h3">{{info.order_info.detail[0].name}}</view>
+          <view class="num">X{{info.order_info.detail[0].count}}</view>
+        </view>
+      </view>
+      <block wx:else>
+        <view class="pic" wx:for="{{info.order_info.detail}}" wx:for-item="pic">
+          <image src="{{pic.image_url}}" mode="aspectFill"></image>
+          <view class="count">X{{pic.count}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+  <view class="type flex"><view>配送方式</view><text>原麦山丘物流助手</text></view>
+</view>
+<view class="delivery-info">
+  <block wx:for="{{info.steps}}">
+    <view class="item">
+      <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
+      <view class="time">{{item.time}}</view>
+    </view>
+    <view class="item">
+      <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
+      <view class="time">{{item.time}}</view>
+    </view>
+  </block>
+</view>

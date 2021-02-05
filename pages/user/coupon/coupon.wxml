@@ -64,7 +64,7 @@
 </view>
 <view class="card" hidden="{{currentTab!=1}}">
   <block wx:for="{{shopLi}}" wx:for-item="list">
-    <view class="item" wx:for="{{list}}" wx:key="id">
+    <view class="item" wx:for="{{list}}" wx:for-index="idx" wx:key="id" data-id="{{item.id}}" wx:if="{{!item.used}}">
       <view class="tag {{item.tag=='新领取'?'new':''}}">{{item.tag}}</view>
       <view class="flex">
         <view class="coupon-num flex">
@@ -80,20 +80,20 @@
           <view class="date">{{item.valid_time}}</view>
           <view class="txt flex">
             <text>{{item.desc1}}</text>
-            <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去兑换</navigator>
+            <view bind:tap="useCoupon" data-idx="{{idx}}" data-id="{{item.id}}" class="btn">去使用</view>
           </view>
         </view>
       </view>
       <view class="border">
         <view></view>
       </view>
-      <view class="tips {{item.id==curId?'on':''}}" bind:tap="showTips" data-id="{{item.id}}">
+      <view class="tips {{item.id==curId?'on':''}}" bind:tap="showTips" data-id="{{item.id}}" data-card='{{item.card_no}}'>
         <view class="txt">
           <view class="flex" style="justify-content: space-between;">
             <view>{{item.desc2}}</view>
             <view class="arrow-bottom"></view>
           </view>
-          <view class="card-code-img">
+          <view class="card-code-img" wx:if="{{item.id==curId}}">
             <canvas canvas-id="barcode-{{item.id}}"></canvas>
           </view>
           <view class="card_no">{{item.card_no}}</view>
@@ -108,8 +108,8 @@
     </view>
   </block>
   <block wx:else>
-    <view wx:if="{{pageInfo.shop.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
+    <!-- <view wx:if="{{pageInfo.shop.noMoreData}}" class="more-btn">我可是有底线的</view> -->
+    <view wx:if="{{!pageInfo.shop.noMoreData}}" class="more-btn">加载中...</view>
   </block>
 </view>
 <view class="card" hidden="{{currentTab!=2}}">
@@ -157,7 +157,7 @@
 </view>
 <view class="card" hidden="{{currentTab!=3}}">
   <block wx:for-item="list" wx:for="{{expiredLi}}" >
-    <view class="item used unuse" wx:for="{{list}}" wx:key="id">
+    <view class="item used unuse" wx:for="{{list}}"  wx:for-index="idx" data-idx="{{idx}}">
       <view class="flex">
         <view class="coupon-num flex">
           <image src="../../../image/coupon1-1.png"></image>

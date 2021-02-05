@@ -1,0 +1,14 @@
+<!-- pages/user/user.wxml -->
+<view class="msg">
+  <view class="logo-txt">
+    <view class="logo1"><image src="../../../image/icon-logo.png"></image></view>
+    <view class="logo2"><image src="../../../image/logo-txt.png"></image></view>
+    <view class="tip">您好，很抱歉给你带来不便，我们由衷感谢所有提出宝贵意见的用户</view>
+  </view>
+  <textarea class="txt-area" placeholder="请输入您的详细问题，我们将尽快为您解决。" placeholder-style="color:#ccc;" bindinput="inputTxt"></textarea>
+  <view class="logo">
+    <image src="../../../image/logo.png"></image>
+  </view>
+</view>
+<view class="fixedBtn" style="padding-bottom:{{12+btmHolder}}px"><view class="btn" bind:tap="submit">提交</view></view>
+<view style="height:{{56+btmHolder}}px"></view>

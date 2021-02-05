@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentTab:0,
+    currentTab:'0',
     mallLi:null,
     shopLi:null,
     usedLi:null,
@@ -73,20 +73,46 @@ Page({
         ['usedLi['+(obj.used.pageNum-1)+']']:this.getCurrList(usedLi,1),
         ['expiredLi['+(obj.expired.pageNum-1)+']']:this.getCurrList(expiredLi,1),
       })
-      let curShopLi = this.getCurrList(shopLi,1)
-      if(curShopLi.length>0){
-        curShopLi.forEach(item=>{
-          wxbarcode.barcode.call(this,'barcode-'+item.id, item.card_no, 660, 300);
-        })
-      }
+      // let curShopLi = this.getCurrList(shopLi,1)
+      // if(curShopLi.length>0){
+      //   curShopLi.forEach(item=>{
+      //     wxbarcode.barcode('barcode-'+item.id, item.card_no, 660, 300);
+      //   })
+      // }
       
     })
   },
   getCurrList(list,pageNum){
     return list.slice(pageNum*10-10,pageNum*10)
   },
+  useCoupon(e){
+    let id = e.currentTarget.dataset.id,idx = e.currentTarget.dataset.idx
+    let pageNum = parseInt(this.data.pageInfo.shop.pageNum)
+    let index = pageNum-1
+    let data = {
+      promotion_id:id
+    }
+    console.log(this.data.shopLi);
+    api.storeCoupon(data).then(res=>{
+      console.log(res);
+      if(res){
+        
+        this.setData({
+          ['shopLi['+index+']['+idx+'].used']:true
+        })
+        console.log(this.data.shopLi);
+        wx.showToast({
+          icon:"success",
+          title:"使用成功"
+        })
+
+      }
+    })
+    
+  },
   showTips(e){
-    let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id,
+    card=e.currentTarget.dataset.card
     let curId = this.data.curId
     console.log(id);
     if(id == curId){
@@ -94,6 +120,7 @@ Page({
         curId:null,
       })
     }else{
+      wxbarcode.barcode('barcode-'+id, card, 660, 300);
       this.setData({
         curId:id,
       })
@@ -109,7 +136,7 @@ Page({
         if(pageInfo.mall.noMoreData){
           return false
         }
-        noMoreData = this.getCurrList(mallLi,pageNum).length-pageNum*10 <= 0
+        noMoreData = this.getCurrList(mallLi,pageNum).length-10 < 0
         this.setData({
           ['pageInfo.mall.pageNum']: pageNum,
           ['pageInfo.mall.noMoreData']:noMoreData,
@@ -129,7 +156,7 @@ Page({
           })
         }
 
-        noMoreData = this.getCurrList(shopLi,pageNum).length-pageNum*10 <= 0
+        noMoreData = this.getCurrList(shopLi,pageNum).length-10 < 0
         this.setData({
           ['pageInfo.shop.pageNum']: pageNum,
           ['pageInfo.shop.noMoreData']:noMoreData,
@@ -142,7 +169,7 @@ Page({
         if(pageInfo.used.noMoreData){
           return false
         }
-        noMoreData = this.getCurrList(usedLi,pageNum).length-pageNum*10 <= 0
+        noMoreData = this.getCurrList(usedLi,pageNum).length-10 < 0
         this.setData({
           ['pageInfo.used.pageNum']: pageNum,
           ['pageInfo.used.noMoreData']:noMoreData,
@@ -155,7 +182,7 @@ Page({
         if(pageInfo.expired.noMoreData){
           return false
         }
-        noMoreData = this.getCurrList(expiredLi,pageNum).length-pageNum*10 <= 0
+        noMoreData = this.getCurrList(expiredLi,pageNum).length-10 < 0
         this.setData({
           ['pageInfo.expired.pageNum']: pageNum,
           ['pageInfo.expired.noMoreData']:noMoreData,

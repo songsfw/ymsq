@@ -34,8 +34,7 @@ Page({
   },
   addAddress(){
     console.log(this.data.address)
-    
-    let {id,address, address_detail, mobile, name,is_default,location,city_name,title} = this.data.address
+    let {id,address, address_detail, mobile, name,is_default,location,city_name,title,is_ziti,city_id} = this.data.address
     let newAdd = {address:address}
     
     if(!name){
@@ -90,9 +89,10 @@ Page({
       address_detail:address_detail,
       is_default:is_default,
       city_name:city_name,
-      mobile:mobile
+      mobile:mobile,
+      title:title
     }
-    
+
     //修改
     if(this.data.type=="1"){
       data.id = id
@@ -100,6 +100,20 @@ Page({
       api.editAddress(data).then(res => {
         console.log(res);
         if(res){
+          if(is_default==1){
+            let addressInfo = {
+              address: address,
+              id: id,
+              city_id: res.city_id,
+              city_name: city_name,
+              address_detail:address_detail,
+              is_default:is_default,
+              mobile:mobile,
+              name:name,
+              is_ziti:res.is_ziti
+            }
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          }
           wx.navigateBack({
             delta: 1
           })
@@ -110,6 +124,20 @@ Page({
       api.addAddress(data).then(res => {
         console.log(res);
         if(res){
+          if(is_default==1){
+            let addressInfo = {
+              address: address,
+              id: id,
+              city_id: res.city_id,
+              city_name: city_name,
+              address_detail:address_detail,
+              is_default:is_default,
+              mobile:mobile,
+              name:name,
+              is_ziti:res.is_ziti
+            }
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          }
           wx.navigateBack({
             delta: 1
           })

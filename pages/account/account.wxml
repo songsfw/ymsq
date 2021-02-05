@@ -6,13 +6,12 @@
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
   <scroll-view scroll-y="true" class="contain">
     <view class="account">
-      <view class="txt">
-        <view>我的账户余额 (元)</view>
-        <view class="show" bindtap="changeMoney">
-          <text class="iconfont icon-eye" wx:if="{{show}}"></text>
-          <text class="iconfont icon-eye2" wx:else></text>
-        </view>
-      </view>
+
+      <view class="txt flex-center" bindtap="changeMoney"><view>我的账户余额 (元)</view><view class="show">
+        <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+        <text class="iconfont icon-eye2" wx:else></text>
+      </view></view>
+
       <view class="money">{{show?money:"******"}}</view>
       <navigator url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信充值</navigator>
     </view>

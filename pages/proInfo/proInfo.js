@@ -60,7 +60,7 @@ Page({
   },
   confirmBread:util.debounce(function(e){
     let proId = e.currentTarget.dataset.id
-    let {city_id,skuNum,action}=this.data
+    let {city_id,skuNum,action,totalNum}=this.data
 
     let data = {
       city_id: city_id,
@@ -68,24 +68,24 @@ Page({
       tab_id:proId,
       number:skuNum
     }
-
-    console.log(data);
+    totalNum = totalNum+skuNum
     api.setChart(data).then(res => {
       console.log(res);
       if(res){
+        wx.setStorageSync('total_num',totalNum)
         wx.showToast({
           icon:"none",
           title:'加入购物车成功'
+        })
+        this.setData({
+          totalNum:totalNum,
+          pop:0
         })
         if(action==1){
           wx.switchTab({
             url:"/pages/chart/chart"
           })
         }
-        this.setData({
-          pop:0
-        })
-        
       }
       
     })
@@ -162,8 +162,10 @@ Page({
   onLoad: function (options) {
     let proId = options.proId
     let addressInfo = wx.getStorageSync("addressInfo")
+    let totalNum = wx.getStorageSync("total_num")
     let city_id = JSON.parse(addressInfo).city_id
     this.setData({
+      totalNum:totalNum,
       city_id:city_id,
       proId: proId
     })

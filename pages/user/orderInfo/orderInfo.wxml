@@ -4,25 +4,29 @@
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
   <view class="order-type">
     <view class="txt">{{status.title}}</view>
-    <view class="status">
-      {{status.msg}}
-    </view>
+    <view class="status">{{status.msg}}</view>
   </view>
   <view class="order-wp">
-    <view class=""></view>
-    <view bind:tap="changeAdd" class="address flex-center">
-      <view class="local iconfont icon-local"></view>
-      <view class="txt flex-1">
-        <view class="tit flex">
-          <text>{{orderData.username}}</text>
-          <text>{{orderData.mobile}}</text>
-          <view class="tag" wx:if="{{address.address_default}}">默认</view>
+    <view class="pro-info">
+      <view class="delivery-info flex-center" bind:tap="showDelivery" wx:if="{{steps.length>0}}">
+        <view class="txt">
+          <view>{{steps[0].msg}}</view>
+          <view>{{steps[0].time}}</view>
         </view>
-        <view class="address-txt">
-          {{orderData.address}}{{orderData.address_detail}}
-        </view>
+        <view class="iconfont icon-arrow-r "></view>
       </view>
-      <view class="edit" wx:if="{{status.title=='待支付'}}">修改</view>
+      <view class="address flex-center">
+        <view class="local iconfont icon-local"></view>
+        <view class="txt flex-1">
+          <view class="tit flex">
+            <text>{{orderData.username}}</text>
+            <text>{{orderData.mobile}}</text>
+            <view class="tag" wx:if="{{address.address_default}}">默认</view>
+          </view>
+          <view class="address-txt">{{orderData.address}}{{orderData.address_detail}}</view>
+        </view>
+        <!-- <view class="edit" wx:if="{{stat=='1'}}">修改</view> -->
+      </view>
     </view>
     <view class="pro-info">
       <view class="hd flex-center">
@@ -31,12 +35,43 @@
       </view>
       <view class="pro-wp">
         <view class="item" wx:if="{{index<3}}" wx:for="{{cart_data}}">
-           <view class="flex">
+          <view class="flex">
             <view class="pic">
               <image src="{{item.image_url}}" mode="aspectFill"></image>
             </view>
             <view class="info flex-1 flex">
-              <view class="tit">{{item.name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
+              <view class="tit">
+                {{item.name}}
+                <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
+              </view>
+              <view class="tag flex-wrap">
+                <text>{{item.size}}</text>
+                <text>{{item.spec}}</text>
+                <text>{{item.edible}}</text>
+              </view>
+              <view class="price flex">
+                <view class="num">
+                  ￥<text>{{item.price}}</text>
+                </view>
+                <view class="count">x{{item.count}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="flex-center txt-card" wx:if="{{item.remark}}">
+            <view class="h4">巧克力牌</view>
+            <view class="txt">{{item.remark}}</view>
+          </view>
+        </view>
+        <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{cart_data}}">
+          <view class="flex">
+            <view class="pic">
+              <image src="{{item.image_url}}" mode="aspectFill"></image>
+            </view>
+            <view class="info flex-1 flex">
+              <view class="tit">
+                {{item.name}}
+                <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
+              </view>
               <view class="tag flex-wrap">
                 <text>{{item.size}}</text>
                 <text>{{item.edible}}</text>
@@ -55,21 +90,6 @@
             <view class="txt">{{item.remark}}</view>
           </view>
         </view>
-        <view class="item flex" wx:if="{{index>=3 && showAll}}" wx:for="{{cart_data}}">
-          <view class="pic">
-            <image src="{{item.image_url}}" mode="aspectFill"></image>
-          </view>
-          <view class="info flex-1 flex">
-            <view class="tit">{{item.name}}</view>
-            <view class="price flex">
-              <view class="num">
-                ￥
-                <text>{{item.price}}</text>
-              </view>
-              <view class="count">x{{item.count}}</view>
-            </view>
-          </view>
-        </view>
       </view>
       <view class="more-pro flex-center" wx:if="{{cart_data.length>3 && !showAll}}" bind:tap="showAllPro">
         <view>还有更多商品</view>
@@ -82,7 +102,10 @@
       </view>
       <view class="flex-center ">
         <view class="name">订单编号</view>
-        <view class="val"><text class="copy-btn" bind:tap="copy" data-id="{{orderData.id}}">复制</text>{{orderData.id}}</view>
+        <view class="val">
+          <text class="copy-btn" bind:tap="copy" data-id="{{orderData.id}}">复制</text>
+          {{orderData.id}}
+        </view>
       </view>
       <view class="flex-center ">
         <view class="name">下单时间</view>
@@ -94,17 +117,16 @@
       </view> -->
       <view class="flex-center ">
         <view class="name">配送方式</view>
-        <view class="val">{{delivery.dispatch_company}}</view>
+        <view class="val">{{orderData.dispatch_company}}</view>
       </view>
       <view class="flex-center ">
         <view class="name">期望配送时间</view>
-        <view class="val">{{delivery.dispatch_date}} {{delivery.dispatch_time}}</view>
+        <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
       <view class="flex-center ">
         <view class="name">备注</view>
         <view class="val">{{orderData.remark}}</view>
       </view>
-      
     </view>
     <view class="pay-info">
       <view class="flex-center">
@@ -112,9 +134,7 @@
         <view class="val">￥{{orderData.product_price}}</view>
       </view>
       <view class="flex-center">
-        <view class="name delivery">
-          配送费用
-        </view>
+        <view class="name delivery">配送费用</view>
         <view class="val">+￥{{orderData.delivery_price}}</view>
       </view>
       <view class="flex-center" wx:if="{{orderData.point_price!=0}}">
@@ -153,21 +173,41 @@
     </view>
   </view>
 </view>
-<view class="option flex-center">
-  <block wx:if="{{status.title=='待发货'}}">
-    <view class="btn" bind:tap="shareOrder">查看物流</view>
-    <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator>
+<view class="option flex-center" style="padding-bottom:{{10+btmHolder}}px">
+  <block wx:if="{{stat==2}}">
+    <view class="btn" bind:tap="showDelivery" wx:if="{{steps.length>0}}">查看物流</view>
+    <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
   </block>
-  <block wx:if="{{status.title=='已完结'}}">
-     <view class="btn" bind:tap="shareOrder">去评价</view>
+  <block wx:if="{{stat==3}}">
+    <view class="btn" bind:tap="toComment">去评价</view>
     <view class="btn" bind:tap="shareOrder">分享给朋友</view>
-    <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator>
+    <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
   </block>
-  <block wx:if="{{status.title=='待支付'}}">
+  <block wx:if="{{stat==1}}">
     <view class="btn" bind:tap="cancelOrder">取消订单</view>
     <view class="btn main-btn" bind:tap="payOrder">去支付</view>
   </block>
-  <block wx:if="{{status.title=='已取消'}}">
+  <!-- <block wx:if="{{stat==4}}">
     <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator>
-  </block>
+  </block> -->
 </view>
+
+<view class="pop-panel delivery-panel" wx:if="{{pop=='delivery'}}">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="tit">
+    <text>订单跟踪</text>
+  </view>
+  <view class="pop-con">
+    <scroll-view scroll-y="{{true}}">
+      <block wx:for="{{steps}}">
+        <view class="item">
+          <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
+          <view class="time">{{item.time}}</view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  <!-- <view class="confirm-btn btn" bind:tap="close">确定</view> -->
+</view>
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+<view style="height:{{50+btmHolder}}px"></view>

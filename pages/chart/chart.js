@@ -363,13 +363,7 @@ Page({
   setCartNum(data){
     api.setChart(data).then(res => {
       console.log(res);
-      if(!res){
-        wx.showToast({
-          icon:"none",
-          title:'加入购物车失败'
-        })
-        return
-      }else{
+      if(res){
         this.getChartData()
       }
     })
@@ -392,10 +386,17 @@ Page({
       if(res){
         let breadLi = res.bread.detail,cakeLi=res.cake.detail
 
-        wx.setTabBarBadge({ 
-          index: 2,
-          text: res.total_num.toString()
-        })
+        if(res.total_num>0){
+          wx.setTabBarBadge({ 
+            index: 2,
+            text: res.total_num.toString()
+          })
+        }else{
+          wx.removeTabBarBadge({
+            index: 2
+          })
+        }
+        
         wx.setStorageSync('total_num',res.total_num)
         
         if(breadLi.length>0){
@@ -542,10 +543,17 @@ Page({
   },
   getCartInfo(){
     let total_num = wx.getStorageSync("total_num")
-    wx.setTabBarBadge({ 
-      index: 2,
-      text: total_num.toString()
-    })
+    if(total_num && total_num>0){
+      wx.setTabBarBadge({ 
+        index: 2,
+        text: total_num.toString()
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 2
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -597,7 +605,7 @@ Page({
     let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = JSON.parse(addressInfo).city_id
+    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     if(userInfo){
       userInfo = JSON.parse(userInfo)
     }

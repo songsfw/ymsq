@@ -35,6 +35,7 @@ Page({
     
   },
   open(){
+    let step
     let data ={
       order_code:this.data.orderCode
     }
@@ -72,6 +73,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({title:"加载中"})
     let step=0
     let pages = getCurrentPages();
     let currentPage = pages[pages.length-1];
@@ -89,6 +91,7 @@ Page({
       if(res.is_reward){
         step=2
       }
+      wx.hideLoading()
       this.setData({
         users:res.userRewardDataReader,
         step:step,

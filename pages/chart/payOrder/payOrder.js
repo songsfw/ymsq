@@ -42,7 +42,9 @@ Page({
     confirmText:"确定",
     unuse:true,
     verifyed:false,
-    zitiName:''
+    zitiName:'',
+
+    isSet:null
   },
   
   closeCoupon(){
@@ -263,30 +265,28 @@ Page({
         }
 
         let hasMai = res.jinmai.can
-        let balanceInfo = res.balance_config
-        let {free_secret} = balanceInfo
+        // let balanceInfo = res.balance_config
+        // let {free_secret} = balanceInfo
 
-        if(useBalance){
-          if(free_secret=="0"){
-            verifyed = false
-          }else{
-            verifyed = true
-          }
-        }
+        // if(useBalance){
+        //   if(free_secret=="0"){
+        //     verifyed = false
+        //   }else{
+        //     verifyed = true
+        //   }
+        // }
 
         this.setData({
-          verifyed:verifyed,
           hasMai:hasMai,
           address: res.address,
           balance: res.balance,
-          balanceInfo: balanceInfo,
+          balanceInfo: res.balance_config,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery:res.delivery,
           cart_data: newcart_data,
           proList:cart_data.detail,
           couponList:cart_data.promotion_info,
-          couponNum:cart_data.promotion_info.length,
           unableCouponList:cart_data.promotion_info_unable,
           couponPrice:cart_data.promotion_price
         })
@@ -313,8 +313,8 @@ Page({
         }
 
         let hasMai = res.jinmai.can
-        let balanceInfo = res.balance_config
-        let {free_secret} = balanceInfo
+        // let balanceInfo = res.balance_config
+        // let {free_secret} = balanceInfo
         let detail = cart_data.detail
 
         detail.find(item=>{
@@ -323,19 +323,18 @@ Page({
           }
         })
 
-        if(useBalance){
-          if(free_secret=="0"){
-            verifyed = false
-          }else{
-            verifyed = true
-          }
-        }
+        // if(useBalance){
+        //   if(free_secret=="0"){
+        //     verifyed = false
+        //   }else{
+        //     verifyed = true
+        //   }
+        // }
 
         this.setData({
           hasMai:hasMai,
           txtCard:res.default_mcake_message,
           fittings_desc:res.fittings_desc,
-          verifyed:verifyed,
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
@@ -345,7 +344,6 @@ Page({
           cart_data: newcart_data,
           proList:cart_data.detail,
           couponList:cart_data.promotion_info,
-          couponNum:cart_data.promotion_info.length,
           unableCouponList:cart_data.promotion_info_unable,
           couponPrice:cart_data.promotion_price
         })
@@ -354,6 +352,8 @@ Page({
     }
   },
   //初始化订单金额 扣除麦点 运费 余额
+  //hasDelivery false 免邮-减邮费 10
+  //hasDelivery true 需邮费-不减邮费 0
   initOrderPrice(){
     let { cart_data, jinmai, hasDelivery,
       hasMai,
@@ -386,7 +386,7 @@ Page({
         }
         coupon = this.data.usedCouponPrice
       }else{
-        if(cart_data.free_type==1){
+        if(cart_data.free_type==1 || cart_data.free_type==2){
           hasDelivery=false
         }else{
           hasDelivery=true
@@ -396,10 +396,10 @@ Page({
     }
 
     //无运费减去运费
-    if (!hasDelivery) { //免邮-减去邮费
+    if (!hasDelivery) { //免邮-需要减去邮费
       //1 单品免邮，可与优惠券同用  2 满减免邮  0 
       delivery = parseInt(cart_data.default_delivery)
-    }else{ //不免邮
+    }else{ //要邮费-不用减邮费
       delivery = 0
     }
 
@@ -408,13 +408,8 @@ Page({
 
     console.log(newPayQueue)
 
-    newPayQueue[3]=0
-    newPayQueue[4]=0
-    this.setData({
-      payQueue:newPayQueue,
-      hasCard:false,
-      hasThirdCard:false
-    })
+    // newPayQueue[3]=0
+    // newPayQueue[4]=0
     
     this.setData({
       hasDelivery:hasDelivery,
@@ -431,15 +426,15 @@ Page({
     },payPrice)
     console.log(payPrice)
 
-    let free_amount = this.data.balanceInfo.free_amount,
+    let {free_amount,free_secret} = this.data.balanceInfo,
         {useBalance,verifyed} = this.data
     free_amount = parseFloat(free_amount)
     payPrice = parseFloat(payPrice)
     if(useBalance){
-      if(free_amount < payPrice){
-        verifyed = false
-      }else{
+      if(free_secret==1 && free_amount > payPrice){
         verifyed = true
+      }else{
+        verifyed = false
       }
     }
 
@@ -537,11 +532,29 @@ Page({
   },300),
   submmitOrder:util.debounce(function(){
     
-    let {cart_data,addressInfo,address_id,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName}=this.data
+    let {cart_data,addressInfo,address_id,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName,balanceInfo}=this.data
     let balance_price = useBalance=="1" ? preUseBalancePrice : 0
 
+    if(!selectDateTxt || !selectTimeTxt){
+      this.setData({
+        pop:'showTime'
+      })
+      wx.showToast({
+        icon:"none",
+        title:"请选择配送时间"
+      })
+      return
+    }
  
-    if(!verifyed){
+    if(!verifyed && balanceInfo.pwd_set==0){
+        this.setData({
+          popShow:true,
+          poptitle:"请设置余额密码",
+          step:2
+        })
+        return
+    } 
+    if(!verifyed && balanceInfo.pwd_set==1){
       this.setData({
         popShow:true,
         poptitle:"请输入设置的余额密码",
@@ -549,6 +562,7 @@ Page({
       })
       return
     }
+    
 
     console.log(payQueue)
     console.log(balance_price)
@@ -559,13 +573,7 @@ Page({
       })
       return
     }
-    if(!selectDateTxt || !selectTimeTxt){
-      wx.showToast({
-        icon:"none",
-        title:"请选择配送时间"
-      })
-      return
-    }
+    
     console.log(addressInfo)
     let deliveryPrice = payQueue[0] == 0 ? cart_data.default_delivery : 0
     let data = {
@@ -772,7 +780,20 @@ Page({
       })
     }
   },500),
-
+  verifyPwd(val){
+    let data = {
+      password:val
+    }
+    api.verifyPwd(data).then(res=>{
+      console.log(res);
+      if(res){
+        this.setData({
+          poptitle:"输入密码",
+          step:2
+        })
+      }
+    })
+  },
   verifyInput(e){
     var val = e.detail.value
     if(val.length==6){
@@ -842,146 +863,84 @@ Page({
   },
   confirm(e){
     let step = this.data.step
-    
-    switch (step) {
-      case 1:
-        let val = this.data.pwdVal
-        if(!val || val.length<6){
-          wx.showToast({
-            title: '请输入6位数字密码',
-            icon: 'none',
-            duration: 2000
-          })
-          return 
-        }
-
-        let data = {
-          password:val
-        }
-        api.verifyPwd(data).then(res=>{
-          console.log(res);
-          
-          if(res.status=='1016'){
-            wx.showToast({
-              title: res.message,
-              icon: 'none',
-              duration: 2000
-            })
-            return
-          }
-          if(res){
-            this.setData({
-              popShow:false,
-              useBalance:true,
-              verifyed:true
-            })
-            this.setBalancePrice()
-          }
+    if(step==1){
+      let val = this.data.pwdVal
+      if(!val || val.length<6){
+        wx.showToast({
+          title: '请输入6位数字密码',
+          icon: 'none',
+          duration: 2000
         })
-        break;
-      case 2:
-        let {newPwd,oldPwd,confirmPwd,initPwd,pwd_set}=this.data
-        if(pwd_set==1){
-          if(newPwd.length<6 || oldPwd.length<6){
-            wx.showToast({
-              title: '请输入6位数字密码',
-              icon: 'none',
-              duration: 2000
-            })
-            return 
-          }
-          let data = {
-            old_password:oldPwd,
-            new_password:newPwd
-          }
-          api.setNewPwd(data).then(res=>{
-            console.log(res)
-            if(res.status=='1017'){
-              wx.showToast({
-                title: res.message,
-                icon: 'none',
-                duration: 2000
-              })
-            }else if(res.pwd_set==1){
-              wx.showToast({
-                title: '新密码设置成功',
-                icon: 'none',
-                duration: 2000
-              })
-              this.closePanel()
-            }
+        return 
+      }
+      let data = {
+        password:val
+      }
+      api.verifyPwd(data).then(res=>{
+        console.log(res);
+        if(res){
+          this.setData({
+            popShow:false,
+            useBalance:true,
+            verifyed:true
           })
-        }else{
-          if(confirmPwd.length<6 || initPwd.length<6){
-            wx.showToast({
-              title: '请输入6位数字密码',
-              icon: 'none',
-              duration: 2000
-            })
-            return 
-          }
-          let data = {
-            password:initPwd,
-            re_password:confirmPwd
-          }
-          api.setPwd(data).then(res=>{
-            console.log(res)
-            if(res.status=='1017'){
-              wx.showToast({
-                title: res.message,
-                icon: 'none',
-                duration: 2000
-              })
-            }else if(res.pwd_set==1){
-              wx.showToast({
-                title: '密码设置成功',
-                icon: 'none',
-                duration: 2000
-              })
-              this.closePanel()
-            }
-          })
+          this.setBalancePrice()
+          this.submmitOrder()
         }
-        
-        break
-      case 3:
-        let verify =this.data.verify,phone=this.data.userInfo.phone
+      })
+    }
+    if(step==2){
+      let {confirmPwd,initPwd,balanceInfo}=this.data
+      if(confirmPwd.length<6 || initPwd.length<6){
+        wx.showToast({
+          title: '请输入6位数字密码',
+          icon: 'none',
+          duration: 2000
+        })
+        return 
+      }
+      let data = {
+        password:initPwd,
+        re_password:confirmPwd
+      }
+      api.setPwd(data).then(res=>{
+        console.log(res)
 
-        if(verify.length<6){
-          wx.showToast({
-            title: '请输入6位验证码',
-            icon: 'none',
-            duration: 2000
-          })
-          return 
-        }else{
-          let data = {
-            code:verify,
-            mobile:phone,
-            send_type:"password"
-          }
-          api.verifyCode(data).then(res=>{
-            console.log(res)
-            if(res.status=='1004'){
-              wx.showToast({
-                title: res.message,
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          })
+        wx.showToast({
+          title: '密码设置成功',
+          icon: 'none',
+          duration: 2000
+        })
+        this.closePanel()
+        this.setBalancePrice()
+        this.submmitOrder()
+        
+      })
+    }
+    if(step==3){
+      let verify =this.data.verify,phone=this.data.userInfo.phone
+
+      if(verify.length<6){
+        wx.showToast({
+          title: '请输入6位验证码',
+          icon: 'none',
+          duration: 2000
+        })
+        return 
+      }else{
+        let data = {
+          code:verify,
+          mobile:phone,
+          send_type:"password"
         }
-        // if(newPwd!=oldPwd){
-        //   wx.showToast({
-        //     title: '',
-        //     icon: 'none',
-        //     duration: 2000
-        //   })
-        //   return 
-        // }
-        break 
-      default:
-        break;
+        api.verifyCode(data).then(res=>{
+          console.log(res)
+          this.setData({
+            poptitle:"输入密码",
+            step:2
+          })
+        })
+      }
     }
     
   },

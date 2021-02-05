@@ -15,7 +15,7 @@ Page({
     })
   },
   showPop(e) {
-    wx,showLoading({title:"加载中..."})
+    
     let pop = e.currentTarget.dataset.pop
     let action = this.data.shareInfo.action,
     order_code = this.data.order_code
@@ -23,6 +23,7 @@ Page({
       order_code:order_code
     }
     if(action=="share"){
+      wx.showLoading({title:"加载中..."})
       api.createPoster(data).then(res=>{
         console.log(res);
         if(!res){
@@ -50,12 +51,14 @@ Page({
 		})
 	},
   confirmCoupon(){
+    wx.showLoading({title:"加载中..."})
     let order_code = this.data.order_code
     let data = {
       order_code:order_code
     }
     api.createPoster(data).then(res=>{
       console.log(res);
+      wx.hideLoading()
       if(!res){
         return
       }
@@ -64,6 +67,7 @@ Page({
         poster:poster,
         pop: 'showPoster'
       })
+      
     })
   },
   showTips(){

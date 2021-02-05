@@ -2,13 +2,11 @@
 .navBarWrap{position: fixed;left: 0;top: 0;width: 100%; color: #fff;box-sizing: border-box;align-items: center;z-index: 20;}
 .navwrap{position: relative; padding:0 30rpx;width: 100%;box-sizing: border-box;align-items: center;}
 .searchBox{align-items: center;}
-.searchBox .city{max-width:394rpx;height: 56rpx;line-height: 56rpx;align-items: center;padding-right: 38rpx;justify-content: space-between;color: #222;font-size: 30rpx;}
-
-
+.searchBox .city{max-width:400rpx;height: 56rpx;line-height: 56rpx;align-items: center;padding-right: 38rpx;justify-content: space-between;color: #222;font-size: 30rpx;}
 
 .searchBox .city .arrow-bottom:after{border-color: #fff;width: 6px;height: 6px;}
 .searchBox .city .icon{flex-shrink: 0; width:32rpx;height: 36rpx;margin-right: 20rpx;}
-.searchBox .city .citytxt{width: 100%;overflow: hidden;white-space: nowrap;text-align: left; text-overflow: ellipsis;font-size: 32rpx;}
+.searchBox .city .citytxt{width: 100%;overflow: hidden;white-space: nowrap;text-align: left; text-overflow: ellipsis;font-size: 14px;}
 .searchBox .city{font-size: 18px;}
 .searchBox .city .icon-arrow-btm{font-size: 20rpx;}
 

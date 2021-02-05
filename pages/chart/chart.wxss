@@ -1,7 +1,7 @@
 /* pages/user/user.wxss */
 view{font-size:12px}
 image{width: 100%;height: 100%}
-page{background: #F6F6F6;height: auto;}
+page{background: #F6F6F6;height: auto;padding-top: 36px;}
 
 .pro-box{margin:20rpx 24rpx;border-radius: 8rpx;background-color: #fff;padding:0 20rpx;}
 .pro-box .hd{line-height: 46px;border-bottom: 1px solid #F6F6F6;align-items: center;}
@@ -16,11 +16,11 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .checkbox{margin-right: 20rpx;}
 .pro-info .txt{justify-content: space-between;flex-direction: column;}
 .item{position: relative; align-items: center;margin-bottom: 40rpx;}
-.item .tit{font-size: 15px;color: #222;margin-bottom: 8px;}
+.item .tit{font-size: 15px;color: #222;margin-bottom: 8px;font-weight: 500;margin-top: 4rpx;}
 .item .tag{margin-bottom: 10px;    display: flex;
     flex-wrap: wrap;}
 .item .tag text{background: #F6F6F6;color: #aaa;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin:0 5px 5px 0; }
-.item .price{justify-content: space-between;align-items: center;}
+.item .price{justify-content: space-between;align-items: center;font-weight: 500;}
 .item .price .num{font-size: 13px;color: #FA603D;}
 .item .price .num text{font-size: 16px;}
 .item .price .add{width:44rpx;height: 44rpx;color: #FA603D;
@@ -59,8 +59,8 @@ page{background: #F6F6F6;height: auto;}
 .option .price .num text{font-size:16px;}
 .buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;}
 
-.tips{line-height: 20px;color: #FA603D; background: #fff;margin: 24rpx;border-radius: 8rpx;padding: 24rpx;align-items: center;}
-.tips text{margin-right: 10rpx;}
+.tips{position: fixed;left: 0;top: 0;width: 100%; background: #FEFBF3;height: 36px;line-height: 36px;font-size: 14px;color: #FF7D06;padding: 0 20rpx;margin-bottom: 24rpx;z-index: 2;align-items: center;}
+.tips .iconfont{margin-right: 20rpx;}
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
@@ -86,7 +86,7 @@ page{background: #F6F6F6;height: auto;}
     box-shadow: 0px 6px 10px -8px rgba(0, 0, 0, 0.2);}
 .fittings .list .item:last-child{margin-right: 0;}
 .fittings .item .pic{width: 260rpx;height: 260rpx;}
-.fittings .item .tit{font-size: 13px;}
+.fittings .item .tit{font-size: 13px;height: 34px;overflow: hidden;}
 .fittings .item .tit,.fittings .item .price{padding:0 20rpx;margin: 16rpx 0;}
 .fittings .item .price{justify-content: space-between;}
 .fittings .item .price .num{font-size: 11px;color: #FA603D;}

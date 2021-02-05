@@ -3,9 +3,25 @@ page{background-color: #fff;height: 100%;}
 
 .logo{width: 118rpx;height: 118rpx;margin: 42rpx auto;overflow: hidden;border-radius: 50%;}
 .getWXAuth{margin:40rpx auto;width: 690rpx;}
-.getWXAuth navigator{text-align: center;}
+.getWXAuth navigator{text-align: center;margin-top: 30rpx;}
 .getWXAuth button{width: 690rpx;box-sizing: border-box; color: #fff;font-size: 32rpx;margin: 0;padding: 0;}
 
 .txt{text-align: center;color: #333;font-size: 28rpx;line-height: 1.8;}
 
 .authorizeBtn{ width: 260rpx;height: 80rpx;line-height: 80rpx; background: #C1996B;color: #fff;text-align: center;margin: 0 auto;border-radius: 40rpx;font-size: 16px;}
+
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.pop-panel{ position: fixed;width: 100%;background: #fff;z-index: 22;border-radius:16rpx ;width: 646rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);padding: 40rpx;box-sizing: border-box;}
+
+.pop-panel .tit{text-align: center;}
+.pop-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+.pop-panel .close:after,
+.pop-panel .close::before{background-color: #fff;}
+.pop-con{height: 500rpx;position: relative;z-index: 2;}
+.inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 40px;line-height: 40px;}
+.inputxt text{width:70px;}
+.inputxt input{height: 100%;}
+.comfirm{margin-top: 20rpx;}
+
+.verify{text-align: center;}
+.notice{color: #999;color: 14px;margin: 30rpx 0;}

@@ -8,39 +8,59 @@
   </view>
   <scroll-view class="sub" scroll-x="{{true}}">
     <view class="flex">
-      <text data-id="全部" class="{{currentTag=='全部'?'on':''}}" bind:tap="selectTag">全部</text>
-      <block wx:for="{{tags}}" wx:for-index="index">
-        <text data-id="{{index}}" class="{{currentTag==index?'on':''}}" bind:tap="selectTag">{{tags[index]}}</text>
+      
+      <block wx:if="{{currentTab==1}}">
+        <text data-id="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+        <block wx:for="{{breadTags}}" wx:for-index="index">
+          <text data-id="{{index}}" class="{{breadTag==index?'on':''}}" bind:tap="selectTag">{{breadTags[index]}}</text>
+        </block>
       </block>
+      <block wx:else>
+        <text data-id="全部" wx:if="{{cakeTags}}" class="{{cakeTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+        <block wx:for="{{cakeTags}}" wx:for-index="index">
+          <text data-id="{{index}}" class="{{cakeTag==index?'on':''}}" bind:tap="selectTag">{{cakeTags[index]}}</text>
+        </block>
+      </block>
+
     </view>
   </scroll-view>
 </view>
 <!--面包-->
 <view class="pro-box" wx:if="{{currentTab=='1'}}">
-  <block wx:if="{{count!=0}}">
+  <block wx:if="{{breadList.count==0}}">
+    <view class="nodata">
+      <image src="../../image/no-data.png"></image>
+      <view>暂无数据</view>
+    </view>
+  </block>
+  <block wx:else>
     <view class="listItemwp flex">
-      
-      <block wx:for="{{proList}}" wx:for-index="idx">
+      <block wx:for="{{breadList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
-            <view class="pic"><image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image></view>
+            <view class="pic">
+              <view wx:if="{{stock[pro.meal_id]==0 || pro.soldStat==1}}" class="sold-out">
+                <text>已售罄</text>
+              </view>
+              <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
+            </view>
             <view class="info">
               <view class="tit text-overflow">{{pro.name}}</view>
               <view class="tags text-overflow">
                 <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
               </view>
               <view class="price flex">
-                <block wx:if="{{stock[pro.meal_id]==0}}">
+                <!-- <block wx:if="{{stock[pro.meal_id]==0}}">
                   <view class="num sold-out">售罄</view>
-                </block>
-                <block wx:else>
+                </block> -->
+                
                   <view class="num">￥<text>{{pro.price}}</text></view>
-                  <view class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}">
+                  <view wx:if="{{stock[pro.meal_id]!=0 || pro.soldStat==0}}" class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}">
                     <!-- <view class="cart-motion">
                       <view class="cart-motion2"></view>
                     </view> -->
                   </view>
-                </block>
+                
                 
               </view>
             </view>
@@ -48,28 +68,24 @@
         </block>
       </block>
     </view>
+    <view wx:if="{{breadInfo.noMoreData}}" class="more-btn">我可是有底线的</view>
+    <view wx:else class="more-btn">加载中...</view>
   </block>
-  <!-- <block wx:if="{{proList==null}}">
-    <view class="nodata">
-      <image src="../../image/no-data.png"></image>
-      <view>加载中...</view>
-    </view>
-  </block> -->
-  <block wx:if="{{count==0}}">
+</view>
+<!--蛋糕-->
+<view class="pro-box" wx:if="{{currentTab=='2'}}">
+  <block wx:if="{{cakeList.count==0}}">
     <view class="nodata">
       <image src="../../image/no-data.png"></image>
       <view>暂无数据</view>
     </view>
   </block>
-</view>
-<!--蛋糕-->
-<view class="pro-box" wx:if="{{currentTab=='2'}}">
-  <block wx:if="{{count!=0}}">
+  <block wx:else>
     <view class="listItemwp flex">
-      <block wx:for="{{proList}}" wx:for-index="idx">
+      <block wx:for="{{cakeList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <navigator class="item" url="/pages/cakeInfo/cakeInfo?proId={{pro.spu_id}}">
-            <view class="pic"><image src="{{pro.img}}" mode="aspectFill"></image></view>
+            <view class="pic"><image src="{{pro.img}}" mode="aspectFill" lazy-load="{{true}}"></image></view>
             <view class="info">
               <view class="tit">{{pro.name}}</view>
               <view class="tags text-overflow">
@@ -85,24 +101,12 @@
         </block>
       </block>
     </view>
+    <view wx:if="{{cakeInfo.noMoreData}}" class="more-btn">我可是有底线的</view>
+    <view wx:else class="more-btn">加载中...</view>
   </block>
-  <!-- <block wx:if="{{proList==null}}">
-    <view class="nodata">
-      <image src="../../image/no-data.png"></image>
-      <view>加载中...</view>
-    </view>
-  </block> -->
-  <block wx:if="{{count==0}}">
-    <view class="nodata">
-      <image src="../../image/no-data.png"></image>
-      <view>暂无数据</view>
-    </view>
-  </block>
+  
 </view>
-<block wx:if='{{count!=0}}'>
-  <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
-  <view wx:else class="more-btn">加载中...</view>
-</block>
+
 <!-- <view class="logo">
   <image src="../../image/logo.png"></image>
 </view> -->

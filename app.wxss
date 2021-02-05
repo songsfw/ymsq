@@ -130,6 +130,8 @@ image{max-width: 100%}
 .footer{text-align: center;font-size: 12px;color: #999;padding: 30rpx 0;background: #fff;}
 .nodata{text-align: center;}
 
+.pop-panel.upPanel{transform: translateY(0);}
+
 .upmotion{animation: uplist .3s;}
 @keyframes uplist{
 0% {

@@ -11,8 +11,8 @@
     </view>
     <view class="edit iconfont icon-edit" catch:tap="toAdddata" data-type="1" data-idx ="{{index}}"></view>
     <view class="option flex">
-      <view class="set-def" bind:tap="setDefAddress" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
-      <view class="del" data-id="{{item.id}}" catch:tap="delAddress">删除</view>
+      <view class="set-def" bind:tap="setDefAddress" data-idx="{{index}}" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
+      <view class="del" data-idx="{{index}}" data-id="{{item.id}}" catch:tap="delAddress">删除</view>
     </view>
   </view>
 </view>

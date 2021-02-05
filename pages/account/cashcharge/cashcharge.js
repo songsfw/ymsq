@@ -8,7 +8,8 @@ Page({
   data: {
     show:false,
     result:'',
-    pwd:''
+    pwd:'',
+    type:1
   },
   changeShow(){
     let show = this.data.show
@@ -118,13 +119,7 @@ Page({
       api.chashCharge(data).then(res=>{
         console.log(res)
         
-        if(res.status!=0){
-          wx.showToast({
-            title: '充值失败，请确认卡号和密码',
-            icon: 'none',
-            duration: 2000
-          })
-        }else{
+        if(res){
           wx.showToast({
             title: '充值成功',
             icon: 'none',

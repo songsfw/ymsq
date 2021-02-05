@@ -4,17 +4,23 @@ const api = require('../../utils/api.js')
 
 const app = getApp()
 
-let timer=null,proNum=0,windowH,windowW,top,left
+let timer=null,proNum=0,breadList=null,cakeList=null
 Page({
   data: {
     curProId:-1,
-    currentTab:1,
-    breadLi:null,
-    cakeLi:null,
-    breakLi:null,
+    currentTab:'1',
+    breadList:null,
+    cakeList:null,
+
     proNum:0,
     pageNum:1,
     noMoreData:false,
+
+    breadInfo:{count:0,pageNum:1,noMoreData:false},
+    cakeInfo:{count:0,pageNum:1,noMoreData:false},
+
+    breadTag:'',
+    cakeTag:'',
 
     share: {
       tit: "原麦山丘",
@@ -34,6 +40,12 @@ Page({
     if (this.data.currentTab == currentId) {
       return false;
     } else {
+      if(!breadList){
+        this.getProList(currentId)
+      }
+      if(!cakeList){
+        this.getProList(currentId)
+      }
       that.setData({
         currentTab: currentId
       })
@@ -42,17 +54,23 @@ Page({
   selectTag(e){
     var tagId = e.currentTarget.dataset.id
     let currentTab = this.data.currentTab
-    if (this.data.currentTag == tagId) {
-      return false;
-    } else {
+    let currentTag = tagId=='全部'?'':tagId
+    
+    if(currentTab==1){
+      console.log(currentTag);
       this.setData({
-        noMoreData: false,
-        proList: null,
-        currentTag: tagId,
-        pageNum: 1,
+        breadTag:currentTag,
+        breadList:[]
       })
-      this.getProList(currentTab)
+    }else{
+      this.setData({
+        cakeTag:currentTag,
+        cakeList:[]
+      })
     }
+
+    this.getProList(currentTab)
+    
   },
   getStock(){
     let {city_id}=this.data
@@ -71,8 +89,14 @@ Page({
     })
   },
   getProList: function (currentTab) {
-    let {pageNum,currentTag,city_id}=this.data
-    currentTag = currentTag=='全部' ? '' : currentTag
+    let {city_id,breadTag,cakeTag}=this.data
+    let count,noMoreData,currentTag
+    if(currentTab=='1'){
+      currentTag = breadTag
+    }else{
+      currentTag = cakeTag
+    }
+    
     let data = {
       city_id: city_id,
       type:currentTab,
@@ -82,43 +106,54 @@ Page({
     api.getProList(data).then(res => {
       console.log(res);
       if(!res){
-        this.setData({
-          noMoreData: true,
-          count:0,
-          proList:[]
-        })
         return false
       }
 
-      let proList = res.list,count=proList.length,stock=res.stock
-      let noMoreData = count-pageNum*10 <= 0
-      let currList = proList.slice(pageNum*10-10,pageNum*10)
+      if(currentTab=='1'){
+        breadList = res.list
+        let stock=res.stock
+        count = breadList.length
+        noMoreData = count-1*10 <= 0
+        this.setData({
+          breadTags:res.tags,
+          stock:stock,
+          breadInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+          'breadList[0]':this.getCurrList(breadList,1),
+        })
+      }
+      if(currentTab=='2'){
+        cakeList = res.list
+        count = cakeList.length
+        noMoreData = count-1*10 <= 0
+        this.setData({
+          cakeTags:res.tags,
+          cakeInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+          'cakeList[0]':this.getCurrList(cakeList,1),
+        })
+      }
+      
+      // let currList = proList.slice(pageNum*10-10,pageNum*10)
       this.setData({
         menu:res.type,
-        tags:res.tags,
-        noMoreData: noMoreData,
-        count:count,
-        stock:stock,
-        city_id:res.city_id,
-        ['proList['+(pageNum-1)+']']:currList
+        city_id:res.city_id
       })
       wx.stopPullDownRefresh() //停止下拉刷新
     })
 
   },
+  getCurrList(list,pageNum){
+    return list.slice(pageNum*10-10,pageNum*10)
+  },
   freshData: function () {
     let currentTab = this.data.currentTab
-    this.setData({
-      noMoreData: false,
-      pageNum: 1,
-      proList: null,
-      count:null
-    })
     this.getProList(currentTab)
   },
   addChart:function(e){
     let proId = e.currentTarget.dataset.id,
-        img = e.currentTarget.dataset.img
+        img = e.currentTarget.dataset.img,
+        idx = e.currentTarget.dataset.idx
+    let pageNum = parseInt(this.data.breadInfo.pageNum)
+    let index = pageNum-1
     let {currentTab,curProId,stock,city_id,totalNum}=this.data
     totalNum = parseInt(totalNum)
     let curStock = parseInt(stock[proId])
@@ -165,14 +200,7 @@ Page({
           finger:this.finger,
           topPoint:topPoint,
           busPos:this.busPos,
-          curPro:img,
-          totalNum
-        })
-
-        wx.setStorageSync("total_num",totalNum)
-        wx.setTabBarBadge({ 
-          index: 2,
-          text: totalNum.toString()
+          curPro:img
         })
       }else{
         wx.showToast({
@@ -198,12 +226,32 @@ Page({
       console.log(data);
       api.setChart(data).then(res => {
         console.log(res);
-        if(!res){
-          wx.showToast({
-            icon:"none",
-            title:'加入购物车失败'
+        if(res){
+          wx.setStorageSync("total_num",totalNum)
+          this.setData({
+            totalNum:totalNum
+          })
+          if(totalNum>0){
+            wx.setTabBarBadge({ 
+              index: 2,
+              text: totalNum.toString()
+            })
+          }else{
+            wx.removeTabBarBadge({
+              index: 2
+            })
+          }
+        }else{
+          this.setData({
+            ['breadList['+index+']['+idx+'].soldStat']:1
           })
         }
+        // if(!res){
+        //   wx.showToast({
+        //     icon:"none",
+        //     title:'加入购物车失败'
+        //   })
+        // }
         
       })
     },300)
@@ -233,12 +281,38 @@ Page({
     }, 30);
 },
   getMoreData() {
-    let pageNum = this.data.pageNum + 1
-    let currentTab = this.data.currentTab
-    this.setData({
-      pageNum: pageNum
-    })
-    this.getProList(currentTab)
+    let pageNum,noMoreData
+    let {currentTab,breadInfo,cakeInfo} = this.data
+    switch (currentTab) {
+      case '1':
+        if(breadInfo.noMoreData){
+          return false
+        }
+        pageNum = breadInfo.pageNum + 1
+        noMoreData = breadInfo.count-pageNum*10 <= 0
+        this.setData({
+          ['breadInfo.pageNum']: pageNum,
+          ['breadInfo.noMoreData']:noMoreData,
+          ['breadList['+(pageNum-1)+']']:this.getCurrList(breadList,pageNum),
+        })
+
+        break;
+      case '2':
+        if(cakeInfo.noMoreData){
+          return false
+        }
+        pageNum = cakeInfo.pageNum + 1
+        noMoreData = cakeInfo.count-pageNum*10 <= 0
+        this.setData({
+          ['cakeInfo.pageNum']: pageNum,
+          ['cakeInfo.noMoreData']:noMoreData,
+          ['cakeList['+(pageNum-1)+']']:this.getCurrList(cakeList,pageNum),
+        })
+
+        break;
+      default:
+        break;
+    }
   },
   toProInfo: function (e) {
     let proId = e.currentTarget.dataset.proid
@@ -253,9 +327,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if(this.data.noMoreData){
-      return false
-    }
     this.getMoreData()
   },
   getCartInfo(){
@@ -263,16 +334,22 @@ Page({
     this.setData({
       totalNum:total_num || 0
     })
-    wx.setTabBarBadge({ 
-      index: 2,
-      text: total_num.toString() || '0'
-    })
+    if(total_num>0){
+      wx.setTabBarBadge({ 
+        index: 2,
+        text: total_num.toString()
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 2
+      })
+    }
   },
   onShow() {
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo&&JSON.parse(addressInfo).city_id
-    let proType = app.globalData.proType || 1
+    let proType = app.globalData.proType || '1'
     // if (typeof this.getTabBar === 'function' &&
     //   this.getTabBar()) {
     //   this.getTabBar().setData({
@@ -282,7 +359,7 @@ Page({
     // }
     this.setData({
       currentTab:proType,
-      city_id:city_id
+      city_id:city_id || '10216'
     })
     this.getStock()
     this.getCartInfo()
@@ -300,7 +377,7 @@ Page({
     this.busPos = {};
     this.busPos['x'] = sysInfo.screenWidth * .6;
     this.busPos['y'] = sysInfo.screenHeight * .85;
-    let proType = app.globalData.proType || 1
+    let proType = app.globalData.proType || '1'
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     
@@ -327,23 +404,23 @@ Page({
     //     btmHolder:btmHolder
     //   })
     // }
-    util.setWatcher(this);
+    //util.setWatcher(this);
   },
   watch:{
-    'currentTab':function (value, oldValue){
-      console.log("watch");
-      console.log(value);
-      if(value==oldValue){
-        return
-      }
-      this.setData({
-        currentTag:'',
-        noMoreData: false,
-        proList: null,
-        pageNum: 1,
-      })
-      this.getProList(value);
-    }
+    // 'currentTab':function (value, oldValue){
+    //   console.log("watch");
+    //   console.log(value);
+    //   if(value==oldValue){
+    //     return
+    //   }
+    //   this.setData({
+    //     currentTag:'',
+    //     noMoreData: false,
+    //     proList: null,
+    //     pageNum: 1,
+    //   })
+    //   this.getProList(value);
+    // }
   }
 
 })

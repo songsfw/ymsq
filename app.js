@@ -23,6 +23,7 @@ App({
       console.log(loginInfo)
       if(loginInfo.statusCode==200){
         is_authed = loginInfo.data.result.is_authed
+        this.globalData.is_mobile = loginInfo.data.result.is_mobile
         let {openid,user_info,user_id,address_info} = loginInfo.data.result
         userInfo = {
           user_id:user_id,
@@ -136,6 +137,7 @@ App({
   },
   
   globalData: {
+    is_mobile:1,
     proType:null,
     isShare: false,
     userInfo: null,

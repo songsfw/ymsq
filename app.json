@@ -17,7 +17,9 @@
     "pages/user/vipcard/vipcard",
     "pages/user/order/order",
     "pages/account/account",
+    "pages/user/message/message",
     "pages/user/coupon/coupon",
+    "pages/user/delivery/delivery",
     "pages/account/wxcharge/wxcharge",
     "pages/account/maidian/maidian",
     "pages/account/cashcharge/cashcharge",
@@ -36,6 +38,7 @@
     "color": "#333333",
     "selectedColor": "#C1996B",
     "backgroundColor": "#fff",
+    "borderStyle":"white",
     "list": [{
       "pagePath": "pages/index/index",
       "iconPath":"image/icon-home.png",

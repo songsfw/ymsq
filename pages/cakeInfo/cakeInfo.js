@@ -66,7 +66,7 @@ Page({
   },
   confirmCake:util.debounce(function(e){
     let proId = e.currentTarget.dataset.sku
-    let {city_id,skuNum,action}=this.data
+    let {city_id,skuNum,action,totalNum}=this.data
 
     // if(skuNum==0){
     //   this.setData({
@@ -82,27 +82,26 @@ Page({
       number:skuNum
     }
 
+    totalNum = totalNum+skuNum
     console.log(data);
     api.setChart(data).then(res => {
       console.log(res);
-      if(res.status=="2001"){
-        wx.showToast({
-          icon:"none",
-          title:'商品不存在或已下架'
-        })
-      }else{
+      if(res){
+        wx.setStorageSync('total_num',totalNum)
         wx.showToast({
           icon:"none",
           title:'加入购物车成功'
+        })
+        this.setData({
+          totalNum:totalNum,
+          pop:0
         })
         if(action==1){
           wx.switchTab({
             url:"/pages/chart/chart"
           })
         }
-        this.setData({
-          pop:0
-        })
+        
         
       }
       
@@ -138,12 +137,14 @@ Page({
   },
   onLoad: function (options) {
     let addressInfo = wx.getStorageSync("addressInfo")
+    let totalNum = wx.getStorageSync("total_num")
     let city_id = JSON.parse(addressInfo).city_id
     let proId = options.proId
     console.log(proId)
     let btmHolder = wx.getStorageSync('btmHolder')
 
     this.setData({
+      totalNum:totalNum,
       btmHolder:btmHolder||0,
       city_id:city_id,
       proId: proId,

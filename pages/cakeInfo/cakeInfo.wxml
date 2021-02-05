@@ -44,6 +44,7 @@
     <text >首页</text>
   </navigator>
   <navigator class="cart" open-type="switchTab" url="/pages/chart/chart">
+    <view class="num" wx:if="{{totalNum>0}}">{{totalNum}}</view>
     <view class="iconfont icon-chart"></view>
     <text >购物车</text>
   </navigator>
@@ -51,7 +52,7 @@
   <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="cake-panel">立即购买</view>
 </view>
 
-<view class="pop-panel score-panel" style="bottom:{{50+view}}px" wx:if="{{pop=='cake-panel'}}">
+<view class="pop-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
@@ -63,9 +64,9 @@
     </view>
     <view class="h4"><text>蛋糕尺寸</text><text class="tip">{{selectSku.ahead}}</text></view>
     <view class="sku-list flex">
-      <view class="{{key==selectSku.sku_id?'on':''}}" wx:for="{{proInfo.sku_list}}" wx:for-index="key" data-skuid="{{key}}" bind:tap="selectSku">{{item.spec}}({{item.weight}})</view>
+      <view class="{{key==selectSku.sku_id?'on':''}}" wx:for="{{proInfo.sku_list}}" wx:for-index="key" data-skuid="{{key}}" bind:tap="selectSku">{{item.spec}}<block wx:if="{{item.weight}}">({{item.weight}})</block></view>
     </view>
-    <view class="h4"><text>标配餐具</text><text class="tip default-tip">免费</text></view>
+    <!-- <view class="h4"><text>标配餐具</text><text class="tip default-tip">免费</text></view> -->
     <view class="default-fitts flex">
       <view class="" wx:if="{{selectSku.size}}"><image src="../../image/icon-c1.png"></image> {{selectSku.size}}</view>
       <view class="" ><image src="../../image/icon-c2.png"></image> {{selectSku.edible}}</view>

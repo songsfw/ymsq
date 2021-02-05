@@ -33,7 +33,7 @@ Page({
       console.log(res);
       const { pay_code, card_no ,balance} = res;
       //const codeStr = `${code.slice(0, 4)}****${code.slice(20)}`;
-      wxbarcode.barcode('barcode', pay_code, 660, 300);
+      wxbarcode.barcode('barcode', pay_code, 588, 300);
       this.setData({
         pay_code,
         card_no,

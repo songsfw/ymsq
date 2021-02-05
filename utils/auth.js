@@ -1,6 +1,5 @@
-const ajax = require('request.js')
-var baseUrl = 'http://api-beta.withwheat.com/v1'
-const app = getApp()
+const api = require('api.js')
+//var baseUrl = 'http://api-beta.withwheat.com/v1'
 
 //微信登录
 function wxLogin() {
@@ -28,29 +27,29 @@ async function getLoginInfo(){
   let data = {
     code: res
   };
-  return ajax.POST(baseUrl + "/user/xcx-check-login", data,false);
+  return api.getLoginInfo(data);
 }
 
 //小程序登录  
-function appLogin(loginData) {
-  return new Promise((resolve, reject) => {
-    ajax.POST(baseUrl + "/user/xcx-add-user", loginData)
-      .then((res) => {
-        console.log("loginInfo", res);
-        resolve(res)
-      })
-      .catch(res => {
-        wx.showModal({
-          title: '网络错误',
-          content: '登录接口错误',
-          showCancel: false
-        })
-      })
-  })
-}
+// function appLogin(loginData) {
+//   return new Promise((resolve, reject) => {
+//     api.appLogin(loginData)
+//       .then((res) => {
+//         console.log("loginInfo", res);
+//         resolve(res)
+//       })
+//       .catch(res => {
+//         wx.showModal({
+//           title: '网络错误',
+//           content: '登录接口错误',
+//           showCancel: false
+//         })
+//       })
+//   })
+// }
 
 module.exports = {
   getLoginInfo:getLoginInfo,
   wxLogin: wxLogin,
-  appLogin: appLogin
+  //appLogin: appLogin
 };

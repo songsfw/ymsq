@@ -12,7 +12,7 @@ const returnData = res=>{
     }else if(data.status==-5){
       return false
     }else if(data.status==1001){
-      if(!isLogin){
+      if(isLogin==0){
         wx.showModal({
           title: '',
           showCancel:false,
@@ -34,8 +34,6 @@ const returnData = res=>{
           title:data.message
         })
       }
-      
-      //return "warn"
     }
   }else if(res.statusCode == 500){
     wx.showModal({
@@ -46,9 +44,18 @@ const returnData = res=>{
   }
 }
 
+//微信登录
+const getLoginInfo = (data) => {
+  return POST(baseUrl+"/user/xcx-check-login", data,false)
+}
+
+//用户登录
+const appLogin = (data) => {
+  return POST(baseUrl+"/user/xcx-add-user", data)
+}
+
 //首页信息
 const getIndexInfo = (data) => {
-  
   return POST(baseUrl+"/home/home", data).then(res => returnData(res))
 }
 
@@ -182,6 +189,11 @@ const getCode = (data) => {
 //验证验证码
 const verifyCode = (data) => {
   return POST(baseUrl+"/user/valid-code",data).then(res => returnData(res))
+}
+
+//绑定手机
+const bindPhone = (data) => {
+  return POST(baseUrl+"/user/bind-mobile",data).then(res => returnData(res))
 }
 
 //产品列表
@@ -330,6 +342,22 @@ const getHongbao = (data) => {
   return POST(baseUrl + "/share/get-red-package",data).then(res => returnData(res))
 }
 
+//反馈
+const feedBack = (data) => {
+  return POST(baseUrl + "/user-feedback/create",data).then(res => returnData(res))
+}
+
+//门店券
+const storeCoupon = (data) => {
+  return POST(baseUrl + "/user-promotion/promotion-use-shop",data).then(res => returnData(res))
+}
+
+//配送详情
+const deliveryInfo = (data) => {
+  return POST(baseUrl + "/order/delivery-detail",data).then(res => returnData(res))
+}
+
+
 const submitOrder = (params) => {
   console.log(JSON.stringify(params))
   //如果需要自定义不同code对应的msg,可以不用在这调用then，去具体的方法中处理不同的code
@@ -391,5 +419,11 @@ module.exports = {
   getComment,
   setComment,
   hongbao,
-  getHongbao
+  getHongbao,
+  bindPhone,
+  getLoginInfo,
+  appLogin,
+  feedBack,
+  storeCoupon,
+  deliveryInfo
 }

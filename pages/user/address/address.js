@@ -86,16 +86,18 @@ Page({
       let idx = e.currentTarget.dataset.idx
       let rawAddress = this.data.address[idx]
       let address = {
+        city_id:rawAddress.old_city_id,
         id:rawAddress.id,
         name:rawAddress.name,
-        city_name:rawAddress.city_name,
-        area_name:rawAddress.area_name,
+        city_name:rawAddress.city_name+','+rawAddress.area_name,
         mobile:rawAddress.mobile,
         address:rawAddress.address,
         location:rawAddress.location,
         address_detail:rawAddress.address_detail,
         is_default:rawAddress.is_default,
-        user_id:rawAddress.rawAddress
+        user_id:rawAddress.rawAddress,
+        title:rawAddress.building,
+        is_ziti:rawAddress.is_ziti
       }
       wx.setStorageSync('address', JSON.stringify(address))
     }else{
@@ -104,17 +106,41 @@ Page({
     wx.navigateTo({
       url:"/pages/user/adddata/adddata?type="+type
     })
-    
   },
   setDefAddress(e){
-    let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id,
+    idx = e.currentTarget.dataset.idx
+    let addressLi = this.data.address
     let data = {
       address_id:id
     }
     api.setDefAddress(data).then(res => {
       console.log(res);
       if(res){
+        let selectAddress = addressLi[idx]
+        let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name,is_ziti} = selectAddress
+        console.log(addresstxt)
+        console.log(selectAddress)
+        let addressInfo = {
+          address: addresstxt,
+          id: id,
+          area_id: area_id,
+          area_name: area_name,
+          city_id: old_city_id,
+          city_name: city_name,
+          address_detail:address_detail,
+          is_default:is_default,
+          mobile:mobile,
+          name:name,
+          is_ziti:is_ziti
+        }
+        wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         this.getAddress()
+        wx.showToast({
+          title: '设置成功',
+          icon: 'none',
+          duration: 3000
+        })
       }else{
         wx.showToast({
           title: '设置失败',
@@ -125,13 +151,19 @@ Page({
     })
   },
   delAddress(e){
-    let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id,
+    idx = e.currentTarget.dataset.idx
+    let addressLi = this.data.address
     let data = {
       address_id:id
     }
     api.delAddress(data).then(res => {
       console.log(res);
       if(res){
+        let selectAddress = addressLi[idx]
+        if(selectAddress.is_default=='1'){
+          wx.setStorageSync("addressInfo", '{city_id:10216}')
+        }
         this.getAddress()
       }else{
         wx.showToast({

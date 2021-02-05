@@ -1,12 +1,13 @@
 <!-- pages/user/user.wxml -->
 <view class="card">
-  <image src="../../../image/card1.png" />
+  <image wx:if="{{type==1}}" src="../../../image/card1.png" />
+  <image wx:else src="../../../image/third-card.png" />
 </view>
 <view class="form">
   <view class="inputxt">
     <text>卡号</text>
     <input placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
-    <view class="icon iconfont icon-scan" bind:tap="scan"></view>
+    <view class="icon iconfont icon-scan" wx:if="{{use==1 && type==1}}" bind:tap="scan"></view>
   </view>
   <view class="inputxt">
     <text>卡密码</text>
@@ -17,7 +18,7 @@
     </view>
   </view>
 </view>
-<view class="tips">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
+<view class="tips" wx:if="{{use!=1}}">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
 <view class="fixedBtn">
   <view class="btn" bindtap="chashCharge">{{use==1?'确定':'充值'}}</view>
 </view>

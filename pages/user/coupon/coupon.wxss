@@ -5,7 +5,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item.unuse{background-image: url(http://api-beta.withwheat.com/img/coupon3.png);}
 .item .tips .txt{height:16px;overflow: hidden;}
 .item .tips.on .txt{height: auto;}
-.item .tips .arrow-bottom{margin-left: 32rpx;}
+.item .tips .arrow-bottom{margin-left: 32rpx;width: 28px;}
 .item .tips .arrow-bottom:after{border-color: #ccc;border-width: 1px;}
 .item .border view{height: 0;border-top: 1px dashed #ccc;}
 .item .border:after,
@@ -44,6 +44,6 @@ page{background: #F6F6F6;padding-top: 48px;}
 .menu>view.on view{color: #c1996b;}
 .menu>view.on text{height: 3px;}
 
-.card-code-img{background: #e2e2e2;margin-top: 20rpx;}
+.card-code-img{margin-top: 20rpx;}
 .card-code-img canvas{width: 100%;}
 .card_no{text-align: center;color: #999;margin: 40rpx 0 20rpx 0;}

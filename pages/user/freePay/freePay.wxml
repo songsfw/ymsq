@@ -31,7 +31,7 @@
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
   <view slot="setNewPwd" wx:if="{{step==2}}">
-    <block wx:if="{{pwd_set==1}}">
+    <!-- <block wx:if="{{pwd_set==1}}">
       <view class="inputxt flex">
         <text>旧密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" password placeholder="请输入6位数字密码" />
@@ -40,17 +40,17 @@
         <text>新密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" password placeholder="请输入6位数字密码" />
       </view>
-    </block>
-    <block wx:else>
-      <view class="inputxt flex">
-        <text>密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
-      </view>
-      <view class="inputxt flex">
-        <text>确认密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
-      </view>
-    </block>
+    </block> -->
+    
+    <view class="inputxt flex">
+      <text>密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
+    </view>
+    <view class="inputxt flex">
+      <text>确认密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
+    </view>
+
     
   </view>
   <view slot="verify" class="verify"  wx:if="{{step==3}}">

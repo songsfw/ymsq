@@ -16,7 +16,7 @@
 </view>
 <view class="suggestion" wx:if="{{suggestion.length>0}}">
   <scroll-view scroll-y="true" class="suggestion-scroll">
-    <view class="item" wx:for="{{suggestion}}" wx:key="index" bindtap="backfill">
+    <view class="item" data-id="{{index}}" wx:for="{{suggestion}}" wx:key="index" bindtap="backfill">
       <view class="tit" id="{{index}}">{{item.title}}</view>
       <view>{{item.addr}}</view>
     </view>

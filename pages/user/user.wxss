@@ -12,18 +12,25 @@ image{width: 100%;height: 100%}
 .name .tit{font-size: 36rpx;font-weight: bold;}
 .level{width:51px;height: 21px;margin-top: 10rpx;}
 .level-4{background-position:100% 0;}
-.level-3{background-position:100% -21px;}
-.level-0{background-position:100% -42px;}
-.ym-pay{margin-top: 48rpx;justify-content: space-around;text-align: center;}
-.ym-pay .data{font-size:40rpx;color: #000;line-height: 56rpx;}
+.level-3{background-position:100% -55px;}
+.level-0{background-position:100% -29px;}
+.ym-pay{margin-top: 48rpx;justify-content: space-between;text-align: center;}
+.ym-pay .data{font-size:40rpx;color: #000;line-height: 56rpx;color:#C1996B}
 .ym-pay text{font-size: 28rpx;color:#333;line-height: 40rpx;}
 .vipcard{width: 624rpx;height:106rpx;margin:34rpx 0 40rpx 0;
   overflow: hidden;}
 
-.menu{padding:40rpx;text-align: center;color: #333;margin-bottom: 20rpx;background-color: #fff;margin: 0 24rpx;border-radius: 16rpx;justify-content: space-between;}
-.menu>view{position: relative;font-size:14px;width:42px}
-.menu>view .tag{position: absolute;right:-6px;top: -6px; color: #fff;width: 20px;height: 20px;border-radius: 50%;line-height: 20px;text-align: center; background-color: #f5222d;}
-
+.menu{padding: 40rpx 20rpx;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  margin: 0 24rpx;
+  border-radius: 16rpx;
+  justify-content: flex-start;}
+.menu>view{position: relative;font-size:12px;width: 25%;}
+.menu>view .tag{position: absolute;right:-12px;top: -6px; color: #fff;width: 18px;height: 18px;border-radius: 50%;line-height: 18px;text-align: center; background-color: #f5222d;}
+.menu .iconAll {position: relative;}
 .user-pay1{background-position:0 -23px;}
 .user-pack{background-position:0 -50px;}
 .user-send{background-position:0 -75px;}
@@ -37,7 +44,7 @@ image{width: 100%;height: 100%}
 
 .service{flex-wrap: wrap;text-align: center;padding-top: 52rpx;justify-content: flex-start;}
 .service navigator,.service>view{width:25%;margin-bottom: 52rpx;}
-.service .iconAll,.menu .iconAll{width: 25px;height: 25px;margin:0 auto;}
+.service .iconAll,.menu .iconAll{width: 25px;height: 25px;margin:0 auto 10rpx auto;}
 .user-pay{background-position:0 -199px;}
 .user-heart{background-position:0 -148px;}
 .user-local2{background-position:0 -223px;}

@@ -2,7 +2,8 @@ page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .order-wp{padding:20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
-.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
+.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;}
+.option .flex-center{margin-left: 20rpx;}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .checkbox.on{border: none;}
@@ -12,7 +13,7 @@ page{background: #F6F6F6;height: auto;}
 .option .price view{font-size: 13px;}
 .option .price .num{color: #FA603D;}
 .option .price .num text{font-size:16px;}
-.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;}
+.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;}
 
 .address{padding:40rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
@@ -52,7 +53,7 @@ page{background: #F6F6F6;height: auto;}
 .inputbox input{text-align: right;}
 .inputbox input::placeholder{color: #ccc;font-size: 13px;}
 .inputbox.on{color: #F5222D;}
-.pay-info{padding: 0 20rpx 40rpx 20rpx;}
+.pay-info{padding: 0 20rpx;}
 .pay-info>view{justify-content: space-between;height: 86rpx;line-height: 86rpx;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}

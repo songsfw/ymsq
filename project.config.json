@@ -173,6 +173,18 @@
           "pathName": "pages/share/share",
           "query": "orderCode=1000201130001930",
           "scene": null
+        },
+        {
+          "name": "意见反馈",
+          "pathName": "pages/user/message/message",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "配送",
+          "pathName": "pages/user/delivery/delivery",
+          "query": "orderCode=1000210205002435",
+          "scene": null
         }
       ]
     }
