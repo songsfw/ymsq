@@ -81,6 +81,8 @@ debounce   防抖
 
 getLocation  获取经纬度，如果用户拒绝，默认北京
 
+bezier     bezier (points, times,arc)   三个点坐标，时间，是否反向
+
 - setWatcher  监听data中属性值变化，类似于vue中的watch方法
 
 onLoad中引入
