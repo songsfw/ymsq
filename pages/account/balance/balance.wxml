@@ -1,12 +1,15 @@
 <!-- pages/user/user.wxml -->
-<view class="hd">
-  <view class="flex {{selected?'on':''}}" bind:tap="select">
+<view class="hd flex">
+  <!-- <view class="flex {{selected?'on':''}}" bind:tap="select">
     <text>筛选</text>
     <text class="arrow-bottom"></text>
-  </view>
+  </view> -->
+
+    <text wx:for="{{type}}" data-index="{{index}}" class="{{item.selected?'on':''}}" bind:tap="selectItem" data-id="{{item.tag_id}}">{{item.tag_name}}</text>
+
 </view>
 <view class="tags flex flex-wrp" wx:if="{{selected}}">
-  <view wx:for="{{type}}" data-index="{{index}}" class="{{item.selected?'on':''}}" bind:tap="selectItem" data-id="{{item.tag_id}}">{{item.tag_name}}</view>
+  
 </view>
 <view class="list">
   <block wx:for="{{list}}">

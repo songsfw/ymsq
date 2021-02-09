@@ -101,5 +101,5 @@ color: #666;
 .notice swiper text{vertical-align: middle;}
 .notice-panel{position:absolute;left:0;top:28px; width:100%;height:0;background:#fff;z-index: 11;border-radius: 0 0 20rpx 20rpx;box-sizing: border-box;}
 .notice-panel .icon-close{position: absolute;left: 50%;transform: translateX(-50%);background-color: #fff;border-radius: 50%;bottom: -38px;}
-.notice-panel .item{line-height: 1.5;margin-bottom: 20rpx;font-size: 14px;}
+.notice-panel .item{line-height: 1.5;margin-bottom: 20rpx;font-size: 14px;color: #FA603D;}
 .pro-list navigator{margin-bottom:30rpx ;}

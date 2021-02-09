@@ -2,10 +2,10 @@
 view{font-size:14px}
 image{width: 100%;height: 100%}
 
-.bannerBg{position: absolute;left: 0;top:0;width: 100%;height: 586rpx;z-index: -1;overflow:hidden;}
+.bannerBg{position: absolute;left: 0;top:0;width: 100%;height: 620rpx;z-index: -1;overflow:hidden;}
 .bannerBg image{width: 750rpx;height:100%;}
 
-.account{height:428rpx;text-align: center;color: #fff;}
+.account{height:422rpx;text-align: center;color: #fff;}
 
 
 .option{padding: 0 36rpx;background-color: #fff;

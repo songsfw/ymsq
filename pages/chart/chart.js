@@ -82,7 +82,7 @@ Page({
         Y: touchMoveY
       });
 
-      if (Math.abs(angle) > 30) return;
+      if (Math.abs(angle) > 60) return;
       
       if (touchMoveX < startX){
         txtStyle = startX - touchMoveX
@@ -97,6 +97,18 @@ Page({
           })
         }
         
+      }else{
+        txtStyle = touchMoveX - startX
+        if(type=='1'){
+          that.setData({
+            ['breadLi['+index+'].txtStyle']: -txtStyle
+          })
+        }
+        else{
+          that.setData({
+            ['cakeLi['+index+'].txtStyle']: -txtStyle
+          })
+        }
       }
     //更新数据
     
@@ -198,19 +210,12 @@ Page({
     if(parseFloat(totalPrice)==0){
       wx.showToast({
         icon:"none",
-        title:"购物车为空"
+        title:"您还没有选择商品哦"
       })
       return false
     }
     api.commitChart(data).then(res=>{
       console.log(res)
-      if(res.status=='3011'){
-        wx.showToast({
-          icon:"none",
-          title:"购物车为空"
-        })
-        return false
-      }
       if(res){
         wx.navigateTo({
           url:"/pages/chart/payOrder/payOrder?type="+type

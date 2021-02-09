@@ -59,7 +59,7 @@
         
         <block wx:if="{{order.status==1}}">
           <!-- <view class="time">支付时间剩余</view> -->
-          <view class="btn btn1 cancel-btn" catch:tap="cancelOrder" data-code="{{order.order_code}}">取消订单</view>
+          <view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-code="{{order.order_code}}">取消订单</view>
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
         <!-- <block wx:if="{{order.status==2}}">
@@ -68,7 +68,7 @@
         </block> -->
         <block wx:if="{{order.status==3}}">
           <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn btn1 delivery-btn">去逛逛</navigator> -->
-          <view class="btn btn1" bind:tap="shareOrder">分享给朋友</view>
+          <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
           <navigator url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">去评价</navigator>
         </block>
         <!-- <block wx:if="{{order.status==4}}">
@@ -82,9 +82,81 @@
 </view>
 <block wx:else>
   <view class="nodata">
-    <image src="../../image/no-data.png"></image>
-    <view>暂无数据</view>
+    <view><image src="../../../image/no-order.png"></image></view>
+    <view class="txt">现在还没有订单，快去下单吧～</view>
+    <navigator url="/pages/index/index" open-type="switchTab" class="btn">去点单</navigator>
   </view>
 </block>
 
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 
+<view class="pop-panel coupon-panel {{pop=='showCoupon'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="tit flex">分享好友您可以获取优惠券</view>
+
+  <view class="pop-con">
+    <view class="coupon-box">
+        <scroll-view class="list" scroll-y="{{true}}">
+          <view class="item" data-id="{{shareInfo.promotion_info.id}}">
+            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+            <view class="flex">
+              <view class="coupon-num flex">
+                <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
+                <image wx:if="{{shareInfo.promotion_info.place_type==2}}" src="../../../image/coupon2.png"></image>
+                <view class="txt">
+                  <view class="num" wx:if="{{shareInfo.promotion_info.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                  <view class="num" wx:else>￥<text>{{shareInfo.promotion_info.money}}</text></view>
+                  
+                  <text>{{shareInfo.promotion_info.remark}}</text>
+                </view>
+              </view>
+              <view class="coupon-info flex-1">
+                <view class="name">{{shareInfo.promotion_info.name}}</view>
+                <view class="date">{{shareInfo.promotion_info.valid_time}}</view>
+                <view class="txt flex">
+                  <text>{{shareInfo.promotion_info.desc1}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="border">
+              <view></view>
+            </view>
+            <view class="flex tips {{showTip?'show':''}}" catch:tap="showTips">
+              <view class="txt flex-1">
+                {{shareInfo.promotion_info.desc2}}
+              </view>
+              <view class="arrow-bottom"></view>
+            </view>
+          </view>
+          <view class="desc">
+            <view class="h3">奖励说明</view>
+            <view class="txt">
+              <view >● 分享成功后分享者可获得{{shareInfo.promotion_info.name}}，将自动发放至账户.</view>
+              <view >● 期间最多可获得1次奖励.</view>
+            </view>
+          </view>
+        </scroll-view>
+    </view>
+  </view>
+  <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
+</view>
+
+<view class="pop-panel cancel-panel" wx:if="{{pop=='cancel'}}">
+  <view class="tit">请选择取消的理由</view>
+  <view class="flex item" wx:for="{{reason}}" bind:tap="bindSelect" data-idx="{{index}}">
+    <text>{{item}}</text>
+    <view class="checkbox {{index==curRes?'on':''}}">
+      <view class="iconfont icon-check"></view>
+    </view>
+  </view>
+  <view wx:if="{{curRes==2}}">
+    <textarea class="reason-txt" bindinput="inputReason" placeholder="请填写理由" placeholder-style="color:#ccc;"  />
+  </view>
+  <view class="cancel-btn btn" bind:tap="cancelOrder">确定取消</view>
+  <view class="icon-close close" bind:tap="close"></view>
+</view>
+
+<view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
+  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress bindtap="previewImage"></image>
+  <view class="icon-close close" bind:tap="close"></view>
+</view>

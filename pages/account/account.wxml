@@ -1,7 +1,7 @@
 <!-- pages/user/user.wxml -->
 <navBar navType="transparent" hasReturn title="余额" titColor="#fff"></navBar>
 <view class="bannerBg">
-  <image src="../../image/card.png"></image>
+  <image src="http://api-beta.withwheat.com/img/charbe-bg0.png"></image>
 </view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
   <scroll-view scroll-y="true" class="contain">

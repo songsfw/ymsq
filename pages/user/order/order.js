@@ -10,14 +10,31 @@ Page({
     orderList:null,
     page:1,
     limit:20,
-    noMoreData:false
+    noMoreData:false,
+    pop:0,
+    
+    curRes:0,
+    reasonTxt:"",
+    reason:[
+      "我不想买了",
+      "信息填写错误",
+      "其他原因"
+    ]
+  },
+  close(){
+    this.setData({
+      pop: 0
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let type = options.type
+    let btmHolder = wx.getStorageSync('btmHolder')
+
     this.setData({
+      btmHolder:btmHolder||0,
       currentTab:type || 0
     })
    
@@ -59,11 +76,43 @@ Page({
       this.timing(remainTime)
     }, 1000);
   },
-  cancelOrder(e){
+  bindcancel(e){
     let code = e.currentTarget.dataset.code
-    let data = {
-      order_code:code
+    this.setData({
+      curOrderCode:code,
+      pop:"cancel"
+    })
+  },
+  bindSelect(e){
+    let idx = e.currentTarget.dataset.idx
+    this.setData({
+      curRes:idx
+    })
+  },
+  inputReason:util.debounce(function(e){
+    let val = e.detail.value
+    console.log(val);
+    if(val){
+      this.setData({
+        reasonTxt:val,
+      })
     }
+  },500),
+  cancelOrder(){
+    let code = this.data.curOrderCode
+    let {reason,curRes,reasonTxt} = this.data
+    let data = {
+      order_code:code,
+      reason: reasonTxt=='' ? reason[curRes] : reasonTxt 
+    }
+    if(curRes==2 && reasonTxt == ''){
+      wx.showToast({
+        icon:"none",
+        title:"请填写理由"
+      })
+      return
+    }
+    console.log(reason);
     api.cancleOrder(data).then(res=>{
       console.log(res);
       if(res){
@@ -74,9 +123,14 @@ Page({
         this.setData({
           noMoreData:false,
           page:1,
-          orderList:[]
+          orderList:[],
+          pop:0
         })
         this.getOrder()
+      }else{
+        this.setData({
+          pop:0
+        })
       }
     })
   },
@@ -160,6 +214,95 @@ Page({
   onPullDownRefresh() {   //下拉刷新
 
     this.getOrder()
+  },
+  showTips(){
+    let showTip = this.data.showTip
+    if(showTip){
+      this.setData({
+        showTip:false
+      })
+    }else{
+      this.setData({
+        showTip:true
+      })
+    }
+  },
+  showPop(e) {
+    
+    let pop = e.currentTarget.dataset.pop,
+    order_code = e.currentTarget.dataset.code
+
+    let data = {
+      order_code:order_code
+    }
+
+    api.preShareOrder(data).then(res=>{
+      console.log(res);
+      if(!res){
+        return
+      }
+      let action = res.action
+      this.setData({
+        curOrderCode:order_code,
+        shareInfo:res
+      })
+      if(action=="share"){
+        wx.showLoading({title:"加载中..."})
+        api.createPoster(data).then(res=>{
+          console.log(res);
+          if(!res){
+            return
+          }
+          let poster = res.file
+          this.setData({
+            poster:poster,
+            pop: 'showPoster'
+          })
+          wx.hideLoading()
+        })
+      }else{
+        this.setData({
+          pop: pop
+        })
+      }
+    })
+    
+    
+  },
+  previewImage(e){
+		var cur=e.target.dataset.src;//获取本地一张图片链接
+		wx.previewImage({
+			current: cur, //字符串，默认显示urls的第一张
+  			urls: [cur] // 数组，需要预览的图片链接列表
+		})
+	},
+  confirmCoupon(){
+    wx.showLoading({title:"加载中..."})
+    let order_code = this.data.curOrderCode
+    let data = {
+      order_code:order_code
+    }
+    api.createPoster(data).then(res=>{
+      console.log(res);
+      wx.hideLoading()
+      if(!res){
+        return
+      }
+      let poster = res.file
+      this.setData({
+        poster:poster,
+        pop: 'showPoster'
+      })
+      api.shareOrder(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        this.setData({
+          'shareInfo.action':"share"
+        })
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -3,12 +3,17 @@
 <view class="banner-bg"></view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
   <view class="order-type">
-    <view class="txt">{{status.title}}</view>
+    <view class="txt">
+      <!-- <image wx:if="{{stat==1}}" src="../../../image/icon-od4.png"></image> -->
+      <image wx:if="{{stat==2}}" src="../../../image/icon-od4.png"></image>
+      <image wx:if="{{stat==3}}" src="../../../image/icon-od1.png"></image>
+      {{status.title}}</view>
     <view class="status">{{status.msg}}</view>
   </view>
   <view class="order-wp">
     <view class="pro-info">
       <view class="delivery-info flex-center" bind:tap="showDelivery" wx:if="{{steps.length>0}}">
+        <image src="../../../image/icon-od5.png"></image>
         <view class="txt">
           <view>{{steps[0].msg}}</view>
           <view>{{steps[0].time}}</view>
@@ -180,7 +185,7 @@
   </block>
   <block wx:if="{{stat==3}}">
     <view class="btn" bind:tap="toComment">去评价</view>
-    <view class="btn" bind:tap="shareOrder">分享给朋友</view>
+    <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
     <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
   </block>
   <block wx:if="{{stat==1}}">
@@ -192,22 +197,61 @@
   </block> -->
 </view>
 
-<view class="pop-panel delivery-panel" wx:if="{{pop=='delivery'}}">
-  <view class="icon-close close" bind:tap="close"></view>
-  <view class="tit">
-    <text>订单跟踪</text>
-  </view>
-  <view class="pop-con">
-    <scroll-view scroll-y="{{true}}">
-      <block wx:for="{{steps}}">
-        <view class="item">
-          <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
-          <view class="time">{{item.time}}</view>
-        </view>
-      </block>
-    </scroll-view>
-  </view>
-  <!-- <view class="confirm-btn btn" bind:tap="close">确定</view> -->
-</view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 <view style="height:{{50+btmHolder}}px"></view>
+
+<view class="pop-panel coupon-panel {{pop=='showCoupon'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="tit flex">分享好友您可以获取优惠券</view>
+
+  <view class="pop-con">
+    <view class="coupon-box">
+        <scroll-view class="list" scroll-y="{{true}}">
+          <view class="item" data-id="{{shareInfo.promotion_info.id}}">
+            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+            <view class="flex">
+              <view class="coupon-num flex">
+                <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
+                <image wx:if="{{shareInfo.promotion_info.place_type==2}}" src="../../../image/coupon2.png"></image>
+                <view class="txt">
+                  <view class="num" wx:if="{{shareInfo.promotion_info.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                  <view class="num" wx:else>￥<text>{{shareInfo.promotion_info.money}}</text></view>
+                  
+                  <text>{{shareInfo.promotion_info.remark}}</text>
+                </view>
+              </view>
+              <view class="coupon-info flex-1">
+                <view class="name">{{shareInfo.promotion_info.name}}</view>
+                <view class="date">{{shareInfo.promotion_info.valid_time}}</view>
+                <view class="txt flex">
+                  <text>{{shareInfo.promotion_info.desc1}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="border">
+              <view></view>
+            </view>
+            <view class="flex tips {{showTip?'show':''}}" catch:tap="showTips">
+              <view class="txt flex-1">
+                {{shareInfo.promotion_info.desc2}}
+              </view>
+              <view class="arrow-bottom"></view>
+            </view>
+          </view>
+          <view class="desc">
+            <view class="h3">奖励说明</view>
+            <view class="txt">
+              <view >● 分享成功后分享者可获得{{shareInfo.promotion_info.name}}，将自动发放至账户.</view>
+              <view >● 期间最多可获得1次奖励.</view>
+            </view>
+          </view>
+        </scroll-view>
+    </view>
+  </view>
+  <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
+</view>
+
+<view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
+  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress bindtap="previewImage"></image>
+  <view class="icon-close close" bind:tap="close"></view>
+</view>

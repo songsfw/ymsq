@@ -68,6 +68,15 @@ Page({
         pop: 'showPoster'
       })
       
+      api.shareOrder(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        this.setData({
+          'shareInfo.action':"share"
+        })
+      })
     })
   },
   showTips(){
@@ -130,24 +139,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(app.globalData.sharePoster){
-      let data = {
-        order_code:this.data.order_code
-      }
-      api.shareOrder(data).then(res=>{
-        console.log(res);
-        if(!res){
-          return
-        }
-        this.setData({
-          'shareInfo.action':"share"
-        })
-        // wx.showToast({
-        //   icon:"success",
-        //   title:res.msg
-        // })
-      })
-    }
+    // let action = this.data.shareInfo.action
+    // if(action == "share")
+    //   let data = {
+    //     order_code:this.data.order_code
+    //   }
+    //   api.shareOrder(data).then(res=>{
+    //     console.log(res);
+    //     if(!res){
+    //       return
+    //     }
+    //     this.setData({
+    //       'shareInfo.action':"share"
+    //     })
+    //     // wx.showToast({
+    //     //   icon:"success",
+    //     //   title:res.msg
+    //     // })
+    //   })
+    
     
   },
 

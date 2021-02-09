@@ -24,3 +24,5 @@ page{height: auto;}
   transform: translateX(0);
   }
   .fixedBtn{background: #fff;}
+  .nodata .btn{background-color: #fff;color: #222;border: 1px solid #ccc;}
+  .notice{font-size: 14px;color: #666;text-align: right;padding: 30rpx;}

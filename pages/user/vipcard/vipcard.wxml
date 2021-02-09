@@ -5,7 +5,7 @@
       <image src="../../../image/icon-logo.png"></image>
     </view>
     <view class="info flex-1">
-      <view>原麦山丘</view>
+      <view class="logo-txt"><image src="../../../image/logo-txt.png" /></view>
       <text class="color-b">可用余额:{{show?balance:"******"}}元</text>
     </view>
     <view class="show" bindtap="changeMoney">

@@ -250,6 +250,22 @@ Page({
       //面包
       api.getOrderBread(data).then(res => {
         console.log(res);
+        if(!res){
+          // wx.showModal({
+          //   title: '',
+          //   content: '当前地址不在配送范围，选择其他地址',
+          //   showCancel:false,
+          //   confirmText: "确定",
+          //   success(res) {
+
+          //     wx.navigateTo({
+          //       url:'/pages/user/address/address?source=1&cartType='+this.data.type
+          //     })
+              
+          //   }
+          // })
+          return
+        }
         let cart_data = res.cart_data
         let newcart_data = {
           can_promotion_count:cart_data.can_promotion_count,
@@ -532,9 +548,15 @@ Page({
   },300),
   submmitOrder:util.debounce(function(){
     
-    let {cart_data,addressInfo,address_id,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName,balanceInfo}=this.data
+    let {cart_data,address,addressInfo,address_id,selectDateTxt,selectTimeTxt,type,remark,stock_type,delivery,ziti,payQueue,preUseBalancePrice,hasPolicy,curId,useCoupon,hasCard,hasThirdCard,useBalance,verifyed,zitiName,balanceInfo}=this.data
     let balance_price = useBalance=="1" ? preUseBalancePrice : 0
-
+    if(!address.address_allow_delivery){
+      wx.showToast({
+        icon:"none",
+        title:"请选择可配送地址"
+      })
+      return
+    }
     if(!selectDateTxt || !selectTimeTxt){
       this.setData({
         pop:'showTime'
@@ -635,10 +657,10 @@ Page({
       if(res.callPay){
         let jsApiParameters = res.jsApiParameters
         let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
-        wx.showToast({
-          icon:"loading",
-          title:"提交订单成功，发起支付"
-        })
+        // wx.showToast({
+        //   icon:"loading",
+        //   title:"提交订单成功，发起支付"
+        // })
 
         wx.requestPayment({
           timeStamp: timeStamp,
@@ -688,13 +710,24 @@ Page({
     })
   }),
   inputCard:function(e){
-    txt = e.detail.value,
+    console.log("1111");
+    let temp = e.detail.value
+    if(util.charLen(temp)>18){
+      wx.showToast({
+        icon:"none",
+        title:"请输入9个汉字或18个数字字母"
+      })
+      return 
+    }
+    txt = temp,
     cartid = e.currentTarget.dataset.cartid
 
   },
   setTxt(){
-    txtCard[cartid]=txt
-    
+    if(cartid && txt) txtCard[cartid]=txt
+    this.setData({
+      txtCardObj:txtCard
+    })
     console.log(txtCard)
   },
   pwdInput(e){
@@ -1025,7 +1058,7 @@ Page({
 
     //用户地址列表
     let addressInfo = wx.getStorageSync("addressInfo")
-        addressInfo = JSON.parse(addressInfo)
+        addressInfo = addressInfo&&JSON.parse(addressInfo)
     if(addressInfo){
       this.setData({
         type: type,

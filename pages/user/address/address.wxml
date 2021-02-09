@@ -1,5 +1,6 @@
 <!-- pages/user/user.wxml -->
 <view class="address-list">
+  <navigator class="notice" url="/pages/user/deliveryArea/deliveryArea"><text class="iconfont icon-notice2"></text> 配送范围说明</navigator>
   <view class="item flex " wx:for="{{address}}" style="transform:translateX(-{{item.txtStyle}}rpx)" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}">
     <view class="info flex-1" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" data-index='{{index}}'>
       <view class="name flex">
@@ -14,6 +15,11 @@
       <view class="set-def" bind:tap="setDefAddress" data-idx="{{index}}" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
       <view class="del" data-idx="{{index}}" data-id="{{item.id}}" catch:tap="delAddress">删除</view>
     </view>
+  </view>
+  <view wx:if="{{address.length==0}}" class="nodata">
+    <view><image src="../../../image/no-addre.png"></image></view>
+    <view class="txt">暂无收货地址</view>
+    <!-- <navigator class="btn" url="/pages/user/deliveryArea/deliveryArea">配送范围说明</navigator> -->
   </view>
 </view>
 <view class="fixedBtn" style="padding-bottom:{{12+btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>

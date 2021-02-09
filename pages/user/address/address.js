@@ -199,6 +199,25 @@ Page({
       api.checkAddress(data).then(res=>{
         console.log(res);
         if(!res){
+          wx.hideToast()
+
+          wx.showModal({
+            title: '',
+            content: '暂无法配送到地址',
+            cancelText:"重选地址",
+            confirmText: "配送范围",
+            success(res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '/pages/user/deliveryArea/deliveryArea'
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+              
+            }
+          })
+
           return
         }
         let selectAddress = addressLi[idx]

@@ -122,7 +122,7 @@ Page({
     this.mapCtx.moveToLocation({
       longitude:lng,
       latitude:lat,
-      success(res){
+      success:res=>{
         console.log(res);
         this.setData({
           scale:16

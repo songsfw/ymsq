@@ -29,7 +29,7 @@
 <view class="wrap" style="padding-top:{{notice.length>0 ? fixedTop+30:fixedTop}}px;">
   <scroll-view scroll-y="true" class="contain"  refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" bindrefresherrefresh="refresh">
     <view class="banner flex">
-      <swiper interval="{{interval}}" autoplay="{{true}}"  duration="{{duration}}" circular="{{circular}}" bindchange="changeBg" current="{{currentSwiper}}" indicator-dots indicator-active-color="#C1996B">
+      <swiper interval="{{interval}}" autoplay="{{true}}"  duration="{{duration}}" circular="{{circular}}" indicator-dots indicator-active-color="#C1996B">
         <block wx:for="{{banner}}" wx:for-index="index">
           <swiper-item>
             <view data-url="{{item.url}}" data-type="{{item.url_type}}" bind:tap="toPro">

@@ -29,9 +29,5 @@
       <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
       <view class="time">{{item.time}}</view>
     </view>
-    <view class="item">
-      <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
-      <view class="time">{{item.time}}</view>
-    </view>
   </block>
 </view>

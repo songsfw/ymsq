@@ -131,9 +131,9 @@ App({
     } else {
       this.globalData.isShare = false
     };
-    if ((options.scene == 1001 || options.scene == 1012 || options.scene == 1017) && options.path == 'pages/chart/paySuccess/paySuccess') {
-      this.globalData.sharePoster = true
-    }
+    // if ((options.scene == 1001 || options.scene == 1012 || options.scene == 1017) && options.path == 'pages/chart/paySuccess/paySuccess') {
+    //   this.globalData.sharePoster = true
+    // }
   },
   
   globalData: {

@@ -30,7 +30,7 @@
   <block wx:if="{{breadList.count==0}}">
     <view class="nodata">
       <image src="../../image/no-data.png"></image>
-      <view>暂无数据</view>
+      <view class="txt">暂无内容</view>
     </view>
   </block>
   <block wx:else>
@@ -38,10 +38,8 @@
       <block wx:for="{{breadList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
-            <view class="pic">
-              <view wx:if="{{stock[pro.meal_id]==0 || pro.soldStat==1}}" class="sold-out">
-                <text>已售罄</text>
-              </view>
+            <view class="pic {{stock[pro.meal_id]==0 || pro.soldStat==1?'sold-out':''}}">
+              <view class="tag">已售罄</view>
               <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
             </view>
             <view class="info">
@@ -77,7 +75,7 @@
   <block wx:if="{{cakeList.count==0}}">
     <view class="nodata">
       <image src="../../image/no-data.png"></image>
-      <view>暂无数据</view>
+      <view class="txt">暂无内容</view>
     </view>
   </block>
   <block wx:else>

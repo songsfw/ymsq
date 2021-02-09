@@ -54,7 +54,8 @@
   </block>
   <block wx:if="{{pageInfo.mall.count==0}}">
     <view class="nodata">
-      <view>暂无数据</view>
+       <view><image src="../../../image/no-coupon.png"></image></view>
+       <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -104,7 +105,8 @@
   </block>
   <block wx:if="{{pageInfo.shop.count==0}}">
     <view class="nodata">
-      <view>暂无数据</view>
+      <view><image src="../../../image/no-coupon.png"></image></view>
+       <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -147,7 +149,8 @@
   </block>
   <block wx:if="{{pageInfo.used.count==0}}">
     <view class="nodata">
-      <view>暂无数据</view>
+      <view><image src="../../../image/no-coupon.png"></image></view>
+       <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -189,7 +192,8 @@
   </block>
   <block wx:if="{{pageInfo.expired.count==0}}">
     <view class="nodata">
-      <view>暂无数据</view>
+      <view><image src="../../../image/no-coupon.png"></image></view>
+       <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>

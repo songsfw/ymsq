@@ -1,6 +1,7 @@
 page{background: #F6F6F6;}
 .card{margin:20rpx 24rpx 0 24rpx;padding:20rpx;border-radius:16rpx;background: #fff;}
 .card .hd{align-items: center;}
+.logo-txt{width: 104rpx;height: 42rpx;margin-bottom: 20rpx;}
 .name{align-items: center;margin-bottom: 12rpx;}
 .name text{font-size: 30rpx;color: #222;margin-right: 22rpx;font-weight: bold;}
 .item .address{font-size: 14px;color: #666;width: 462rpx;}

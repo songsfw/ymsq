@@ -245,14 +245,7 @@ Page({
           this.setData({
             ['breadList['+index+']['+idx+'].soldStat']:1
           })
-        }
-        // if(!res){
-        //   wx.showToast({
-        //     icon:"none",
-        //     title:'加入购物车失败'
-        //   })
-        // }
-        
+        }        
       })
     },300)
   },
@@ -272,13 +265,13 @@ Page({
             bus_x: bezier_points[index]['x'],
             bus_y: bezier_points[index]['y']
         })
-        if (index >= 29) {
+        if (index >= 28) {
             clearInterval(that.timer2);
             that.setData({
                 hide_good_box: true
             })
         }
-    }, 30);
+    }, 20);
 },
   getMoreData() {
     let pageNum,noMoreData

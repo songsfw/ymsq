@@ -19,6 +19,7 @@
   </view>
 </view>
 <view class="tips" wx:if="{{use!=1}}">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
-<view class="fixedBtn">
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="chashCharge">{{use==1?'确定':'充值'}}</view>
 </view>
+<view style="height:{{60+btmHolder}}px"></view>

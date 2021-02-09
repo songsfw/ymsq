@@ -325,6 +325,29 @@ function openLocationSet() {
   })
 }
 
+function charLen(inputVal){    
+    //去除首尾空格    
+    let inputValinputVal = inputVal.replace(/^\s*|\s*$/g,"");    
+    //零长字串不作处理    
+    if ( inputVal.length == 0 )    
+    {    
+        return;    
+    }    
+    //只能匹配数字,字母或汉字    
+    var _match = inputVal.match(/^[a-zA-Z0-9\u4e00-\u9fa5]+$/g);    
+    //匹配数字或字母(包括大小写)    
+    var codeMatch = inputVal.match(/[a-zA-Z0-9]/g);    
+    //匹配汉字    
+    var charMatch = inputVal.match(/[\u4e00-\u9fa5]/g);    
+    //数字或字母个数    
+    var codeNum = codeMatch ? codeMatch.length : 0;    
+    //汉字个数    
+    var charNum = charMatch ? charMatch.length : 0; 
+    var len = _match && codeNum + 2*charNum   
+    
+    return len
+}    
+
 function bezier (points, times,arc) {
   // 0、以3个控制点为例，点A,B,C,AB上设置点D,BC上设置点E,DE连线上设置点F,则最终的贝塞尔曲线是点F的坐标轨迹。
   // 1、计算相邻控制点间距。
@@ -456,5 +479,6 @@ module.exports = {
   formatDate: formatDate,
   toFixed,
   formatePrice,
-  bezier
+  bezier,
+  charLen
 }

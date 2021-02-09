@@ -136,6 +136,12 @@ Page({
    */
   onLoad: function (options) {
     let use = options.use,type=options.type,cardPrice=options.cardPrice
+
+    let btmHolder = wx.getStorageSync('btmHolder')
+    this.setData({
+      btmHolder:btmHolder||0,
+    })
+    
     if(use==1){
       this.setData({
         use:use,

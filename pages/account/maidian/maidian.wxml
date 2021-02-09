@@ -1,7 +1,7 @@
 <!-- pages/user/user.wxml -->
 <navBar hasReturn navType="transparent" title="麦点" titColor="#fff"></navBar>
 <view class="bg">
-  <image src="../../../image/card.png"></image>
+  <image src="http://api-beta.withwheat.com/img/mai-bg.png"></image>
 </view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
   <scroll-view scroll-y="true" class="contain">

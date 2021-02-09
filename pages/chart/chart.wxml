@@ -1,4 +1,4 @@
-<view class="tips flex"><text class="iconfont icon-notice"></text> <text >面包与蛋糕需分开支付</text></view>
+<view class="tips flex"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
     <view class="checkbox {{noallBread?'':'on'}}">
@@ -88,10 +88,14 @@
     </scroll-view>
   </view>
 </view>
-
-<view class="logo">
-  <image src="../../image/logo.png"></image>
+<view class="nodata" wx:if="{{breadLi.length==0 && cakeLi.length==0}}">
+  <view><image src="../../image/no-pro.png"></image></view>
+  <view class="txt">购物车还是空的</view>
+  <navigator url="/pages/index/index" open-type="switchTab" class="btn">去逛逛</navigator>
 </view>
+<!-- <view class="logo">
+  <image src="../../image/logo.png"></image>
+</view> -->
 
 <view class="option flex">
   <!-- <view class="select flex-center">

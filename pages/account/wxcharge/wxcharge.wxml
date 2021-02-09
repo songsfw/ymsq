@@ -1,6 +1,6 @@
 <!-- pages/user/user.wxml -->
 <view class="bg">
-  <image src="../../../image/card.png"></image>
+  <image src="http://api-beta.withwheat.com/img/charge-bg3.png"></image>
 </view>
 <view class="info">
   <view class="tit">选择充值金额</view>
@@ -27,6 +27,7 @@
   </view>
   <view class="flex-1">我已阅读并同意<navigator url="">《原麦山丘会员章程》</navigator></view>
 </view>
-<view class="fixedBtn">
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="charge">立即充值</view>
 </view>
+<view style="height:{{60+btmHolder}}px"></view>

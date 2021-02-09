@@ -109,6 +109,11 @@ Page({
     })
   },
   onLoad: function (options) {
+    let btmHolder = wx.getStorageSync('btmHolder')
+    this.setData({
+      btmHolder:btmHolder||0,
+    })
+    
     api.chargeList().then(res=>{
       console.log(res);
       if(res){

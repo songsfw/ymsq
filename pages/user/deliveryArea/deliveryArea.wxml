@@ -6,21 +6,9 @@
       <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}</view>
     </block>
   </view>
-  <!-- <view class="search">
-    <text class="iconfont icon-local"></text>
-    <input type="text" placeholder="小区/写字楼/学校等" bindinput="getsuggest" value="{{backfill}}" />
-  </view> -->
 </view>
-<!-- <view class="suggestion" wx:if="{{suggestion.length>0}}">
-  <scroll-view scroll-y="true" class="suggestion-scroll">
-    <view class="item" wx:for="{{suggestion}}" wx:key="index" bindtap="backfill">
-      <view class="tit" id="{{index}}">{{item.title}}</view>
-      <view>{{item.addr}}</view>
-    </view>
-  </scroll-view>
-</view> -->
-<map class="map" id="myMap" longitude="{{lng}}" latitude="{{lat}}" show-location bindregionchange="changeRegion" scale="{{scale}}" polygons="{{polygons}}">
-  <image class="center-local animate {{moving?'bounce':''}}" src="../../../image/local.png"></image>
+<map class="map" id="myMap" longitude="{{lng}}" latitude="{{lat}}" bindregionchange="changeRegion" scale="{{scale}}" polygons="{{polygons}}">
+  <!-- <image class="center-local animate {{moving?'bounce':''}}" src="../../../image/local.png"></image> -->
   <image bind:tap="moveToUserLocal" class="local" src="../../../image/dingwei.png"></image>
   <view class='city flex' wx:if="{{currentTab==2}}">
     <picker class="citytxt" bindchange="selectCity"  range-key="city_nae" value="{{cityIndex}}" range="{{citys}}">

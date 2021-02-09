@@ -85,7 +85,7 @@ image{max-width: 100%}
 .col-3 .item{width: 33.33%;}
 
 .btn{width: 100%;height:88rpx;line-height: 88rpx;background:#C1996B;border-radius:44rpx;color: #fff;text-align: center;font-size: 30rpx}
-.fixedBtn{position: fixed;padding: 24rpx;box-sizing: border-box; left: 0;bottom: 0; width:100%;}
+.fixedBtn{position: fixed;padding: 24rpx;box-sizing: border-box; left: 0;bottom: 0; width:100%;z-index: 2;}
 .btn.unuse{opacity: .5;}
 
 .more-btn{text-align: center;padding: 30rpx 0;font-size: 24rpx;color: #999;}
@@ -128,8 +128,10 @@ image{max-width: 100%}
 .refresh-block image{width:20px;height: 20px; }
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
 .footer{text-align: center;font-size: 12px;color: #999;padding: 30rpx 0;background: #fff;}
-.nodata{text-align: center;}
-
+.nodata{text-align: center;margin-top: 20vh;}
+.nodata image{width: 608rpx;height:312rpx;}
+.nodata .txt{margin: 38rpx 0 60rpx 0;font-size: 14px;color: #666;}
+.nodata .btn{margin: 0 auto; width: 320rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #fff;background: #C1996B;font-size: 15px;}
 .pop-panel.upPanel{transform: translateY(0);}
 
 .upmotion{animation: uplist .3s;}

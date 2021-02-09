@@ -141,7 +141,7 @@
         {
           "name": "支付成功",
           "pathName": "pages/chart/paySuccess/paySuccess",
-          "query": "orderCode=1000210118002266",
+          "query": "orderCode=1000210205002451",
           "scene": null
         },
         {

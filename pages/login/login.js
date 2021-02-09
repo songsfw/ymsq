@@ -10,6 +10,13 @@ Page({
     show:false,
     pop:0,
     tips:"获取验证码",
+    pics:[
+      '/image/cake1.jpg'
+    ],
+    setTime:'',
+    num:0,
+    showpic:null,
+    hidepic:null
   },
   close(){
     this.setData({
@@ -183,6 +190,30 @@ Page({
           userInfo:userInfo,
           show:true
         })
+
+    var _this=this;
+    var num=_this.data.num;
+    var animation= wx.createAnimation({}) //创建一个动画实例
+    _this.setData({      //创建一个计时器
+        setTime:setInterval(function(){
+          _this.setData({
+            num:num++
+          })
+          if(num>1){
+            num=0;
+          }           //淡入
+          animation.opacity(1).step({
+            duration:1000
+          }) //描述动画
+          _this.setData({
+            showpic:animation.export()
+          }) //输出动画
+        //淡出
+          animation.opacity(0).step({duration:1000})
+          _this.setData({hidepic:animation.export()})
+      },3000)
+    })
+    
     // let loginInfo = await auth.getLoginInfo()
     // console.log(loginInfo);
     // let local

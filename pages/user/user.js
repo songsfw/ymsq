@@ -29,8 +29,8 @@ Page({
     wx.showModal({
       title: '联系客服',
       content: '400-992-6632',
-      showCancel:false,
       confirmText:"拨打",
+      cancelText:"取消",
       confirmColor:"#C1996B",
       success (res) {
         if (res.confirm) {

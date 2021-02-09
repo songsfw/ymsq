@@ -40,9 +40,83 @@ Page({
       url:"/pages/commit/commit?orderCode="+this.data.orderCode
     })
   },
-  shareOrder(){
+  showTips(){
+    let showTip = this.data.showTip
+    if(showTip){
+      this.setData({
+        showTip:false
+      })
+    }else{
+      this.setData({
+        showTip:true
+      })
+    }
+  },
+  showPop(e) {
+    
+    let pop = e.currentTarget.dataset.pop
+    let action = this.data.shareInfo.action,
+    order_code = this.data.orderCode
+    let data = {
+      order_code:order_code
+    }
+    if(action=="share"){
+      wx.showLoading({title:"加载中..."})
+      api.createPoster(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        let poster = res.file
+        this.setData({
+          poster:poster,
+          pop: 'showPoster'
+        })
+        wx.hideLoading()
+      })
+    }else{
+      this.setData({
+        pop: pop
+      })
+    }
     
   },
+  previewImage(e){
+		var cur=e.target.dataset.src;//获取本地一张图片链接
+		wx.previewImage({
+			current: cur, //字符串，默认显示urls的第一张
+  			urls: [cur] // 数组，需要预览的图片链接列表
+		})
+	},
+  confirmCoupon(){
+    wx.showLoading({title:"加载中..."})
+    let order_code = this.data.orderCode
+    let data = {
+      order_code:order_code
+    }
+    api.createPoster(data).then(res=>{
+      console.log(res);
+      wx.hideLoading()
+      if(!res){
+        return
+      }
+      let poster = res.file
+      this.setData({
+        poster:poster,
+        pop: 'showPoster'
+      })
+      api.shareOrder(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        this.setData({
+          'shareInfo.action':"share"
+        })
+      })
+    })
+  },
+
   showAllPro() {
     this.setData({
       showAll: true
@@ -52,13 +126,6 @@ Page({
     let stype = e.currentTarget.dataset.stype
     this.setData({
       stype: stype
-    })
-  },
-  showPop(e) {
-    
-    let pop = e.currentTarget.dataset.pop
-    this.setData({
-      pop: pop
     })
   },
 
@@ -276,9 +343,31 @@ Page({
       fixedTop,
       orderCode: orderCode
     })
+
+    let data = {
+      order_code:orderCode
+    }
+
+    api.preShareOrder(data).then(res=>{
+      console.log(res);
+      if(!res){
+        return
+      }
+      this.setData({
+        shareInfo:res
+      })
+    })
+
     this.initOrderData();
   },
-
+  share(){
+    wx.showShareImageMenu({
+      path:this.data.poster,
+      success(res){
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -290,7 +379,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let pages = getCurrentPages();
+    let currentPage = pages[pages.length-1];
+    console.log(currentPage.options)
+    let data = {
+      order_code:currentPage.options.code
+    }
+    api.preShareOrder(data).then(res=>{
+      console.log(res);
+      if(!res){
+        return
+      }
+      this.setData({
+        'shareInfo.action':res.action
+      })
+    })
 
   },
 

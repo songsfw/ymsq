@@ -1,6 +1,6 @@
 page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
-.order-wp{padding:20rpx 24rpx;}
+.order-wp{padding:0 24rpx 20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;}
 .option .flex-center{margin-left: 20rpx;}
@@ -15,7 +15,7 @@ page{background: #F6F6F6;height: auto;}
 .option .price .num text{font-size:16px;}
 .buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;}
 
-.address{padding:40rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
+.address{padding:30rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}
@@ -37,9 +37,9 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .price{justify-content: space-between;}
 .pro-info .item .info .tag{color: #aaa;}
 .info .tag text{margin-right: 20rpx;}
-.txt-card{margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
+.txt-card{position: relative; margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
 .txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
-.txt-card .icon-edit{color: #C1996B;font-size: 16px;margin-right: 10px;}
+.txt-card .icon-edit{position: absolute;right: 0;top: 0; color: #C1996B;font-size: 16px;margin-right: 10px;pointer-events:none;}
 .txt-card input{margin-left: 10px;font-size: 13px;}
 .pro-info .price .num{font-size: 11px;color: #FA603D;}
 .pro-info .price .num text{font-size:14px}
@@ -90,10 +90,10 @@ page{background: #F6F6F6;height: auto;}
 
 .confirm-btn{margin: 24rpx;width: auto;}
 
-.send-type{height: 55px;background-color: #fff;padding: 20rpx 0; box-sizing: border-box;border-top: 1px solid #F6F6F6;}
-.send-type view{margin: 0 auto; width: 156px;height: 36px; background: #F6F6F6;align-items: center;border-radius: 18px;overflow: hidden;padding: 0 3px;}
-.send-type text{background: #F6F6F6;height: 30px;line-height: 30px;width: 50%;border-radius: 15px;text-align: center;font-size: 13px;color: #999;}
-.send-type text.on{background: #C1996B;color: #fff;}
+.send-type{height: 36px;background-color: #fff;border-top: 1px solid #F6F6F6;margin:20rpx 24rpx 0 24rpx;border-radius: 18rpx 18rpx 0 0;overflow: hidden;}
+.send-type view{margin: 0 auto; height: 36px; background:linear-gradient(to bottom,#C1996B,#fff);align-items: center;overflow: hidden;}
+.send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
+.send-type text.on{background: #fff;color: #C1996B;}
 .delivery text{color:#5375FD ;}
 .delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
 .delivery-tip text{vertical-align: sub;font-size: 30rpx;}

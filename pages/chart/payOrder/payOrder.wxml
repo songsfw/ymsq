@@ -2,8 +2,8 @@
 <wxs module="filter" src="../../../utils/tools.wxs"></wxs>
 <view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">
-    <text class="{{ziti=='0'?'on':''}}" data-stype="0" bind:tap="selectType">商家配送</text>
-    <text class="{{ziti=='1'?'on':''}}" data-stype="1" bind:tap="selectType">上门自提</text>
+    <text class="{{ziti=='0'?'on':''}} flex-1" data-stype="0" bind:tap="selectType" style="border-radius:0 18rpx 18rpx 0">商家配送</text>
+    <text class="{{ziti=='1'?'on':''}} flex-1" data-stype="1" bind:tap="selectType" style="border-radius:18rpx 0 0 18rpx">上门自提</text>
   </view>
 </view>
 <view class="order-wp">
@@ -21,7 +21,7 @@
       </view>
     </block>
     <block wx:else>
-      <block wx:if="{{address.is_address || address_allow_delivery}}">
+      <block wx:if="{{address.is_address && address.address_allow_delivery}}">
         <view class="local iconfont icon-local"></view>
         <view class="txt flex-1">
           <view class="tit flex">
@@ -91,7 +91,7 @@
         </view>
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
           <view class="h4">巧克力牌</view>
-          <input class="inputxt flex-1" type="text" placeholder="happy birthday!" maxlength="18" bindinput="inputCard" bindblur="setTxt" value="{{txtCard}}" data-cartid="{{item.cart_id}}"/>
+          <input class="inputxt flex-1" type="text" placeholder="happy birthday!" maxlength="18" bindinput="inputCard" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}" data-cartid="{{item.cart_id}}"/>
           <view class="iconfont icon-edit"></view>
         </view>
       </view>
@@ -142,7 +142,7 @@
       <view class="name">商品金额</view>
       <view class="val" style="color:#222">￥{{cart_data.price}}</view>
     </view>
-    <view class="flex-center">
+    <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
         配送费用
         <text wx:if="{{cart_data.free_msg!='' && !useCoupon}}">【{{cart_data.free_msg}}】</text>
@@ -232,7 +232,7 @@
 </view>
 <view class="pop-panel time-panel" wx:if="{{pop=='showTime'}}">
   <view class="icon-close close" bind:tap="close"></view>
-  <view class="tit">选择送达时间</view>
+  <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block><block wx:else>自提</block>时间</view>
   <view class="pop-con">
     <view class="flex time-box">
       <scroll-view class="date" scroll-y="{{true}}">
