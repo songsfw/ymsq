@@ -150,17 +150,17 @@ Page({
       'address.name':e.detail.value
     })
     console.log(this.data.address.name)
-  },500),
+  },300),
   inputMobi:util.debounce(function(e){
     this.setData({
       'address.mobile':e.detail.value
     })
-  },500),
+  },300),
   inputAdd:util.debounce(function(e){
     this.setData({
       'address.address_detail':e.detail.value
     })
-  },500),
+  },300),
   /**
    * 生命周期函数--监听页面加载
    */
@@ -181,7 +181,8 @@ Page({
   onShow: function () {
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
-    let options = currPage.__data__.options
+    let options = currPage.options
+    options = Object.assign(options,currPage.__data__.options || {}) 
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,city = options.city,title=options.title
     console.log(options);
     let oldAddress = this.data.address

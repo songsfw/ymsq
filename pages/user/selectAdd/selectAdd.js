@@ -114,14 +114,15 @@ Page({
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];//上一个页面
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    //title 和 address调换
     prevPage.setData({
       options: { 
         type: type, 
-        address: address,
+        address: title,
         lng:lng,
         lat:lat,
         city:city,
-        title:title
+        title:address
       }
     })
     wx.navigateBack({
