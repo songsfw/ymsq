@@ -6,9 +6,9 @@
       <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}</view>
     </block>
   </view>
-  <scroll-view class="sub" scroll-x="{{true}}">
+  <view class="sub-wrap">
+    <scroll-view class="sub {{isFixed?'fixed':''}}" scroll-x="{{true}}">
     <view class="flex">
-      
       <block wx:if="{{currentTab==1}}">
         <text data-id="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
         <block wx:for="{{breadTags}}" wx:for-index="index">
@@ -24,6 +24,7 @@
 
     </view>
   </scroll-view>
+  </view>
 </view>
 <!--面包-->
 <view class="pro-box" wx:if="{{currentTab=='1'}}">

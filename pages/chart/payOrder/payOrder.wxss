@@ -3,7 +3,7 @@ page{background: #F6F6F6;height: auto;}
 .order-wp{padding:0 24rpx 20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;}
-.option .flex-center{margin-left: 20rpx;}
+.option .flex-center{margin-left: 20rpx;font-size: 13px;}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .checkbox.on{border: none;}
@@ -13,12 +13,13 @@ page{background: #F6F6F6;height: auto;}
 .option .price view{font-size: 13px;}
 .option .price .num{color: #FA603D;}
 .option .price .num text{font-size:16px;}
-.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;}
+.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;font-size: 13px;}
 
 .address{padding:30rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}
+.arrow-r{display: inline-block; width: 8px;height: 14px;vertical-align: middle;margin-left: 20rpx;}
 .address .txt{width: 498rpx;}
 .address .tit text{margin-right: 20rpx;}
 .address .tit .tag{font-size: 11px;color: #fff; padding:0 5px; line-height: 18px; background: #C1996B;border-radius: 4px;}
@@ -59,11 +60,11 @@ page{background: #F6F6F6;height: auto;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
 .pay-info .icon-arrow-r{vertical-align: middle;margin-left: 20rpx;font-size: 30rpx;}
-.pay-info .val{font-size: 13px;color: #aaa;}
+.pay-info .val{font-size: 13px;color: #aaa;justify-content: flex-end;}
 .policy{padding:30rpx 20rpx ;color: #999;}
 .policy .checkbox{border-radius: 50%;margin-right: 16rpx;}
 .balance .val text{color: #F5222D;}
-.balance switch{margin-left:20rpx ;transform: scale(.8);}
+.balance switch{margin-left:20rpx ;transform: scale(.8) translateX(10rpx);transform-origin: right;}
 .pay-info .total-price{text-align: right;justify-content: flex-end;}
 .pay-info .total-price{font-size: 13px;}
 .pay-info .total-price view{font-size: 18px;color: #F5222D;}

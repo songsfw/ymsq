@@ -140,7 +140,7 @@
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>
-      <view class="val" style="color:#222">￥{{cart_data.price}}</view>
+      <view class="val" style="color:#222">￥{{cart_data.price}}<text class="arrow-r"></text></view>
     </view>
     <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
@@ -148,7 +148,7 @@
         <text wx:if="{{cart_data.free_msg!='' && !useCoupon}}">【{{cart_data.free_msg}}】</text>
       </view>
       <view class="val strongTxt">
-        ￥{{hasDelivery?cart_data.default_delivery:'0'}}
+        ￥{{hasDelivery?cart_data.default_delivery:'0'}}<text class="arrow-r"></text>
       </view>
     </view>
     <view class="delivery-tip" wx:if="{{useCoupon}}">
@@ -163,7 +163,8 @@
       <view class="val">
         <block wx:if="{{hasMai}}"><text class="strongTxt">-￥{{jinmai.now_price}}</text></block>
         <block wx:else>可用2000麦点,抵扣2.00元</block>
-        <text class="iconfont icon-arrow-r"></text>
+        <!-- <text class="iconfont icon-arrow-r"></text> -->
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
     <view class="flex-center" wx:if="{{pay_style.promotion==1}}" bind:tap="showPop" data-pop="showCoupon">
@@ -174,7 +175,7 @@
       <view class="val {{useCoupon?'strongTxt':''}}">
         <block wx:if="{{useCoupon}}">-￥{{usedCouponPrice}}</block>
         <block wx:else>{{cart_data.can_promotion_count}}张优惠券可用</block>
-        <text class="iconfont icon-arrow-r"></text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
     <view class="flex-center" wx:if="{{pay_style.cash_card==1}}" bind:tap="useCard" data-type="1">
@@ -182,7 +183,7 @@
       <view class="val">
         <block wx:if="{{hasCard}}"><text class="strongTxt">-￥{{payQueue[3]}}</text></block>
         <block wx:else>去使用</block>
-        <text class="iconfont icon-arrow-r"></text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
     <view class="flex-center" wx:if="{{pay_style.third_card==1}}" bind:tap="useCard" data-type="2">
@@ -193,7 +194,7 @@
       <view class="val">
         <block wx:if="{{hasThirdCard}}"><text class="strongTxt">-￥{{payQueue[4]}}</text></block>
         <block wx:else>去使用</block>
-        <text class="iconfont icon-arrow-r"></text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
     <view class="flex-center balance" wx:if="{{pay_style.balance==1}}">
@@ -209,8 +210,7 @@
     <view class="total-price flex">
       <text>合计：</text>
       <view>
-        <text>￥</text>
-        {{payPrice}}
+        <text>￥</text>{{payPrice}}<text class="arrow-r"></text>
       </view>
     </view>
   </view>

@@ -28,7 +28,7 @@ Page({
     console.log(address)
     //未提交情况下保存未填完信息
     wx.setStorageSync('address', JSON.stringify(address))
-    wx.redirectTo({
+    wx.navigateTo({
       url:"/pages/user/selectAdd/selectAdd?type="+type
     })
   },
@@ -164,7 +164,24 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];
+    let options = currPage.__data__.options
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,city = options.city,title=options.title
     console.log(options);
     let oldAddress = this.data.address
@@ -185,22 +202,8 @@ Page({
       type:type,
       address:oldAddress,
     })
-    
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
+    console.log(this.data.options);
   },
 
   /**

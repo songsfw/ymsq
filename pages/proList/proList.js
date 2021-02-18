@@ -357,7 +357,19 @@ Page({
     this.getStock()
     this.getCartInfo()
   },
-  
+  onPageScroll(e){
+    console.log(e.scrollTop);
+    let stop=e.scrollTop
+    if(stop>46){
+      this.setData({
+        isFixed:true
+      })
+    }else{
+      this.setData({
+        isFixed:false
+      })
+    }
+  },
   onLoad: function () {
     let sysInfo = null
     if(app.globalSystemInfo){

@@ -111,9 +111,25 @@ Page({
     let {address,lng,lat,title} = e.currentTarget.dataset
     let type = this.data.type,city=this.data.cityName + ',' + this.data.district
     console.log(address);
-    wx.redirectTo({
-      url: "/pages/user/adddata/adddata?address=" + address + "&lng=" + lng + "&lat="+lat+"&type="+type+"&city="+city+"&title="+title
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];//上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      options: { 
+        type: type, 
+        address: address,
+        lng:lng,
+        lat:lat,
+        city:city,
+        title:title
+      }
     })
+    wx.navigateBack({
+      delta: 1
+    })
+    // wx.redirectTo({
+    //   url: "/pages/user/adddata/adddata?address=" + address + "&lng=" + lng + "&lat="+lat+"&type="+type+"&city="+city+"&title="+title
+    // })
   },
   moveToUserLocal(){
     this.mapCtx.moveToLocation()
@@ -246,6 +262,7 @@ Page({
           this.moveToLocation('116.458033','39.983673')
         } else {
           this.setData({
+            flag:false,
             cityName: cityName,
             district:district,
             poi: res.pois
