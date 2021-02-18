@@ -86,7 +86,7 @@
           <navigator class="item" url="/pages/cakeInfo/cakeInfo?proId={{pro.spu_id}}">
             <view class="pic"><image src="{{pro.img}}" mode="aspectFill" lazy-load="{{true}}"></image></view>
             <view class="info">
-              <view class="tit">{{pro.name}}</view>
+              <view class="tit">{{pro.name}} ({{pro.spec}})</view>
               <view class="tags text-overflow">
                 <text wx:for="{{pro.tags}}" wx:for-index="index" wx:if="{{index<3}}" wx:for-item="tag">{{tag}}</text>
               </view>

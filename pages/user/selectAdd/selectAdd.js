@@ -116,7 +116,7 @@ Page({
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     //title 和 address调换
     prevPage.setData({
-      options: { 
+      options: {
         type: type, 
         address: title,
         lng:lng,

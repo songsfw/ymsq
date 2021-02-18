@@ -21,7 +21,7 @@
       </block>
     </view>
   </scroll-view>
-  <view class="type flex"><view>配送方式</view><text>原麦山丘物流助手</text></view>
+  <view class="type flex"><view>配送方式</view><text>原麦山丘物流</text></view>
 </view>
 <view class="delivery-info">
   <block wx:for="{{info.steps}}">
