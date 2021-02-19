@@ -44,15 +44,16 @@
             <view class="pic">
               <image src="{{item.image_url}}" mode="aspectFill"></image>
             </view>
-            <view class="info flex-1 flex">
+            <view class="info flex-1 flex text-overflow">
               <view class="tit">
                 {{item.name}}
                 <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
               </view>
-              <view class="tag flex-wrap">
-                <text>{{item.size}}</text>
-                <text>{{item.spec}}</text>
-                <text>{{item.edible}}</text>
+              <view class="tag">
+                <text wx:if="{{item.size}}">{{item.size}}</text>
+                <text wx:if="{{item.spec}}">{{item.spec}}</text>
+                <text wx:if="{{item.edible}}">{{item.edible}}</text>
+                <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
               </view>
               <view class="price flex">
                 <view class="num">
@@ -169,7 +170,8 @@
         <view class="val flex-center">{{orderData.balance_price}}</view>
       </view>
       <view class="total-price flex">
-        <text>应付金额：</text>
+        <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
+        <text wx:else>实付金额：</text>
         <view>
           <text>￥</text>
           {{orderData.weixin_price}}
@@ -178,7 +180,7 @@
     </view>
   </view>
 </view>
-<view class="option flex-center" style="padding-bottom:{{10+btmHolder}}px">
+<view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">
   <block wx:if="{{stat==2}}">
     <view class="btn" bind:tap="showDelivery" wx:if="{{steps.length>0}}">查看物流</view>
     <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
@@ -198,7 +200,7 @@
 </view>
 
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
-<view style="height:{{50+btmHolder}}px"></view>
+<view style="height:{{56+btmHolder}}px" wx:if="{{stat!=4}}"></view>
 
 <view class="pop-panel coupon-panel {{pop=='showCoupon'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="icon-close close" bind:tap="close"></view>

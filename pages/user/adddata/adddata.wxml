@@ -23,7 +23,7 @@
     <view class="txt">设为默认地址</view>
   </view>
 </view>
-<view class="fixedBtn">
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="addAddress">保存</view>
 </view>
 <view style="height:{{56+btmHolder}}px"></view>

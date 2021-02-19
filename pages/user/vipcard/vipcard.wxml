@@ -22,7 +22,7 @@
     <view class="txt">扫码付款</view>
   </view>
 </view>
-<view class="fixedBtn">
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="toAccount">余额充值</view>
 </view>
-<btmHolder defHolder="62"></btmHolder>
+<view style="height:{{56+btmHolder}}px"></view>

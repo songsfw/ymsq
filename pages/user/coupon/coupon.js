@@ -73,12 +73,12 @@ Page({
         ['usedLi['+(obj.used.pageNum-1)+']']:this.getCurrList(usedLi,1),
         ['expiredLi['+(obj.expired.pageNum-1)+']']:this.getCurrList(expiredLi,1),
       })
-      // let curShopLi = this.getCurrList(shopLi,1)
-      // if(curShopLi.length>0){
-      //   curShopLi.forEach(item=>{
-      //     wxbarcode.barcode('barcode-'+item.id, item.card_no, 660, 300);
-      //   })
-      // }
+      let curShopLi = this.getCurrList(shopLi,1)
+      if(curShopLi.length>0){
+        curShopLi.forEach(item=>{
+          wxbarcode.barcode('barcode-'+item.id, item.card_no, 660, 300);
+        })
+      }
       
     })
   },
@@ -93,22 +93,33 @@ Page({
       promotion_id:id
     }
     console.log(this.data.shopLi);
-    api.storeCoupon(data).then(res=>{
-      console.log(res);
-      if(res){
-        
-        this.setData({
-          ['shopLi['+index+']['+idx+'].used']:true
-        })
-        console.log(this.data.shopLi);
-        wx.showToast({
-          icon:"success",
-          title:"使用成功"
-        })
 
+    wx.showModal({
+      title: '兑换',
+      content: '您的优惠券在点击确认后即兑换成功，确定兑换吗？',
+      success:res=>{
+        if (res.confirm) {
+          console.log('用户点击确定')
+          api.storeCoupon(data).then(res=>{
+            console.log(res);
+            if(res){
+              
+              this.setData({
+                ['shopLi['+index+']['+idx+'].used']:true
+              })
+              console.log(this.data.shopLi);
+              wx.showToast({
+                icon:"success",
+                title:"使用成功"
+              })
+      
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
-    
   },
   showTips(e){
     let id = e.currentTarget.dataset.id,

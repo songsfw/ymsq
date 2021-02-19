@@ -97,6 +97,7 @@ Page({
           pop:0
         })
         if(action==1){
+          app.globalData.proSource = "2"
           wx.switchTab({
             url:"/pages/chart/chart"
           })

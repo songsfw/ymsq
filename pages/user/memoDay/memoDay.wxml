@@ -28,16 +28,17 @@
     </view>
   </view>
 </view>
-<view class="fixedBtn">
+<view class="fixedBtn" style="padding-bottom:{{btmHolder==0?12:btmHolder}}px">
   <view class="btn" bindtap="save">保存</view>
 </view>
+<view style="height:{{56+btmHolder}}px"></view>
 <pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" class="tips-panel">
   <view slot="txt" class="txt">
     <view wx:for="{{doc}}">{{item}}</view>
   </view>
 </pop-panel>
 <view class="date-mask" bind:tap="closeDate" wx:if="{{showDate}}"></view>
-<view class="date-panel {{showDate?'on':''}}">
+<view class="date-panel {{showDate?'on':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="hd flex">
     <text>选择日期</text>
     <view class="switch flex" bind:tap="changeType">

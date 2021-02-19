@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "收货地址",
+  "navigationBarTitleText": "免密支付",
   "backgroundTextStyle": "dark",
   "usingComponents": {
     "pop-panel": "/components/pop-panel/pop-panel"

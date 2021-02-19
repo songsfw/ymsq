@@ -8,15 +8,13 @@ Page({
   data: {
     txt:''
   },
-  
-  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
 
     let btmHolder = wx.getStorageSync('btmHolder')
-
+    btmHolder = btmHolder>0?btmHolder:12
     //选择地址
     //source 1 下单页
     this.setData({
@@ -27,7 +25,7 @@ Page({
     this.setData({
       txt:e.detail.value
     })
-  },500),
+  },300),
   submit(){
     let data = {
       content:this.data.txt
@@ -35,10 +33,20 @@ Page({
     api.feedBack(data).then(res=>{
       console.log(res);
       if(res){
-        wx.showToast({
-          icon:"none",
-          title:"提交成功"
+        wx.showModal({
+          content: '感谢您的反馈',
+          confirmText:"知道了",
+          showCancel:false,
+          confirmColor:"#C1996B",
+          success (res) {
+            if (res.confirm) {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          }
         })
+      
       }
     })
   },

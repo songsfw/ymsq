@@ -12,8 +12,9 @@ Page({
     money:"123"
   },
   changeMoney(){
-    let show = this.data.show
+    let show = app.globalData.isShowBalance
     show?show=false:show=true
+    app.globalData.isShowBalance = show
     this.setData({
       show:show
     })
@@ -26,6 +27,7 @@ Page({
     let fixedTop = sysInfo.navBarHeight;
 
     this.setData({
+      show:app.globalData.isShowBalance,
       fixedTop
     })
 

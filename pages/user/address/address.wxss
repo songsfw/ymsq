@@ -5,7 +5,7 @@ page{height: auto;}
 .name{align-items: center;margin-bottom: 12rpx;}
 .name text{font-size: 30rpx;color: #222;margin-right: 22rpx;font-weight: bold;}
 .item .address{font-size: 14px;color: #666;width: 462rpx;}
-.item .tag{margin-left: 16rpx; font-size: 10px;color: #fff;background: #f5222d;padding: 10rpx;line-height: 1;border-radius: 4rpx;}
+.item .tag{margin-left: 16rpx; font-size: 10px;color: #fff;background: #C1996B;padding: 10rpx;line-height: 1;border-radius: 4rpx;}
 .item .option{position: absolute;right:-336rpx;top: 0;height: 100%;width: 336rpx;}
 .del,.set-def{display: flex;align-items: center;justify-content: center; width: 168rpx; color: #fff;background: #E02020;height: 100%;}
 .set-def{background: #f6f6f6;color: #222;}
@@ -23,6 +23,10 @@ page{height: auto;}
   -webkit-transform: translateX(0);
   transform: translateX(0);
   }
-  .fixedBtn{background: #fff;}
-  .nodata .btn{background-color: #fff;color: #222;border: 1px solid #ccc;}
-  .notice{font-size: 14px;color: #666;text-align: right;padding: 30rpx;}
+.fixedBtn{background: #fff;}
+.nodata .btn{background-color: #fff;color: #222;border: 1px solid #ccc;}
+.notice{font-size: 14px;color: #666;text-align: right;padding: 30rpx;}
+.checkbox{position: relative; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 20rpx;box-sizing: border-box;}
+.checkbox view{position: absolute;left: 0;top: 0; display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
+.checkbox.on{border: none;}
+.checkbox.on view{display: block;}

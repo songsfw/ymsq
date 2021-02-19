@@ -334,11 +334,11 @@ Page({
         let detail = cart_data.detail
 
         detail.find(item=>{
-          if(item.is_fittings==0){
-            txtCard[item.cart_id] = res.default_mcake_message
+          if(item.is_fittings==0 && item.is_mcake_message==1){
+            txtCard[item.cart_id] = item.default_mcake_message
           }
         })
-
+        console.log(txtCard);
         // if(useBalance){
         //   if(free_secret=="0"){
         //     verifyed = false
@@ -349,7 +349,6 @@ Page({
 
         this.setData({
           hasMai:hasMai,
-          txtCard:res.default_mcake_message,
           fittings_desc:res.fittings_desc,
           address: res.address,
           balance: res.balance,
@@ -511,10 +510,20 @@ Page({
     
   },
   useCard(e){
+    let isUse=0
     let type = e.currentTarget.dataset.type
+    if(type==1){
+      if(this.data.hasCard){
+        isUse=1
+      }
+    }else{
+      if(this.data.hasThirdCard){
+        isUse=1
+      }
+    }
     let preUseBalancePrice = this.data.preUseBalancePrice
     wx.navigateTo({
-      url: '/pages/account/cashcharge/cashcharge?use=1&type='+type+'&cardPrice='+preUseBalancePrice
+      url: '/pages/account/cashcharge/cashcharge?use=1&type='+type+'&cardPrice='+preUseBalancePrice+'&isUse='+isUse
     })
   },
   setCardPrice(price,type,card_no,card_pwd){
@@ -522,19 +531,32 @@ Page({
     let newPayQueue = payQueue.slice(0)
     if(type==1){
       newPayQueue[3]=price
-      this.setData({
-        cash_card_no:card_no,
-        cash_card_pwd:card_pwd,
-        hasCard:true
-      })
+      if(!card_no){
+        this.setData({
+          hasCard:false
+        })
+      }else{
+        this.setData({
+          cash_card_no:card_no,
+          cash_card_pwd:card_pwd,
+          hasCard:true
+        })
+      }
+      
     }
     if(type==2){
       newPayQueue[4]=price
-      this.setData({
-        third_cash_card_no:card_no,
-        third_cash_card_pwd:card_pwd,
-        hasThirdCard:true
-      })
+      if(!card_no){
+        this.setData({
+          hasThirdCard:false
+        })
+      }else{
+        this.setData({
+          third_cash_card_no:card_no,
+          third_cash_card_pwd:card_pwd,
+          hasThirdCard:true
+        })
+      }
     }
     this.setData({
       payQueue:newPayQueue
@@ -709,9 +731,10 @@ Page({
       }
     })
   }),
-  inputCard:function(e){
+  inputCard:util.debounce(function(e){
     console.log("1111");
     let temp = e.detail.value
+    let defTxt = e.currentTarget.dataset.default
     if(util.charLen(temp)>18){
       wx.showToast({
         icon:"none",
@@ -719,16 +742,18 @@ Page({
       })
       return 
     }
-    txt = temp,
+    txt = temp==""?defTxt:temp,
     cartid = e.currentTarget.dataset.cartid
-
-  },
+  },200),
   setTxt(){
-    if(cartid && txt) txtCard[cartid]=txt
-    this.setData({
-      txtCardObj:txtCard
-    })
-    console.log(txtCard)
+    if(cartid){
+      txtCard[cartid]=txt
+    
+      this.setData({
+        txtCardObj:txtCard
+      })
+      console.log(txtCard)
+    }
   },
   pwdInput(e){
     var val = e.detail.value
@@ -1055,7 +1080,7 @@ Page({
     let pages = getCurrentPages();
     let currentPage = pages[pages.length-1];
     let type = currentPage.options.type
-
+    console.log(type);
     //用户地址列表
     let addressInfo = wx.getStorageSync("addressInfo")
         addressInfo = addressInfo&&JSON.parse(addressInfo)

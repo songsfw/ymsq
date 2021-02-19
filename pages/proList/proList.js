@@ -37,6 +37,7 @@ Page({
     var that = this;
     var currentId = e.currentTarget.dataset.tabid
     app.globalData.proType = currentId
+    app.globalData.proSource = currentId
     if (this.data.currentTab == currentId) {
       return false;
     } else {

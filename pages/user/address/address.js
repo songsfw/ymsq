@@ -8,7 +8,7 @@ Page({
     startX: 0, //开始坐标
     startY: 0,
     page: 1,
-    address: [],
+    address: null,
     source:0
   },
   touchE: function (e) {
@@ -162,7 +162,7 @@ Page({
       if(res){
         let selectAddress = addressLi[idx]
         if(selectAddress.is_default=='1'){
-          wx.setStorageSync("addressInfo", '{city_id:10216}')
+          wx.setStorageSync("addressInfo", '{"city_id":"10216"}')
         }
         this.getAddress()
       }else{
@@ -252,13 +252,21 @@ Page({
   onLoad: function (options) {
     let source = options.source || 0,
     cartType = options.cartType || 0
-
+    console.log(source);
     let btmHolder = wx.getStorageSync('btmHolder')
-
+    
+    btmHolder = btmHolder>0?btmHolder:12
     //选择地址
-    //source 1 下单页
+    //source 1 首页下单页   0 个人中心
+    if(source==1){
+      let addressInfo = wx.getStorageSync('addressInfo')
+      addressInfo = addressInfo&&JSON.parse(addressInfo)
+      this.setData({
+        addressTxt:addressInfo.address+addressInfo.address_detail
+      })
+    }
     this.setData({
-      btmHolder:btmHolder||0,
+      btmHolder:btmHolder,
       cartType:cartType,
       source:source
     })

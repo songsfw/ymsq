@@ -1,5 +1,6 @@
 const api = require("../../../utils/api")
 const util = require('../../../utils/util.js')
+const app = getApp()
 Page({
 
   /**
@@ -49,7 +50,7 @@ Page({
     })
   },300),
   chashCharge(){
-    let {result,pwd,use}=this.data
+    let {result,pwd,use,type}=this.data
     if(result==""){
       wx.showToast({
         title: '请输入卡号',
@@ -71,41 +72,39 @@ Page({
       let data = {
         card_no:result,
         card_pwd:pwd,
-        type:this.data.type,
+        type:type,
         pay_price:this.data.cardPrice
       }
       console.log(data)
       api.useCard(data).then(res=>{
         console.log(res)
-        let msg = res.message
-        if(res.status==-1){
-          wx.showToast({
-            title: msg,
-            icon: 'none',
-            duration: 2000
-          })
-          
-        }else{
+        if(res){
           
           let usePrice = res.use_card
-
-          var pages = getCurrentPages();
-          if(pages.length > 1){
-            //上一个页面实例对象
-            var prePage = pages[pages.length - 2];
-            //关键在这里
-            prePage.setCardPrice(usePrice,this.data.type,result,pwd)
+          
+          if(type==1){
+            app.globalData.cardNo = result
+            app.globalData.cardPwd = pwd
+          }else{
+            app.globalData.thirdCardNo = result
+            app.globalData.thirdCardPwd = pwd
           }
-          wx.showToast({
-            title: `成功抵扣${usePrice}元`,
-            icon: 'none',
-            duration: 2000
+          // wx.showToast({
+          //   title: `成功抵扣${usePrice}元`,
+          //   icon: 'none',
+          //   duration: 2000
+          // })
+          this.setData({
+            showPriceInfo:true,
+            pay_price:res.pay_price,
+            card_balance:res.card_balance,
+            usePrice:usePrice
           })
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 1000);
+          // setTimeout(() => {
+          //   wx.navigateBack({
+          //     delta: 1
+          //   })
+          // }, 1000);
 
         }
         
@@ -118,8 +117,9 @@ Page({
   
       api.chashCharge(data).then(res=>{
         console.log(res)
-        
         if(res){
+          app.globalData.cardNo = result
+          app.globalData.cardPwd = pwd
           wx.showToast({
             title: '充值成功',
             icon: 'none',
@@ -131,32 +131,79 @@ Page({
     }
 
   },
+  useChashCharge(){
+    let {result,pwd,type,usePrice}=this.data
+    var pages = getCurrentPages();
+    if(pages.length > 1){
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      //关键在这里
+      prePage.setCardPrice(usePrice,type,result,pwd)
+    }
+    setTimeout(() => {
+      wx.navigateBack({
+        delta: 1
+      })
+    }, 300);
+         
+  },
+  cancelChashCharge(){
+    let {type}=this.data
+    var pages = getCurrentPages();
+    this.setData({
+      isUse:false
+    })
+    if(pages.length > 1){
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      //关键在这里
+      prePage.setCardPrice(0,type)
+    }
+    setTimeout(() => {
+      wx.navigateBack({
+        delta: 1
+      })
+    }, 300);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let use = options.use,type=options.type,cardPrice=options.cardPrice
-
+    let use = options.use,type=options.type,cardPrice=options.cardPrice,isUse = options.isUse
+    console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
+    btmHolder = btmHolder==0?12:btmHolder
     this.setData({
       btmHolder:btmHolder||0,
     })
-    
     if(use==1){
       this.setData({
+        isUse:isUse,
         use:use,
         type:type,
         cardPrice:cardPrice
       })
     }
-    if(type==1){
-      wx.setNavigationBarTitle({
-        title: '现金卡'
-      })
-    }
+
     if(type==2){
+      if(app.globalData.thirdCardNo){
+        this.setData({
+          result:app.globalData.thirdCardNo,
+          pwd:app.globalData.thirdCardPwd
+        })
+      }
       wx.setNavigationBarTitle({
         title: '多美味卡'
+      })
+    }else{
+      if(app.globalData.cardNo){
+        this.setData({
+          result:app.globalData.cardNo,
+          pwd:app.globalData.cardPwd
+        })
+      } 
+      wx.setNavigationBarTitle({
+        title: '现金卡'
       })
     }
   },

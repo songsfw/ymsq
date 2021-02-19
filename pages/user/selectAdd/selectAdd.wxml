@@ -16,7 +16,7 @@
 </view>
 <view class="suggestion" wx:if="{{suggestion.length>0}}">
   <scroll-view scroll-y="true" class="suggestion-scroll">
-    <view class="item" data-id="{{index}}" wx:for="{{suggestion}}" wx:key="index" bindtap="backfill">
+    <view class="item" wx:for="{{suggestion}}" wx:key="index" data-address="{{item.addr}}" data-lng = "{{item.longitude}}" data-lat = "{{item.latitude}}" data-title="{{item.title}}" bindtap="selectAdd">
       <view class="tit" id="{{index}}">{{item.title}}</view>
       <view>{{item.addr}}</view>
     </view>
@@ -35,7 +35,7 @@
       <view wx:else class="tip">当前区域不在配送范围</view>
     </block>
     <block wx:if="{{poi.length>0}}">
-      <view class="item" wx:for="{{poi}}" wx:key="id" bind:tap="selectAdd" data-address="{{item.address}}" data-lng = "{{item.location.lng}}" data-lat = "{{item.location.lat}}" data-title="{{item.title}}">
+      <view class="item iconfont" wx:for="{{poi}}" wx:key="id" bind:tap="selectAdd" data-address="{{item.address}}" data-lng = "{{item.location.lng}}" data-lat = "{{item.location.lat}}" data-title="{{item.title}}">
         <view class="tit">{{item.title}}</view>
         <view class="desc">{{item.address}}</view>
       </view>

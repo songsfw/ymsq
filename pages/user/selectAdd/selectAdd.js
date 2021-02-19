@@ -202,22 +202,22 @@ Page({
       }
     });
   }, 500),
-  backfill: function (e) {
-    var id = e.currentTarget.dataset.id;
-    let suggestion = this.data.suggestion
-    for (var i = 0; i < suggestion.length; i++) {
-      if (i == id) {
-        console.log(suggestion[i]);
-        this.setData({
-          flag:true,
-          backfill: suggestion[i].title,
-          lng: suggestion[i].longitude,
-          lat: suggestion[i].latitude,
-          suggestion: []
-        });
-      }
-    }
-  },
+  // backfill: function (e) {
+  //   var id = e.currentTarget.dataset.id;
+  //   let suggestion = this.data.suggestion
+  //   for (var i = 0; i < suggestion.length; i++) {
+  //     if (i == id) {
+  //       console.log(suggestion[i]);
+  //       this.setData({
+  //         flag:true,
+  //         backfill: suggestion[i].title,
+  //         lng: suggestion[i].longitude,
+  //         lat: suggestion[i].latitude,
+  //         suggestion: []
+  //       });
+  //     }
+  //   }
+  // },
   getPoi: util.debounce(function (lat, lng) {
     let { city } = this.data, location = null
     //let polygons = this.data.polygons

@@ -142,6 +142,13 @@ App({
     isShare: false,
     userInfo: null,
     cityId:null,
-    cityName:null
+    cityName:null,
+    isShowBalance:false,
+    isShowScore:true,
+    cardNo:null,
+    cardPwd:null,
+    thirdCardNo:null,
+    thirdCardPwd:null,
+    proSource:1
   }
 })

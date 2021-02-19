@@ -92,7 +92,8 @@ color: #666;
 .gotop{position: fixed;right:50rpx ;bottom: 150rpx;width: 80rpx;height: 80rpx;z-index: 3;}
 .notice{position: fixed;width: 100%;left: 0;top: 0; height:28px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;}
 .notice .txt,.notice .tit{padding: 0 24rpx;height: 28px;line-height: 28px;background: #fff;}
-.notice .tit{font-size: 14px;font-weight: bold;}
+.notice .tit{font-size: 14px;font-weight: bold;justify-content: space-between;}
+.notice .tit .iconfont{transform: rotate(180deg);font-weight: normal;}
 .notice-panel{line-height: 28px;height: 0;transition: height .2s linear;}
 .notice.show .notice-panel{height: 300rpx;}
 .notice .icon-top{width: 17px;height: 9px;flex-shrink: 0;}

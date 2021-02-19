@@ -2,6 +2,10 @@
 <view class="card">
   <image wx:if="{{type==1}}" src="../../../image/card1.png" />
   <image wx:else src="../../../image/third-card.png" />
+  <view class="price-info flex" wx:if="{{showPriceInfo}}">
+    <text>现金卡余额:{{card_balance}}</text>
+    <text>本单已减:￥{{usePrice}}</text>
+  </view>
 </view>
 <view class="form">
   <view class="inputxt">
@@ -11,7 +15,7 @@
   </view>
   <view class="inputxt">
     <text>卡密码</text>
-    <input placeholder="请输入现金卡密码" password="{{!show}}" type="number" class="flex-1" bindinput="inputPwd" />
+    <input placeholder="请输入现金卡密码" password="{{!show}}" type="number" value="{{pwd}}" class="flex-1" bindinput="inputPwd" />
     <view class="icon" bindtap="changeShow">
       <text class="iconfont icon-eye" wx:if="{{show}}"></text>
       <text class="iconfont icon-eye2" wx:else></text>
@@ -19,7 +23,16 @@
   </view>
 </view>
 <view class="tips" wx:if="{{use!=1}}">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
-<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
-  <view class="btn" bindtap="chashCharge">{{use==1?'确定':'充值'}}</view>
+<view class="fixedBtn" wx:if="{{use==1}}" style="padding-bottom:{{btmHolder}}px">
+  <block wx:if="{{isUse==1}}">
+    <view class="btn" bindtap="cancelChashCharge">取消使用</view>
+  </block>
+  <block wx:else>
+    <view class="btn" bindtap="useChashCharge" wx:if="{{showPriceInfo}}">去使用</view>
+    <view class="btn confirm-btn" wx:else bindtap="chashCharge">确定</view>
+  </block>
+</view>
+<view class="fixedBtn" wx:else style="padding-bottom:{{btmHolder}}px">
+  <view class="btn" bindtap="chashCharge">充值</view>
 </view>
 <view style="height:{{60+btmHolder}}px"></view>

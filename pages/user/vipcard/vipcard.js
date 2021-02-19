@@ -1,6 +1,7 @@
 const api = require('../../../utils/api.js')
 const wxbarcode = require('../../../utils/initBarCode.js')
 var timer = null
+const app = getApp()
 Page({
 
   /**
@@ -17,7 +18,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    let btmHolder = wx.getStorageSync('btmHolder')
+    btmHolder = btmHolder>0?btmHolder:12
+    this.setData({
+      btmHolder:btmHolder,
+      show:app.globalData.isShowScore
+    })
     
   },
   toAccount(){
@@ -61,8 +67,9 @@ Page({
     });
   },
   changeMoney(){
-    let show = this.data.show
+    let show = app.globalData.isShowScore
     show?show=false:show=true
+    app.globalData.isShowScore = show
     this.setData({
       show:show
     })

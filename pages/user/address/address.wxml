@@ -2,6 +2,9 @@
 <view class="address-list">
   <navigator class="notice" url="/pages/user/deliveryArea/deliveryArea"><text class="iconfont icon-notice2"></text> 配送范围说明</navigator>
   <view class="item flex " wx:for="{{address}}" style="transform:translateX(-{{item.txtStyle}}rpx)" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}">
+    <view wx:if="{{source==1}}" class="checkbox {{addressTxt == item.address+item.address_detail?'on':''}}" >
+      <view class="iconfont icon-check"></view>
+    </view>
     <view class="info flex-1" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" data-index='{{index}}'>
       <view class="name flex">
         <text>{{item.name}}</text>
@@ -21,6 +24,7 @@
     <view class="txt">暂无收货地址</view>
     <!-- <navigator class="btn" url="/pages/user/deliveryArea/deliveryArea">配送范围说明</navigator> -->
   </view>
+  <view class="more-btn" wx:if="{{!address}}">加载中...</view>
 </view>
-<view class="fixedBtn" style="padding-bottom:{{12+btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
 <view style="height:{{56+btmHolder}}px"></view>

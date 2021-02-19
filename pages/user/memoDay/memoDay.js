@@ -42,11 +42,14 @@ Page({
   onLoad: function (options) {
     let end = new Date().getFullYear()
     let userInfo = wx.getStorageSync('userInfo')
+    let btmHolder = wx.getStorageSync('btmHolder')
+    //btmHolder = btmHolder>0?btmHolder:12
     if(userInfo){
       userInfo = JSON.parse(userInfo)
     }
     console.log(end-100);
     this.setData({
+      btmHolder:btmHolder,
       user_id:userInfo.user_id,
       start:end-100,
       end:end

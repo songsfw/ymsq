@@ -10,5 +10,5 @@
     <image src="../../../image/logo.png"></image>
   </view>
 </view>
-<view class="fixedBtn" style="padding-bottom:{{12+btmHolder}}px"><view class="btn" bind:tap="submit">提交</view></view>
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px"><view class="btn" bind:tap="submit">提交</view></view>
 <view style="height:{{56+btmHolder}}px"></view>

@@ -15,7 +15,10 @@
     </swiper>
     <text class="iconfont icon-arrow-btm"></text>
   </view>
-  <view class="tit" wx:if="{{panel=='notice'}}">最新通知</view>
+  <view class="tit flex" wx:if="{{panel=='notice'}}" catch:tap="closePanel">
+    <text>最新通知</text>
+    <text class="iconfont icon-arrow-btm"></text>
+  </view>
   <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="notice-panel">
     <view style="padding:0 24rpx 24rpx 24rpx;">
       <block wx:for="{{notice}}" wx:for-index="index">

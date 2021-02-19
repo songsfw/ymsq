@@ -1,4 +1,4 @@
-<view class="tips flex"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
+<view class="tips flex" wx:if="{{breadLi.length>0 || cakeLi.length>0}}"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
     <view class="checkbox {{noallBread?'':'on'}}">
@@ -54,6 +54,7 @@
           <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
             <text wx:if="{{item.size}}">{{item.size}}</text>
             <text wx:if="{{item.edible}}">{{item.edible}}</text>
+            <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
           </view>
           <view class="price flex">
             <view class="num">￥<text>{{item.sku_price}}</text></view>
@@ -97,7 +98,7 @@
   <image src="../../image/logo.png"></image>
 </view> -->
 
-<view class="option flex">
+<view class="option flex" wx:if="{{breadLi.length>0 || cakeLi.length>0}}">
   <!-- <view class="select flex-center">
     <view class="checkbox">
       <view class="iconfont icon-check"></view>

@@ -1,4 +1,4 @@
-page{background: #F6F6F6;height: auto;}
+page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .strongTxt{color: #F5222D !important;}
 .order-wp{padding:0 24rpx 20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
@@ -91,7 +91,7 @@ page{background: #F6F6F6;height: auto;}
 
 .confirm-btn{margin: 24rpx;width: auto;}
 
-.send-type{height: 36px;background-color: #fff;border-top: 1px solid #F6F6F6;margin:20rpx 24rpx 0 24rpx;border-radius: 18rpx 18rpx 0 0;overflow: hidden;}
+.send-type{height: 36px;background-color: #fff;border-top: 1px solid #F6F6F6;margin:0 24rpx;border-radius: 18rpx 18rpx 0 0;overflow: hidden;}
 .send-type view{margin: 0 auto; height: 36px; background:linear-gradient(to bottom,#C1996B,#fff);align-items: center;overflow: hidden;}
 .send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
 .send-type text.on{background: #fff;color: #C1996B;}

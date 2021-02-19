@@ -81,20 +81,20 @@
           <view class="date">{{item.valid_time}}</view>
           <view class="txt flex">
             <text>{{item.desc1}}</text>
-            <view bind:tap="useCoupon" data-idx="{{idx}}" data-id="{{item.id}}" class="btn">去使用</view>
+            <view bind:tap="useCoupon" data-idx="{{idx}}" data-id="{{item.id}}" class="btn">去兑换</view>
           </view>
         </view>
       </view>
       <view class="border">
         <view></view>
       </view>
-      <view class="tips {{item.id==curId?'on':''}}" bind:tap="showTips" data-id="{{item.id}}" data-card='{{item.card_no}}'>
+      <view class="tips on" data-id="{{item.id}}" data-card='{{item.card_no}}'>
         <view class="txt">
           <view class="flex" style="justify-content: space-between;">
             <view>{{item.desc2}}</view>
             <view class="arrow-bottom"></view>
           </view>
-          <view class="card-code-img" wx:if="{{item.id==curId}}">
+          <view class="card-code-img">
             <canvas canvas-id="barcode-{{item.id}}"></canvas>
           </view>
           <view class="card_no">{{item.card_no}}</view>

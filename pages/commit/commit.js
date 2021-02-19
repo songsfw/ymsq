@@ -108,7 +108,7 @@ Page({
       })
       return
     }
-    
+    detail = JSON.stringify(detail)
     let data = {
       order_code:orderCode,
       comment:comment,

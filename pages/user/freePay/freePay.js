@@ -107,7 +107,7 @@ Page({
       console.log(res);
       if(res){
         this.setData({
-          poptitle:"输入密码",
+          poptitle:"设置新的余额密码",
           step:2
         })
       }
@@ -355,11 +355,18 @@ Page({
     api.freePayInfo().then(res=>{
       console.log(res);
       console.log(res.free_secret)
+      let list = res.free_amount_list,
+          free_amount = res.free_amount
+      
+      let index = list.findIndex(item=>{
+        return item == free_amount
+      })
       if(res){
         this.setData({
-          free_amount:res.free_amount,
+          index:index,
+          free_amount:free_amount,
           free_secret:res.free_secret,
-          list:res.free_amount_list,
+          list:list,
           status:res.pwd_set,
           pwd_set:res.pwd_set
         })

@@ -7,8 +7,8 @@ Page({
     pageNum: 1,
     noMoreData: false,
     list:null,
-    selected:false,
-    loaded:false
+    loaded:false,
+    curTag:0
   },
   balanceList(tag_id){
     
@@ -45,33 +45,20 @@ Page({
     })
   },
   selectItem(e){
-    let id = e.currentTarget.dataset.id,
-    index = e.currentTarget.dataset.index,
-    tags = this.data.type
-    tags.forEach(item=>{
-      item.selected = false
-    })
-    tags[index].selected = true
+    let id = e.currentTarget.dataset.id
+    let tags = this.data.type
+    // tags.forEach(item=>{
+    //   item.selected = false
+    // })
+    // tags[index].selected = true
     this.setData({
       pageNum:1,
       list:null,
+      curTag:id,
       noMoreData:false,
-      type:tags,
-      selected:false
+      type:tags
     })
     this.balanceList(id)
-  },
-  select(){
-    let selected = this.data.selected
-    if(selected){
-      this.setData({
-        selected:false
-      })
-    }else{
-      this.setData({
-        selected:true
-      })
-    }
   },
   onReachBottom(){
     if(this.data.noMoreData){
@@ -80,19 +67,19 @@ Page({
     this.getMoreData()
   },
   getMoreData() {
-    let currentTab = this.data.currentTab
+    let curTag = this.data.curTag
     let pageNum = this.data.pageNum + 1
     this.setData({
       pageNum: pageNum
     })
 
-    this.balanceList()
+    this.balanceList(curTag)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.balanceList()
+    this.balanceList(0)
   },
 
   /**
@@ -127,7 +114,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let curTag = this.data.curTag
+    this.setData({
+      pageNum: 1,
+      noMoreData: false,
+      list:null,
+      loaded:false,
+      curTag:curTag
+    })
+    this.balanceList(curTag)
   },
 
   /**

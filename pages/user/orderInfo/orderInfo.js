@@ -336,7 +336,7 @@ Page({
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
-
+    btmHolder = btmHolder>0?btmHolder:10
     this.setData({
       stat:stat,
       btmHolder:btmHolder||0,

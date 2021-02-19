@@ -8,11 +8,13 @@ page{padding-top:550rpx;}
 .search input{ width: 554rpx;height: 66rpx;background-color: #f6f6f6;border-radius: 33rpx;padding-left: 78rpx;box-sizing: border-box;}
 .search text{position: absolute;left: 0;top: 0;height: 66rpx;line-height: 66rpx;left:20rpx;color: #ccc;}
 .address-list{background: #fff;height: 100%;}
+
+.address-list .item:first-child:after{content: "\e60a";    position: absolute;right: 20rpx;top: 50%;transform: translateY(-50%);color: #f5222d;}
 .scroll{height: 100%;}
-.item{padding:18rpx 24rpx;border-bottom: 1px solid #F6F6F6;}
+.item{position: relative; padding:18rpx 24rpx;border-bottom: 1px solid #F6F6F6;}
 .item .tit{font-size: 15px;}
 .desc{font-size: 13px;color: #aaa;}
-.local{width: 80rpx;height:80rpx;position: absolute;right: 20rpx;bottom: 20rpx;}
+.local{width: 70rpx;height:70rpx;position: absolute;right: 20rpx;bottom: 20rpx;background: rgba(255, 255, 255, .8);border-radius: 8rpx;}
 .center-local{width: 60rpx;height:60rpx;position: absolute;left:50% ;top:50%;margin: -30rpx 0 0 -30rpx;}
 .nodata{text-align: center;margin: 50rpx auto;width:60rpx;height: 60rpx ;}
 .nodata image{width: 100%;height:100%}

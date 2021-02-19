@@ -185,6 +185,18 @@ Page({
     options = Object.assign(options,currPage.__data__.options || {}) 
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,city = options.city,title=options.title
     console.log(options);
+
+    if(type==1){
+      wx.setNavigationBarTitle({
+        title: '修改地址' 
+      })
+    }else{
+      wx.setNavigationBarTitle({
+        title: '添加地址' 
+      })
+    }
+
+
     let oldAddress = this.data.address
     let address = wx.getStorageSync('address') || '{}'
     address = JSON.parse(address)
@@ -197,9 +209,9 @@ Page({
     Object.assign(oldAddress,address)
     console.log(oldAddress);
     let btmHolder = wx.getStorageSync('btmHolder')
-    
+    btmHolder = btmHolder>0?btmHolder:12
     this.setData({
-      btmHolder:btmHolder||0,
+      btmHolder:btmHolder,
       type:type,
       address:oldAddress,
     })

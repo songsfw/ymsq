@@ -345,8 +345,9 @@ Page({
         wx.showModal({
           title: '',
           content: '删除商品？',
-          cancleText:"取消",
+          cancelText:"取消",
           confirmText: "删除",
+          confirmColor:"#C1996B",
           success:res=> {
             if (res.confirm) {
               data.number=-1
@@ -375,6 +376,7 @@ Page({
   },
   getChartData(){
     let data = {
+      type:app.globalData.proSource,  //此type为跳转过来的参数，不同于页面中其他type
       city_id:this.data.city_id
     }
     api.getChartData(data).then(res => {
@@ -420,8 +422,8 @@ Page({
         }
 
         type = breadSelectedNum>0 ? "1" :"2"
-        noallBread = breadSelectedNum==res.bread.length ? false : true
-        noallCake = cakeSelectedNum==res.cake.length ? false : true
+        noallBread = breadSelectedNum==res.bread.detail.length ? false : true
+        noallCake = cakeSelectedNum==res.cake.detail.length ? false : true
 
         this.setData({
           noallBread:noallBread,

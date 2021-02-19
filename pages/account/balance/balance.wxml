@@ -5,11 +5,8 @@
     <text class="arrow-bottom"></text>
   </view> -->
 
-    <text wx:for="{{type}}" data-index="{{index}}" class="{{item.selected?'on':''}}" bind:tap="selectItem" data-id="{{item.tag_id}}">{{item.tag_name}}</text>
+    <text wx:for="{{type}}" class="{{item.tag_id==curTag?'on':''}}" bind:tap="selectItem" data-id="{{item.tag_id}}">{{item.tag_name}}</text>
 
-</view>
-<view class="tags flex flex-wrp" wx:if="{{selected}}">
-  
 </view>
 <view class="list">
   <block wx:for="{{list}}">
@@ -22,7 +19,6 @@
     </view>
   </block>
   <view wx:if="{{noMoreData && list[0].length==0}}" class="more-btn">暂无数据</view>
-  <view wx:elif="{{noMoreData}}" class="more-btn">我可是有底线的</view>
+  <!-- <view wx:elif="{{noMoreData}}" class="more-btn">我可是有底线的</view> -->
   
 </view>
-<view class="mask" wx:if="{{selected}}"></view>
