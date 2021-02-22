@@ -42,6 +42,16 @@ page{background:#F6F6F6;height: auto;}
     line-height: 18px;
     text-align: center;
     background-color: #f5222d;}
+.option .cart .num99{position: absolute;
+        right: -6px;
+        top: -6px;
+        color: #fff;
+        width: 30px;
+        height: 18px;
+        border-radius: 30%;
+        line-height: 18px;
+        text-align: center;
+        background-color: #f5222d;}
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
 .pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
