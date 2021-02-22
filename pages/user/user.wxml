@@ -39,7 +39,7 @@
     </view>
     <view bind:tap="toOrder" data-type="2">
       
-      <view class="iconAll user-pack"><view class="tag">{{user.order_dispatching}}</view></view>
+      <view class="iconAll user-pack"><view class="tag" wx:if="{{user.order_dispatching!=0}}">{{user.order_dispatching}}</view></view>
       <text>待收货</text>
     </view>
     <view bind:tap="toOrder" data-type="3">
