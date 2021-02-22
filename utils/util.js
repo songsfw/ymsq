@@ -270,7 +270,6 @@ function getLocation() {
 
     wx.getLocation({
       type: 'gcj02 ',
-      isHighAccuracy: true,
       success(res) {
         const latitude = res.latitude
         const longitude = res.longitude

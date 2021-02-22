@@ -8,7 +8,8 @@ let timer=null,proNum=0,breadList=null,cakeList=null
 Page({
   data: {
     curProId:-1,
-    currentTab:'1',
+    currentTab:'',
+    currentTag:'',
     breadList:null,
     cakeList:null,
 
@@ -37,7 +38,6 @@ Page({
     var that = this;
     var currentId = e.currentTarget.dataset.tabid
     app.globalData.proType = currentId
-    app.globalData.proSource = currentId
     if (this.data.currentTab == currentId) {
       return false;
     } else {
@@ -94,22 +94,32 @@ Page({
     let count,noMoreData,currentTag
     if(currentTab=='1'){
       currentTag = breadTag
-    }else{
+    }
+    if(currentTab=='2'){
       currentTag = cakeTag
     }
-    
+    console.log(city_id);
     let data = {
       city_id: city_id,
-      type:currentTab,
-      tag:currentTag
     }
-
+    if(currentTab){
+      data.tag = currentTag
+      data.type=currentTab
+    }
     api.getProList(data).then(res => {
       console.log(res);
       if(!res){
         return false
       }
-
+      let menu = res.type
+      if(!currentTab){
+        if(menu['1']&&menu['1']=="面包"){
+          currentTab="1"
+        }else{
+          currentTab="2"
+        }
+      }
+      
       if(currentTab=='1'){
         breadList = res.list
         let stock=res.stock
@@ -132,10 +142,9 @@ Page({
           'cakeList[0]':this.getCurrList(cakeList,1),
         })
       }
-      
-      // let currList = proList.slice(pageNum*10-10,pageNum*10)
+    
       this.setData({
-        menu:res.type,
+        menu:menu,
         city_id:res.city_id
       })
       wx.stopPullDownRefresh() //停止下拉刷新
@@ -343,20 +352,14 @@ Page({
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo&&JSON.parse(addressInfo).city_id
-    let proType = app.globalData.proType || '1'
-    // if (typeof this.getTabBar === 'function' &&
-    //   this.getTabBar()) {
-    //   this.getTabBar().setData({
-    //     count:"",
-    //     selected: 1
-    //   })
-    // }
+    let proType = app.globalData.proType || ''
+
     this.setData({
       currentTab:proType,
       city_id:city_id || '10216'
     })
-    this.getStock()
     this.getCartInfo()
+    this.getProList();
   },
   onPageScroll(e){
     console.log(e.scrollTop);
@@ -383,33 +386,16 @@ Page({
     this.busPos = {};
     this.busPos['x'] = sysInfo.screenWidth * .6;
     this.busPos['y'] = sysInfo.screenHeight * .85;
-    let proType = app.globalData.proType || '1'
-    let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
-    
+    // let addressInfo = wx.getStorageSync("addressInfo")
+    // let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     let btmHolder = wx.getStorageSync('btmHolder')
 
     this.setData({
-      city_id:city_id,
-      currentTab: proType,
-      currentTag:'',
-      noMoreData: false,
-      proList: null,
-      pageNum: 1,
+      //city_id:city_id,
       btmHolder:btmHolder||0
     })
-    this.getProList(proType);
+    //this.getProList();
 
-    
-
-    // let safeArea = sysInfo.safeArea;
-    // if(sysInfo.screenHeight > safeArea.bottom){
-    //   let btmHolder = sysInfo.screenHeight - safeArea.bottom
-    //   btmHolder = parseInt(btmHolder)
-    //   this.setData({
-    //     btmHolder:btmHolder
-    //   })
-    // }
     //util.setWatcher(this);
   },
   watch:{

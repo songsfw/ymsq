@@ -34,7 +34,7 @@ Page({
   },
   addAddress(){
     console.log(this.data.address)
-    let {id,address, address_detail, mobile, name,is_default,location,city_name,title,is_ziti,city_id} = this.data.address
+    let {id,address, address_detail, mobile, name,is_default,location,district,province,title,is_ziti,city_id} = this.data.address
     let newAdd = {address:address}
     
     if(!name){
@@ -80,6 +80,8 @@ Page({
     location = JSON.parse(location)
     newAdd.location = location
     newAdd.title=title
+    newAdd.province=province
+    newAdd.district=district
     newAdd = JSON.stringify(newAdd)
     console.log(newAdd)
 
@@ -88,7 +90,7 @@ Page({
       address:newAdd,
       address_detail:address_detail,
       is_default:is_default,
-      city_name:city_name,
+      // city_name:city_name,
       mobile:mobile,
       title:title
     }
@@ -105,7 +107,7 @@ Page({
               address: address,
               id: id,
               city_id: res.city_id,
-              city_name: city_name,
+              // city_name: city_name,
               address_detail:address_detail,
               is_default:is_default,
               mobile:mobile,
@@ -129,7 +131,7 @@ Page({
               address: address,
               id: id,
               city_id: res.city_id,
-              city_name: city_name,
+              //city_name: city_name,
               address_detail:address_detail,
               is_default:is_default,
               mobile:mobile,
@@ -183,7 +185,7 @@ Page({
     var currPage = pages[pages.length - 1];
     let options = currPage.options
     options = Object.assign(options,currPage.__data__.options || {}) 
-    let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,city = options.city,title=options.title
+    let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,province = options.province,district=options.district,title=options.title
     console.log(options);
 
     if(type==1){
@@ -202,7 +204,8 @@ Page({
     address = JSON.parse(address)
     if(newAddress){
       address.address = newAddress
-      address.city_name = city
+      address.province = province
+      address.district = district
       address.location = `{"lng":${lng},"lat":${lat}}`
       address.title=title
     }

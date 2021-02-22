@@ -108,8 +108,8 @@ Page({
     }
   },
   selectAdd(e) {
-    let {address,lng,lat,title} = e.currentTarget.dataset
-    let type = this.data.type,city=this.data.cityName + ',' + this.data.district
+    let {address,lng,lat,title,prov,district} = e.currentTarget.dataset
+    let type = this.data.type
     console.log(address);
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];//上一个页面
@@ -121,7 +121,8 @@ Page({
         address: title,
         lng:lng,
         lat:lat,
-        city:city,
+        province:prov,
+        district:district,
         title:address
       }
     })
@@ -152,7 +153,9 @@ Page({
     let type = e.type, moving = false
     if (type == 'end') {
       console.log("111")
-      this.getCenterLocation()
+      let {latitude,longitude}=e.detail.centerLocation
+      this.getPoi(latitude,longitude)
+      //this.getCenterLocation()
       moving = true
     } else {
       this.setData({
@@ -170,15 +173,15 @@ Page({
       return
     }
     if (!e.detail.value) return
-    let cityName = this.data.cityName
-    console.log(cityName);
+    // let cityName = this.data.cityName
+    // console.log(cityName);
     console.log(e.detail.value)
     var _this = this;
     //调用关键词提示接口
     qqmapsdk.getSuggestion({
       //获取输入框值并设置keyword参数
       keyword: e.detail.value, //用户输入的关键词，可设置固定值
-      region: cityName, //设置城市名，限制关键词所示的地域范围，非必填参数
+      //region: cityName, //设置城市名，限制关键词所示的地域范围，非必填参数
       success: function (res) {
         console.log(res);
         var sug = [];
@@ -372,7 +375,7 @@ Page({
         type,
         selected: 1
       })
-      this.getPoi(res.latitude, res.longitude)
+      //this.getPoi(res.latitude, res.longitude)
     })
   },
 

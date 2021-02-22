@@ -188,7 +188,7 @@ Page({
     })
   },
   getOrder:util.debounce(function(){
-    let {totalPrice,type,cakeLi,breadLi}=this.data
+    let {totalPrice,type,cakeLi,breadLi,city_id}=this.data
 
     let isBread = breadLi.some(item=>{
       return item.is_selected=="1"
@@ -205,6 +205,7 @@ Page({
     }
 
     let data = {
+      city_id:city_id,
       type : type
     }
     if(parseFloat(totalPrice)==0){
