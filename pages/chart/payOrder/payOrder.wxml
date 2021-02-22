@@ -58,7 +58,7 @@
   <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop" wx:if="{{ziti=='0'}}">
     <text class="tit">配送时间</text>
     <view class="time flex-center">
-      <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
+      <text wx:if="{{selectTime!=-1 && dateStr && selectTimeTxt}}">{{dateStr}} {{selectTimeTxt}}</text>
       <text wx:else>请选择配送时间</text>
       <view class="iconfont icon-arrow-r"></view>
     </view>
