@@ -4,7 +4,7 @@ const api = require('../../utils/api.js')
 
 const app = getApp()
 
-let timer=null,proNum=0,breadList=null,cakeList=null
+let timer=null,proNum=0,breadList=null,cakeList=null,tagObj={}
 Page({
   data: {
     curProId:-1,
@@ -89,68 +89,7 @@ Page({
       })
     })
   },
-  getProList: function (currentTab) {
-    let {city_id,breadTag,cakeTag}=this.data
-    let count,noMoreData,currentTag
-    if(currentTab=='1'){
-      currentTag = breadTag
-    }
-    if(currentTab=='2'){
-      currentTag = cakeTag
-    }
-    console.log(city_id);
-    let data = {
-      city_id: city_id,
-    }
-    if(currentTab){
-      data.tag = currentTag
-      data.type=currentTab
-    }
-    api.getProList(data).then(res => {
-      console.log(res);
-      if(!res){
-        return false
-      }
-      let menu = res.type
-      if(!currentTab){
-        if(menu['1']&&menu['1']=="面包"){
-          currentTab="1"
-        }else{
-          currentTab="2"
-        }
-      }
-      
-      if(currentTab=='1'){
-        breadList = res.list
-        let stock=res.stock
-        count = breadList.length
-        noMoreData = count-1*10 <= 0
-        this.setData({
-          breadTags:res.tags,
-          stock:stock,
-          breadInfo:{count:count,pageNum:1,noMoreData:noMoreData},
-          'breadList[0]':this.getCurrList(breadList,1),
-        })
-      }
-      if(currentTab=='2'){
-        cakeList = res.list
-        count = cakeList.length
-        noMoreData = count-1*10 <= 0
-        this.setData({
-          cakeTags:res.tags,
-          cakeInfo:{count:count,pageNum:1,noMoreData:noMoreData},
-          'cakeList[0]':this.getCurrList(cakeList,1),
-        })
-      }
-    
-      this.setData({
-        menu:menu,
-        city_id:res.city_id
-      })
-      wx.stopPullDownRefresh() //停止下拉刷新
-    })
-
-  },
+  
   getCurrList(list,pageNum){
     return list.slice(pageNum*10-10,pageNum*10)
   },
@@ -237,21 +176,11 @@ Page({
       api.setChart(data).then(res => {
         console.log(res);
         if(res){
+          util.setTabBarBadge(totalNum)
           wx.setStorageSync("total_num",totalNum)
           this.setData({
             totalNum:totalNum
           })
-          util.setTabBarBadge(totalNum)
-          // if(totalNum>0){
-          //   wx.setTabBarBadge({ 
-          //     index: 2,
-          //     text: totalNum.toString()
-          //   })
-          // }else{
-          //   wx.removeTabBarBadge({
-          //     index: 2
-          //   })
-          // }
         }else{
           this.setData({
             ['breadList['+index+']['+idx+'].soldStat']:1
@@ -287,8 +216,9 @@ Page({
   getMoreData() {
     let pageNum,noMoreData
     let {currentTab,breadInfo,cakeInfo} = this.data
+    currentTab = parseInt(currentTab)
     switch (currentTab) {
-      case '1':
+      case 1:
         if(breadInfo.noMoreData){
           return false
         }
@@ -301,7 +231,7 @@ Page({
         })
 
         break;
-      case '2':
+      case 2:
         if(cakeInfo.noMoreData){
           return false
         }
@@ -338,16 +268,75 @@ Page({
     this.setData({
       totalNum:total_num || 0
     })
-    if(total_num>0){
-      wx.setTabBarBadge({ 
-        index: 2,
-        text: total_num.toString()
-      })
-    }else{
-      wx.removeTabBarBadge({
-        index: 2
+    util.setTabBarBadge(total_num)
+  },
+  getProList: function (currentTab) {
+    let {city_id,breadTag,cakeTag}=this.data
+    let count,noMoreData
+    let data = {
+      city_id: city_id,
+    }
+    if(!currentTab){
+      data.tag=0
+      data.type=""
+      this.setData({
+        breadTag:"",
+        breadList:[],
+        cakeList:[],
+        cakeTag:"",
+        noMoreData:false
       })
     }
+    if(currentTab=='1'){
+      data.tag = breadTag
+      data.type="1"
+    }
+    if(currentTab=='2'){
+      data.tag = cakeTag
+      data.type="2"
+    }
+    console.log(city_id);
+    
+    api.getProList(data).then(res => {
+      console.log(res);
+      if(!res){
+        return false
+      }
+      let menu = res.type,
+      choose_type = res.choose_type
+
+      this.setData({
+        menu:menu,
+        currentTab:choose_type,
+        city_id:res.city_id
+      })
+
+      console.log(currentTab);
+      if(choose_type=='1'){
+        breadList = res.list
+        let stock=res.stock
+        count = breadList.length
+        noMoreData = count-1*10 <= 0
+        this.setData({
+          breadTags:res.tags,
+          stock:stock,
+          breadInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+          'breadList[0]':this.getCurrList(breadList,1),
+        })
+      }
+      if(choose_type=='2'){
+        cakeList = res.list
+        count = cakeList.length
+        noMoreData = count-1*10 <= 0
+        this.setData({
+          cakeTags:res.tags,
+          cakeInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+          'cakeList[0]':this.getCurrList(cakeList,1),
+        })
+      }
+      wx.stopPullDownRefresh() //停止下拉刷新
+    })
+
   },
   onShow() {
     //自定义tabbar选中
