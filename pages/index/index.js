@@ -135,6 +135,7 @@ Page({
         }
         
         this.setData({
+          components,
           notice:notice,
           banner,
           menu,
