@@ -124,9 +124,14 @@ Page({
         wx.setStorageSync("total_num",res.cart.total_num)
 
         if(res.cart.total_num>0){
+          let  totalNum = res.cart.total_num.toString()|| '0'
+          if(res.cart.total_num>=100){
+            totalNum = '99+';
+          }
+         
           wx.setTabBarBadge({
             index: 2,
-            text: res.cart.total_num.toString() || '0'
+            text: totalNum
           })
         }else{
           wx.removeTabBarBadge({
