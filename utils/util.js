@@ -46,6 +46,23 @@ let mailReg = function (val) {
   return reg.test(val)
 }
 
+function setTabBarBadge(num){
+  let totalNum = num
+  if(totalNum>0){
+    if(totalNum>=100){
+      totalNum = '99+';
+    }
+    wx.setTabBarBadge({ 
+      index: 2,
+      text: totalNum.toString()
+    })
+  }else{
+    wx.removeTabBarBadge({
+      index: 2
+    })
+  }
+}
+
 let getQueryRandValue = function () {
   var currDate = new Date();
   return currDate.getTime();
@@ -480,5 +497,6 @@ module.exports = {
   toFixed,
   formatePrice,
   bezier,
-  charLen
+  charLen,
+  setTabBarBadge
 }

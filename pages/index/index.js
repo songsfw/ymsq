@@ -122,22 +122,22 @@ Page({
             block3 = components[4] && components[4].componentDetail
 
         wx.setStorageSync("total_num",res.cart.total_num)
-
-        if(res.cart.total_num>0){
-          let  totalNum = res.cart.total_num.toString()|| '0'
-          if(res.cart.total_num>=100){
-            totalNum = '99+';
-          }
+        util.setTabBarBadge(res.cart.total_num)
+        // if(res.cart.total_num>0){
+        //   let  totalNum = res.cart.total_num.toString()|| '0'
+        //   if(res.cart.total_num>=100){
+        //     totalNum = '99+';
+        //   }
          
-          wx.setTabBarBadge({
-            index: 2,
-            text: totalNum
-          })
-        }else{
-          wx.removeTabBarBadge({
-            index: 2
-          })
-        }
+        //   wx.setTabBarBadge({
+        //     index: 2,
+        //     text: totalNum
+        //   })
+        // }else{
+        //   wx.removeTabBarBadge({
+        //     index: 2
+        //   })
+        // }
         
         this.setData({
           notice:notice,

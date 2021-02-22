@@ -34,12 +34,12 @@
   <view class="menu flex">
     <view bind:tap="toOrder" data-type="1">
       
-      <view class="iconAll user-pay1"><view class="tag"wx:if="{{user.order_unpaid!=0}}">{{user.order_unpaid}}</view></view>
+      <view class="iconAll user-pay1"><view class="tag"wx:if="{{order_unpaid!=0}}">{{order_unpaid>99?'99+':order_unpaid}}</view></view>
       <text>待付款</text>
     </view>
     <view bind:tap="toOrder" data-type="2">
       
-      <view class="iconAll user-pack"><view class="tag" wx:if="{{user.order_dispatching!=0}}">{{user.order_dispatching}}</view></view>
+      <view class="iconAll user-pack"><view class="tag" wx:if="{{order_dispatching!=0}}">{{order_dispatching>99?'99+':order_dispatching}}</view></view>
       <text>待收货</text>
     </view>
     <view bind:tap="toOrder" data-type="3">

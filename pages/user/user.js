@@ -1,5 +1,6 @@
 // pages/user/user.js
 const api = require('../../utils/api.js')
+const util = require('../../utils/util.js')
 const app = getApp()
 Page({
 
@@ -50,17 +51,7 @@ Page({
   },
   getCartInfo(){
     let total_num = wx.getStorageSync("total_num")
-    if(total_num>0){
-      wx.setTabBarBadge({ 
-        index: 2,
-        text: total_num.toString()
-      })
-    }else{
-      wx.removeTabBarBadge({
-        index: 2
-      })
-    }
-    
+    util.setTabBarBadge(total_num)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -88,7 +79,9 @@ Page({
     api.getUserCenter().then(res=>{
       console.log(res);
       this.setData({
-        user:res.user
+        user:res.user,
+        order_unpaid:parseInt(res.user.order_unpaid),
+        order_dispatching:parseInt(res.user.order_dispatching)
       })
     })
   },

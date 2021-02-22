@@ -241,16 +241,17 @@ Page({
           this.setData({
             totalNum:totalNum
           })
-          if(totalNum>0){
-            wx.setTabBarBadge({ 
-              index: 2,
-              text: totalNum.toString()
-            })
-          }else{
-            wx.removeTabBarBadge({
-              index: 2
-            })
-          }
+          util.setTabBarBadge(totalNum)
+          // if(totalNum>0){
+          //   wx.setTabBarBadge({ 
+          //     index: 2,
+          //     text: totalNum.toString()
+          //   })
+          // }else{
+          //   wx.removeTabBarBadge({
+          //     index: 2
+          //   })
+          // }
         }else{
           this.setData({
             ['breadList['+index+']['+idx+'].soldStat']:1

@@ -393,19 +393,9 @@ Page({
       let type="1",breadSelectedNum=0,cakeSelectedNum=0,noallBread=true,noallCake=true
       if(res){
         let breadLi = res.bread.detail,cakeLi=res.cake.detail
-
-        if(res.total_num>0){
-          wx.setTabBarBadge({ 
-            index: 2,
-            text: res.total_num.toString()
-          })
-        }else{
-          wx.removeTabBarBadge({
-            index: 2
-          })
-        }
         
         wx.setStorageSync('total_num',res.total_num)
+        util.setTabBarBadge(res.total_num)
         
         if(breadLi.length>0){
           breadLi.forEach(item=>{
