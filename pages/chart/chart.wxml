@@ -1,4 +1,7 @@
-<view class="tips flex" wx:if="{{breadLi.length>0 || cakeLi.length>0}}"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
+<view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
+  <view class="tips flex"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
+</view>
+
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
     <view class="checkbox {{noallBread?'':'on'}}">

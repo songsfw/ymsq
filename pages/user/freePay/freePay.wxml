@@ -26,7 +26,7 @@
   <view slot="setPwd" wx:if="{{step==1}}">
     <view class="inputxt flex">
       <text style="width:50px">密码</text>
-      <input class="flex-1" type="number" maxlength='6' bindinput="pwdInput" password placeholder="请输入6位数字密码" />
+      <input class="flex-1" value="{{pwdVal}}" type="number" maxlength='6' bindinput="pwdInput" password placeholder="请输入6位数字密码" />
     </view>
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
@@ -43,7 +43,7 @@
     </block> -->
     
     <view class="inputxt flex">
-      <text>密码</text>
+      <text>新密码</text>
       <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
     </view>
     <view class="inputxt flex">

@@ -19,8 +19,8 @@ page{background: #F4F6F8;height: auto;}
 .item .price .num{font-size: 13px;color: #FA603D;}
 .item .price .num text{font-size: 18px;font-weight: 500;}
 .item .price .add{position: absolute;right: 0;top: 0; width:44px;height: 44px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
-.menu{width: 100%;background: #fff;z-index: 11;border-top: 1rpx solid #F6F6F6;}
-.main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;}
+.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F6F6F6;}
+.main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
 .main view:after{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 10rpx;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;}
 .main view.on{color: #C1996B;font-weight:bold;}
 .main view.on:after{display: block;}

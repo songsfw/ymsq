@@ -299,15 +299,20 @@ Page({
     
   },
   close(e){
-    let step = this.data.step
+    let step = this.data.step,
+    free_secret = this.data.free_secret
+    console.log(free_secret);
     this.setData({ 
       unuse:true
     })
     switch (step) {
       case 1:
-        this.setData({
-          free_secret:0
-        })
+        if(free_secret==0){
+          this.setData({
+            free_secret:0
+          })
+        }
+        
         
         break;
     
@@ -317,7 +322,8 @@ Page({
     
   },
   changeFreePay(val){
-    let action = this.data.free_secret==1 ? 1 : 2
+    console.log(this.data.free_secret);
+    let action = this.data.free_secret==0 ? 1 : 2
     
     console.log(action)
     let data = {
@@ -377,28 +383,30 @@ Page({
     console.log(e.detail.value)
     if(this.data.free_secret==0){
       this.setData({
+        pwdVal:'',
+        unuse:true,
         type:0,//开启免密支付中
-        free_secret:1,
+        //free_secret:1,
         popShow:true,
         poptitle:"请输入设置的余额密码",
         step:1
       })
+      
     }else{
       wx.showToast({
         title: "已关闭免密支付",
         icon: 'none',
         duration: 2000
       })
-      this.setData({
-        free_secret:0
-      })
+
       this.changeFreePay()
     }
   },
   changePwd(e){
     console.log(e)
-
     this.setData({
+      pwdVal:'',
+      unuse:true,
       type:1,//修改或设置密码中
       popShow:true,
       poptitle:"请输入设置的余额密码",

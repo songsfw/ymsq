@@ -14,11 +14,17 @@
         </swiper-item>
       </block>
     </swiper>
-    <text class="iconfont icon-arrow-btm"></text>
+    <view class="flex-center show-btn">
+      <view>更多</view>
+      <text class="iconfont icon-arrow-btm"></text>
+    </view>
   </view>
   <view class="tit flex" wx:if="{{panel=='notice'}}" catch:tap="closePanel">
     <text>最新通知</text>
-    <text class="iconfont icon-arrow-btm"></text>
+    <view class="flex-center show-btn">
+      <view>收起</view>
+      <text class="iconfont icon-arrow-btm"></text>
+    </view>
   </view>
   <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="notice-panel">
     <view style="padding:0 24rpx 24rpx 24rpx;">
@@ -64,10 +70,10 @@
         <view class='pro-block block3' wx:if="{{item.block_type == 2}}">
           <view class="title flex">
             <block  wx:if="{{item.componentDetail.box_style.background_image != ''}}">
-              <view style="width:244rpx;height:34rpx"><image src="{{item.componentDetail.box_style.background_image}}"></image></view>
+              <view style="height:34rpx"><image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image></view>
             </block>
             <block wx:elif="{{item}}">
-              <view style="width:244rpx;height:34rpx"><image src=""></image></view>
+              <view style="height:34rpx" mode="heightFix"><image src=""></image></view>
             </block>
             
           
@@ -89,95 +95,6 @@
       </view>
     </block>
 
-
-
-
-
-
-
-
-    <!-- 111111111111111111111111111
-    <view class="banner flex">
-      <swiper interval="{{interval}}" autoplay="{{true}}" duration="{{duration}}" circular="{{circular}}" indicator-dots
-        indicator-active-color="#C1996B">
-        <block wx:for="{{banner}}" wx:for-index="index">
-          <swiper-item>
-            <view data-url="{{item.url}}" data-type="{{item.url_type}}" bind:tap="toPro">
-              <image src="{{item.image_url}}" mode="aspectFill" class="slide-image" />
-            </view>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-
-    <view class="menu flex-center">
-      <view hover-class="none" wx:for="{{menu}}" bind:tap="toPro" data-url="{{item.url}}" data-type="{{item.url_type}}">
-        <image src="{{item.image_url}}"></image>
-      </view>
-    </view>
-    <view class='main-content'>
-      <view class='pro-block block1' wx:if="{{block1}}">
-        <view class="title">
-          <image src="../../image/tit4.png"></image>
-        </view>
-        <view class="pro-list">
-          <block wx:for="{{block1.imageReader}}">
-            <view hover-class="none" bind:tap="toPro" data-url="{{item.url}}" data-type="{{item.url_type}}">
-              <view class="pic">
-                <image src="{{item.image_url}}"></image>
-              </view>
-
-            </view>
-          </block>
-        </view>
-      </view>
-      <view class='pro-block block2' wx:if="{{block2}}">
-        <view class="title flex">
-          <view style="width:226rpx;height:34rpx">
-            <image src="../../image/tit2.png"></image>
-          </view>
-          <view class="more" bind:tap="toPro" data-url="{{block2.link_type}}" data-type="4">查看更多<text
-              class="iconfont icon-arrow-r"></text></view>
-        </view>
-        <view class="pro-list">
-          <block wx:for="{{block2.imageReader}}">
-            <view url="{{item.url}}" hover-class="none" bind:tap="toPro" data-url="{{item.url}}"
-              data-type="{{item.url_type}}">
-              <view class="pic">
-                <image src="{{item.image_url}}"></image>
-              </view>
-              <view class="info">
-                <view class="h3">{{item.title}}</view>
-                <view class="txt text-overflow">{{item.desc}}</view>
-              </view>
-            </view>
-          </block>
-        </view>
-      </view>
-      <view class='pro-block block3' wx:if="{{block3}}">
-        <view class="title flex">
-          <view style="width:244rpx;height:34rpx">
-            <image src="../../image/tit3.png"></image>
-          </view>
-          <view class="more" bind:tap="toPro" data-url="{{block3.link_type}}" data-type="4">查看更多<text
-              class="iconfont icon-arrow-r"></text></view>
-        </view>
-        <view class="pro-list">
-          <block wx:for="{{block3.imageReader}}">
-            <view url="{{item.url}}" hover-class="none" bind:tap="toPro" data-url="{{item.url}}"
-              data-type="{{item.url_type}}">
-              <view class="pic">
-                <image src="{{item.image_url}}"></image>
-              </view>
-              <view class="info">
-                <view class="h3">{{item.title}}</view>
-                <view class="txt text-overflow">{{item.desc}}</view>
-              </view>
-            </view>
-          </block>
-        </view>
-      </view>
-    </view> -->
     <view class="logo">
       <image src="../../image/logo.png"></image>
     </view>

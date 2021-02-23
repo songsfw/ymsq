@@ -1,8 +1,8 @@
 <!-- pages/user/user.wxml -->
 <view class="tips flex">
-  <view class="flex">
+  <view class="flex-center">
     <view class="iconfont icon-notice"></view>
-    <text>您的纪念优惠还有{{available_day}}次。</text>
+    <text>您的纪念优惠还有{{available_day}}次,每年的纪念日都有优惠哦！</text>
   </view>
   <view class="rule-btn flex" bind:tap="showRule">
     <view class="iconfont icon-notice2"></view>规则
