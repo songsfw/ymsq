@@ -25,10 +25,13 @@ Page({
     checkDate: null,
     checkTime: null,
     checkChange: true,
+    checkDateChange: true,
     tempTime: -1,
-    tempDate:-1,
+    tempDate: -1,
     payQueue: [10, 0, 0, 0, 0],
     useCoupon: false,
+    couponCheck: -1,
+    couponTempCheck: -1,
     curtabid: 1,
     pop: 0,
 
@@ -60,7 +63,8 @@ Page({
 
   closeCoupon() {
     this.setData({
-      useCoupon: false,
+      // useCoupon: false,
+      couponTempCheck:-1,
       pop: 0
     })
   },
@@ -75,9 +79,11 @@ Page({
         useCoupon: false,
       })
     } else {
+      console.log(curId);
       console.log(couponPrice[curId].promotion_price)
       this.setData({
         useCoupon: true,
+        couponCheck: curId,
         usedCouponPrice: couponPrice[curId].promotion_price
       })
     }
@@ -86,7 +92,7 @@ Page({
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let curId
+    let curId ,couponTempCheck;
     console.log(id)
     let {
       couponList
@@ -100,12 +106,13 @@ Page({
           couponList[key].selected = false
         }
         couponList[id].selected = true
-        curId = id
+        couponTempCheck = curId = id
       }
 
       this.setData({
         curId,
-        couponList
+        couponList,
+        couponTempCheck,
       })
     }
   },
@@ -160,7 +167,6 @@ Page({
     this.initOrderPrice()
   },
   showPop(e) {
-
     let pop = e.currentTarget.dataset.pop
     this.setData({
       pop: pop
@@ -185,38 +191,40 @@ Page({
 
   close() {
     this.setData({
-      pop: 0
+      pop: 0,
+      tempTime: -1,
+      checkChange: true,
+      checkDateChange: true,
+      selectDate: this.data.checkDate || 0,
     })
   },
   selectDate(e) {
     let selectDate = e.currentTarget.dataset.idx
-    console.log(selectDate)
-
-    let cdate = this.data.checkDate === null ? selectDate : this.data.checkDate;
-    console.log(cdate);
     this.setData({
       selectDate: selectDate,
-      // selectDate:cdate,
-      selectTime: -1
+      selectTime: -1,
+      checkDateChange: false,
     })
   },
   confirmDate() {
-    console.log(this.data);
     let {
       delivery,
       selectDate,
-      selectTime
+      selectTime,
+      tempDate,
+      tempTime
     } = this.data
     if (selectTime == -1) {
-      wx.showToast({
-        icon: "none",
-        title: "请选择时间段"
-      })
-      return
+      if(tempTime == -1|| tempDate == -1){
+        wx.showToast({
+          icon: "none",
+          title: "请选择时间段"
+        })
+        return
+      }
+      selectTime = tempTime;
+      selectDate = tempDate;
     }
-    console.log(selectDate);
-    console.log(selectTime);
-
     let selectDateTxt = util.formatDate(delivery.delivery_times[selectDate].date)
     let selectTimeTxt = delivery.delivery_times[selectDate].time_range[selectTime].range
     let stock_type = delivery.delivery_times[selectDate].time_range[selectTime].stock_type
@@ -240,6 +248,7 @@ Page({
       checkDate: selectDate,
       checkTime: selectTime,
       checkChange: true,
+      checkDateChange: true,
       selectDateTxt: delivery.delivery_times[selectDate].date,
       selectTimeTxt: selectTimeTxt,
       stock_type: stock_type
@@ -251,8 +260,8 @@ Page({
     this.setData({
       selectTime: selectTime,
       checkChange: false,
-      tempTime:selectTime,
-      tempDate:this.data.selectDate,
+      tempTime: selectTime,
+      tempDate: this.data.selectDate,
     })
   },
 
