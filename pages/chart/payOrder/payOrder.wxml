@@ -243,13 +243,12 @@
         <!-- <view class="{{checkDate!==null && checkDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
           {{item.date_desc}}
         </view> -->
-
-        <view class="{{selectDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
+        <view class="{{(checkDateChange && checkDate == index ) ||  (selectDate==index)?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
           {{item.date_desc}}
         </view>
       </scroll-view>
       <scroll-view class="time flex-1" scroll-y="{{true}}">
-        <view class="item flex {{(selectTime!=-1 && selectTime==index)|| (tempDate==selectDate && tempTime == index) || ( selectTime==-1 && checkChange && checkDate == selectDate && checkTime == index)?'on':''}}" bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
+        <view class="item flex {{(!checkTime && selectTime!=-1 && selectTime==index) || (tempDate==selectDate && tempTime == index) || (checkChange && checkDate == selectDate && checkTime == index) ?'on':''}}" bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
           <text>{{item.range}}</text>
           <view class="checkbox">
             <view class="iconfont icon-check"></view>
@@ -291,7 +290,8 @@
                   <text>{{item.desc1}}</text>
                 </view>
               </view>
-              <view class="checkbox {{item.selected?'on':''}}">
+  
+              <view class="checkbox {{(useCoupon && couponTempCheck == -1 && item.id==couponCheck) || (couponTempCheck!=-1 &&  item.selected)?'on':''}}">
                 <view class="iconfont icon-check"></view>
               </view>
             </view>
