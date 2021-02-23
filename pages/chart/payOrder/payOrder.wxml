@@ -269,76 +269,78 @@
   <view class="pop-con">
     <view class="coupon-box">
       <scroll-view class="list" scroll-y="{{true}}">
-        <block wx:if="{{curtabid==1}}">
-          <view class="item" wx:for="{{couponList}}" catch:tap="selectCoupon" data-id="{{item.id}}">
-            <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
-            <view class="flex">
-              <view class="coupon-num flex">
-                <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
-                <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
-                <view class="txt">
-                  <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
-                  <view class="num" wx:else>￥<text>{{item.money}}</text></view>
-                  
-                  <text>{{item.remark}}</text>
+        <view class='coupon-padding'>
+          <block wx:if="{{curtabid==1}}">
+            <view class="item" wx:for="{{couponList}}" catch:tap="selectCoupon" data-id="{{item.id}}">
+              <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+              <view class="flex">
+                <view class="coupon-num flex">
+                  <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
+                  <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
+                  <view class="txt">
+                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                    <view class="num" wx:else>￥<text>{{item.money}}</text></view>
+                    
+                    <text>{{item.remark}}</text>
+                  </view>
+                </view>
+                <view class="coupon-info flex-1">
+                  <view class="name">{{item.name}}</view>
+                  <view class="date">{{item.valid_time}}</view>
+                  <view class="txt flex">
+                    <text>{{item.desc1}}</text>
+                  </view>
+                </view>
+    
+                <view class="checkbox {{(useCoupon && couponTempCheck == -1 && item.id==couponCheck) || (couponTempCheck!=-1 &&  item.selected)?'on':''}}">
+                  <view class="iconfont icon-check"></view>
                 </view>
               </view>
-              <view class="coupon-info flex-1">
-                <view class="name">{{item.name}}</view>
-                <view class="date">{{item.valid_time}}</view>
-                <view class="txt flex">
-                  <text>{{item.desc1}}</text>
+              <view class="border">
+                <view></view>
+              </view>
+              <view class="flex tips {{item.showTip?'show':''}}" catch:tap="showTips" data-idx="{{index}}">
+                <view class="txt flex-1">
+                  {{item.desc2}}
                 </view>
-              </view>
-  
-              <view class="checkbox {{(useCoupon && couponTempCheck == -1 && item.id==couponCheck) || (couponTempCheck!=-1 &&  item.selected)?'on':''}}">
-                <view class="iconfont icon-check"></view>
+                <view class="arrow-bottom"></view>
               </view>
             </view>
-            <view class="border">
-              <view></view>
-            </view>
-            <view class="flex tips {{item.showTip?'show':''}}" catch:tap="showTips" data-idx="{{index}}">
-              <view class="txt flex-1">
-                {{item.desc2}}
-              </view>
-              <view class="arrow-bottom"></view>
-            </view>
-          </view>
-        </block>
-        <block wx:else>
-          <view class="item" wx:for="{{unableCouponList}}">
-            <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
-            <view class="flex">
-              <view class="coupon-num flex">
-                <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
-                <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
-                <view class="txt">
+          </block>
+          <block wx:else>
+            <view class="item" wx:for="{{unableCouponList}}">
+              <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+              <view class="flex">
+                <view class="coupon-num flex">
+                  <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
+                  <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
+                  <view class="txt">
 
-                  <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
-                  <view class="num" wx:else>￥<text>{{item.money}}</text></view>
-                  <text>{{item.remark}}</text>
+                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                    <view class="num" wx:else>￥<text>{{item.money}}</text></view>
+                    <text>{{item.remark}}</text>
+                  </view>
+                </view>
+                <view class="coupon-info flex-1">
+                  <view class="name">{{item.name}}</view>
+                  <view class="date">{{item.valid_time}}</view>
+                  <view class="txt flex">
+                    <text>{{item.desc1}}</text>
+                  </view>
                 </view>
               </view>
-              <view class="coupon-info flex-1">
-                <view class="name">{{item.name}}</view>
-                <view class="date">{{item.valid_time}}</view>
-                <view class="txt flex">
-                  <text>{{item.desc1}}</text>
+              <view class="border">
+                <view></view>
+              </view>
+              <view class="flex tips {{item.showTip?'show':''}}" bind:tap="showTips" data-idx="{{index}}">
+                <view class="txt flex-1">
+                  {{item.desc2}}
                 </view>
+                <view class="arrow-bottom"></view>
               </view>
             </view>
-            <view class="border">
-              <view></view>
-            </view>
-            <view class="flex tips {{item.showTip?'show':''}}" bind:tap="showTips" data-idx="{{index}}">
-              <view class="txt flex-1">
-                {{item.desc2}}
-              </view>
-              <view class="arrow-bottom"></view>
-            </view>
-          </view>
-        </block>
+          </block>
+        </view>
       </scroll-view>
     </view>
   </view>

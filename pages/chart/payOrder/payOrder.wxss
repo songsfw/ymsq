@@ -104,8 +104,9 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-panel .hd view:after{content: ""; display: none; position: absolute;left: 50%;transform: translateX(-50%);bottom: 5px;width:45px;height: 3px;background-color: #C1996B ;}
 .coupon-panel .hd view.on{color: #C1996B;font-size: 15px;}
 .coupon-panel .hd view.on:after{display: block;}
-.coupon-box{background: #F6F6F6;padding: 20rpx 24rpx;box-sizing: border-box;height: 100%;}
+.coupon-box{background: #F6F6F6;padding: 0px 24px 0rpx 24rpx;box-sizing: border-box;height: 100%;}
 .coupon-box .list{height: 100%;}
+.coupon-padding {padding:10px 0 0 0}
 
 .coupon-box .item .tips{align-items: top; color: #999;}
 .coupon-box .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
