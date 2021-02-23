@@ -58,7 +58,7 @@
   <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop" wx:if="{{ziti=='0'}}">
     <text class="tit">配送时间</text>
     <view class="time flex-center">
-      <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
+      <text wx:if="{{checkDate!==null}}">{{dateStr}} {{selectTimeTxt}}</text>
       <text wx:else>请选择配送时间</text>
       <view class="iconfont icon-arrow-r"></view>
     </view>
@@ -240,12 +240,16 @@
   <view class="pop-con">
     <view class="flex time-box">
       <scroll-view class="date" scroll-y="{{true}}">
+        <!-- <view class="{{checkDate!==null && checkDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
+          {{item.date_desc}}
+        </view> -->
+
         <view class="{{selectDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
-          {{item.date}}
+          {{item.date_desc}}
         </view>
       </scroll-view>
       <scroll-view class="time flex-1" scroll-y="{{true}}">
-        <view class="item flex {{selectTime==index?'on':''}}" bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
+        <view class="item flex {{(selectTime!=-1 && selectTime==index)|| (tempDate==selectDate && tempTime == index) || ( selectTime==-1 && checkChange && checkDate == selectDate && checkTime == index)?'on':''}}" bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
           <text>{{item.range}}</text>
           <view class="checkbox">
             <view class="iconfont icon-check"></view>
