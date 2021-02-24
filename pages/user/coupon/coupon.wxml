@@ -17,6 +17,7 @@
     <text></text>
   </view>
 </view>
+
 <view class="card" hidden="{{currentTab!=0}}">
   <block wx:for="{{mallLi}}" wx:for-item="list">
     <view class="item" wx:for="{{list}}" wx:key="id">
@@ -42,20 +43,25 @@
       <view class="border">
         <view></view>
       </view>
-      <view class="flex tips {{tips?'on':''}}" bind:tap="showTips" data-id="{{item.id}}">
-        <view class="txt flex-1">
-          <view>{{item.desc2}}</view>
-          <view>{{item.desc2}}</view>
-          <view>{{item.desc2}}</view>
+      <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+        data-type="mallLi">
+        <view class="show-more">
+          <view id="desc2MallFont_{{item.id}}">使用规则</view>
+          <view class="show-more">
+            <view>{{showStatus[item.id] ?'展开': '收起'}}</view>
+            <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+          </view>
         </view>
-        <view class="arrow-bottom"></view>
+        <view class="flex-view-item {{showStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}</view>
       </view>
     </view>
   </block>
   <block wx:if="{{pageInfo.mall.count==0}}">
     <view class="nodata">
-       <view><image src="../../../image/no-coupon.png"></image></view>
-       <view class="txt">暂无优惠券</view>
+      <view>
+        <image src="../../../image/no-coupon.png"></image>
+      </view>
+      <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -63,6 +69,7 @@
     <view wx:else class="more-btn">加载中...</view>
   </block>
 </view>
+
 <view class="card" hidden="{{currentTab!=1}}">
   <block wx:for="{{shopLi}}" wx:for-item="list">
     <view class="item" wx:for="{{list}}" wx:for-index="idx" wx:key="id" data-id="{{item.id}}" wx:if="{{!item.used}}">
@@ -88,25 +95,30 @@
       <view class="border">
         <view></view>
       </view>
-      <view class="tips on" data-id="{{item.id}}" data-card='{{item.card_no}}'>
-        <view class="txt">
-          <view class="flex" style="justify-content: space-between;">
-            <view>{{item.desc2}}</view>
-            <view class="arrow-bottom"></view>
+      <view class="tips on" data-id="{{item.id}}" data-card='{{item.card_no}}' bind:tap="showTips" data-type='shopLi'>
+        <view class="show-more">
+          <view id="desc2MallFont_{{item.id}}">使用规则</view>
+          <view class="show-more">
+            <view>{{showStatus[item.id] ?'收起': '展开'}}</view>
+            <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
           </view>
+        </view>
+        <view class="flex-view-item {{showStatus[item.id]?'show-more-true':'show-more-false'}}">
+          <view>{{item.desc2}}</view>
           <view class="card-code-img">
             <canvas canvas-id="barcode-{{item.id}}"></canvas>
           </view>
           <view class="card_no">{{item.card_no}}</view>
         </view>
-        
       </view>
     </view>
   </block>
   <block wx:if="{{pageInfo.shop.count==0}}">
     <view class="nodata">
-      <view><image src="../../../image/no-coupon.png"></image></view>
-       <view class="txt">暂无优惠券</view>
+      <view>
+        <image src="../../../image/no-coupon.png"></image>
+      </view>
+      <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -114,6 +126,7 @@
     <view wx:if="{{!pageInfo.shop.noMoreData}}" class="more-btn">加载中...</view>
   </block>
 </view>
+
 <view class="card" hidden="{{currentTab!=2}}">
   <block wx:for="{{usedLi}}" wx:for-item="list">
     <view class="item used" wx:for="{{list}}" wx:key="id">
@@ -139,18 +152,25 @@
       <view class="border">
         <view></view>
       </view>
-      <view class="flex tips {{item.id==curId?'on':''}}" bind:tap="showTips" data-id="{{item.id}}">
-        <view class="txt flex-1">
-          <view>{{item.desc2}}</view>
+      <view class="flex tips {{tips?'on':''}} show-more-main"  bind:tap="showTips" data-id="{{item.id}}" data-type="used"
+        style="height:{{showStatus[item.id]?'20px':'auto'}}">
+        <view class="show-more">
+          <view id="desc2MallFont_{{item.id}}">使用规则</view>
+          <view class="show-more">
+            <view>{{showStatus[item.id] ?'展开': '收起'}}</view>
+            <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+          </view>
         </view>
-        <view class="arrow-bottom"></view>
+        <view class="flex-view-item {{showStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}</view>
       </view>
     </view>
   </block>
   <block wx:if="{{pageInfo.used.count==0}}">
     <view class="nodata">
-      <view><image src="../../../image/no-coupon.png"></image></view>
-       <view class="txt">暂无优惠券</view>
+      <view>
+        <image src="../../../image/no-coupon.png"></image>
+      </view>
+      <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -158,9 +178,10 @@
     <view wx:else class="more-btn">加载中...</view>
   </block>
 </view>
+
 <view class="card" hidden="{{currentTab!=3}}">
-  <block wx:for-item="list" wx:for="{{expiredLi}}" >
-    <view class="item used unuse" wx:for="{{list}}"  wx:for-index="idx" data-idx="{{idx}}">
+  <block wx:for-item="list" wx:for="{{expiredLi}}">
+    <view class="item used unuse" wx:for="{{list}}" wx:for-index="idx" data-idx="{{idx}}">
       <view class="flex">
         <view class="coupon-num flex">
           <image src="../../../image/coupon1-1.png"></image>
@@ -182,18 +203,25 @@
       <view class="border">
         <view></view>
       </view>
-      <view class="flex tips {{item.id==curId?'on':''}}" bind:tap="showTips" data-id="{{item.id}}">
-        <view class="txt flex-1">
-          <view>{{item.desc2}}</view>
+      <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+        data-type="expired">
+        <view class="show-more">
+          <view id="desc2MallFont_{{item.id}}">使用规则</view>
+          <view class="show-more">
+            <view>{{showStatus[item.id] ?'展开': '收起'}}</view>
+            <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+          </view>
         </view>
-        <view class="arrow-bottom"></view>
+        <view class="flex-view-item {{showStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}</view>
       </view>
     </view>
   </block>
   <block wx:if="{{pageInfo.expired.count==0}}">
     <view class="nodata">
-      <view><image src="../../../image/no-coupon.png"></image></view>
-       <view class="txt">暂无优惠券</view>
+      <view>
+        <image src="../../../image/no-coupon.png"></image>
+      </view>
+      <view class="txt">暂无优惠券</view>
     </view>
   </block>
   <block wx:else>
@@ -201,4 +229,3 @@
     <view wx:else class="more-btn">加载中...</view>
   </block>
 </view>
-
