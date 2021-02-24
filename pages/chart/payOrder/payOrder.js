@@ -60,14 +60,15 @@ Page({
 
     isSet: null
 
-    ,useShowStatus:{}
-    ,unUsedShowStatus:{}
+      ,
+    useShowStatus: {},
+    unUsedShowStatus: {}
   },
 
   closeCoupon() {
     this.setData({
       // useCoupon: false,
-      couponTempCheck:-1,
+      couponTempCheck: -1,
       pop: 0
     })
   },
@@ -95,7 +96,7 @@ Page({
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let curId ,couponTempCheck;
+    let curId, couponTempCheck;
     console.log(id)
     let {
       couponList
@@ -120,7 +121,8 @@ Page({
     }
   },
   showTips(e) {
-    let id = e.currentTarget.dataset.id,  type = e.currentTarget.dataset.type
+    let id = e.currentTarget.dataset.id,
+      type = e.currentTarget.dataset.type
 
     switch (type) {
       case 'canuse':
@@ -137,7 +139,7 @@ Page({
           rotateRight: 'rotateRight',
         })
         break;
-      
+
     }
     return false;
     // let {
@@ -233,19 +235,27 @@ Page({
       selectDate,
       selectTime,
       tempDate,
-      tempTime
+      tempTime,
+      checkChange,
+      checkDate,
+      checkTime,
     } = this.data
     if (selectTime == -1) {
-      if(tempTime == -1|| tempDate == -1){
+      if (checkChange && tempTime == -1 && selectTime == -1) {
+        selectTime = checkTime;
+        selectDate = checkDate;
+      } else if (tempTime == -1 || tempDate == -1) {
         wx.showToast({
           icon: "none",
           title: "请选择时间段"
         })
         return
+      }else{
+        selectTime = tempTime;
+        selectDate = tempDate;
       }
-      selectTime = tempTime;
-      selectDate = tempDate;
     }
+
     let selectDateTxt = util.formatDate(delivery.delivery_times[selectDate].date)
     let selectTimeTxt = delivery.delivery_times[selectDate].time_range[selectTime].range
     let stock_type = delivery.delivery_times[selectDate].time_range[selectTime].stock_type
@@ -369,13 +379,13 @@ Page({
         //   }
         // }
         //整理点击
-        var useShowStatus ={};
-        var unUsedShowStatus= {};
-        for(let index in cart_data.promotion_info){
-          useShowStatus[index]=false;
+        var useShowStatus = {};
+        var unUsedShowStatus = {};
+        for (let index in cart_data.promotion_info) {
+          useShowStatus[index] = false;
         }
-        for(let index in cart_data.promotion_info_unable){
-          unUsedShowStatus[index]=false;
+        for (let index in cart_data.promotion_info_unable) {
+          unUsedShowStatus[index] = false;
         }
 
         this.setData({
