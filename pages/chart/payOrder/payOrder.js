@@ -59,6 +59,9 @@ Page({
     zitiName: '',
 
     isSet: null
+
+    ,useShowStatus:{}
+    ,unUsedShowStatus:{}
   },
 
   closeCoupon() {
@@ -117,34 +120,52 @@ Page({
     }
   },
   showTips(e) {
-    let idx = e.currentTarget.dataset.idx
-    console.log(idx)
-    let {
-      couponList,
-      unableCouponList
-    } = this.data
+    let id = e.currentTarget.dataset.id,  type = e.currentTarget.dataset.type
 
-    if (this.data.curtabid == 1) {
-      if (couponList[idx].showTip) {
-        couponList[idx].showTip = false
-      } else {
-        couponList[idx].showTip = true
-      }
-
-      this.setData({
-        couponList
-      })
-    } else {
-      if (unableCouponList[idx].showTip) {
-        unableCouponList[idx].showTip = false
-      } else {
-        unableCouponList[idx].showTip = true
-      }
-
-      this.setData({
-        unableCouponList
-      })
+    switch (type) {
+      case 'canuse':
+        this.data.useShowStatus[id] = this.data.useShowStatus[id] == true ? false : true;
+        this.setData({
+          useShowStatus: this.data.useShowStatus,
+          rotateRight: 'rotateRight',
+        })
+        break;
+      case 'uncanuse':
+        this.data.unUsedShowStatus[id] = this.data.unUsedShowStatus[id] == true ? false : true;
+        this.setData({
+          unUsedShowStatus: this.data.unUsedShowStatus,
+          rotateRight: 'rotateRight',
+        })
+        break;
+      
     }
+    return false;
+    // let {
+    //   couponList,
+    //   unableCouponList
+    // } = this.data
+
+    // if (this.data.curtabid == 1) {
+    //   if (couponList[idx].showTip) {
+    //     couponList[idx].showTip = false
+    //   } else {
+    //     couponList[idx].showTip = true
+    //   }
+
+    //   this.setData({
+    //     couponList
+    //   })
+    // } else {
+    //   if (unableCouponList[idx].showTip) {
+    //     unableCouponList[idx].showTip = false
+    //   } else {
+    //     unableCouponList[idx].showTip = true
+    //   }
+
+    //   this.setData({
+    //     unableCouponList
+    //   })
+    // }
   },
   showAllPro() {
     this.setData({
@@ -347,6 +368,15 @@ Page({
         //     verifyed = true
         //   }
         // }
+        //整理点击
+        var useShowStatus ={};
+        var unUsedShowStatus= {};
+        for(let index in cart_data.promotion_info){
+          useShowStatus[index]=false;
+        }
+        for(let index in cart_data.promotion_info_unable){
+          unUsedShowStatus[index]=false;
+        }
 
         this.setData({
           hasMai: hasMai,
@@ -360,7 +390,9 @@ Page({
           proList: cart_data.detail,
           couponList: cart_data.promotion_info,
           unableCouponList: cart_data.promotion_info_unable,
-          couponPrice: cart_data.promotion_price
+          couponPrice: cart_data.promotion_price,
+          useShowStatus,
+          unUsedShowStatus
         })
         this.initOrderPrice()
       })
@@ -402,7 +434,6 @@ Page({
         //     verifyed = true
         //   }
         // }
-
         this.setData({
           hasMai: hasMai,
           fittings_desc: res.fittings_desc,

@@ -176,8 +176,7 @@ Page({
       card = e.currentTarget.dataset.card,
       type = e.currentTarget.dataset.type
 
-    console.log(type);
-    console.log(id);
+
     switch (type) {
       case 'shopLi':
         this.data.showStatus[id] = this.data.showStatus[id] == true ? false : true;

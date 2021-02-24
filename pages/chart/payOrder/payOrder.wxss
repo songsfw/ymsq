@@ -104,7 +104,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-panel .hd view:after{content: ""; display: none; position: absolute;left: 50%;transform: translateX(-50%);bottom: 5px;width:45px;height: 3px;background-color: #C1996B ;}
 .coupon-panel .hd view.on{color: #C1996B;font-size: 15px;}
 .coupon-panel .hd view.on:after{display: block;}
-.coupon-box{background: #F6F6F6;padding: 0px 24px 0rpx 24rpx;box-sizing: border-box;height: 100%;}
+.coupon-box{background: #F6F6F6;box-sizing: border-box;height: 100%;}
 .coupon-box .list{height: 100%;}
 .coupon-padding {padding:10px 0 0 0}
 
@@ -112,7 +112,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-box .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
 .coupon-box .item .tips.show .txt{height: auto;}
 .coupon-box .item .tips .txt{height:16px;overflow: hidden;}
-.coupon-box .item .tips .arrow-bottom{margin-left: 32rpx;}
+.coupon-box .item .tips .arrow-bottom{margin-left: 32rpx;padding-top:4px;}
 .coupon-box .item .tips .arrow-bottom:after{border-color: #ccc;border-width: 1px;}
 .coupon-box .item .border view{height: 0;border-top: 1px dashed #ccc;}
 .coupon-box .item .border:after,
@@ -139,6 +139,14 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-box .checkbox{position: relative;margin-top:30px; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
 .coupon-box .checkbox view{ display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .coupon-box .checkbox.on view{display: block;}
+
+.rotateLeft{transform: rotate(180deg);}
+.flex-view-item{padding-top:4px}
+.show-more-main{display:flex;flex-direction:column;}
+.show-more{display: flex;flex-direction: row;justify-content:space-between}
+.show-more-true{display:block}
+.show-more-false{display:none}
+
 .score-panel .tit{justify-content: space-between;padding-right: 36px;}
 .score-panel .tit view{color: #ccc;font-size: 13px;}
 .score-panel .pop-con{padding: 30rpx;}

@@ -2,8 +2,10 @@
 <wxs module="filter" src="../../../utils/tools.wxs"></wxs>
 <view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">
-    <text class="{{ziti=='0'?'on':''}} flex-1" data-stype="0" bind:tap="selectType" style="border-radius:0 18rpx 18rpx 0">商家配送</text>
-    <text class="{{ziti=='1'?'on':''}} flex-1" data-stype="1" bind:tap="selectType" style="border-radius:18rpx 0 0 18rpx">上门自提</text>
+    <text class="{{ziti=='0'?'on':''}} flex-1" data-stype="0" bind:tap="selectType"
+      style="border-radius:0 18rpx 18rpx 0">商家配送</text>
+    <text class="{{ziti=='1'?'on':''}} flex-1" data-stype="1" bind:tap="selectType"
+      style="border-radius:18rpx 0 0 18rpx">上门自提</text>
   </view>
 </view>
 <view class="order-wp">
@@ -38,7 +40,7 @@
         <view class="flex-1 add-address"><text class="iconfont icon-plus"></text> 选择收货地址</view>
       </block>
     </block>
-    
+
     <view class="iconfont icon-arrow-r"></view>
   </view>
   <view class="ziti-info" wx:if="{{ziti=='1'}}">
@@ -75,7 +77,8 @@
             <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
           </view>
           <view class="info flex-1 flex">
-            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
             <view class="tag" wx:if="{{item.is_fittings==0}}">
               <text wx:if="{{item.size}}">{{item.size}}</text>
               <text wx:if="{{item.spec}}">{{item.spec}}</text>
@@ -93,7 +96,10 @@
         </view>
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
           <view class="h4" wx:if="{{item.is_mcake_message==1}}">巧克力牌</view>
-          <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text" placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard" disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}" data-cartid="{{item.cart_id}}"/>
+          <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
+            placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard"
+            disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
+            data-cartid="{{item.cart_id}}" />
           <view class="iconfont icon-edit" wx:if="{{item.is_mcake_message==1}}"></view>
         </view>
       </view>
@@ -103,7 +109,8 @@
             <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
           </view>
           <view class="info flex-1 flex">
-            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block></view>
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
             <view class="tag" wx:if="{{item.is_fittings==0}}">
               <text wx:if="{{item.size}}">{{item.size}}</text>
               <text wx:if="{{item.spec}}">{{item.spec}}</text>
@@ -224,7 +231,7 @@
     <view class="iconfont icon-check"></view>
   </view>
   <view class="flex-1">配送当天无法修改任何信息(过敏者慎用)
-收货后，非质量问题不予退换</view>
+    收货后，非质量问题不予退换</view>
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px">
   <view class="flex-center">
@@ -236,19 +243,24 @@
 </view>
 <view class="pop-panel time-panel" style="padding-bottom:{{btmHolder}}px" wx:if="{{pop=='showTime'}}">
   <view class="icon-close close" bind:tap="close"></view>
-  <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block><block wx:else>自提</block>时间</view>
+  <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block>
+    <block wx:else>自提</block>时间
+  </view>
   <view class="pop-con">
     <view class="flex time-box">
       <scroll-view class="date" scroll-y="{{true}}">
         <!-- <view class="{{checkDate!==null && checkDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
           {{item.date_desc}}
         </view> -->
-        <view class="{{(checkDateChange && checkDate == index ) ||  (selectDate==index)?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
+        <view class="{{(checkDateChange && checkDate == index ) ||  (selectDate==index)?'on':''}}" bind:tap="selectDate"
+          wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
           {{item.date_desc}}
         </view>
       </scroll-view>
       <scroll-view class="time flex-1" scroll-y="{{true}}">
-        <view class="item flex {{(!checkTime && selectTime!=-1 && selectTime==index) || (tempDate==selectDate && tempTime == index) || (checkChange && checkDate == selectDate && checkTime == index) ?'on':''}}" bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
+        <view
+          class="item flex {{(!checkTime && selectTime!=-1 && selectTime==index) || (tempDate==selectDate && tempTime == index) || (checkChange && checkDate == selectDate && checkTime == index) ?'on':''}}"
+          bind:tap="selectTime" wx:for="{{delivery.delivery_times[selectDate].time_range}}" data-idx="{{index}}">
           <text>{{item.range}}</text>
           <view class="checkbox">
             <view class="iconfont icon-check"></view>
@@ -271,16 +283,16 @@
       <scroll-view class="list" scroll-y="{{true}}">
         <view class='coupon-padding'>
           <block wx:if="{{curtabid==1}}">
-            <view class="item" wx:for="{{couponList}}" catch:tap="selectCoupon" data-id="{{item.id}}">
-              <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
-              <view class="flex">
+            <view class="item" wx:for="{{couponList}}" data-id="{{item.id}}">
+              <view class="{{item.tag == ''? '' : (item.tag=='快过期'?'tag tag1':'tag')}}">{{!item.tag?'':item.tag}}</view>
+              <view class="flex" catch:tap="selectCoupon" data-id="{{item.id}}">
                 <view class="coupon-num flex">
                   <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
                   <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
                   <view class="txt">
-                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text style="font-size:14px">张</text></text></view>
                     <view class="num" wx:else>￥<text>{{item.money}}</text></view>
-                    
+
                     <text>{{item.remark}}</text>
                   </view>
                 </view>
@@ -291,32 +303,39 @@
                     <text>{{item.desc1}}</text>
                   </view>
                 </view>
-    
-                <view class="checkbox {{(useCoupon && couponTempCheck == -1 && item.id==couponCheck) || (couponTempCheck!=-1 &&  item.selected)?'on':''}}">
+
+                <view
+                  class="checkbox {{(useCoupon && couponTempCheck == -1 && item.id==couponCheck) || (couponTempCheck!=-1 &&  item.selected)?'on':''}}">
                   <view class="iconfont icon-check"></view>
                 </view>
               </view>
               <view class="border">
                 <view></view>
               </view>
-              <view class="flex tips {{item.showTip?'show':''}}" catch:tap="showTips" data-idx="{{index}}">
-                <view class="txt flex-1">
-                  {{item.desc2}}
+              <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+                data-type="canuse">
+                <view class="show-more">
+                  <view id="desc2MallFont_{{item.id}}">使用规则</view>
+                  <view class="show-more">
+                    <view>{{!useShowStatus[item.id] ?'展开': '收起'}}</view>
+                    <view class="arrow-bottom {{!useShowStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+                  </view>
                 </view>
-                <view class="arrow-bottom"></view>
-              </view>
+                <view class="flex-view-item {{!useShowStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}
+                </view>
+              </view>      
             </view>
           </block>
           <block wx:else>
             <view class="item" wx:for="{{unableCouponList}}">
-              <view class="tag {{item.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+              <view class="{{item.tag == ''? '' : (item.tag=='快过期'?'tag tag1':'tag')}}">{{!item.tag?'':item.tag}}</view>
               <view class="flex">
                 <view class="coupon-num flex">
                   <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
                   <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
                   <view class="txt">
 
-                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                    <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text style="font-size:14px">张</text></text></view>
                     <view class="num" wx:else>￥<text>{{item.money}}</text></view>
                     <text>{{item.remark}}</text>
                   </view>
@@ -332,12 +351,26 @@
               <view class="border">
                 <view></view>
               </view>
-              <view class="flex tips {{item.showTip?'show':''}}" bind:tap="showTips" data-idx="{{index}}">
+              {{useShowStatus[item.id]}}
+              {{unUseShowStatus[item.id]}}
+              <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+                data-type="uncanuse">
+                <view class="show-more">
+                  <view id="desc2MallFont_{{item.id}}">使用规则</view>
+                  <view class="show-more">
+                    <view>{{!unUsedShowStatus[item.id] ?'展开': '收起'}}</view>
+                    <view class="arrow-bottom {{!unUsedShowStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+                  </view>
+                </view>
+                <view class="flex-view-item {{!unUsedShowStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}
+                </view>
+              </view>
+              <!-- <view class="flex tips {{item.showTip?'show':''}}" bind:tap="showTips" data-idx="{{index}}">
                 <view class="txt flex-1">
                   {{item.desc2}}
                 </view>
                 <view class="arrow-bottom"></view>
-              </view>
+              </view> -->
             </view>
           </block>
         </view>
@@ -355,10 +388,10 @@
   <view class="pop-con">
     <view class="mai-info flex">
       <view class="">账户麦点：{{jinmai.total_point}}</view>
-      <view wx:if="{{hasMai}}">本单<text >已减￥{{jinmai.now_price}}</text></view>
+      <view wx:if="{{hasMai}}">本单<text>已减￥{{jinmai.now_price}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
-      <view >抵扣<text >￥{{jinmai.now_price}}</text>使用{{jinmai.now_point}}麦点</view>
+      <view>抵扣<text>￥{{jinmai.now_price}}</text>使用{{jinmai.now_point}}麦点</view>
       <view class="checkbox {{hasMai?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>
@@ -369,7 +402,8 @@
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 
 
-<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}" class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="closePanel" unuse="{{unuse}}">
+<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}"
+  class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="closePanel" unuse="{{unuse}}">
   <view slot="setPwd" wx:if="{{step==1}}">
     <view class="inputxt flex">
       <text style="width:50px">密码</text>
@@ -387,7 +421,7 @@
       <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
     </view>
   </view>
-  <view slot="verify" class="verify"  wx:if="{{step==3}}">
+  <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>
     <view class="inputxt flex">
       <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder="请输入验证码" />
