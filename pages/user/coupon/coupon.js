@@ -1,7 +1,6 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 const wxbarcode = require('../../../utils/initBarCode.js')
-const funcString = require('../../../utils/func_string.js')
 
 let mallLi = null,
   usedLi = null,
@@ -320,7 +319,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
 
   /**
