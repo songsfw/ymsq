@@ -65,7 +65,8 @@
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
         <block wx:if="{{order.status==2}}">
-          <view class="btn btn1 delivery-btn" bind:tap="showDelivery" data-code="{{order.order_code}}">查看物流</view>
+          <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+          <view class="btn pay-btn" bind:tap="showDelivery" data-code="{{order.order_code}}">查看物流</view>
           <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator> -->
         </block>
         <block wx:if="{{order.status==3}}">
@@ -163,7 +164,7 @@
   <view class="icon-close close" bind:tap="close"></view>
 </view>
 
-<view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
+<view class="pop-panel post-panel" style="position:fixed;top:47%;left:50%;" wx:if="{{pop=='showPoster'}}">
   <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>
   <view class="icon-close close" bind:tap="close"></view>
   <view class="share-remark" bind:tap="saveImg">

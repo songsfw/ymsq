@@ -199,6 +199,9 @@ Page({
     })
 
   },
+  catchTouchMove(){
+    return false;
+  },
   onShow() {
     //自定义tabbar选中
     // if (typeof this.getTabBar === 'function' &&

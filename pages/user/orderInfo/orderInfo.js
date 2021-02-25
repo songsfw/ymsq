@@ -368,6 +368,83 @@ Page({
       }
     })
   },
+  //20200224
+ saveImg() {
+  var page = this;
+  if (!wx.saveImageToPhotosAlbum) {
+    // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
+    wx.showModal({
+      title: '提示',
+      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+      showCancel: false,
+    });
+    return;
+  }
+
+  wx.showLoading({
+    title: "正在保存图片",
+    mask: false,
+  });
+
+  wx.downloadFile({
+    url: page.data.poster,
+    success: function (e) {
+      wx.showLoading({
+        title: "正在保存图片",
+        mask: false,
+      });
+      wx.saveImageToPhotosAlbum({
+        filePath: e.tempFilePath,
+        success: function () {
+          wx.showModal({
+            title: '提示',
+            content: '商品海报保存成功',
+            showCancel: false,
+          });
+        },
+        fail: function (e) {
+          if (e.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+            //用户取消 重新调起
+            wx.showModal({
+              title: '提示',
+              content: '需要开启图片保存权限，点击确定去设置',
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.openSetting({
+                    success(res) {
+
+                    },
+                    fail(res) {
+
+                    }
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+
+          }
+        },
+        complete: function (e) {
+          
+        }
+      });
+    },
+    fail: function (e) {
+      wx.showModal({
+        title: '图片下载失败',
+        content: e.errMsg + ";" + page.data.goods_qrcode,
+        showCancel: false,
+      });
+    },
+    complete: function (e) {
+      console.log(e);
+      wx.hideLoading();
+    }
+  });
+},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

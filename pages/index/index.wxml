@@ -7,9 +7,9 @@
 <view class="notice {{panel=='notice'?'show':''}}" bindtap="showNotice" style="top:{{fixedTop}}px"
   wx:if="{{notice.length>0}}">
   <view class="txt flex" wx:if="{{panel!='notice'}}">
-    <swiper autoplay="{{playnotice}}" circular vertical>
+    <swiper autoplay="{{playnotice}}" circular vertical >
       <block wx:for="{{notice}}" wx:for-index="index">
-        <swiper-item>
+        <swiper-item catchtouchmove='catchTouchMove'>
           <view class="text-overflow"><text class="iconfont icon-notice"></text> {{item}}</view>
         </swiper-item>
       </block>
