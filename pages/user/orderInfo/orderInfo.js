@@ -265,7 +265,8 @@ Page({
         delivery_price:orderData.delivery_price,
         pay_mode_string:orderData.pay_mode_string,
         create_time:orderData.create_time,
-        order_status:orderData.order_status
+        order_status:orderData.order_status,
+        order_type:orderData.order_type
       }
       this.setData({
         delivery:orderData.delivery,

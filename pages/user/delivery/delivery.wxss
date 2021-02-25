@@ -1,6 +1,6 @@
 page{background: #F6F6F6;}
 
-.order-info .hd{font-size: 15px;padding:30rpx 20rpx;font-weight: 500;}
+.order-info .hd{font-size: 14px;padding:30rpx 20rpx;font-weight: 500;}
 .order-info .hd .order-code{font-size: 15px;line-height: 21px;}
 .order-info .hd .date{color: #999;line-height: 18px;}
 .order-info .hd .status{color: #C1996B;}

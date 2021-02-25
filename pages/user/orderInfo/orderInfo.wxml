@@ -129,9 +129,9 @@
         <view class="name">期望配送时间</view>
         <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
-      <view class="flex-center ">
+      <view class="flex-center " wx:if="{{orderData.order_type == '2'}}">
         <view class="name">备注</view>
-        <view class="val">{{orderData.remark}}</view>
+        <view class="val">{{orderData.remark == ''?'无':orderData.remark}}</view>
       </view>
     </view>
     <view class="pay-info">
@@ -146,14 +146,14 @@
       <view class="flex-center" wx:if="{{orderData.point_price!=0}}">
         <view class="name">
           麦点
-          <image src="../../../image/icon-mai.png"></image>
+          <!-- <image src="../../../image/icon-mai.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.point_price}}</view>
       </view>
       <view class="flex-center" wx:if="{{orderData.promotion_price!=0}}">
         <view class="name">
           优惠券
-          <image src="../../../image/icon-coupon.png"></image>
+          <!-- <image src="../../../image/icon-coupon.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.promotion_price}}</view>
       </view>
