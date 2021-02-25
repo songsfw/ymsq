@@ -153,7 +153,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .mai-info{justify-content: space-between;background: #F6F6F6;line-height: 92rpx;padding: 0 20rpx;margin-bottom: 50rpx;border-radius: 8rpx;}
 .mai-price{justify-content: space-between;}
 .mai-info text,
-.mai-price text{color:#C1996B;}
+.mai-price text{color:#f11616;}
 
 
 .inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 40px;line-height: 40px;}

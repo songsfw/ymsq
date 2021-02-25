@@ -391,7 +391,7 @@
   <view class="pop-con">
     <view class="mai-info flex">
       <view class="">账户麦点：{{jinmai.total_point}}</view>
-      <view wx:if="{{hasMai}}">本单<text>已减￥{{jinmai.now_price}}</text></view>
+      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{jinmai.now_price}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
       <view>抵扣<text>￥{{jinmai.now_price}}</text>使用{{jinmai.now_point}}麦点</view>
