@@ -84,12 +84,16 @@ page{background: #F6F6F6;}
 .confirm-btn{    margin: 24rpx;
   width: auto;}
 
-.post-panel{width: 600rpx;height: 1090rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;}
+.post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;}
 .post-panel image{border-radius: 20rpx;}
-.post-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+.post-panel .close{position: absolute;left: 95%;transform: translateX(-50%);top: auto; bottom: 100%;border-radius: 50%; border:1px solid #fff;width: 20px;height: 20px;}
 .post-panel .close:after,
 .post-panel .close::before{background-color: #fff;}
 
 .desc{margin-top: 40rpx;}
 .desc .h3{font-size: 13px;text-align: left;margin-bottom: 10rpx;}
 .desc .txt view{font-size: 13px;color: #C1996B;}
+
+.share-remark{display: flex;flex-direction: column;justify-content:space-between;color:white;text-align:center}
+.share-remark-tip{font-size:13px;margin:7px;}
+.share-remark-save{font-size:12px;border:1px solid white;border-radius: 50px;margin:0 auto;width:137px;padding:5px;}

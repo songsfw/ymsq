@@ -86,9 +86,11 @@ page{background: #F6F6F6;padding-top: 48px;}
 .confirm-btn{    margin: 24rpx;
   width: auto;}
 
-.post-panel{width: 600rpx;height: 1090rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;}
+/* .post-panel{width: 600rpx;height: 1090rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;} */
+.post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;position: absolute;top:45%;}
 .post-panel image{border-radius: 20rpx;}
-.post-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+/* .post-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;} */
+.post-panel .close{position: absolute;left: 95%;transform: translateX(-50%);top: auto; bottom: 100%;border-radius: 50%; border:1px solid #fff;width: 20px;height: 20px;}
 .post-panel .close:after,
 .post-panel .close::before{background-color: #fff;}
 
@@ -100,3 +102,9 @@ page{background: #F6F6F6;padding-top: 48px;}
 .checkbox.on{border: none;}
 .checkbox.on view{display: block;}
 .reason-txt{height: 150rpx;width: 100%;background: #F6F6F6;font-size: 14px;padding:20rpx;box-sizing: border-box;margin:32rpx 0 60rpx 0;border-radius: 8rpx;}
+
+
+
+.share-remark{display: flex;flex-direction: column;justify-content:space-between;color:white;text-align:center}
+.share-remark-tip{font-size:13px;margin:7px;}
+.share-remark-save{font-size:12px;border:1px solid white;border-radius: 50px;margin:0 auto;width:137px;padding:5px;}
