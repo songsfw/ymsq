@@ -168,7 +168,7 @@
     </view> -->
     <view class="flex-center" bind:tap="showPop" data-pop="showScore" wx:if="{{pay_style.point==1}}">
       <view class="name">
-        麦点 (共：{{jinmai.total_point <=0 ?'0':jinmai.total_point}})
+        麦点 <text style="font-size:12px;color:#aaa">(共：{{jinmai.total_point <=0 ?'0':jinmai.total_point}})</text>
         <!-- <image src="../../../image/icon-mai.png"></image> -->
       </view>
       <view class="val">
