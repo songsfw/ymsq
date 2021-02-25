@@ -182,12 +182,13 @@
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">
   <block wx:if="{{stat==2}}">
-    <view class="btn" bind:tap="showDelivery" wx:if="{{steps.length>0}}">查看物流</view>
+    <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
+    <view class="btn pay-btn" bind:tap="showDelivery" wx:if="{{steps.length>0}}">查看物流</view>
     <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
   </block>
   <block wx:if="{{stat==3}}">
-    <view class="btn" bind:tap="toComment">去评价</view>
     <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
+    <view class="btn pay-btn" bind:tap="toComment">去评价</view>
     <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
   </block>
   <block wx:if="{{stat==1}}">
@@ -253,7 +254,11 @@
   <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
 </view>
 
-<view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
-  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress bindtap="previewImage"></image>
+<view class="pop-panel post-panel" style="position:fixed;top:50%;left:50%;" wx:if="{{pop=='showPoster'}}">
+  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>
   <view class="icon-close close" bind:tap="close"></view>
+  <view class="share-remark" bind:tap="saveImg">
+    <view class="share-remark-tip">保存分享给好友</view>
+    <view class="share-remark-save">保存海报</view>
+  </view>
 </view>
