@@ -56,7 +56,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .inputbox.on{color: #F5222D;}
 .pay-info{padding: 0 20rpx;}
 .pay-info>view{justify-content: space-between;height: 86rpx;line-height: 86rpx;}
-.pay-info>view .tip{color: #ccc;font-size: 12px;}
+.pay-info>view .tip{color: #aaa;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
 .pay-info .icon-arrow-r{vertical-align: middle;margin-left: 20rpx;font-size: 30rpx;}
@@ -64,7 +64,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .policy{padding:30rpx 20rpx ;color: #999;}
 .policy .checkbox{border-radius: 50%;margin-right: 16rpx;}
 .balance .val text{color: #F5222D;}
-.balance switch{margin-left:20rpx ;transform: scale(.8) translateX(10rpx);transform-origin: right;}
+.balance switch{margin-left:0rpx ;transform: scale(.8) translateX(10rpx);transform-origin: right;}
 .pay-info .total-price{text-align: right;justify-content: flex-end;}
 .pay-info .total-price{font-size: 13px;}
 .pay-info .total-price view{font-size: 18px;color: #F5222D;}
@@ -95,7 +95,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .send-type view{margin: 0 auto; height: 36px; background:linear-gradient(to bottom,#C1996B,#fff);align-items: center;overflow: hidden;}
 .send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
 .send-type text.on{background: #fff;color: #C1996B;}
-.delivery text{color:#5375FD ;}
+.delivery text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px 1px;font-size: 12px;}
 .delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
 .delivery-tip text{vertical-align: sub;font-size: 30rpx;}
 
@@ -171,3 +171,6 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .fittings-info .txt{color: #666;}
 .fittings-info .txt text{color: #C1996B;}
 .fittings-info .txt view{margin-bottom:30rpx ;font-size: 13px;}
+
+.useBalanceColor{color:#F5222D}
+.canUseBalanceColor{color:#aaa}
