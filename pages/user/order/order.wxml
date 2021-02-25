@@ -161,6 +161,10 @@
 </view>
 
 <view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
-  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress bindtap="previewImage"></image>
+  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>
   <view class="icon-close close" bind:tap="close"></view>
+  <view class="share-remark" bind:tap="saveImg">
+    <view class="share-remark-tip">保存分享给好友</view>
+    <view class="share-remark-save">保存海报</view>
+  </view>
 </view>
