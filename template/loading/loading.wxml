@@ -1,9 +1,12 @@
 <template name="loading">
-  <view class="loading-wp" wx:if="{{showLoading}}">
-    <view class="loading ouro3">
-      <view class="left"><view class="anim"></view></view>
-      <view class="right"><view class="anim"></view></view>
-    </view>
-  </view>
-  
+
+      <view class="spinner"  wx:if="{{showLoading}}">
+    <view class="rect1"></view>
+    <view class="rect2"></view>
+    <view class="rect3"></view>
+    <view class="rect4"></view>
+    <view class="rect5"></view>
+</view>
+
+
 </template>
