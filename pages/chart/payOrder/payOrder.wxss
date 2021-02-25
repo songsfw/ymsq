@@ -95,7 +95,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .send-type view{margin: 0 auto; height: 36px; background:linear-gradient(to bottom,#C1996B,#fff);align-items: center;overflow: hidden;}
 .send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
 .send-type text.on{background: #fff;color: #C1996B;}
-.delivery text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px 1px;font-size: 12px;}
+.delivery text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px;font-size: 12px;}
 .delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
 .delivery-tip text{vertical-align: sub;font-size: 30rpx;}
 
