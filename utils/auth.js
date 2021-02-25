@@ -27,7 +27,7 @@ async function getLoginInfo(){
   let data = {
     code: res
   };
-  return api.getLoginInfo(data);
+  return api.getLoginInfo(data)
 }
 
 //小程序登录  

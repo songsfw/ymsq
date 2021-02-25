@@ -1,3 +1,5 @@
+<import src="../../template/loading/loading.wxml"/>
+<template is="loading" data="{{showLoading}}"></template>
 <view class="hongbao-stat">
   <block wx:if="{{step==1}}">
     <image class="bg" src="../../image/stat3.jpg"></image>
@@ -27,7 +29,7 @@
     <view class="bd step3"></view>
   </block>
 </view>
-<view class="block user-list">
+<view class="block user-list" wx:if="{{users.length>0}}">
   <view class="hd"><image src="../../image/tit1.png" /><text >看看大家手气</text></view>
   <view class="list">
     <view class="item flex" wx:for="{{users}}">
@@ -40,7 +42,7 @@
         <view class="notice">{{item.remark}}</view>
       </view>
       <view class="price">
-        <view class="top">{{item.amount}}元<text>最佳手气</text></view>
+        <view class="top">{{item.amount}}元<text wx:if="{{item.best}}">最佳手气</text></view>
       </view>
     </view>
   </view>

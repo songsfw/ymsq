@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "../../template/loading/loading.wxss";
 view{font-size:12px}
 page{background: #F4F6F8;height: auto;}
 

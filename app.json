@@ -30,6 +30,7 @@
     "pages/chart/paySuccess/paySuccess",
     "pages/web/web",
     "pages/commit/commit",
+    "pages/hasCommit/hasCommit",
     "pages/share/share"
   ],
   

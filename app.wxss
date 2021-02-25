@@ -134,6 +134,7 @@ image{max-width: 100%}
 .nodata .btn{margin: 0 auto; width: 320rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #fff;background: #C1996B;font-size: 15px;}
 .pop-panel.upPanel{transform: translateY(0);}
 
+
 .upmotion{animation: uplist .3s;}
 @keyframes uplist{
 0% {

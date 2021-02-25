@@ -1,4 +1,5 @@
 /* pages/customer/paySuccess/paySuccess.wxss */
+@import "../../template/loading/loading.wxss";
 page{
   background: #C41025;height: auto;}
 .hongbao-stat{position: relative; width: 750rpx;height: 1050rpx;}

@@ -37,7 +37,7 @@
   <navigator class="cart" open-type="switchTab" url="/pages/chart/chart">
     <block wx:if="{{totalNum>0}}">
       <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
-      <view class="num99" wx:else>99+</view>
+      <view class="num num99" wx:else>99+</view>
     </block>
     
     <view class="iconfont icon-chart"></view>

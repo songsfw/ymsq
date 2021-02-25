@@ -163,9 +163,9 @@
           "scene": null
         },
         {
-          "name": "评论",
-          "pathName": "pages/commit/commit",
-          "query": "orderCode=1000201130001930",
+          "name": "pages/hasCommit/hasCommit",
+          "pathName": "pages/hasCommit/hasCommit",
+          "query": "orderCode=1000201130001926",
           "scene": null
         },
         {
@@ -184,6 +184,12 @@
           "name": "配送",
           "pathName": "pages/user/delivery/delivery",
           "query": "orderCode=1000210205002435",
+          "scene": null
+        },
+        {
+          "name": "分享",
+          "pathName": "pages/share/share",
+          "query": "orderCode=1000201130001906",
           "scene": null
         }
       ]

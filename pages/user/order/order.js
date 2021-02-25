@@ -7,7 +7,7 @@ Page({
    */
   data: {
     currentTab:0,
-    orderList:null,
+    orderList:[],
     page:1,
     limit:20,
     noMoreData:false,
@@ -51,11 +51,12 @@ Page({
     if (this.data.currentTab == currentId) {
       return false;
     } else {
+      console.log(this.data.count);
       that.setData({
         noMoreData: false,
-        orderList: null,
+        orderList: [],
         currentTab: currentId,
-        page: 1,
+        page: 1
       })
       this.getOrder()
     }
@@ -98,6 +99,12 @@ Page({
       })
     }
   },500),
+  showDelivery(e){
+    let orderCode = e.currentTarget.dataset.code
+    wx.navigateTo({
+      url:'/pages/user/delivery/delivery?orderCode='+orderCode
+    })
+  },
   cancelOrder(){
     let code = this.data.curOrderCode
     let {reason,curRes,reasonTxt} = this.data
@@ -180,6 +187,9 @@ Page({
     })
   },
   getOrder(){
+    this.setData({
+      showLoading:true
+    })
     let {page,currentTab}=this.data
     let data = {
       page:page,
@@ -188,15 +198,21 @@ Page({
     }
     api.orderList(data).then(res=>{
       console.log(res);
+      if(!res){
+        return
+      }
       if(!res.order){
         this.setData({
           noMoreData: true
         })
         return false
       }
-      let list = res.order,count=parseInt(res.total_num)
+      let totalNum = res.total_num[0]
+      let list = res.order,count=parseInt(res.total_num[currentTab])
       let noMoreData = count-page*20 <= 0
       this.setData({
+        totalNum:totalNum,
+        showLoading:false,
         noMoreData: noMoreData,
         count:count,
         ['orderList['+(data.page-1)+']']:list,

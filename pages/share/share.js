@@ -39,7 +39,13 @@ Page({
     let data ={
       order_code:this.data.orderCode
     }
+    this.setData({
+      showLoading:true
+    })
     api.getHongbao(data).then(res=>{
+      this.setData({
+        showLoading:false
+      })
       console.log(res);
       if(!res){
         wx.showToast({
@@ -47,9 +53,12 @@ Page({
           title:"领取失败"
         })
       }
-      console.log(res);
       if(res.type=='reward'){
         step=2
+        this.setData({
+          self_reward:res.price,
+          users:res.userRewardDataReader
+        })
       }else if(res.type == 'show'){
         step=2
         wx.showToast({
@@ -73,7 +82,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({title:"加载中"})
+    this.setData({
+      showLoading:true
+    })
     let step=0
     let pages = getCurrentPages();
     let currentPage = pages[pages.length-1];
@@ -83,6 +94,8 @@ Page({
     }
     api.hongbao(data).then(res=>{
       console.log(res);
+      let best_reward = res.best_reward,
+          users = res.userRewardDataReader
       if(res.is_received){
         step=1
       }else{
@@ -91,9 +104,19 @@ Page({
       if(res.is_reward){
         step=2
       }
-      wx.hideLoading()
       this.setData({
-        users:res.userRewardDataReader,
+        showLoading:false
+      })
+      if(best_reward!=0){
+        users.find(item=>{
+          if(item.id==best_reward){
+            item.best=true
+          }
+        })
+      }
+      console.log(users);
+      this.setData({
+        users:users,
         step:step,
         self_reward:res.self_reward,
         rule:res.rule,

@@ -29,13 +29,13 @@ image{width: 100%;height: 100%}
   border-radius: 16rpx;
   justify-content: flex-start;}
 .menu>view{position: relative;font-size:12px;width: 25%;}
-.menu>view .tag{position: absolute;right:-12px;top: -6px; color: #fff;width: 18px;height: 18px;border-radius: 50%;line-height: 18px;text-align: center; background-color: #f5222d;}
+.menu>view .tag{position: absolute;right:-12px;top: -6px; color: #fff;width: 18px;height: 18px;border-radius:9px;line-height: 18px;text-align: center; background-color: #f5222d;}
 .menu .iconAll {position: relative;}
 .user-pay1{background-position:0 -23px;}
 .user-pack{background-position:0 -50px;}
 .user-send{background-position:0 -75px;}
 .user-order{background-position:0 0;}
-
+.num99{width: 30px !important;}
 
 .option{padding: 32rpx 20rpx 0 20rpx;background-color: #fff;border-radius: 16rpx;margin: 24rpx;}
 .option .tit{font-size: 15px;border-bottom: 1px solid #e9e9e9;padding-bottom: 18rpx;}

@@ -152,7 +152,6 @@ Page({
   getSelectedPro(){
     let {type,cakeLi,breadLi}=this.data
     let selectedBread=null,selectedCake=null,totalPrice=0
-    let fittings = type==1 ? false : true
     function getSelected(type) {
       return pro => pro.is_selected == type;
     }
@@ -164,6 +163,9 @@ Page({
             let curPrice = util.floatObj().multiply(cur.sku_number,cur.sku_price,2)
             return util.floatObj().add(pre,curPrice,2)
           },0)
+          this.setData({
+            fittings:false
+          })
         }
         break;
       case "2":
@@ -173,6 +175,13 @@ Page({
             let curPrice = util.floatObj().multiply(cur.sku_number,cur.sku_price,2)
             return util.floatObj().add(pre,curPrice,2)
           },0)
+          this.setData({
+            fittings:true
+          })
+        }else{
+          this.setData({
+            fittings:false
+          })
         }
         break;
       default:
@@ -183,7 +192,6 @@ Page({
     console.log(totalPrice)
     
     this.setData({
-      fittings:fittings,
       totalPrice:totalPrice
     })
   },
@@ -471,7 +479,8 @@ Page({
       if(noallBread){
         this.setData({
           noallBread:false,
-          noallCake:true
+          noallCake:true,
+          fittings:false
         })
         data.action="1"
       }else{
@@ -485,12 +494,14 @@ Page({
       if(noallCake){
         this.setData({
           noallBread:true,
-          noallCake:false
+          noallCake:false,
+          fittings:true
         })
         data.action="1"
       }else{
         this.setData({
-          noallCake:true
+          noallCake:true,
+          fittings:false
         })
         data.action="0"
       }

@@ -1,4 +1,6 @@
 <!-- index.wxml -->
+<import src="../../template/loading/loading.wxml"/>
+<template is="loading" data="{{showLoading}}"></template>
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <view class="menu">
   <view class="main flex">
@@ -28,7 +30,7 @@
 </view>
 <!--面包-->
 <view class="pro-box" wx:if="{{currentTab=='1'}}">
-  <block wx:if="{{breadInfo.count==0}}">
+  <block wx:if="{{!breadList}}">
     <view class="nodata">
       <image src="../../image/no-data.png"></image>
       <view class="txt">暂无内容</view>
@@ -68,12 +70,16 @@
       </block>
     </view>
     <view wx:if="{{breadInfo.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
+    <!-- <view wx:else class="more-btn">
+      <view class="nodata">
+        <view class="txt">加载中</view>
+      </view>
+    </view> -->
   </block>
 </view>
 <!--蛋糕-->
 <view class="pro-box" wx:if="{{currentTab=='2'}}">
-  <block wx:if="{{cakeInfo.count==0}}">
+  <block wx:if="{{!cakeList}}">
     <view class="nodata">
       <image src="../../image/no-data.png"></image>
       <view class="txt">暂无内容</view>
@@ -101,16 +107,17 @@
       </block>
     </view>
     <view wx:if="{{cakeInfo.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
+    <!-- <view wx:else class="more-btn">
+      <view class="nodata">
+        <view class="txt">加载中</view>
+      </view>
+    </view> -->
   </block>
   
 </view>
-<view wx:if="{{!currentTab}}">
-  <view class="nodata">
-    <image src="../../image/no-data.png"></image>
-    <view class="txt">加载中</view>
-  </view>
-</view>
+<!-- <view wx:if="{{!currentTab}}">
+  <view class="loading"></view>
+</view> -->
 <!-- <view class="logo">
   <image src="../../image/logo.png"></image>
 </view> -->
@@ -119,3 +126,4 @@
 <view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
   <image src="{{curPro}}"></image>
 </view>
+

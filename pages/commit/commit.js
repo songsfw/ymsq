@@ -119,19 +119,12 @@ Page({
     api.setComment(data).then(res=>{
       console.log(res);
       if(res){
-        if(old_status=='COMPLETE'&&delivery_status=='3'){
+        
           this.setData({
             price:res.price,
             pop: 'hongbao'
           })
-        }else{
-          wx.showToast({
-            icon:"none",
-            title:"评价成功"
-          })
-        }
-        
-        
+
       }
     })
   },
@@ -142,7 +135,7 @@ Page({
     let orderCode = options.orderCode
 
     let btmHolder = wx.getStorageSync('btmHolder')
-    
+    btmHolder = btmHolder>0?btmHolder:12
     let data = {
       order_code:orderCode
     }
@@ -186,7 +179,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    if(this.data.isShare){
+      setTimeout(() => {
+        wx.navigateBack({
+          delta: 1
+        })
+      }, 500);
+    }
   },
 
   /**
@@ -222,18 +221,22 @@ Page({
    */
   onShareAppMessage: function (res) {
     if(res.from==='button'){
-
+      this.setData({
+        isShare:true
+      })
       return {
         title:'恭喜您获得红包',
-        path:"/pages/share/share?orderCode="+this.data.orderCode
+        path:"/pages/share/share?orderCode="+this.data.orderCode,
+        complate:function(){
+          console.log("111");
+        }
       }
     }
     if(res.from==='menu'){
-      wx.showToast({
-        icon:"none",
-        title:"点击按钮分享"
-      })
-      return
+      return {
+        title:'原麦山丘',
+        path:"/pages/index/index"
+      }
     }
     
   }

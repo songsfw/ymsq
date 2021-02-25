@@ -4,18 +4,16 @@ const api = require('../../utils/api.js')
 
 const app = getApp()
 
-let timer=null,proNum=0,breadList=null,cakeList=null,tagObj={}
+let timer=null,proNum=0,breadList=null,cakeList=null
 Page({
   data: {
     curProId:-1,
     currentTab:'',
     currentTag:'',
-    breadList:null,
-    cakeList:null,
+    breadList:[],
+    cakeList:[],
 
     proNum:0,
-    pageNum:1,
-    noMoreData:false,
 
     breadInfo:{count:0,pageNum:1,noMoreData:false},
     cakeInfo:{count:0,pageNum:1,noMoreData:false},
@@ -32,7 +30,9 @@ Page({
     hideCount: true, //角标初始是隐藏的
     count: 0, //角标数
     hide_good_box: true,
-    curPro: ""
+    curPro: "",
+
+    showLoading:true
   },
   switchTab: function (e) {
     var that = this;
@@ -41,12 +41,19 @@ Page({
     if (this.data.currentTab == currentId) {
       return false;
     } else {
-      if(!breadList){
-        this.getProList(currentId)
+      if(!breadList || breadList.length==0){
+        this.setData({
+          showLoading:true
+        })
+        this.getProList()
       }
-      if(!cakeList){
-        this.getProList(currentId)
+      if(!cakeList || cakeList.length==0){
+        this.setData({
+          showLoading:true
+        })
+        this.getProList()
       }
+      
       that.setData({
         currentTab: currentId
       })
@@ -60,17 +67,20 @@ Page({
     if(currentTab==1){
       console.log(currentTag);
       this.setData({
+        breadInfo:{count:0,pageNum:1,noMoreData:false},
         breadTag:currentTag,
-        breadList:[]
+        breadList:[],
+        showLoading:true
       })
     }else{
       this.setData({
+        cakeInfo:{count:0,pageNum:1,noMoreData:false},
         cakeTag:currentTag,
-        cakeList:[]
+        cakeList:[],
+        showLoading:true
       })
     }
-
-    this.getProList(currentTab)
+    this.getProList()
     
   },
   getStock(){
@@ -94,8 +104,7 @@ Page({
     return list.slice(pageNum*10-10,pageNum*10)
   },
   freshData: function () {
-    let currentTab = this.data.currentTab
-    this.getProList(currentTab)
+    this.getProList()
   },
   addChart:function(e){
     let proId = e.currentTarget.dataset.id,
@@ -270,22 +279,17 @@ Page({
     })
     util.setTabBarBadge(total_num)
   },
-  getProList: function (currentTab) {
+  getProList: function (cityid) {
+
     let {city_id,breadTag,cakeTag}=this.data
-    let count,noMoreData
+    let count,noMoreData,currentTab=app.globalData.proType
+    city_id = cityid?cityid:city_id
     let data = {
-      city_id: city_id,
+      city_id: city_id
     }
     if(!currentTab){
       data.tag=0
       data.type=""
-      this.setData({
-        breadTag:"",
-        breadList:[],
-        cakeList:[],
-        cakeTag:"",
-        noMoreData:false
-      })
     }
     if(currentTab=='1'){
       data.tag = breadTag
@@ -298,41 +302,58 @@ Page({
     console.log(city_id);
     
     api.getProList(data).then(res => {
+      this.setData({
+        showLoading:false
+      })
       console.log(res);
       if(!res){
         return false
       }
       let menu = res.type,
       choose_type = res.choose_type
-
+      if(!currentTab){
+        app.globalData.proType = choose_type
+      }
+      
       this.setData({
         menu:menu,
-        currentTab:choose_type,
-        city_id:res.city_id
+        currentTab:app.globalData.proType
       })
-
-      console.log(currentTab);
-      if(choose_type=='1'){
+     
+      if(app.globalData.proType=='1'){
         breadList = res.list
         let stock=res.stock
         count = breadList.length
         noMoreData = count-1*10 <= 0
-        this.setData({
-          breadTags:res.tags,
-          stock:stock,
-          breadInfo:{count:count,pageNum:1,noMoreData:noMoreData},
-          'breadList[0]':this.getCurrList(breadList,1),
-        })
+        if(count==0){
+          this.setData({
+            breadList:null
+          })
+        }else{
+          this.setData({
+            breadTags:res.tags,
+            stock:stock,
+            breadInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+            'breadList[0]':this.getCurrList(breadList,1),
+          })
+        }
+        
       }
-      if(choose_type=='2'){
+      if(app.globalData.proType=='2'){
         cakeList = res.list
         count = cakeList.length
         noMoreData = count-1*10 <= 0
-        this.setData({
-          cakeTags:res.tags,
-          cakeInfo:{count:count,pageNum:1,noMoreData:noMoreData},
-          'cakeList[0]':this.getCurrList(cakeList,1),
-        })
+        if(count==0){
+          this.setData({
+            cakeList:null
+          })
+        }else{
+          this.setData({
+            cakeTags:res.tags,
+            cakeInfo:{count:count,pageNum:1,noMoreData:noMoreData},
+            'cakeList[0]':this.getCurrList(cakeList,1),
+          })
+        }
       }
       wx.stopPullDownRefresh() //停止下拉刷新
     })
@@ -342,7 +363,7 @@ Page({
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo&&JSON.parse(addressInfo).city_id
-    let proType = app.globalData.proType || ''
+    let proType = app.globalData.proType
 
     this.setData({
       currentTab:proType,
@@ -386,23 +407,33 @@ Page({
     })
     //this.getProList();
 
-    //util.setWatcher(this);
+    util.setWatcher(this);
   },
   watch:{
-    // 'currentTab':function (value, oldValue){
-    //   console.log("watch");
-    //   console.log(value);
-    //   if(value==oldValue){
-    //     return
-    //   }
-    //   this.setData({
-    //     currentTag:'',
-    //     noMoreData: false,
-    //     proList: null,
-    //     pageNum: 1,
-    //   })
-    //   this.getProList(value);
-    // }
+    'city_id':function (value, oldValue){
+      console.log("watch");
+      
+      if(value==oldValue || this.data.currentTab==''){
+        return
+      }
+      breadList=null
+      cakeList=null
+      app.globalData.proType = ''
+      this.setData({
+        breadList:null,
+        cakeList:null,
+        currentTab:'',
+        currentTag:'',
+
+        breadInfo:{count:0,pageNum:1,noMoreData:false},
+        cakeInfo:{count:0,pageNum:1,noMoreData:false},
+
+        breadTag:'',
+        cakeTag:'',
+      })
+      this.getProList(value);
+      console.log(value);
+    }
   }
 
 })

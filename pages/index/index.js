@@ -211,7 +211,7 @@ Page({
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    console.log(sysInfo)
+    console.log(fixedTop)
 
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")

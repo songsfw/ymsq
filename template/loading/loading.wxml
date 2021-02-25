@@ -1,0 +1,9 @@
+<template name="loading">
+  <view class="loading-wp" wx:if="{{showLoading}}">
+    <view class="loading ouro3">
+      <view class="left"><view class="anim"></view></view>
+      <view class="right"><view class="anim"></view></view>
+    </view>
+  </view>
+  
+</template>

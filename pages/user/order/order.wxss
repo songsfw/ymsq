@@ -1,3 +1,5 @@
+@import "../../../template/loading/loading.wxss";
+
 page{background: #F6F6F6;padding-top: 48px;}
 .item .hd{justify-content: space-between;font-size: 13px;margin-bottom: 12px;padding: 0 20rpx;}
 .item .hd .order-code{font-size: 15px;line-height: 21px;}

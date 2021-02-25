@@ -514,10 +514,10 @@ Page({
     }
 
     //无运费减去运费
-    if (!hasDelivery) { //免邮-需要减去邮费
+    if (!hasDelivery) { //免邮-减去邮费
       //1 单品免邮，可与优惠券同用  2 满减免邮  0 
       delivery = parseInt(cart_data.default_delivery)
-    } else { //要邮费-不用减邮费
+    } else { //不减邮费
       delivery = 0
     }
 
