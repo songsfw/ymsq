@@ -75,10 +75,12 @@ const request = (method,url,data,needToken=true)=>{
           content: '网络出错，请刷新重试',
           showCancel: false
         })
-        reject(res)
         //hideLoading()
       }
     })
+  }).catch(err=>{
+    reject(err)
+    console.log(err);
   })
 }
 

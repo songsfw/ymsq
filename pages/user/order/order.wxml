@@ -1,4 +1,6 @@
-<!-- pages/user/user.wxml -->
+<!-- pages/user/order.wxml -->
+<import src="../../../template/loading/loading.wxml"/>
+<template is="loading" data="{{showLoading}}"></template>
 <view class="menu flex">
   <view bind:tap="switchTab" class="{{currentTab==0 ? 'on' : ''}}" data-tabid="0">
     <view>全部</view>
@@ -21,7 +23,7 @@
     <text></text>
   </view>
 </view>
-<view class="card" wx:if="{{count!=0}}">
+<view class="card" wx:if="{{count&&count>0}}">
   <block wx:for="{{orderList}}">
     <view class="item" wx:for="{{item}}" wx:for-item="order">
       <navigator hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{order.order_code}}&stat={{order.status}}">
@@ -62,14 +64,15 @@
           <view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-code="{{order.order_code}}">取消订单</view>
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
-        <!-- <block wx:if="{{order.status==2}}">
-          <view class="btn btn1 delivery-btn" data-code="{{order.order_code}}">查看物流</view>
-          <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
-        </block> -->
+        <block wx:if="{{order.status==2}}">
+          <view class="btn btn1 delivery-btn" bind:tap="showDelivery" data-code="{{order.order_code}}">查看物流</view>
+          <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator> -->
+        </block>
         <block wx:if="{{order.status==3}}">
           <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn btn1 delivery-btn">去逛逛</navigator> -->
           <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
-          <navigator url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">去评价</navigator>
+          <navigator wx:if="{{order.comment_status==1}}" url="/pages/hasCommit/hasCommit?orderCode={{order.order_code}}" class="btn pay-btn">查看评价</navigator>
+          <navigator wx:else url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">去评价</navigator>
         </block>
         <!-- <block wx:if="{{order.status==4}}">
           <navigator url="/pages/index/index" open-type="switchTab" class="btn pay-btn">去逛逛</navigator>
@@ -77,18 +80,18 @@
       </view>
     </view>
   </block>
-  
   <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
 </view>
-<block wx:else>
+<block wx:if="{{count==0&&!showLoading}}">
   <view class="nodata">
     <view><image src="../../../image/no-order.png"></image></view>
-    
-    <block wx:if="{{currentTab==0}}">
+    <block wx:if="{{totalNum==0}}">
       <view class="txt">现在还没有订单，快去下单吧～</view>
       <navigator url="/pages/index/index" open-type="switchTab" class="btn">去点单</navigator>
     </block>
-    <view class="txt" wx:else>暂时没有相关订单～</view>
+    <block wx:else>
+      <view class="txt">暂时没有相关订单～</view>
+    </block>
   </view>
 </block>
 

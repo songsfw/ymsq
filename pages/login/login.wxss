@@ -13,7 +13,7 @@ page{background-color: #fff;height: 100%;}
 .authorizeBtn{ width: 260rpx;height: 80rpx;line-height: 80rpx; background: #C1996B;color: #fff;text-align: center;margin: 0 auto;border-radius: 40rpx;font-size: 16px;}
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
-.pop-panel{ position: fixed;width: 100%;background: #fff;z-index: 22;border-radius:16rpx ;width: 646rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);padding: 40rpx;box-sizing: border-box;}
+.pop-panel{ position: fixed;width: 100%;background: #fff;z-index: 22;border-radius:16rpx ;width: 646rpx;left: 50%;top: 30%;transform: translate(-50%,-50%);padding: 40rpx;box-sizing: border-box;}
 
 .pop-panel .tit{text-align: center;}
 .pop-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}

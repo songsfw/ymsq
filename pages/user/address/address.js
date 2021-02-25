@@ -1,4 +1,5 @@
 const api = require('../../../utils/api.js')
+const app =getApp()
 Page({
 
   /**
@@ -192,7 +193,7 @@ Page({
     let {source,address:addressLi,cartType} = this.data
     
     if(source!=0){
-      let  data = {
+      let data = {
         address_id:id,
         cart_type:cartType
       }
@@ -238,6 +239,8 @@ Page({
           is_ziti:res.is_ziti
         }
         wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+        //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+        app.globalData.proType=''
         wx.navigateBack({
           delta: 1
         })

@@ -26,6 +26,20 @@ const returnData = res=>{
         })
         isLogin=1
       }
+    }else if(data.status==1022){
+
+        wx.showModal({
+          title: '',
+          showCancel:false,
+          content: '未绑定手机号',
+          confirmText: "重新登录",
+          success(res) {
+            wx.navigateTo({
+              url: '/pages/login/login'
+            })
+          }
+        })
+
     }else{
       //特殊状态统一处理
       if(data.message){
@@ -46,12 +60,15 @@ const returnData = res=>{
 
 //微信登录
 const getLoginInfo = (data) => {
+  console.log("111111");
   return POST(baseUrl+"/user/xcx-check-login", data,false)
 }
 
 //用户登录
 const appLogin = (data) => {
-  return POST(baseUrl+"/user/xcx-add-user", data)
+  return POST(baseUrl+"/user/xcx-add-user", data).catch(e=>{
+    console.log(e);
+  })
 }
 
 //首页信息

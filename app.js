@@ -4,13 +4,13 @@ const api = require('utils/api.js')
 const util = require('utils/util.js')
 App({
   onLaunch: function (options) {
-    wx.showLoading({
-      title: '加载中...',
-      mask: true,
-      success (res) {
-        console.log('显示loading')
-      }
-    })
+    // wx.showLoading({
+    //   title: '加载中...',
+    //   mask: true,
+    //   success (res) {
+    //     console.log('显示loading')
+    //   }
+    // })
     this.init()
   },
   async init(){
@@ -19,7 +19,7 @@ App({
     if(userInfo && JSON.parse(userInfo).is_authed==1){
       is_authed = JSON.parse(userInfo).is_authed
     }else{
-      let loginInfo = await auth.getLoginInfo()
+      let loginInfo = await auth.getLoginInfo().catch(e=>{console.log("err");})
       console.log(loginInfo)
       if(loginInfo.statusCode==200){
         is_authed = loginInfo.data.result.is_authed
@@ -138,7 +138,7 @@ App({
   
   globalData: {
     is_mobile:1,
-    proType:null,
+    proType:'',
     isShare: false,
     userInfo: null,
     cityId:null,
