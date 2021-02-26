@@ -35,6 +35,7 @@ Page({
   addAddress(){
     console.log(this.data.address)
     let {id,address, address_detail, mobile, name,is_default,location,district,province,title,is_ziti,city_id} = this.data.address
+    console.log(this.data)
     let newAdd = {address:address}
     
     if(!name){
@@ -78,12 +79,18 @@ Page({
     }
     
     location = JSON.parse(location)
+    if(this.data.type=="1"){
+      let city_area = this.data.address.city_name.split(',')
+      newAdd['province']=city_area[0];
+      newAdd['district']=city_area[1];
+    }else{
+      newAdd['province']=this.data.address.province;
+      newAdd['district']=this.data.address.district;
+    }
+   
     newAdd.location = location
     newAdd.title=title
-    newAdd.province=province
-    newAdd.district=district
     newAdd = JSON.stringify(newAdd)
-    console.log(newAdd)
 
     let data = {
       name:name,
@@ -92,7 +99,7 @@ Page({
       is_default:is_default,
       // city_name:city_name,
       mobile:mobile,
-      title:title
+      title:title,
     }
 
     //修改
@@ -183,6 +190,7 @@ Page({
   onShow: function () {
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
+    console.log(currPage)
     let options = currPage.options
     options = Object.assign(options,currPage.__data__.options || {}) 
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,province = options.province,district=options.district,title=options.title
@@ -200,7 +208,11 @@ Page({
 
 
     let oldAddress = this.data.address
+    console.log(oldAddress);
+
     let address = wx.getStorageSync('address') || '{}'
+    console.log(address);
+
     address = JSON.parse(address)
     if(newAddress){
       address.address = newAddress
