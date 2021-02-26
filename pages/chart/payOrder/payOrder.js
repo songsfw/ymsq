@@ -256,6 +256,14 @@ Page({
       }
     }
 
+    if(selectTime === null && selectDate === null){
+      wx.showToast({
+        icon: "none",
+        title: "请选择可配送时间"
+      })
+      return
+    }
+
     let selectDateTxt = util.formatDate(delivery.delivery_times[selectDate].date)
     let selectTimeTxt = delivery.delivery_times[selectDate].time_range[selectTime].range
     let stock_type = delivery.delivery_times[selectDate].time_range[selectTime].stock_type
