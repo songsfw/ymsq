@@ -1,5 +1,10 @@
 {
   "navigationBarTitleText": "授权登录",
   "enablePullDownRefresh": false,
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "phonePanel": "/components/phonePanel/phonePanel"
+  }
 } 

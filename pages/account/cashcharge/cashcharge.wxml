@@ -36,3 +36,4 @@
   <view class="btn" bindtap="chashCharge">充值</view>
 </view>
 <view style="height:{{60+btmHolder}}px"></view>
+<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

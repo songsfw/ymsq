@@ -286,7 +286,7 @@ function getLocation() {
   return new Promise((resolve, reject) => {
 
     wx.getLocation({
-      type: 'gcj02 ',
+      type: 'gcj02',
       success(res) {
         const latitude = res.latitude
         const longitude = res.longitude

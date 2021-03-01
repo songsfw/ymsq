@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
-<navBar hasAddress cityName="{{addressInfo}}"></navBar>
+<navBar hasAddress cityName="{{addressInfo}}" wx:if="{{showNav}}"></navBar>
 <!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
 </view> -->

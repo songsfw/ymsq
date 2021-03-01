@@ -11,28 +11,53 @@ App({
     //     console.log('显示loading')
     //   }
     // })
+    
     this.init()
   },
   async init(){
-    var is_authed,local=null
-    let userInfo = wx.getStorageSync("userInfo")
+    console.log("---app onload--");
+    var is_authed,local=null,is_mobile=null
+    let userInfo = wx.getStorageSync(userInfo)
     if(userInfo && JSON.parse(userInfo).is_authed==1){
       is_authed = JSON.parse(userInfo).is_authed
     }else{
-      let loginInfo = await auth.getLoginInfo().catch(e=>{console.log("err");})
+      let loginInfo = await auth.getLoginInfo()
       console.log(loginInfo)
       if(loginInfo.statusCode==200){
-        is_authed = loginInfo.data.result.is_authed
-        this.globalData.is_mobile = loginInfo.data.result.is_mobile
-        let {openid,user_info,user_id,address_info} = loginInfo.data.result
-        userInfo = {
+        let result = loginInfo.data.result
+        is_authed = result.is_authed
+        is_mobile = result.is_mobile
+
+        let {openid,user_info,user_id,address_info} = result
+        let userInfo = {
           user_id:user_id,
           is_authed:is_authed,
+          is_mobile:is_mobile,
           openid:openid,
           nickname:user_info.nickname,
           photo:user_info.head_url,
           phone:user_info.mobile
         }
+        wx.setStorageSync("userInfo", JSON.stringify(userInfo))
+
+        wx.getSetting({
+          success: res => {
+            if (!res.authSetting['scope.userInfo'] || is_authed !=1) {
+              // 未授权跳授权页
+              wx.navigateTo({
+                url: '/pages/login/login'
+              })
+            }
+          },
+          fail:res=>{
+            wx.showModal({
+              title: '网络出错',
+              content: '网络出错，请刷新重试',
+              showCancel: false
+            })
+          }
+        })
+
         console.log(address_info)
         if(!address_info.city_id){
           try {
@@ -65,28 +90,12 @@ App({
             name:name,
             is_ziti:address_info.is_ziti
           }
+          console.log(addressInfo);
           wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         }
-        wx.setStorageSync("userInfo", JSON.stringify(userInfo))
+        
       }
-    }
-    wx.getSetting({
-      success: res => {
-        if (!res.authSetting['scope.userInfo'] || is_authed !=1) {
-          // 未授权跳授权页
-          wx.navigateTo({
-            url: '/pages/login/login'
-          })
-        }
-      },
-      fail:res=>{
-        wx.showModal({
-          title: '网络出错',
-          content: '网络出错，请刷新重试',
-          showCancel: false
-        })
-      }
-    })
+    }  
     await this.getBtmHolder()
     wx.hideLoading()
   },
@@ -137,7 +146,7 @@ App({
   },
   
   globalData: {
-    is_mobile:1,
+    bindPhoneStat:"1022",
     proType:'',
     isShare: false,
     userInfo: null,

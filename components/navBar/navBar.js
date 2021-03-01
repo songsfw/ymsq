@@ -8,6 +8,10 @@ Component({
       type: Boolean,
       value: false
     },
+    hasHome: { // 属性名
+      type: Boolean,
+      value: false
+    },
     hasReturn: { // 属性名
       type: Boolean,
       value: false
@@ -29,7 +33,10 @@ Component({
       value:"#222"
     },
     navType:String,
-    cityName:Object,
+    cityName:{
+      type:Object,
+      value:{}
+    },
     title:String
   },
 

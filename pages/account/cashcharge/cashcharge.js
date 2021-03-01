@@ -49,6 +49,9 @@ Page({
       result: e.detail.value
     })
   },300),
+  bindPhoneSucess(){
+    this.chashCharge()
+  },
   chashCharge(){
     let {result,pwd,use,type}=this.data
     if(result==""){
@@ -78,36 +81,40 @@ Page({
       console.log(data)
       api.useCard(data).then(res=>{
         console.log(res)
-        if(res){
-          
-          let usePrice = res.use_card
-          
-          if(type==1){
-            app.globalData.cardNo = result
-            app.globalData.cardPwd = pwd
-          }else{
-            app.globalData.thirdCardNo = result
-            app.globalData.thirdCardPwd = pwd
-          }
-          // wx.showToast({
-          //   title: `成功抵扣${usePrice}元`,
-          //   icon: 'none',
-          //   duration: 2000
-          // })
-          this.setData({
-            showPriceInfo:true,
-            pay_price:res.pay_price,
-            card_balance:res.card_balance,
-            usePrice:usePrice
-          })
-          // setTimeout(() => {
-          //   wx.navigateBack({
-          //     delta: 1
-          //   })
-          // }, 1000);
-
+        if(!res){
+          return
         }
-        
+        if(res==app.globalData.bindPhoneStat){
+          this.setData({
+            popShow:true
+          })
+          return
+        }
+
+        let usePrice = res.use_card
+        if(type==1){
+          app.globalData.cardNo = result
+          app.globalData.cardPwd = pwd
+        }else{
+          app.globalData.thirdCardNo = result
+          app.globalData.thirdCardPwd = pwd
+        }
+        // wx.showToast({
+        //   title: `成功抵扣${usePrice}元`,
+        //   icon: 'none',
+        //   duration: 2000
+        // })
+        this.setData({
+          showPriceInfo:true,
+          pay_price:res.pay_price,
+          card_balance:res.card_balance,
+          usePrice:usePrice
+        })
+        // setTimeout(() => {
+        //   wx.navigateBack({
+        //     delta: 1
+        //   })
+        // }, 1000);
       })
     }else{
       let data = {
@@ -117,16 +124,22 @@ Page({
   
       api.chashCharge(data).then(res=>{
         console.log(res)
-        if(res){
-          app.globalData.cardNo = result
-          app.globalData.cardPwd = pwd
-          wx.showToast({
-            title: '充值成功',
-            icon: 'none',
-            duration: 2000
-          })
+        if(!res){
+          return
         }
-        
+        if(res==app.globalData.bindPhoneStat){
+          this.setData({
+            popShow:true
+          })
+          return
+        }
+        app.globalData.cardNo = result
+        app.globalData.cardPwd = pwd
+        wx.showToast({
+          title: '充值成功',
+          icon: 'none',
+          duration: 2000
+        })
       })
     }
 
@@ -219,7 +232,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log('is_mobile',app.globalData.is_mobile);
   },
 
   /**
@@ -253,7 +266,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

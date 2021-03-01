@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "充值中心",
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "phonePanel": "/components/phonePanel/phonePanel"
+  }
 }

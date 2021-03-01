@@ -31,3 +31,5 @@
   <view class="btn" bindtap="charge">立即充值</view>
 </view>
 <view style="height:{{60+btmHolder}}px"></view>
+
+<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

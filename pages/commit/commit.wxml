@@ -60,3 +60,5 @@
   </view>
   <view class="icon-close close" bind:tap="close"></view>
 </view>
+
+<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

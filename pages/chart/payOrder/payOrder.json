@@ -2,6 +2,7 @@
   "navigationBarTitleText": "订单结算",
   "backgroundTextStyle": "dark",
   "usingComponents": {
-    "pop-panel": "/components/pop-panel/pop-panel"
+    "pop-panel": "/components/pop-panel/pop-panel",
+    "phonePanel": "/components/phonePanel/phonePanel"
   }
 }

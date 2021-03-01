@@ -1,14 +1,14 @@
 <!-- login.wxml -->
-<view class="auth-wp">
+<navBar hasHome title="授权登录"></navBar>
+<view class="auth-wp" style="padding-top:{{fixedTop}}px;">
   <view class='auth-content'>
     <view class='pic'>
-      <!-- <image src="{{userInfo.photo}}" wx:if="{{userInfo.photo}}"></image> -->
       <image src="/image/logo2.png" class="pic1"></image>
       <image src="/image/20210207.png" class="pic2"></image>
     </view>
     <view class="gallery">
         <block wx:for="{{pics}}" wx:for-index="index">
-          <image animation="{{num==index?showpic:hidepic}}" src="{{item}}" mode="aspectFill" class="slide-image" />
+          <image animation="{{num==index?showpic:hidepic}}" src="{{item}}" mode="aspectFit" class="slide-image" />
         </block>
     </view>
     <view class="txt">
@@ -21,20 +21,4 @@
     </view>
   </view>
 </view>
-
-<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
-
-<view class="pop-panel" wx:if="{{pop=='phone'}}">
-  <view class="icon-close close" bind:tap="close"></view>
-  <view class="inputxt flex">
-    <text style="width:50px">手机号</text>
-    <input class="flex-1" type="number" bindinput="inputMobi" placeholder="请输入手机号" />
-    <view class="get-code color-b" bind:tap="getCode" wx:if="{{!isSend}}"><text>{{tips}}</text></view>
-    <view class="get-code color-b" wx:else><text>{{second}}</text></view>
-  </view>
-  <view class="inputxt flex">
-    <text style="width:50px">验证码</text>
-    <input class="flex-1" type="number" maxlength='6' bindinput="inputCode" placeholder="请输入验证码" />
-  </view>
-  <view class="btn comfirm" bind:tap="bindPhone">确定</view>
-</view>
+<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

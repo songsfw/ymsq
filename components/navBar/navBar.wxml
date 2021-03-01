@@ -8,6 +8,9 @@
             <view class="citytxt">{{cityName.address}}</view>
           </view>
       </view>
+      <view class="homebtn" wx:if="{{hasHome}}" bindtap="toHome">
+        <view class="iconfont icon-home"></view>
+      </view>
       <view class="return" wx:if="{{hasReturn}}" bindtap="return">
         <view class="arrow-left"></view>
       </view>

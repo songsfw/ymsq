@@ -1,0 +1,16 @@
+<view class="mask" wx:if="{{popShow}}" bind:tap="touchMask"></view>
+
+<view class="pop-panel" wx:if="{{popShow}}">
+  <view class="icon-close close" bind:tap="close"></view>
+  <view class="inputxt flex">
+    <text style="width:50px">手机号</text>
+    <input class="flex-1" type="number" bindinput="inputMobi" placeholder="请输入手机号" />
+    <view class="get-code color-b" bind:tap="getCode" wx:if="{{!isSend}}"><text>{{tips}}</text></view>
+    <view class="get-code color-b" wx:else><text>{{second}}</text></view>
+  </view>
+  <view class="inputxt flex">
+    <text style="width:50px">验证码</text>
+    <input class="flex-1" type="number" maxlength='6' bindinput="inputCode" placeholder="请输入验证码" />
+  </view>
+  <view class="btn comfirm" bind:tap="bindPhone">确定</view>
+</view>

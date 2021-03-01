@@ -7,6 +7,7 @@ var timer = null
 
 Page({
   data: {
+    showNav:true,
     banner: [],
     autoplay: true,
     interval: 3000,
@@ -216,7 +217,7 @@ Page({
     let fixedTop = sysInfo.navBarHeight;
     console.log(fixedTop)
 
-    let userInfo = wx.getStorageSync("userInfo")
+    //let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")
     let btmHolder = wx.getStorageSync('btmHolder')
 
@@ -224,20 +225,21 @@ Page({
       addressInfo = JSON.parse(addressInfo)
     }
     
-    if(!userInfo){
-      // wx.showToast({
-      //   icon:"none",
-      //   title:"未登录"
-      // })
-      return
-    }else{
-      userInfo = JSON.parse(userInfo)
-    }
+    // if(!userInfo){
+    //   // wx.showToast({
+    //   //   icon:"none",
+    //   //   title:"未登录"
+    //   // })
+    //   return
+    // }else{
+    //   userInfo = JSON.parse(userInfo)
+    // }
     console.log(addressInfo)
     this.setData({
+      showNav:true,
       btmHolder:btmHolder||0,
       addressInfo:addressInfo,
-      userInfo:userInfo,
+      //userInfo:userInfo,
       fixedTop:fixedTop
     })
 
@@ -248,4 +250,9 @@ Page({
     console.log('111',wx.canIUse('scroll-view.refresher-enabled'))
 
   },
+  onHide:function(){
+    this.setData({
+      showNav:false
+    })
+  }
 })

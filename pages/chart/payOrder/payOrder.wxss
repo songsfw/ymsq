@@ -15,7 +15,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .option .price .num text{font-size:16px;}
 .buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;font-size: 13px;}
 
-.address{padding:30rpx 20rpx;background: #fff;margin-bottom: 20rpx;border-radius: 8rpx;}
+.address{padding:30rpx 20rpx;margin-bottom: 20rpx;border-radius: 8rpx;background:#fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x !important;background-size:29px 4px !important;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}
@@ -76,7 +76,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .pop-panel .close:after,
 .pop-panel .close::before{border-color: #999;}
 .pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
-.pop-con{height: 580rpx;}
+.pop-con{height: 580rpx;position: relative;}
 .time-box .date{width: 246rpx;height: 580rpx;background:#F6F6F6;color: #aaa;}
 .time-box .time{height: 580rpx;}
 .time-box .date view,
@@ -95,7 +95,8 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .send-type view{margin: 0 auto; height: 36px; background:linear-gradient(to bottom,#C1996B,#fff);align-items: center;overflow: hidden;}
 .send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
 .send-type text.on{background: #fff;color: #C1996B;}
-.delivery text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px;font-size: 12px;}
+.delivery text,
+.coupon text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px;font-size: 12px;}
 .delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
 .delivery-tip text{vertical-align: sub;font-size: 30rpx;}
 
@@ -120,11 +121,15 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-box .item .border:before{left: auto;right: -15rpx;}
 .coupon-box .card{padding-top:20rpx ;}
 .coupon-box .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
-.coupon-box .item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;overflow: hidden;}
+.coupon-box .item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;overflow: hidden;background: #F6F6F6;}
 .coupon-box .item .tag{position: absolute;right: 0;top: 0;background: rgba(100, 191, 0,.1);color:#64BF00;font-size: 11px;padding: 6px;line-height: 1;}
 .coupon-box .item .tag1{background: rgba(245, 34, 45, .1);color: #F5222D;}
 .coupon-box .item .name{font-size: 16px;}
+.item.act{background: #f11616;}
+.item .item-wrap{background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;}
 
+.discount_tips{width: 100%; background: #FEFBF3;font-size: 14px;color: #FF7D06;padding:10px 20rpx;box-sizing: border-box;}
+.discount_tips .iconfont{margin-right: 20rpx;}
 .coupon-num{position: relative; width: 92px;flex-shrink: 0;height: 77px;align-items: center;overflow: hidden;}
 .coupon-num .txt{position: absolute;left: 0;width: 100%;z-index: 2;text-align: center;color: #FFE8CB;}
 .coupon-num .txt .num{font-size:18px;}

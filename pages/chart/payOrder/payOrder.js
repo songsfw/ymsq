@@ -1,6 +1,3 @@
-const {
-  getUserLocation
-} = require('../../../utils/api.js')
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let delivery = 10,
@@ -31,7 +28,7 @@ Page({
     payQueue: [10, 0, 0, 0, 0],
     useCoupon: false,
     couponCheck: -1,
-    couponTempCheck: -1,
+    curId:-1,
     curtabid: 1,
     pop: 0,
 
@@ -58,68 +55,79 @@ Page({
     verifyed: false,
     zitiName: '',
 
-    isSet: null
-
-      ,
+    isSet: null,
     useShowStatus: {},
     unUsedShowStatus: {}
   },
-
   closeCoupon() {
-    this.setData({
-      // useCoupon: false,
-      couponTempCheck: -1,
-      pop: 0
-    })
+    let {couponCheck} = this.data
+    if(couponCheck!=-1){
+      this.setData({
+        useCoupon: true,
+        curId:couponCheck,
+        pop: 0
+      })
+    }else{
+      this.setData({
+        useCoupon: false,
+        curId:-1,
+        couponCheck:-1,
+        pop: 0
+      })
+    }
   },
   //优惠券抵扣
   confirmCoupon() {
-    let {
-      curId,
-      couponPrice
-    } = this.data
-    if (!curId) {
-      this.setData({
-        useCoupon: false,
-      })
+    let {curId,couponPrice,payQueue,defaultCoupon,cart_data} = this.data
+    let newPayQueue = payQueue.slice(0)
+    let useCoupon,couponCheck,useDiscount
+    if (curId==-1) {
+      coupon=0
+      useCoupon= false,
+      couponCheck=-1
+      useDiscount=false   //是否使用推荐优惠
     } else {
       console.log(curId);
-      console.log(couponPrice[curId].promotion_price)
-      this.setData({
-        useCoupon: true,
-        couponCheck: curId,
-        usedCouponPrice: couponPrice[curId].promotion_price
-      })
+      if(defaultCoupon==curId){
+        useDiscount=true
+      }else{
+        useDiscount=false
+      }
+      coupon = curId==1?cart_data.default_delivery:couponPrice[curId].promotion_price
+      useCoupon= true,
+      couponCheck=curId
     }
-    this.initOrderPrice()
+    newPayQueue[2] = coupon
+    this.setData({
+      useDiscount:useDiscount,
+      useCoupon: useCoupon,
+      couponCheck: couponCheck,
+      payQueue: newPayQueue
+    })
+    //this.initOrderPrice()
     this.close()
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let curId, couponTempCheck;
+    let {curId} = this.data
     console.log(id)
     let {
       couponList
     } = this.data
-
+    
     if (this.data.curtabid == 1) {
-      if (couponList[id].selected) {
-        couponList[id].selected = false
-      } else {
-        for (let key in couponList) {
-          couponList[key].selected = false
-        }
-        couponList[id].selected = true
-        couponTempCheck = curId = id
+      if(curId==id){
+        curId=-1
+      }else{
+        curId=id
       }
-
       this.setData({
-        curId,
-        couponList,
-        couponTempCheck,
+        curId:curId,
+        couponList
       })
     }
   },
+
   showTips(e) {
     let id = e.currentTarget.dataset.id,
       type = e.currentTarget.dataset.type
@@ -182,10 +190,8 @@ Page({
   },
   selectType(e) {
     let ziti = e.currentTarget.dataset.stype
-    let delivertTip = ziti == '1' ? '自提无配送费' : '满减免邮费不能与优惠券同时使用'
     this.setData({
       ziti: ziti,
-      delivertTip: delivertTip
     })
     this.initOrderPrice()
   },
@@ -194,19 +200,35 @@ Page({
     this.setData({
       pop: pop
     })
+
+    if(pop=="showTime" && this.data.delivery.delivery_times.length==0){
+      wx.showToast({
+        icon: "none",
+        title: "请先选择可配送地址"
+      })
+    }
+    
   },
   //麦点抵扣
   selectMai() {
-    if (this.data.hasMai) {
-      this.setData({
-        hasMai: false
-      })
+    let {jinmai,payQueue,hasMai}=this.data
+    let newPayQueue = payQueue.slice(0)
+
+    if (hasMai) {
+      mai = 0
+      hasMai=false
     } else {
-      this.setData({
-        hasMai: true
-      })
+      mai = jinmai.now_price
+      hasMai=true
     }
-    this.initOrderPrice()
+    this.setData({
+      hasMai: hasMai
+    })
+    newPayQueue[1] = mai
+    this.setData({
+      payQueue: newPayQueue
+    })
+    //this.initOrderPrice()
   },
   confirmSore() {
     this.close()
@@ -346,19 +368,6 @@ Page({
       api.getOrderBread(data).then(res => {
         console.log(res);
         if (!res) {
-          // wx.showModal({
-          //   title: '',
-          //   content: '当前地址不在配送范围，选择其他地址',
-          //   showCancel:false,
-          //   confirmText: "确定",
-          //   success(res) {
-
-          //     wx.navigateTo({
-          //       url:'/pages/user/address/address?source=1&cartType='+this.data.type
-          //     })
-
-          //   }
-          // })
           return
         }
         let cart_data = res.cart_data
@@ -376,16 +385,6 @@ Page({
         }
 
         let hasMai = res.jinmai.can
-        // let balanceInfo = res.balance_config
-        // let {free_secret} = balanceInfo
-
-        // if(useBalance){
-        //   if(free_secret=="0"){
-        //     verifyed = false
-        //   }else{
-        //     verifyed = true
-        //   }
-        // }
         //整理点击
         var useShowStatus = {};
         var unUsedShowStatus = {};
@@ -397,6 +396,7 @@ Page({
         }
 
         this.setData({
+          biggest_discount:res.biggest_discount,
           hasMai: hasMai,
           address: res.address,
           balance: res.balance,
@@ -435,8 +435,6 @@ Page({
         }
 
         let hasMai = res.jinmai.can
-        // let balanceInfo = res.balance_config
-        // let {free_secret} = balanceInfo
         let detail = cart_data.detail
 
         detail.find(item => {
@@ -445,14 +443,9 @@ Page({
           }
         })
         console.log(txtCard);
-        // if(useBalance){
-        //   if(free_secret=="0"){
-        //     verifyed = false
-        //   }else{
-        //     verifyed = true
-        //   }
-        // }
+
         this.setData({
+          biggest_discount:res.biggest_discount,
           hasMai: hasMai,
           fittings_desc: res.fittings_desc,
           address: res.address,
@@ -471,82 +464,93 @@ Page({
       })
     }
   },
-  //初始化订单金额 扣除麦点 运费 余额
-  //hasDelivery false 免邮-减邮费 10
-  //hasDelivery true 需邮费-不减邮费 0
+  //初始化订单金额 扣除麦点 余额
+  //hasDelivery false 免邮 10
+  //hasDelivery true 需邮费 0
   initOrderPrice() {
+    let useCoupon,hasDelivery
     let {
       cart_data,
       jinmai,
-      hasDelivery,
       hasMai,
-      useCoupon,
       payQueue,
-      is_ziti,
-      ziti
+      ziti,
+      biggest_discount
     } = this.data
     let newPayQueue = payQueue.slice(0)
 
-    //有麦点减去麦点抵扣
+    //初始运费
+    if(ziti=="1"){
+      hasDelivery = false
+    }else{
+      if (cart_data.free_type == 1) {
+        hasDelivery = false
+      } else {
+        hasDelivery = true
+      }
+    }
+
+    //初始金额(price)不含邮费
+    if (!hasDelivery) { //免邮
+      //2 单品+x 可免邮  1 满减免邮  可与优惠券同用    0 
+      delivery = 0
+    } else { //加邮费
+      delivery = -parseInt(cart_data.default_delivery)
+    }
+
+    //初始优惠券
+    if(!biggest_discount.promotion_info){
+      this.setBalancePrice({
+        useDiscount:false
+      })
+    }
+    if(biggest_discount.type=='promotion'){
+      let promotion = biggest_discount.promotion_info
+      useCoupon=true
+      coupon = promotion.promotion_price
+      this.setData({
+        useDiscount:true,
+        defaultCoupon:promotion.promotion_id,
+        couponCheck:promotion.promotion_id,
+        curId:promotion.promotion_id
+      })
+    }
+    if(biggest_discount.type=='free_delivery'){
+      useCoupon=true
+      coupon = cart_data.default_delivery
+      this.setData({
+        useDiscount:true,
+        defaultCoupon:1,
+        couponCheck:1,
+        curId:1
+      })
+    }
+
+    //初始麦点抵扣
     if (hasMai) {
       mai = jinmai.now_price
     } else {
       mai = 0
     }
+
+    //填入待减值
     newPayQueue[1] = mai
-
-    if (is_ziti == 1 && ziti == '1') {
-      hasDelivery = false
-
-      if (useCoupon) {
-        coupon = this.data.usedCouponPrice
-      } else {
-        coupon = 0
-      }
-    } else {
-      if (useCoupon) {
-        if (cart_data.free_type == 1) {
-          hasDelivery = false
-        } else {
-          hasDelivery = true
-        }
-        coupon = this.data.usedCouponPrice
-      } else {
-        if (cart_data.free_type == 1 || cart_data.free_type == 2) {
-          hasDelivery = false
-        } else {
-          hasDelivery = true
-        }
-        coupon = 0
-      }
-    }
-
-    //无运费减去运费
-    if (!hasDelivery) { //免邮-减去邮费
-      //1 单品免邮，可与优惠券同用  2 满减免邮  0 
-      delivery = parseInt(cart_data.default_delivery)
-    } else { //不减邮费
-      delivery = 0
-    }
-
     newPayQueue[0] = delivery
     newPayQueue[2] = coupon
 
     console.log(newPayQueue)
 
-    // newPayQueue[3]=0
-    // newPayQueue[4]=0
-
     this.setData({
-      hasDelivery: hasDelivery,
+      useCoupon,
+      hasDelivery,
       payQueue: newPayQueue
     })
 
     wx.hideLoading();
   },
   setPayPrice(payQueue) {
-    let payPrice = this.data.cart_data.total_price
-    //总价依次减去支付队列中的抵扣额
+    let payPrice = this.data.cart_data.price
+    //初始总价依次减去支付队列中的抵扣额
     payPrice = payQueue.reduce((pre, cur) => {
       return util.floatObj().subtract(pre, cur)
     }, payPrice)
@@ -684,6 +688,9 @@ Page({
       zitiName: val
     })
   }, 300),
+  bindPhoneSucess(){
+    this.submmitOrder()
+  },
   submmitOrder: util.debounce(function () {
 
     let {
@@ -806,76 +813,82 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
-    api.submmitOrder(data).then(res => {
-      wx.hideLoading();
-      console.log(res)
-      if (!res) {
-        wx.showToast({
-          icon: "error",
-          title: "提交订单失败，刷新页面"
-        })
-        return
-      }
-      let order_code = res.orderCode
-      if (res.callPay) {
-        let jsApiParameters = res.jsApiParameters
-        let {
-          timeStamp,
-          nonceStr,
-          signType,
-          paySign
-        } = jsApiParameters
-        // wx.showToast({
-        //   icon:"loading",
-        //   title:"提交订单成功，发起支付"
-        // })
+    // api.submmitOrder(data).then(res => {
+    //   wx.hideLoading();
+    //   console.log(res)
+    //   if (!res) {
+    //     wx.showToast({
+    //       icon: "error",
+    //       title: "提交订单失败，刷新页面"
+    //     })
+    //     return
+    //   }
+    //   if(res==app.globalData.bindPhoneStat){
+    //     this.setData({
+    //       showPhonePanel:true
+    //     })
+    //     return
+    //   }
+    //   let order_code = res.orderCode
+    //   if (res.callPay) {
+    //     let jsApiParameters = res.jsApiParameters
+    //     let {
+    //       timeStamp,
+    //       nonceStr,
+    //       signType,
+    //       paySign
+    //     } = jsApiParameters
+    //     // wx.showToast({
+    //     //   icon:"loading",
+    //     //   title:"提交订单成功，发起支付"
+    //     // })
 
-        wx.requestPayment({
-          timeStamp: timeStamp,
-          nonceStr: nonceStr,
-          package: jsApiParameters.package,
-          signType: signType,
-          paySign: paySign,
-          success(payres) {
-            console.log(payres);
-            wx.showToast({
-              title: '支付成功',
-              icon: 'none',
-              duration: 1000,
-              success: function () {
-                setTimeout(function () {
-                  wx.redirectTo({
-                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-                  })
-                }, 1000)
-              }
-            })
+    //     wx.requestPayment({
+    //       timeStamp: timeStamp,
+    //       nonceStr: nonceStr,
+    //       package: jsApiParameters.package,
+    //       signType: signType,
+    //       paySign: paySign,
+    //       success(payres) {
+    //         console.log(payres);
+    //         wx.showToast({
+    //           title: '支付成功',
+    //           icon: 'none',
+    //           duration: 1000,
+    //           success: function () {
+    //             setTimeout(function () {
+    //               wx.redirectTo({
+    //                 url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+    //               })
+    //             }, 1000)
+    //           }
+    //         })
 
-          },
-          fail(res) {
-            console.log(res)
-            wx.showToast({
-              title: "支付失败",
-              icon: 'none',
-              duration: 2000
-            })
-            wx.redirectTo({
-              url: '/pages/user/order/order?type=1'
-            })
-          }
-        })
-      } else {
-        wx.showToast({
-          icon: "success",
-          title: "支付成功"
-        })
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-          })
-        }, 2000)
-      }
-    })
+    //       },
+    //       fail(res) {
+    //         console.log(res)
+    //         wx.showToast({
+    //           title: "支付失败",
+    //           icon: 'none',
+    //           duration: 2000
+    //         })
+    //         wx.redirectTo({
+    //           url: '/pages/user/order/order?type=1'
+    //         })
+    //       }
+    //     })
+    //   } else {
+    //     wx.showToast({
+    //       icon: "success",
+    //       title: "支付成功"
+    //     })
+    //     setTimeout(function () {
+    //       wx.redirectTo({
+    //         url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+    //       })
+    //     }, 2000)
+    //   }
+    // })
   }),
   inputCard: util.debounce(function (e) {
     console.log("1111");

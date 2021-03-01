@@ -27,6 +27,8 @@ var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 // };
 
 const request = (method,url,data,needToken=true)=>{
+  var userInfo = wx.getStorageSync("userInfo")
+  var openid = userInfo && JSON.parse(userInfo).openid
   let timestamp = (new Date()).valueOf()
   let queryString = "";
   let defData = {
@@ -34,14 +36,10 @@ const request = (method,url,data,needToken=true)=>{
     platform:'wxxcx',
     timestamp:timestamp
   }
-  if(needToken){
-    var userInfo = wx.getStorageSync("userInfo")
-    if(userInfo){
-      var openid=JSON.parse(userInfo).openid
-    }
-    console.log(openid)
+  if(needToken && userInfo){
     defData.openid = openid
   }
+  console.log(openid)
   Object.assign(defData, data)
   let keys = Object.keys(defData);
   keys.sort();
@@ -54,9 +52,9 @@ const request = (method,url,data,needToken=true)=>{
   defData.token = sign;
 
   return new Promise((resolve, reject) => {
-    // if(!sign && needToken){
-    //   return false
-    // }
+    if(!openid && needToken){
+      return false
+    }
     //showLoading()
     wx.request({
       url:url,
@@ -66,10 +64,14 @@ const request = (method,url,data,needToken=true)=>{
       }, 
       data: defData,
       success: function (res) {
+        console.log(url)
+        console.log("---resolve---",res);
         resolve(res)
         //hideLoading()
       },
       fail: function (res) {
+        console.log(url)
+        console.log("---失败---",res);
         wx.showModal({
           title: '网络错误',
           content: '网络出错，请刷新重试',

@@ -12,33 +12,26 @@ const returnData = res=>{
     }else if(data.status==-5){
       return false
     }else if(data.status==1001){
-      if(isLogin==0){
-        wx.showModal({
-          title: '',
-          showCancel:false,
-          content: '未登录',
-          confirmText: "重新登录",
-          success(res) {
-            wx.navigateTo({
-              url: '/pages/login/login'
-            })
-          }
+      //if(isLogin==0){
+        // wx.showModal({
+        //   title: '',
+        //   showCancel:false,
+        //   content: '登录原麦山丘',
+        //   confirmText: "确定",
+        //   success(res) {
+        //     wx.navigateTo({
+        //       url: '/pages/login/login'
+        //     })
+        //   }
+        // })
+        wx.navigateTo({
+          url: '/pages/login/login'
         })
-        isLogin=1
-      }
+        //isLogin=1
+      //}
     }else if(data.status==1022){
-
-        wx.showModal({
-          title: '',
-          showCancel:false,
-          content: '未绑定手机号',
-          confirmText: "重新登录",
-          success(res) {
-            wx.navigateTo({
-              url: '/pages/login/login'
-            })
-          }
-        })
+      console.log('未绑定手机');
+      return '1022'
 
     }else{
       //特殊状态统一处理
@@ -60,7 +53,6 @@ const returnData = res=>{
 
 //微信登录
 const getLoginInfo = (data) => {
-  console.log("111111");
   return POST(baseUrl+"/user/xcx-check-login", data,false)
 }
 

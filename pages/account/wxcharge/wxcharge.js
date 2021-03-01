@@ -1,5 +1,5 @@
 const api = require('../../../utils/api.js')
-
+const app = getApp()
 Page({
 
   /**
@@ -49,6 +49,9 @@ Page({
     }
     
   },
+  bindPhoneSucess(){
+    this.charge()
+  },
   charge(){
     let checkedId = this.data.checkedId,read=this.data.read
     if(!checkedId){
@@ -74,6 +77,12 @@ Page({
       console.log(res);
       if(!res){
         return false
+      }
+      if(res==app.globalData.bindPhoneStat){
+        this.setData({
+          popShow:true
+        })
+        return
       }
       wx.requestPayment({
         timeStamp: res.timeStamp,

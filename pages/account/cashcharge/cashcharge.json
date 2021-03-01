@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "现金卡",
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "phonePanel": "/components/phonePanel/phonePanel"
+  }
 }

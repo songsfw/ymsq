@@ -45,7 +45,7 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
     line-height: 18px;
     text-align: center;
     background-color: #f5222d;}
-
+.option .cart .num99{width: 30px;}
 .detail{background: #fff;}
 .detail .tit{position: relative; text-align: center;padding: 40rpx 0;font-size: 15px;}
 .detail .tit text{background: #fff;padding: 0 26rpx;position:relative;z-index: 1;}

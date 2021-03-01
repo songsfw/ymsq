@@ -30,12 +30,13 @@
     width: 12px;
     height: 12px;}
 .homebtn{display: flex;
+    
     align-items: center;
-    left: 90rpx;
+    left: 30rpx;
     padding-left: 0;
     justify-content: center;
-    width: 50rpx;
-    height: 50rpx;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);}

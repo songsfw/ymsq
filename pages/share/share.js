@@ -94,6 +94,9 @@ Page({
     }
     api.hongbao(data).then(res=>{
       console.log(res);
+      if(!res){
+        return
+      }
       let best_reward = res.best_reward,
           users = res.userRewardDataReader
       if(res.is_received){

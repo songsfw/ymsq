@@ -8,10 +8,9 @@ const app = getApp()
 Page({
   data: {
     show:false,
-    pop:0,
-    tips:"获取验证码",
     pics:[
-      '/image/cake1.jpg'
+      '/image/cake1.jpg',
+      '/image/cake2.jpg'
     ],
     setTime:'',
     num:0,
@@ -23,173 +22,65 @@ Page({
       pop: 0
     })
   },
-  inputMobi:util.debounce(function(e){
-    this.setData({
-      mobile:e.detail.value
-    })
-  },300),
-  inputCode:util.debounce(function(e){
-    this.setData({
-      code:e.detail.value
-    })
-  },300),
-  secondDown(num){
-    if(num==0){
-      clearTimeout(timer)
-      this.setData({
-        isSend:false,
-        tips:"重新获取验证码"
-      })
-      return
-    }else{
-      num--
-    }
-    this.setData({
-      second:num
-    })
-    let timer = setTimeout(()=> {
-      this.secondDown(num)
-    }, 1000);
-  },
-  bindPhone(){
-    let mobile = this.data.mobile,code=this.data.code
-
-    if(!mobile){
-      wx.showToast({
-        title: '请输入手机号',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }else if(!util.isMobile(mobile)){
-      wx.showToast({
-        title: '请填写正确的手机号，如:13012345678',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-    if(!code){
-      wx.showToast({
-        title: '请输入验证码',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-
-    let data = {
-      mobile:mobile,
-      send_type:"bindMobile",
-      code:code
-    }
-    api.bindPhone(data).then(res=>{
-      if(res){
-        wx.navigateBack({
-          delta: 1
-        })
-      }
-      
-    })
-  },
-  getCode(){
-    let mobile = this.data.mobile
-
-    if(!mobile){
-      wx.showToast({
-        title: '请输入手机号',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }else if(!util.isMobile(mobile)){
-      wx.showToast({
-        title: '请填写正确的手机号，如:13012345678',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-
-    let data = {
-      mobile:mobile,
-      send_type:"bindMobile"
-    }
-    api.getCode(data).then(res=>{
-      this.secondDown("20")
-      this.setData({
-        isSend:true
-      })
-      console.log(res)
-      if(!res){
-        wx.showToast({
-          title: "网络错误",
-          icon: 'none',
-          duration: 2000
-        })
-      }else{
-        wx.showToast({
-          title: '验证码已发送',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    })
-  },
   //授权用户信息
   onGotUserInfo: function (e) {
     var detailInfo = e.detail
     var userDetail = detailInfo.userInfo
     console.log(e.detail);
     let timestamp = (new Date()).valueOf()
-    var openid = this.data.userInfo.openid
+    var {openid,is_mobile} = this.data.userInfo
     if (userDetail) { //同意授权
       let data = {
         encryptedData: detailInfo.encryptedData,
         iv: detailInfo.iv,
-        rawData:detailInfo.rawData,
+        //rawData:detailInfo.rawData,
         openid: openid,
         uname:"wxxcx",
         timestamp:timestamp
       }
       api.appLogin(data)
       .then(res=>{
-        let is_mobile = app.globalData.is_mobile
+        console.log(is_mobile);
         console.log(res);
-        if(res){
-          let user_info = res.user_info
-          if(user_info){
-            let userInfo = {
-              user_id:res.user_id,
-              is_authed:res.is_authed,
-              openid:res.openid,
-              nickname:user_info.nickname,
-              photo:user_info.head_url,
-              phone:user_info.mobile
-            }
-            wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-          }
+        if(!res){
+          return
         }
-        if(is_mobile==0){
+        let user_info = res.user_info
+        if(user_info){
+          this.setData({
+            [userInfo.is_authed]:res.is_authed
+          })
+          wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
+        }
+        
+        if(is_mobile==1){
           wx.navigateBack({
             delta: 1
           })
         }else{
           this.setData({
-            pop:"phone"
+            popShow:true
           })
         }
         
       })
     }
   },
+  bindPhoneSucess(){
+    wx.navigateBack({
+      delta: 1
+    })
+  },
   onLoad () {
     let userInfo = wx.getStorageSync("userInfo")
-        userInfo = userInfo && JSON.parse(userInfo)
-        this.setData({
-          userInfo:userInfo,
-          show:true
-        })
+    let sysInfo = app.globalSystemInfo;
+    let fixedTop = sysInfo.navBarHeight;
+    userInfo = userInfo && JSON.parse(userInfo)
+    this.setData({
+      userInfo:userInfo,
+      show:true,
+      fixedTop:fixedTop
+    })
 
     if(this.data.pics.length>1){
       var _this=this;

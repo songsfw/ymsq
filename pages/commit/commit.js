@@ -1,5 +1,6 @@
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
+const app = getApp()
 let initScore = [0,0,0,0,0],tags=null,status=[],selectTagArr=[],selectTag = [],delivery_status=0,old_status=''
 Page({
 
@@ -118,15 +119,25 @@ Page({
     }
     api.setComment(data).then(res=>{
       console.log(res);
-      if(res){
-        
-          this.setData({
-            price:res.price,
-            pop: 'hongbao'
-          })
-
+      if(!res){
+        return
       }
+      if(res==app.globalData.bindPhoneStat){
+        this.setData({
+          popShow:true
+        })
+        return
+      }
+
+      this.setData({
+        price:res.price,
+        pop: 'hongbao'
+      })
+      
     })
+  },
+  bindPhoneSucess(){
+    this.addComment()
   },
   /**
    * 生命周期函数--监听页面加载

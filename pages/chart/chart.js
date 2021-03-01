@@ -229,11 +229,6 @@ Page({
         wx.navigateTo({
           url:"/pages/chart/payOrder/payOrder?type="+type
         })
-      }else{
-        wx.showToast({
-          icon:"none",
-          title:"结算失败，刷新页面"
-        })
       }
     })
     
@@ -391,11 +386,6 @@ Page({
     api.getChartData(data).then(res => {
       console.log(res);
       if(!res){
-        wx.showToast({
-          icon:"none",
-          title:"获取购物车失败，刷新页面",
-          duration:3000
-        })
         return
       }
       let type="1",breadSelectedNum=0,cakeSelectedNum=0,noallBread=true,noallCake=true
