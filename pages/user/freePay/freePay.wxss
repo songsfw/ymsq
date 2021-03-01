@@ -13,3 +13,13 @@ page{background: #F6F6F6;}
 .verify{text-align: center;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
 .get-code{margin: 38rpx 0 0 0;}
+
+.show-more-main{display:flex;flex-direction:column;}
+.show-more{display: flex;flex-direction: row;justify-content:space-between;position: absolute;top:20px;right:0;}
+.show-more-true{display:block}
+.show-more-false{display:none}
+.arrow-bottom{margin-left: 10rpx;top:19px;}
+.arrow-bottom:after{border-color: #ccc;border-width: 1px;}
+.rotateLeft{transform: rotate(180deg);}
+
+.arrow-r{display: inline-block; width: 8px;height: 14px;vertical-align: middle;margin-left: 20rpx;top:20px}

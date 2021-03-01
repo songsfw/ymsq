@@ -7,9 +7,16 @@
   </view>
   <view class="item flex">
     <text>免密金额</text>
-    <picker bindchange="bindSelect" value="{{index}}" range="{{list}}" class="flex-1">
-      <view class="picker">{{free_amount || "请选择金额"}}</view>
-    </picker>
+    <view class="flex-1" style="display: flex;flex-direction: row;justify-content:flex-end;" bind:tap="changeTip">
+      <picker bindchange="bindSelect" bindcancel="close" value="{{index}}" range="{{list}}" class="flex-1" style="padding-right:0;position: relative;">
+        <view class="picker" style="padding-right:15px">{{free_amount || "请选择金额"}}</view>
+        <view class="show-more">
+          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+        </view>
+      </picker>
+
+
+    </view>
   </view>
   <view class="item flex">
     <view><text>余额支付密码</text><text class="tag" wx:if="{{status}}">已设置</text></view>
@@ -22,11 +29,13 @@
 <!-- <view class="fixedBtn">
   <view class="btn" bindtap="save">保存</view>
 </view> -->
-<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}" class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="close" unuse="{{unuse}}">
+<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}"
+  class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="close" unuse="{{unuse}}">
   <view slot="setPwd" wx:if="{{step==1}}">
     <view class="inputxt flex">
       <text style="width:50px">密码</text>
-      <input class="flex-1" value="{{pwdVal}}" type="number" maxlength='6' bindinput="pwdInput" password placeholder="请输入6位数字密码" />
+      <input class="flex-1" value="{{pwdVal}}" type="number" maxlength='6' bindinput="pwdInput" password
+        placeholder="请输入6位数字密码" />
     </view>
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
@@ -41,7 +50,7 @@
         <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" password placeholder="请输入6位数字密码" />
       </view>
     </block> -->
-    
+
     <view class="inputxt flex">
       <text>新密码</text>
       <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
@@ -51,9 +60,9 @@
       <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
     </view>
 
-    
+
   </view>
-  <view slot="verify" class="verify"  wx:if="{{step==3}}">
+  <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>
     <view class="inputxt flex">
       <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder="请输入验证码" />
