@@ -27,7 +27,7 @@ page{background: #F6F6F6;height: auto;}
     font-size: 22px;}
 
 .item .pro-option{position: absolute;right:-168rpx;top: 0;height: 100%;width: 168rpx;}
-.del{display: flex;margin-left: 20rpx; align-items: center;justify-content: center; width: 148rpx; color: #fff;background: #E02020;height: 100%;}
+.chartdel{display: flex;margin-left: 20rpx; align-items: center;justify-content: center; width: 148rpx; color: #fff;background: #E02020;height: 100%;}
 
 .touch-item {
   display:flex;

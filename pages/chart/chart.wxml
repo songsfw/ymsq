@@ -1,5 +1,7 @@
+<wxs module="move" src="../../utils/move.wxs"></wxs>
 <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
-  <view class="tips flex"><text class="iconfont icon-notice"></text> <text >因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text></view>
+  <view class="tips flex"><text class="iconfont icon-notice"></text> <text>因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text>
+  </view>
 </view>
 
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
@@ -9,9 +11,14 @@
     </view>
     <text>面包</text>
   </view>
-  <view class="pro-list">
-    <view class="item flex" wx:for="{{breadLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
-      <view class="checkbox {{item.is_selected=='1'?'on':''}}" >
+  <view class="pro-list" data-itemIds="{{breadItemIds}}">
+    <!-- <view class="item flex" wx:for="{{breadLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"> -->
+    <view staticStyle="{{delStatus}}" change:staticStyle="{{move.reset}}" class="item flex item_{{item.cart_id}}"
+      wx:for="{{breadLi}}" style="color:white;{{item.txtStyle == 0?'':'transform:translateX(0)'}}"
+      bindtouchstart="{{move.recodeMoveStart}}" bindtouchmove="{{move.recordMove}}"
+      bindtouchend="{{move.recodeMoveEnd}}" data-width="{{windowWidth}}" 
+      bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+      <view class="checkbox {{item.is_selected=='1'?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>
       <view class="pro-info flex flex-1">
@@ -23,15 +30,17 @@
           <view class="price flex">
             <view class="num">￥<text>{{item.sku_price}}</text></view>
             <view class="set-chart flex">
-              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1" data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
+              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1"
+                data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
               <text class="count">{{item.sku_number}}</text>
-              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="1" data-idx="{{index}}"></text>
+              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="1"
+                data-idx="{{index}}"></text>
             </view>
           </view>
         </view>
       </view>
       <view class="pro-option flex">
-        <view class="del" data-type="1" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
+        <view class="chartdel" data-type="1" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
       </view>
     </view>
   </view>
@@ -43,9 +52,13 @@
     </view>
     <text>蛋糕</text>
   </view>
-  <view class="pro-list">
-    <view class="item flex" wx:for="{{cakeLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
-      <view class="checkbox {{item.is_selected=='1'?'on':''}}" >
+  <view class="pro-list cakeList" data-itemIds="{{cakeItemIds}}">
+    <!-- <view class="item flex" wx:for="{{cakeLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove"
+      bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}"
+      data-type="2" data-id="{{item.cart_id}}"> -->
+    <view staticStyle="{{delStatus}}" change:staticStyle="{{move.reset}}" class="item flex item_{{item.cart_id}}" wx:for="{{cakeLi}}" bindtouchstart="{{move.recodeMoveStart}}" bindtouchmove="{{move.recordMove}}" bindtouchend="{{move.recodeMoveEnd}}" data-width="{{windowWidth}}"
+      bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+      <view class="checkbox {{item.is_selected=='1'?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>
       <view class="pro-info flex flex-1">
@@ -62,15 +75,17 @@
           <view class="price flex">
             <view class="num">￥<text>{{item.sku_price}}</text></view>
             <view class="set-chart flex">
-              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2" data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
+              <text class="iconfont icon-minus" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2"
+                data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
               <text class="count">{{item.sku_number}}</text>
-              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="2" data-idx="{{index}}"></text>
+              <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="2"
+                data-idx="{{index}}"></text>
             </view>
           </view>
         </view>
       </view>
       <view class="pro-option flex">
-        <view class="del" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
+        <view class="del chartdel" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
       </view>
     </view>
   </view>
@@ -80,8 +95,11 @@
     <view class="hd"><text>蛋糕配件</text></view>
     <scroll-view scroll-x="{{true}}">
       <view class="flex list">
-        <view class="item" wx:for="{{fittingsList}}" catch:tap="selectFittings" data-idx="{{index}}" data-id="{{item.sku}}">
-          <view class="pic"><image src="{{item.img}}"></image></view>
+        <view class="item" wx:for="{{fittingsList}}" catch:tap="selectFittings" data-idx="{{index}}"
+          data-id="{{item.sku}}">
+          <view class="pic">
+            <image src="{{item.img}}"></image>
+          </view>
           <view class="tit">{{item.name}} ({{item.remark}})</view>
           <view class="price flex">
             <view class="num">￥<text>{{item.price}}</text></view>
@@ -93,7 +111,9 @@
   </view>
 </view>
 <view class="nodata" wx:if="{{breadLi.length==0 && cakeLi.length==0}}">
-  <view><image src="../../image/no-pro.png"></image></view>
+  <view>
+    <image src="../../image/no-pro.png"></image>
+  </view>
   <view class="txt">购物车还是空的</view>
   <navigator url="/pages/index/index" open-type="switchTab" class="btn">去逛逛</navigator>
 </view>
@@ -109,7 +129,9 @@
     <text>全选</text>
   </view> -->
   <view class="price flex">
-    <view class="flex-center"><text>合计:</text><view class="num">￥<text>{{totalPrice}}</text></view></view>
+    <view class="flex-center"><text>合计:</text>
+      <view class="num">￥<text>{{totalPrice}}</text></view>
+    </view>
     <view class="buy-btn" bind:tap="getOrder">结算</view>
   </view>
 </view>
@@ -119,7 +141,9 @@
   <view class="icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
-      <view class="pic"><image src="{{fitting.img}}" ></image></view>
+      <view class="pic">
+        <image src="{{fitting.img}}"></image>
+      </view>
       <view class="h3 flex">
         <view class="tit">{{fitting.name}}</view>
         <view class="price"><text>￥</text>{{fitting.price}}</view>
@@ -127,7 +151,8 @@
     </view>
     <view class="h4"><text>选择规格</text></view>
     <view class="fitting-list flex">
-      <view class="{{key==fitting.sku?'on':''}}" wx:for="{{fitting.sku_list}}" wx:for-index="key" data-sku="{{key}}" bind:tap="selectFittingSku">{{item}}</view>
+      <view class="{{key==fitting.sku?'on':''}}" wx:for="{{fitting.sku_list}}" wx:for-index="key" data-sku="{{key}}"
+        bind:tap="selectFittingSku">{{item}}</view>
     </view>
     <view class="h4 flex">
       <text>购买数量</text>
@@ -139,7 +164,7 @@
     </view>
     <view class="confirm-btn btn" bind:tap="confirmFitting" data-sku="{{fitting.sku}}">确定</view>
   </view>
-  
+
 </view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 <view style="height:50px"></view>

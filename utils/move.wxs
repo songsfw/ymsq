@@ -1,0 +1,177 @@
+var startX, startY = 0;
+var direction = 1; //1无，2左 ，3右
+var statusArr = {};
+var isMove = 0;
+var defaultStatus = 0;
+var delWidthM = 97;
+//移动
+function recordMove(e, ins) {
+  var id = e.currentTarget.dataset.id
+  var touchMoveX = (e.touches[0] || e.changedTouches[0]).pageX
+  var touchMoveY = (e.touches[0] || e.changedTouches[0]).pageY
+
+  var angle = angleT({
+    X: startX,
+    Y: startY
+  }, {
+    X: touchMoveX,
+    Y: touchMoveY
+  });
+  //限制角度
+  if (Math.abs(angle) > 80) return;
+  //限制距离
+  if (Math.abs(startX - touchMoveX) < 30) return;
+  isMove = 1;
+  if (touchMoveX < startX) {
+    direction = 2;
+    // console.log('向左滑动 开启删除')
+    // console.log('defaultStatus',defaultStatus);
+    if (defaultStatus == 1) {
+      var res = ins.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
+      tids = res.itemids.split(',')
+      for (j = 0, len = tids.length; j < len; j++) {
+        if (id != tids[j]) {
+          // console.log(tids[j],'0-0-0',id)
+          ins.selectComponent('.item_' + tids[j]).setStyle({
+            transform: 'translateX(0px)'
+          })
+          statusArr[id] = 0;
+        }
+      }
+      //cakeList
+      var res = ins.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
+      tids = res.itemids.split(',')
+      for (j = 0, len = tids.length; j < len; j++) {
+        if (id != tids[j]) {
+          ins.selectComponent('.item_' + tids[j]).setStyle({
+            transform: 'translateX(0px)'
+          })
+          statusArr[id] = 0;
+        }
+      }
+
+      defaultStatus = 0;
+    }
+
+    if (statusArr[id] == 2) {
+      return false;
+    }
+
+    txtStyle = startX - touchMoveX
+    if (txtStyle >= delWidthM) {
+      return false;
+    }
+    ins.selectComponent('.item_' + id).setStyle({
+      transform: 'translateX(-' + txtStyle + 'px)'
+    })
+    statusArr[id] = 1;
+  }
+
+  //向右滑 关闭
+  if (touchMoveX > startX) {
+    direction = 3;
+    ins.selectComponent('.item_' + id).setStyle({
+      transform: 'translateX(0px)'
+    })
+
+    //待修正
+    // txtStyle = touchMoveX - startX;
+    // if(txtStyle>= delWidth){
+    //   console.log("jieshu")
+    //   return false;
+    // }
+    // console.log('向 右 滑动 关闭删除','touchMoveX:',touchMoveX,'startX:',startX,'txtStyle:',txtStyle)
+    // ins.selectComponent('.item_' + id).setStyle({
+    //   transform: 'translateX('+txtStyle+'px)'
+    // })
+  }
+  return false;
+}
+
+//计算滑动角度
+function angleT(start, end) {
+  var _X = end.X - start.X,
+    _Y = end.Y - start.Y
+  //返回角度 /Math.atan()返回数字的反正切值
+  return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+}
+//移动开始
+function recodeMoveStart(e, ins) {
+  // console.log('start')
+  var delObj = ins.selectComponent('.chartdel').getComputedStyle(['width', 'margin-left']);
+
+  var delWidth = delObj.width.replace('px', '')
+  var delMagin = delObj['margin-left'].replace('px', '');
+  delWidthM = parseInt(delWidth) + parseInt(delMagin);
+  defaultStatus = 1;
+  //记录状态
+  var id = e.currentTarget.dataset.id
+  if (typeof (statusArr[id]) == 'undefined') {
+    statusArr[id] = 0;
+  }
+
+  //获取触摸位置
+  var pageX = (e.touches[0] || e.changedTouches[0]).pageX
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  startX = pageX
+  startY = pageY
+}
+
+//移动结束
+function recodeMoveEnd(e, ins) {
+  var endX = (e.touches[0] || e.changedTouches[0]).pageX
+  if (direction == 1 && Math.abs(startX - endX) < 30) return;
+  var id = e.currentTarget.dataset.id
+
+  //向左滑 开启
+  if (direction == 2 || startX > endX) {
+    statusArr[id] = 2;
+    // console.log("end:",statusArr[id])
+    ins.selectComponent('.item_' + id).setStyle({
+      transform: 'translateX(-' + delWidthM + 'px)'
+    })
+  }
+
+  //向右结束
+  if (direction == 3 || startX < endX) {
+    statusArr[id] = 0;
+    ins.selectComponent('.item_' + id).setStyle({
+      transform: 'translateX(0px)'
+    })
+  }
+  direction = 1;
+  return true;
+}
+
+var flag = 0;
+function reset(newValue, oldValue, ownerInstance, instance) {
+  // if(flag == 1){
+  //   return false;
+  // }
+  // flag = 1
+  var res = ownerInstance.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
+  tids = res.itemids.split(',')
+  for (j = 0, len = tids.length; j < len; j++) {
+    // console.log(tids[j],'0-0-0')
+    ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
+      transform: 'translateX(0px)'
+    })
+  }
+
+  var res = ownerInstance.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
+  tids = res.itemids.split(',')
+  for (j = 0, len = tids.length; j < len; j++) {
+    // console.log(tids[j],'0-0-0')
+    ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
+      transform: 'translateX(0px)'
+    })
+  }
+}
+module.exports = {
+  recordMove: recordMove,
+  recodeMoveStart: recodeMoveStart,
+  recodeMoveEnd: recodeMoveEnd,
+  angleT: angleT,
+  reset: reset
+
+}
