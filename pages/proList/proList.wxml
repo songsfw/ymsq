@@ -1,31 +1,33 @@
 <!-- index.wxml -->
-<import src="../../template/loading/loading.wxml"/>
+<import src="../../template/loading/loading.wxml" />
 <template is="loading" data="{{showLoading}}"></template>
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <view class="menu">
   <view class="main flex">
     <block wx:for="{{menu}}" wx:for-index="index">
-      <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}</view>
+      <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}
+      </view>
     </block>
   </view>
   <view class="sub-wrap">
     <scroll-view class="sub {{isFixed?'fixed':''}}" scroll-x="{{true}}">
-    <view class="flex">
-      <block wx:if="{{currentTab==1}}">
-        <text data-id="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
-        <block wx:for="{{breadTags}}" wx:for-index="index">
-          <text data-id="{{index}}" class="{{breadTag==index?'on':''}}" bind:tap="selectTag">{{breadTags[index]}}</text>
+      <view class="flex">
+        <block wx:if="{{currentTab==1}}">
+          <text data-id="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+          <block wx:for="{{breadTags}}" wx:for-index="index">
+            <text data-id="{{index}}" class="{{breadTag==index?'on':''}}"
+              bind:tap="selectTag">{{breadTags[index]}}</text>
+          </block>
         </block>
-      </block>
-      <block wx:else>
-        <text data-id="全部" wx:if="{{cakeTags}}" class="{{cakeTag==''?'on':''}}" bind:tap="selectTag">全部</text>
-        <block wx:for="{{cakeTags}}" wx:for-index="index">
-          <text data-id="{{index}}" class="{{cakeTag==index?'on':''}}" bind:tap="selectTag">{{cakeTags[index]}}</text>
+        <block wx:else>
+          <text data-id="全部" wx:if="{{cakeTags}}" class="{{cakeTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+          <block wx:for="{{cakeTags}}" wx:for-index="index">
+            <text data-id="{{index}}" class="{{cakeTag==index?'on':''}}" bind:tap="selectTag">{{cakeTags[index]}}</text>
+          </block>
         </block>
-      </block>
 
-    </view>
-  </scroll-view>
+      </view>
+    </scroll-view>
   </view>
 </view>
 <!--面包-->
@@ -54,15 +56,16 @@
                 <!-- <block wx:if="{{stock[pro.meal_id]==0}}">
                   <view class="num sold-out">售罄</view>
                 </block> -->
-                
-                  <view class="num">￥<text>{{pro.price}}</text></view>
-                  <view wx:if="{{stock[pro.meal_id]!=0 || pro.soldStat==0}}" class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}">
-                    <!-- <view class="cart-motion">
-                      <view class="cart-motion2"></view>
-                    </view> -->
-                  </view>
-                
-                
+
+                <view class="num">￥<text>{{pro.price}}</text></view>
+                <view wx:if="{{stock[pro.meal_id]!=0 || pro.soldStat==0}}"
+                  class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}"
+                  data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}">
+                  <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
+                    style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
+                </view>
+
+
               </view>
             </view>
           </view>
@@ -90,7 +93,9 @@
       <block wx:for="{{cakeList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <navigator class="item" url="/pages/cakeInfo/cakeInfo?proId={{pro.spu_id}}">
-            <view class="pic"><image src="{{pro.img}}" mode="aspectFill" lazy-load="{{true}}"></image></view>
+            <view class="pic">
+              <image src="{{pro.img}}" mode="aspectFill" lazy-load="{{true}}"></image>
+            </view>
             <view class="info">
               <view class="tit">{{pro.name}} ({{pro.spec}})</view>
               <view class="tags text-overflow">
@@ -113,7 +118,7 @@
       </view>
     </view> -->
   </block>
-  
+
 </view>
 <!-- <view wx:if="{{!currentTab}}">
   <view class="loading"></view>
@@ -126,4 +131,3 @@
 <view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
   <image src="{{curPro}}"></image>
 </view>
-
