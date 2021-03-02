@@ -25,7 +25,7 @@ page{background: #F6F6F6;height: auto;}
 .delivery-info{padding:42rpx 24rpx 0 24rpx;justify-content: space-between; color:#64BF00;font-size: 13px;}
 .delivery-info .iconfont{font-size: 12px;}
 .delivery-info image{width:36rpx;height: 32rpx;}
-.address{padding:40rpx 20rpx;}
+.address{padding:40rpx 20rpx;background: #fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x ;background-size: 29px 4px;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}

@@ -427,6 +427,17 @@ Page({
       confirmText:"修改",
     })
   },
+  editPwd(){
+    this.setData({
+      pwdVal:'',
+      unuse:true,
+      type:1,//修改或设置密码中
+      popShow:true,
+      poptitle:"请设置余额密码",
+      step:2,
+      confirmText:"设置",
+    })
+  },
   // setPwd(e){
   //   this.setData({
   //     popShow:true,

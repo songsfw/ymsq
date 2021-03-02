@@ -140,7 +140,7 @@
         <view class="val">￥{{orderData.product_price}}</view>
       </view>
       <view class="flex-center">
-        <view class="name delivery">配送费用</view>
+        <view class="name delivery">配送费</view>
         <view class="val">+￥{{orderData.delivery_price}}</view>
       </view>
       <view class="flex-center" wx:if="{{orderData.point_price!=0}}">

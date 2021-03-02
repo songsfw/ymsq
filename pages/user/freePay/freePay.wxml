@@ -59,7 +59,7 @@
         <text>确认密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" value="{{confirmPwd}}" password placeholder="请再次输入密码" />
       </view>
-      </block>
+    </block>
   </view>
   <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>

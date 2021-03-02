@@ -20,7 +20,7 @@ image{width: 100%;height: 100%}
 .vipcard{width: 624rpx;height:106rpx;margin:34rpx 0 40rpx 0;
   overflow: hidden;}
 
-.menu{padding: 40rpx 20rpx;
+.menu{padding: 40rpx 0;
   text-align: center;
   color: #333;
   margin-bottom: 20rpx;
@@ -37,8 +37,8 @@ image{width: 100%;height: 100%}
 .user-order{background-position:0 0;}
 .num99{width: 30px !important;}
 
-.option{padding: 32rpx 20rpx 0 20rpx;background-color: #fff;border-radius: 16rpx;margin: 24rpx;}
-.option .tit{font-size: 15px;border-bottom: 1px solid #e9e9e9;padding-bottom: 18rpx;}
+.option{padding: 32rpx 0 0 0;background-color: #fff;border-radius: 16rpx;margin: 24rpx;}
+.option .tit{font-size: 15px;border-bottom: 1px solid #e9e9e9;padding-bottom: 18rpx;margin: 0 20rpx;}
 .menu .order{border-left: 1px solid #e9e9e9;box-sizing: border-box;}
 .topinfo{background: #fff;border-radius:16rpx ;margin: 40rpx 24rpx 20rpx 24rpx;padding: 40rpx;}
 
