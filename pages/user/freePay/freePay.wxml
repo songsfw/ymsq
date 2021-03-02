@@ -19,10 +19,10 @@
     </view>
   </view>
   <view class="item flex">
-    <view><text>余额支付密码</text><text class="tag" wx:if="{{status}}">已设置</text></view>
+    <view><text>余额支付密码</text><text class="tag" wx:if="{{pwd_set}}">已设置</text></view>
     <view class="edit">
-      <text wx:if="{{status==0}}" bind:tap="changePwd">未设置</text>
-      <text wx:else bind:tap="changePwd">修改</text>
+      <text wx:if="{{pwd_set==0}}" bind:tap="changePwd">未设置</text>
+      <text wx:else bind:tap="editPwd">修改</text>
     </view>
   </view>
 </view>
@@ -40,27 +40,26 @@
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
   <view slot="setNewPwd" wx:if="{{step==2}}">
-    <!-- <block wx:if="{{pwd_set==1}}">
+    <block wx:if="{{pwd_set==1}}">
       <view class="inputxt flex">
         <text>旧密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" password placeholder="请输入6位数字密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" value="{{oldPwd}}" password placeholder="请输入6位数字密码" />
       </view>
       <view class="inputxt flex">
         <text>新密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" password placeholder="请输入6位数字密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" value="{{newPwd}}" password placeholder="请输入6位数字密码" />
       </view>
-    </block> -->
-
-    <view class="inputxt flex">
-      <text>新密码</text>
-      <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" password placeholder="请输入6位数字密码" />
-    </view>
-    <view class="inputxt flex">
-      <text>确认密码</text>
-      <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" password placeholder="请再次输入密码" />
-    </view>
-
-
+    </block>
+    <block wx:else>
+      <view class="inputxt flex">
+        <text>密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" value="{{initPwd}}" password placeholder="请输入6位数字密码" />
+      </view>
+      <view class="inputxt flex">
+        <text>确认密码</text>
+        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" value="{{confirmPwd}}" password placeholder="请再次输入密码" />
+      </view>
+      </block>
   </view>
   <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>

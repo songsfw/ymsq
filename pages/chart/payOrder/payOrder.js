@@ -765,7 +765,7 @@ Page({
     }
 
     console.log(addressInfo)
-    let deliveryPrice = payQueue[0] == 0 ? cart_data.default_delivery : 0
+    let deliveryPrice = Math.abs(payQueue[0])
     let data = {
       address_id: address_id,
       delivery_date: selectDateTxt,
@@ -789,7 +789,11 @@ Page({
       data.ziti = '1'
       data.name = zitiName
     }
-    if (useCoupon) {
+    //活动免邮
+    if(curId==1){
+      data.delivery_price=0
+    }
+    if (useCoupon && curId!=1) {
       data.promotion_price = payQueue[2]
       data.promotion_id = curId
     }
@@ -813,82 +817,82 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
-    // api.submmitOrder(data).then(res => {
-    //   wx.hideLoading();
-    //   console.log(res)
-    //   if (!res) {
-    //     wx.showToast({
-    //       icon: "error",
-    //       title: "提交订单失败，刷新页面"
-    //     })
-    //     return
-    //   }
-    //   if(res==app.globalData.bindPhoneStat){
-    //     this.setData({
-    //       showPhonePanel:true
-    //     })
-    //     return
-    //   }
-    //   let order_code = res.orderCode
-    //   if (res.callPay) {
-    //     let jsApiParameters = res.jsApiParameters
-    //     let {
-    //       timeStamp,
-    //       nonceStr,
-    //       signType,
-    //       paySign
-    //     } = jsApiParameters
-    //     // wx.showToast({
-    //     //   icon:"loading",
-    //     //   title:"提交订单成功，发起支付"
-    //     // })
+    api.submmitOrder(data).then(res => {
+      wx.hideLoading();
+      console.log(res)
+      if (!res) {
+        wx.showToast({
+          icon: "error",
+          title: "提交订单失败，刷新页面"
+        })
+        return
+      }
+      if(res==app.globalData.bindPhoneStat){
+        this.setData({
+          showPhonePanel:true
+        })
+        return
+      }
+      let order_code = res.orderCode
+      if (res.callPay) {
+        let jsApiParameters = res.jsApiParameters
+        let {
+          timeStamp,
+          nonceStr,
+          signType,
+          paySign
+        } = jsApiParameters
+        // wx.showToast({
+        //   icon:"loading",
+        //   title:"提交订单成功，发起支付"
+        // })
 
-    //     wx.requestPayment({
-    //       timeStamp: timeStamp,
-    //       nonceStr: nonceStr,
-    //       package: jsApiParameters.package,
-    //       signType: signType,
-    //       paySign: paySign,
-    //       success(payres) {
-    //         console.log(payres);
-    //         wx.showToast({
-    //           title: '支付成功',
-    //           icon: 'none',
-    //           duration: 1000,
-    //           success: function () {
-    //             setTimeout(function () {
-    //               wx.redirectTo({
-    //                 url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-    //               })
-    //             }, 1000)
-    //           }
-    //         })
+        wx.requestPayment({
+          timeStamp: timeStamp,
+          nonceStr: nonceStr,
+          package: jsApiParameters.package,
+          signType: signType,
+          paySign: paySign,
+          success(payres) {
+            console.log(payres);
+            wx.showToast({
+              title: '支付成功',
+              icon: 'none',
+              duration: 1000,
+              success: function () {
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+                  })
+                }, 1000)
+              }
+            })
 
-    //       },
-    //       fail(res) {
-    //         console.log(res)
-    //         wx.showToast({
-    //           title: "支付失败",
-    //           icon: 'none',
-    //           duration: 2000
-    //         })
-    //         wx.redirectTo({
-    //           url: '/pages/user/order/order?type=1'
-    //         })
-    //       }
-    //     })
-    //   } else {
-    //     wx.showToast({
-    //       icon: "success",
-    //       title: "支付成功"
-    //     })
-    //     setTimeout(function () {
-    //       wx.redirectTo({
-    //         url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
-    //       })
-    //     }, 2000)
-    //   }
-    // })
+          },
+          fail(res) {
+            console.log(res)
+            wx.showToast({
+              title: "支付失败",
+              icon: 'none',
+              duration: 2000
+            })
+            wx.redirectTo({
+              url: '/pages/user/order/order?type=1'
+            })
+          }
+        })
+      } else {
+        wx.showToast({
+          icon: "success",
+          title: "支付成功"
+        })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+          })
+        }, 2000)
+      }
+    })
   }),
   inputCard: util.debounce(function (e) {
     console.log("1111");
@@ -928,41 +932,6 @@ Page({
       })
     }
   },
-  oldPwdInput: util.debounce(function (e) {
-    let val = e.detail.value
-    let newPwd = this.data.newPwd || ''
-    this.setData({
-      oldPwd: val
-    })
-    if (val.length == 6 && newPwd.length == 6) {
-      this.setData({
-        unuse: false
-      })
-    }
-    if (val.length != 6 || newPwd.length != 6) {
-      this.setData({
-        unuse: true
-      })
-    }
-  }, 500),
-  newPwdInput: util.debounce(function (e) {
-    let val = e.detail.value
-    let oldPwd = this.data.oldPwd || ''
-    this.setData({
-      newPwd: val
-    })
-    if (val.length == 6 && oldPwd.length == 6) {
-      this.setData({
-        unuse: false
-      })
-    }
-    if (val.length != 6 || oldPwd.length != 6) {
-      this.setData({
-        unuse: true
-      })
-    }
-  }, 500),
-
   initPwdInput: util.debounce(function (e) {
     let val = e.detail.value
     let confirmPwd = this.data.confirmPwd || ''

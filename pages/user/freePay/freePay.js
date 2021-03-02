@@ -30,6 +30,7 @@ Page({
       })
     }
   },
+  //旧密码
   oldPwdInput:util.debounce(function(e){
     let val = e.detail.value
     let newPwd = this.data.newPwd || ''
@@ -47,6 +48,7 @@ Page({
       })
     }
   },500),
+  //新密码
   newPwdInput:util.debounce(function(e){
     let val = e.detail.value
     let oldPwd = this.data.oldPwd || ''
@@ -64,7 +66,7 @@ Page({
       })
     }
   },500),
-
+  //初始密码
   initPwdInput:util.debounce(function(e){
     let val = e.detail.value
     let confirmPwd = this.data.confirmPwd || ''
@@ -82,6 +84,7 @@ Page({
       })
     }
   },500),
+  //确认密码
   confirmInput:util.debounce(function(e){
     let val = e.detail.value
     let initPwd = this.data.initPwd || ''
@@ -203,33 +206,33 @@ Page({
         break;
       case 2:
         let {newPwd,oldPwd,confirmPwd,initPwd,pwd_set}=this.data
-        // if(pwd_set==1){
-        //   if(newPwd.length<6 || oldPwd.length<6){
-        //     wx.showToast({
-        //       title: '请输入6位数字密码',
-        //       icon: 'none',
-        //       duration: 2000
-        //     })
-        //     return 
-        //   }
-        //   let data = {
-        //     old_password:oldPwd,
-        //     new_password:newPwd
-        //   }
-        //   api.setNewPwd(data).then(res=>{
-        //     console.log(res)
-        //     if(res.pwd_set==1){
-        //       wx.showToast({
-        //         title: '新密码设置成功',
-        //         icon: 'none',
-        //         duration: 2000
-        //       })
-        //       this.setData({
-        //         popShow:false
-        //       })
-        //     }
-        //   })
-        // }else{
+        if(pwd_set==1){
+          if(newPwd.length<6 || oldPwd.length<6){
+            wx.showToast({
+              title: '请输入6位数字密码',
+              icon: 'none',
+              duration: 2000
+            })
+            return 
+          }
+          let data = {
+            old_password:oldPwd,
+            new_password:newPwd
+          }
+          api.setNewPwd(data).then(res=>{
+            console.log(res)
+            if(res.pwd_set==1){
+              wx.showToast({
+                title: '新密码设置成功',
+                icon: 'none',
+                duration: 2000
+              })
+              this.setData({
+                popShow:false
+              })
+            }
+          })
+        }else{
           if(confirmPwd.length<6 || initPwd.length<6){
             wx.showToast({
               title: '请输入6位数字密码',
@@ -255,7 +258,7 @@ Page({
               })
             //}
           })
-        //}
+        }
         
         break
       case 3:
@@ -373,7 +376,6 @@ Page({
           free_amount:free_amount,
           free_secret:res.free_secret,
           list:list,
-          status:res.pwd_set,
           pwd_set:res.pwd_set
         })
       }
@@ -402,16 +404,27 @@ Page({
       this.changeFreePay()
     }
   },
-  changePwd(e){
-    console.log(e)
+  changePwd(){
     this.setData({
       pwdVal:'',
       unuse:true,
       type:1,//修改或设置密码中
       popShow:true,
+      poptitle:"请设置余额密码",
+      step:2,
+      confirmText:"设置",
+    })
+  },
+  editPwd(){
+    this.setData({
+      oldPwd:'',
+      newPwd:'',
+      unuse:true,
+      type:1,//修改或设置密码中
+      popShow:true,
       poptitle:"请输入设置的余额密码",
-      step:1,
-      confirmText:"下一步",
+      step:2,
+      confirmText:"修改",
     })
   },
   // setPwd(e){
