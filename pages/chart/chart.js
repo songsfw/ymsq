@@ -249,11 +249,6 @@ Page({
         wx.navigateTo({
           url: "/pages/chart/payOrder/payOrder?type=" + type
         })
-      } else {
-        wx.showToast({
-          icon: "none",
-          title: "结算失败，刷新页面"
-        })
       }
     })
 
