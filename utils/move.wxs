@@ -27,28 +27,34 @@ function recordMove(e, ins) {
     // console.log('向左滑动 开启删除')
     // console.log('defaultStatus',defaultStatus);
     if (defaultStatus == 1) {
-      var res = ins.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
-      tids = res.itemids.split(',')
-      for (j = 0, len = tids.length; j < len; j++) {
-        if (id != tids[j]) {
-          // console.log(tids[j],'0-0-0',id)
-          ins.selectComponent('.item_' + tids[j]).setStyle({
-            transform: 'translateX(0px)'
-          })
-          statusArr[id] = 0;
+      if (ins.selectComponent('.pro-list')) {
+        var res = ins.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
+        tids = res.itemids.split(',')
+        for (j = 0, len = tids.length; j < len; j++) {
+          if (id != tids[j]) {
+            // console.log(tids[j],'0-0-0',id)
+            ins.selectComponent('.item_' + tids[j]).setStyle({
+              transform: 'translateX(0px)'
+            })
+            statusArr[id] = 0;
+          }
         }
       }
+
       //cakeList
-      var res = ins.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
-      tids = res.itemids.split(',')
-      for (j = 0, len = tids.length; j < len; j++) {
-        if (id != tids[j]) {
-          ins.selectComponent('.item_' + tids[j]).setStyle({
-            transform: 'translateX(0px)'
-          })
-          statusArr[id] = 0;
+      if (ins.selectComponent('.cakeList')) {
+        var res = ins.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
+        tids = res.itemids.split(',')
+        for (j = 0, len = tids.length; j < len; j++) {
+          if (id != tids[j]) {
+            ins.selectComponent('.item_' + tids[j]).setStyle({
+              transform: 'translateX(0px)'
+            })
+            statusArr[id] = 0;
+          }
         }
       }
+
 
       defaultStatus = 0;
     }
@@ -144,34 +150,51 @@ function recodeMoveEnd(e, ins) {
 }
 
 var flag = 0;
+
 function reset(newValue, oldValue, ownerInstance, instance) {
   // if(flag == 1){
   //   return false;
   // }
   // flag = 1
-  var res = ownerInstance.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
-  tids = res.itemids.split(',')
-  for (j = 0, len = tids.length; j < len; j++) {
-    // console.log(tids[j],'0-0-0')
-    ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
-      transform: 'translateX(0px)'
-    })
+  if (ownerInstance.selectComponent('.pro-list')) {
+    var res = ownerInstance.selectComponent('.pro-list').getDataset('itemids') //.dataset.itemids
+    tids = res.itemids.split(',')
+    for (j = 0, len = tids.length; j < len; j++) {
+      // console.log(tids[j],'0-0-0')
+      ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
+        transform: 'translateX(0px)'
+      })
+    }
   }
-
-  var res = ownerInstance.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
-  tids = res.itemids.split(',')
-  for (j = 0, len = tids.length; j < len; j++) {
-    // console.log(tids[j],'0-0-0')
-    ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
-      transform: 'translateX(0px)'
-    })
+  if (ownerInstance.selectComponent('.cakeList')) {
+    var res = ownerInstance.selectComponent('.cakeList').getDataset('itemids') //.dataset.itemids
+    tids = res.itemids.split(',')
+    for (j = 0, len = tids.length; j < len; j++) {
+      // console.log(tids[j],'0-0-0')
+      ownerInstance.selectComponent('.item_' + tids[j]).setStyle({
+        transform: 'translateX(0px)'
+      })
+    }
   }
 }
+
+
+
+//掉入购物车
+function toCart(newValue, oldValue, ownerInstance, instance) {
+ 
+
+}
+
+
 module.exports = {
+  //购物车左滑
   recordMove: recordMove,
   recodeMoveStart: recodeMoveStart,
   recodeMoveEnd: recodeMoveEnd,
   angleT: angleT,
-  reset: reset
+  reset: reset,
 
+  //掉入购物车
+  toCart: toCart
 }
