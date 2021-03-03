@@ -136,6 +136,7 @@ Page({
       idx = e.currentTarget.dataset.idx
     let pageNum = parseInt(this.data.breadInfo.pageNum)
     let index = pageNum - 1
+    this.data.totalNum = this.data.totalNum+1;
     let {
       currentTab,
       curProId,
@@ -189,8 +190,6 @@ Page({
         // this.startAnimation();
 
         proNum++
-        totalNum++
-
         this.setData({
           finger: this.finger,
           topPoint: topPoint,
@@ -209,7 +208,7 @@ Page({
     if (timer) {
       clearTimeout(timer);
     }
-    console.log('proNum', proNum);
+
     timer = setTimeout(() => {
       let data = {
         city_id: city_id,
