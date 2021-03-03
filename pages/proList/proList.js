@@ -44,7 +44,9 @@ Page({
     curPro: "",
 
     showLoading: true,
-    cornerTagStyle: '' //加号角标样式
+    cornerTagStyle: '', //加号角标样式
+    //掉入购物车开关
+    toCart: 0
   },
   switchTab: function (e) {
     var that = this;
@@ -141,6 +143,8 @@ Page({
       city_id,
       totalNum
     } = this.data
+
+    let tocartParams = {};
     totalNum = parseInt(totalNum)
     let curStock = parseInt(stock[proId])
     if (proId != curProId) {
@@ -175,9 +179,14 @@ Page({
           topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
           this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
         }
-
-
-        this.startAnimation();
+        this.linePos['bezier_points'].push({x:1000,y:1000});
+        tocartParams['proid'] = proId;
+        tocartParams['img'] = img;
+        tocartParams['position'] = {
+          'linePos': this.linePos
+        };
+        this.selectComponent('#componentsToCart').start(tocartParams)
+        // this.startAnimation();
 
         proNum++
         totalNum++

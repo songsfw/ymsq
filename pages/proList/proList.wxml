@@ -128,6 +128,8 @@
 </view> -->
 <!-- <view style="height:{{50+btmHolder}}px" id="haha"></view> -->
 
-<view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
+<!-- <view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
   <image src="{{curPro}}"></image>
-</view>
+</view> -->
+
+<toCart style="position:absolute;top:0;right: 0;" id="componentsToCart"></toCart>
