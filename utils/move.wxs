@@ -179,14 +179,6 @@ function reset(newValue, oldValue, ownerInstance, instance) {
 }
 
 
-
-//掉入购物车
-function toCart(newValue, oldValue, ownerInstance, instance) {
- 
-
-}
-
-
 module.exports = {
   //购物车左滑
   recordMove: recordMove,
@@ -195,6 +187,4 @@ module.exports = {
   angleT: angleT,
   reset: reset,
 
-  //掉入购物车
-  toCart: toCart
 }
