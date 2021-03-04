@@ -1,27 +1,48 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+let tempOrderNo = '';
+let tempAfter = 0;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    currentTab:0,
-    orderList:[],
-    page:1,
-    limit:20,
-    noMoreData:false,
-    pop:0,
-    
-    curRes:0,
-    reasonTxt:"",
-    reason:[
+    currentTab: 0,
+    orderList: [],
+    page: 1,
+    limit: 20,
+    noMoreData: false,
+    pop: 0,
+    curRes: 0,
+    reasonTxt: "",
+    reason: [
       "我不想买了",
       "信息填写错误",
       "其他原因"
     ]
   },
-  close(){
+  close() {
+    let that = this;
+    if (tempAfter == 1) {
+      wx.showModal({
+        title: '分享成功',
+        content: '恭喜您获得一张优惠券呦,可在会员中心 > 优惠券，查看使用',
+        showCancel: false,
+        confirmText: '我知道了',
+        success: function success(res) {
+          tempAfter = 0;
+          tempOrderNo = '';
+          that.setData({
+            pop: 0,
+          })
+
+          if (res.confirm) {
+            console.log('用户点击确定');
+          }
+        }
+      });
+    }
     this.setData({
       pop: 0
     })
@@ -34,15 +55,15 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
 
     this.setData({
-      btmHolder:btmHolder||0,
-      currentTab:type || 0
+      btmHolder: btmHolder || 0,
+      currentTab: type || 0
     })
-   
+
   },
-  toOrder(e){
+  toOrder(e) {
     let code = e.currentTarget.dataset.code
     wx.navigateTo({
-      url:"/pages/user/orderInfo/orderInfo?code="+code
+      url: "/pages/user/orderInfo/orderInfo?code=" + code
     })
   },
   switchTab: function (e) {
@@ -77,81 +98,90 @@ Page({
       this.timing(remainTime)
     }, 1000);
   },
-  bindcancel(e){
+  bindcancel(e) {
     let code = e.currentTarget.dataset.code
     this.setData({
-      curOrderCode:code,
-      pop:"cancel"
+      curOrderCode: code,
+      pop: "cancel"
     })
   },
-  bindSelect(e){
+  bindSelect(e) {
     let idx = e.currentTarget.dataset.idx
     this.setData({
-      curRes:idx
+      curRes: idx
     })
   },
-  inputReason:util.debounce(function(e){
+  inputReason: util.debounce(function (e) {
     let val = e.detail.value
     console.log(val);
-    if(val){
+    if (val) {
       this.setData({
-        reasonTxt:val,
+        reasonTxt: val,
       })
     }
-  },500),
-  showDelivery(e){
+  }, 500),
+  showDelivery(e) {
     let orderCode = e.currentTarget.dataset.code
     wx.navigateTo({
-      url:'/pages/user/delivery/delivery?orderCode='+orderCode
+      url: '/pages/user/delivery/delivery?orderCode=' + orderCode
     })
   },
-  cancelOrder(){
+  cancelOrder() {
     let code = this.data.curOrderCode
-    let {reason,curRes,reasonTxt} = this.data
+    let {
+      reason,
+      curRes,
+      reasonTxt
+    } = this.data
     let data = {
-      order_code:code,
-      reason: reasonTxt=='' ? reason[curRes] : reasonTxt 
+      order_code: code,
+      reason: reasonTxt == '' ? reason[curRes] : reasonTxt
     }
-    if(curRes==2 && reasonTxt == ''){
+    if (curRes == 2 && reasonTxt == '') {
       wx.showToast({
-        icon:"none",
-        title:"请填写理由"
+        icon: "none",
+        title: "请填写理由"
       })
       return
     }
     console.log(reason);
-    api.cancleOrder(data).then(res=>{
+    api.cancleOrder(data).then(res => {
       console.log(res);
-      if(res){
+      if (res) {
         wx.showToast({
-          icon:"none",
-          title:"订单取消成功"
+          icon: "none",
+          title: "订单取消成功"
         })
         this.setData({
-          noMoreData:false,
-          page:1,
-          orderList:[],
-          pop:0
+          noMoreData: false,
+          page: 1,
+          orderList: [],
+          pop: 0
         })
         this.getOrder()
-      }else{
+      } else {
         this.setData({
-          pop:0
+          pop: 0
         })
       }
     })
   },
-  payOrder(e){
+  payOrder(e) {
     let code = e.currentTarget.dataset.code
     let data = {
-      order_code:code
+      order_code: code
     }
-    api.payOrder(data).then(res=>{
+    api.payOrder(data).then(res => {
 
       console.log(res);
-      if(res){
+      if (res) {
         let jsApiParameters = res.jsApiParameters
-        let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
+        let {
+          timeStamp,
+          nonceStr,
+          signType,
+          paySign
+        } = jsApiParameters
         wx.requestPayment({
           timeStamp: timeStamp,
           nonceStr: nonceStr,
@@ -186,36 +216,40 @@ Page({
       }
     })
   },
-  getOrder(){
+  getOrder() {
     this.setData({
-      showLoading:true
+      showLoading: true
     })
-    let {page,currentTab}=this.data
+    let {
+      page,
+      currentTab
+    } = this.data
     let data = {
-      page:page,
-      type:currentTab,
-      limit:20
+      page: page,
+      type: currentTab,
+      limit: 20
     }
-    api.orderList(data).then(res=>{
+    api.orderList(data).then(res => {
       console.log(res);
-      if(!res){
+      if (!res) {
         return
       }
-      if(!res.order){
+      if (!res.order) {
         this.setData({
           noMoreData: true
         })
         return false
       }
       let totalNum = res.total_num[0]
-      let list = res.order,count=parseInt(res.total_num[currentTab])
-      let noMoreData = count-page*20 <= 0
+      let list = res.order,
+        count = parseInt(res.total_num[currentTab])
+      let noMoreData = count - page * 20 <= 0
       this.setData({
-        totalNum:totalNum,
-        showLoading:false,
+        totalNum: totalNum,
+        showLoading: false,
         noMoreData: noMoreData,
-        count:count,
-        ['orderList['+(data.page-1)+']']:list,
+        count: count,
+        ['orderList[' + (data.page - 1) + ']']: list,
       })
       wx.stopPullDownRefresh() //停止下拉刷新
     })
@@ -227,177 +261,186 @@ Page({
     })
     this.getOrder()
   },
-  onPullDownRefresh() {   //下拉刷新
+  onPullDownRefresh() { //下拉刷新
 
     this.getOrder()
   },
-  showTips(){
+  showTips() {
     let showTip = this.data.showTip
-    if(showTip){
+    if (showTip) {
       this.setData({
-        showTip:false
+        showTip: false
       })
-    }else{
+    } else {
       this.setData({
-        showTip:true
+        showTip: true
       })
     }
   },
   showPop(e) {
-    
+
     let pop = e.currentTarget.dataset.pop,
-    order_code = e.currentTarget.dataset.code
+      order_code = e.currentTarget.dataset.code
 
     let data = {
-      order_code:order_code
+      order_code: order_code
     }
-
-    api.preShareOrder(data).then(res=>{
+    this.setData({
+      tempOrderNo: order_code,
+    })
+    api.preShareOrder(data).then(res => {
       console.log(res);
-      if(!res){
+      if (!res) {
         return
       }
       let action = res.action
       this.setData({
-        curOrderCode:order_code,
-        shareInfo:res
+        curOrderCode: order_code,
+        shareInfo: res
       })
-      if(action=="share"){
-        wx.showLoading({title:"加载中..."})
-        api.createPoster(data).then(res=>{
+      if (action == "share") {
+        wx.showLoading({
+          title: "加载中..."
+        })
+        api.createPoster(data).then(res => {
           console.log(res);
-          if(!res){
+          if (!res) {
             return
           }
           let poster = res.file
           this.setData({
-            poster:poster,
-            pop: 'showPoster'
+            poster: poster,
+            pop: 'showPoster',
           })
           wx.hideLoading()
         })
-      }else{
+      } else {
         this.setData({
-          pop: pop
+          pop: pop,
         })
       }
     })
-    
-    
+
+
   },
-  previewImage(e){
-		var cur=e.target.dataset.src;//获取本地一张图片链接
-		wx.previewImage({
-			current: cur, //字符串，默认显示urls的第一张
-  			urls: [cur] // 数组，需要预览的图片链接列表
-		})
-	},
-  confirmCoupon(){
-    wx.showLoading({title:"加载中..."})
+  previewImage(e) {
+    var cur = e.target.dataset.src; //获取本地一张图片链接
+    wx.previewImage({
+      current: cur, //字符串，默认显示urls的第一张
+      urls: [cur] // 数组，需要预览的图片链接列表
+    })
+  },
+  confirmCoupon() {
+    wx.showLoading({
+      title: "加载中..."
+    })
     let order_code = this.data.curOrderCode
     let data = {
-      order_code:order_code
+      order_code: order_code
     }
-    api.createPoster(data).then(res=>{
+    api.createPoster(data).then(res => {
       console.log(res);
       wx.hideLoading()
-      if(!res){
+      if (!res) {
         return
       }
       let poster = res.file
       this.setData({
-        poster:poster,
+        poster: poster,
         pop: 'showPoster'
       })
-      api.shareOrder(data).then(res=>{
+      api.shareOrder(data).then(res => {
         console.log(res);
-        if(!res){
+        if (!res) {
           return
         }
+        tempOrderNo = order_code;
+        tempAfter = 1;
+        console.log(tempAfter);
         this.setData({
-          'shareInfo.action':"share"
+          'shareInfo.action': "share",
         })
       })
     })
   },
 
- //20200224
- saveImg() {
-  var page = this;
-  if (!wx.saveImageToPhotosAlbum) {
-    // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
-    wx.showModal({
-      title: '提示',
-      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
-      showCancel: false,
-    });
-    return;
-  }
-
-  wx.showLoading({
-    title: "正在保存图片",
-    mask: false,
-  });
-
-  wx.downloadFile({
-    url: page.data.poster,
-    success: function (e) {
-      wx.showLoading({
-        title: "正在保存图片",
-        mask: false,
-      });
-      wx.saveImageToPhotosAlbum({
-        filePath: e.tempFilePath,
-        success: function () {
-          wx.showModal({
-            title: '提示',
-            content: '商品海报保存成功',
-            showCancel: false,
-          });
-        },
-        fail: function (e) {
-          if (e.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
-            //用户取消 重新调起
-            wx.showModal({
-              title: '提示',
-              content: '需要开启图片保存权限，点击确定去设置',
-              success(res) {
-                if (res.confirm) {
-                  console.log('用户点击确定')
-                  wx.openSetting({
-                    success(res) {
-
-                    },
-                    fail(res) {
-
-                    }
-                  })
-                } else if (res.cancel) {
-                  console.log('用户点击取消')
-                }
-              }
-            })
-
-          }
-        },
-        complete: function (e) {
-          
-        }
-      });
-    },
-    fail: function (e) {
+  //20200224
+  saveImg() {
+    var page = this;
+    if (!wx.saveImageToPhotosAlbum) {
+      // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
       wx.showModal({
-        title: '图片下载失败',
-        content: e.errMsg + ";" + page.data.goods_qrcode,
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
         showCancel: false,
       });
-    },
-    complete: function (e) {
-      console.log(e);
-      wx.hideLoading();
+      return;
     }
-  });
-},
+
+    wx.showLoading({
+      title: "正在保存图片",
+      mask: false,
+    });
+
+    wx.downloadFile({
+      url: page.data.poster,
+      success: function (e) {
+        wx.showLoading({
+          title: "正在保存图片",
+          mask: false,
+        });
+        wx.saveImageToPhotosAlbum({
+          filePath: e.tempFilePath,
+          success: function () {
+            wx.showModal({
+              title: '提示',
+              content: '商品海报保存成功',
+              showCancel: false,
+            });
+          },
+          fail: function (e) {
+            if (e.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              //用户取消 重新调起
+              wx.showModal({
+                title: '提示',
+                content: '需要开启图片保存权限，点击确定去设置',
+                success(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.openSetting({
+                      success(res) {
+
+                      },
+                      fail(res) {
+
+                      }
+                    })
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+
+            }
+          },
+          complete: function (e) {
+
+          }
+        });
+      },
+      fail: function (e) {
+        wx.showModal({
+          title: '图片下载失败',
+          content: e.errMsg + ";" + page.data.goods_qrcode,
+          showCancel: false,
+        });
+      },
+      complete: function (e) {
+        console.log(e);
+        wx.hideLoading();
+      }
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -417,21 +460,21 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom(){
-    if(this.data.noMoreData){
+  onReachBottom() {
+    if (this.data.noMoreData) {
       return false
     }
     this.getMoreData()
