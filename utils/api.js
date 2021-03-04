@@ -366,6 +366,10 @@ const deliveryInfo = (data) => {
   return POST(baseUrl + "/order/delivery-detail",data).then(res => returnData(res))
 }
 
+//说明
+const getIntroduction = () => {
+  return POST(baseUrl + "/base/instructions").then(res => returnData(res))
+}
 
 const submitOrder = (params) => {
   console.log(JSON.stringify(params))
@@ -434,5 +438,6 @@ module.exports = {
   appLogin,
   feedBack,
   storeCoupon,
-  deliveryInfo
+  deliveryInfo,
+  getIntroduction
 }

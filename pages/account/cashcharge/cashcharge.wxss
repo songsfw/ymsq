@@ -1,7 +1,6 @@
 page{border-top: 1px solid #F6F6F6;}
-
-.card{position: relative; width: 638rpx;height: 366rpx;margin: 32rpx auto;
-box-shadow: 0px 4px 24px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}
+.card{text-align: center;padding:32rpx 0 50rpx 0;background-color: #F6F6F6;}
+.card .card-wp{position: relative; width: 638rpx;height: 366rpx;margin: 0 auto;box-shadow: 0px 4px 24px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}
 .price-info{    position: absolute;
     left: 0;
     bottom: 0;
@@ -15,6 +14,15 @@ box-shadow: 0px 4px 24px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overf
 .inputxt>text{display: block;width:77px ; color: #333;font-size: 14px;}
 .inputxt input{height: 100%;}
 .inputxt .icon{width: 49px;height: 49px;text-align: center;line-height: 49px;color: #C1996B;}
-.form{padding:0 24rpx;margin-top:90rpx ;}
+.form{padding:0 24rpx;border-radius:32rpx 32rpx 0 0 ;margin-top: -20rpx;background-color: #fff;}
 .tips{padding: 26rpx 50rpx;color: #999;font-size: 12px;}
 .confirm-btn{border: 1px solid #C1996B;box-sizing: border-box;opacity: .6;}
+.rule-btn{position:absolute;right: 0;top:28rpx;font-size: 12px;color: #fff;padding: 0 8px;height: 24px;line-height: 24px;text-align: center;border-radius: 12px 0 0 12px; background-color:rgba(0, 0, 0, 0.5);}
+
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.rule-panel{ position: fixed;left: 50%;top:50%; background: url(http://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;height: 712rpx;z-index: 22;transform: translate(-50%,-50%);background-size: 100% 100%; padding: 166rpx 44rpx 44rpx 44rpx;box-sizing: border-box;}
+.rule-panel .close{position: absolute;transform: translateX(-50%);left: 50%; bottom:-40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
+.rule-panel .close:after,
+.rule-panel .close::before{background-color: #fff;}
+.rule-panel .pop-con{height: 100%;}
+.rule-panel .pop-con view{color: #333;font-size: 13px;line-height: 18px;}

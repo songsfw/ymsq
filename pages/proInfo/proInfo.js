@@ -58,6 +58,9 @@ Page({
       pop: 0
     })
   },
+  toCart(){
+    app.globalData.proType = "1"
+  },
   confirmBread:util.debounce(function(e){
     let proId = e.currentTarget.dataset.id
     let {city_id,skuNum,action,totalNum}=this.data
@@ -82,7 +85,7 @@ Page({
           pop:0
         })
         if(action==1){
-          app.globalData.proSource = "1"
+          app.globalData.proType = "1"
           wx.switchTab({
             url:"/pages/chart/chart"
           })

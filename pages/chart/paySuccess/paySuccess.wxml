@@ -90,7 +90,7 @@
         </scroll-view>
     </view>
   </view>
-  <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
+  <view class="confirm-btn btn" style="margin-bottom:{{btmHolder}}px" bind:tap="confirmCoupon">分享给朋友</view>
 </view>
 <view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
   <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>

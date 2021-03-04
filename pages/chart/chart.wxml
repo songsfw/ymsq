@@ -162,6 +162,15 @@
         <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
       </view>
     </view>
+    <block wx:if="{{fitting.basic}}">
+      <view class="h4">
+        <text>配件说明</text>
+      </view>
+      <view class="basic">
+        <view wx:for="{{fitting.basic}}"><text>{{index}}</text>：{{fitting.basic[index]}}</view>
+      </view>
+    </block>
+    
     <view class="confirm-btn btn" bind:tap="confirmFitting" data-sku="{{fitting.sku}}">确定</view>
   </view>
 

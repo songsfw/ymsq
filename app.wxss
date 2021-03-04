@@ -1,4 +1,5 @@
 @import "/font/iconfont.wxss";
+/*http://api-beta.withwheat.com/img/bg1.png*/
 /**app.wxss**/
 page{background:#fff;font-size:24rpx;color: #222;height: 100%; box-sizing: border-box;}
 image{width: 100%;height: 100%;}

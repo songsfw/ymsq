@@ -68,7 +68,7 @@ page{background: #F6F6F6;height: auto;}
 .pop-panel .close:after,
 .pop-panel .close::before{border-color: #999;}
 .pop-con{padding: 40rpx 40rpx 20rpx 40rpx;}
-.confirm-btn{margin-top: 100rpx;}
+.confirm-btn{margin-top: 50rpx;}
 .score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
 .score-panel .h3{justify-content:space-between; flex-direction: column;}
 .score-panel .tit{font-size: 16px;font-weight: bold;}
@@ -98,3 +98,5 @@ page{background: #F6F6F6;height: auto;}
 .fittings .info .txt{color: #666;}
 .fittings .info .txt text{color: #C1996B;}
 .fittings .info .txt view{margin-bottom:30rpx ;font-size: 13px;}
+.basic{max-height: 80px;-webkit-overflow-scrolling: touch;overflow-y: auto;}
+.basic text{font-weight: bold;color: #C1996B;}

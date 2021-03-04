@@ -422,31 +422,9 @@ Page({
       unuse:true,
       type:1,//修改或设置密码中
       popShow:true,
-      poptitle:"请输入设置的余额密码",
+      poptitle:"修改余额密码",
       step:2,
       confirmText:"修改",
-    })
-  },
-  editPwd(){
-    this.setData({
-      pwdVal:'',
-      unuse:true,
-      type:1,//修改或设置密码中
-      popShow:true,
-      poptitle:"请设置余额密码",
-      step:2,
-      confirmText:"设置",
-    })
-  },
-  editPwd(){
-    this.setData({
-      pwdVal:'',
-      unuse:true,
-      type:1,//修改或设置密码中
-      popShow:true,
-      poptitle:"请设置余额密码",
-      step:2,
-      confirmText:"设置",
     })
   },
   // setPwd(e){

@@ -45,10 +45,13 @@ Page({
         if(!res){
           return
         }
-        let user_info = res.user_info
+        let result = res.data.result
+        let user_info = result.user_info
         if(user_info){
           this.setData({
-            [userInfo.is_authed]:res.is_authed
+            'userInfo.nickname':user_info.nickname,
+            'userInfo.photo':user_info.head_url,
+            'userInfo.is_authed':user_info.is_authed
           })
           wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
         }

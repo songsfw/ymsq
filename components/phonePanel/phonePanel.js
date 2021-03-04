@@ -92,9 +92,11 @@ Component({
         code:code
       }
       api.bindPhone(data).then(res=>{
+        console.log(res);
         if(res){
           this.setData({
             popShow:false,
+            'userInfo.phone':mobile,
             'userInfo.is_mobile':1
           })
           wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))

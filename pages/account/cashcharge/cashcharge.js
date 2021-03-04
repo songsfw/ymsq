@@ -10,7 +10,8 @@ Page({
     show:false,
     result:'',
     pwd:'',
-    type:1
+    type:1,
+    pop:0
   },
   changeShow(){
     let show = this.data.show
@@ -51,6 +52,16 @@ Page({
   },300),
   bindPhoneSucess(){
     this.chashCharge()
+  },
+  showRule(){
+    this.setData({
+      pop:"rules"
+    })
+  },
+  close(){
+    this.setData({
+      pop:0
+    })
   },
   chashCharge(){
     let {result,pwd,use,type}=this.data
@@ -189,7 +200,17 @@ Page({
     this.setData({
       btmHolder:btmHolder||0,
     })
+    
     if(use==1){
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          let txt = type==1?res.instructions['cash-card']:res.instructions.duomeiwei
+          this.setData({
+            instructions:txt
+          })
+        }
+      })
       this.setData({
         isUse:isUse,
         use:use,

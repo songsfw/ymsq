@@ -176,12 +176,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let btmHolder = wx.getStorageSync('btmHolder')
+    btmHolder = btmHolder>0?btmHolder:12
     let order_code = options.orderCode
     console.log(order_code)
     let data = {
       order_code: order_code
     }
     this.setData({
+      btmHolder: btmHolder,
       order_code: order_code
     })
     api.preShareOrder(data).then(res => {

@@ -4,7 +4,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;}
 .option .flex-center{margin-left: 20rpx;font-size: 13px;}
-.checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;}
+.checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;box-sizing: border-box;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .checkbox.on{border: none;}
 .checkbox.on view{display: block;}
@@ -121,12 +121,16 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-box .item .border:before{left: auto;right: -15rpx;}
 .coupon-box .card{padding-top:20rpx ;}
 .coupon-box .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
-.coupon-box .item{position: relative; margin: 0 24rpx 20rpx 24rpx;border-radius:8rpx ;background: #fff;overflow: hidden;background: #F6F6F6;}
-.coupon-box .item .tag{position: absolute;right: 0;top: 0;background: rgba(100, 191, 0,.1);color:#64BF00;font-size: 11px;padding: 6px;line-height: 1;}
+.coupon-box .item{position: relative; margin: 0 24rpx;border-radius:8rpx ;background: #fff;overflow: hidden;background: #F6F6F6;padding:5rpx 10rpx;}
+.coupon-box .item .tag{position: absolute;right: 10rpx;top: 5rpx;background: rgba(100, 191, 0,.1);color:#64BF00;font-size: 11px;padding: 6px;line-height: 1;border-radius: 0 0 0 16rpx;}
 .coupon-box .item .tag1{background: rgba(245, 34, 45, .1);color: #F5222D;}
 .coupon-box .item .name{font-size: 16px;}
-.item.act{background: #f11616;}
-.item .item-wrap{background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;}
+.item.act{background: #f11616;padding-bottom: 10rpx; margin-bottom:5rpx;}
+.coupon-box .item.act .border:after,
+.coupon-box .item.act .border:before{background-color:#f11616;}
+.item.act .h5{color: #FFF4E6;font-size: 12px;margin:4px 0;}
+.item.act .h5 image{width:26rpx;height: 22rpx;vertical-align: middle;margin-right: 10rpx;}
+.item .item-wrap{background: #fff;padding: 32rpx 24rpx 20rpx 24rpx;border-radius: 8rpx;overflow:hidden;}
 
 .discount_tips{width: 100%; background: #FEFBF3;font-size: 14px;color: #FF7D06;padding:10px 20rpx;box-sizing: border-box;}
 .discount_tips .iconfont{margin-right: 20rpx;}
@@ -141,7 +145,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .coupon-info .txt{font-size: 11px;color: #C1996B;justify-content: space-between;align-items: center;}
 .coupon-info .btn{width:64px;height: 26px;line-height: 26px;border-radius: 13px;font-size: 14px;flex-shrink: 0;margin-left:46rpx ;}
 
-.coupon-box .checkbox{position: relative;margin-top:30px; width: 18px;height: 18px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
+.coupon-box .checkbox{position: relative;margin-top:30px; width: 18px;height: 18px;border-radius: 50%;line-height: 1;margin-right: 16rpx;}
 .coupon-box .checkbox view{ display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
 .coupon-box .checkbox.on view{display: block;}
 

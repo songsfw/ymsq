@@ -64,6 +64,9 @@ Page({
       imageUrl: proInfo.price
     }
   },
+  toCart(){
+    app.globalData.proType = "2"
+  },
   confirmCake:util.debounce(function(e){
     let proId = e.currentTarget.dataset.sku
     let {city_id,skuNum,action,totalNum}=this.data
@@ -97,7 +100,7 @@ Page({
           pop:0
         })
         if(action==1){
-          app.globalData.proSource = "2"
+          app.globalData.proType = "2"
           wx.switchTab({
             url:"/pages/chart/chart"
           })

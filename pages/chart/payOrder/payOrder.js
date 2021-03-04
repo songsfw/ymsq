@@ -41,7 +41,6 @@ Page({
     hasPolicy: true,
 
     ziti: "0",
-
     delivertTip: "满减免邮费不能与优惠券同时使用",
 
     poptitle: "请输入设置的余额密码",
@@ -193,7 +192,8 @@ Page({
     this.setData({
       ziti: ziti,
     })
-    this.initOrderPrice()
+    this.initOrderData()
+    //this.initOrderPrice()
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
@@ -355,12 +355,14 @@ Page({
       verifyed,
       city_id,
       is_ziti,
+      ziti,
       address_id
     } = this.data
 
     let data = {
       city_id: city_id,
       is_ziti: is_ziti,
+      choose_ziti:ziti,
       address_id: address_id
     }
     if (type == "1") {
@@ -499,9 +501,12 @@ Page({
     }
 
     //初始优惠券
-    if(!biggest_discount.promotion_info){
-      this.setBalancePrice({
-        useDiscount:false
+    if(!biggest_discount.type){
+      coupon=0
+      this.setData({
+        useDiscount:false,
+        couponCheck:-1,
+        curId:-1
       })
     }
     if(biggest_discount.type=='promotion'){
@@ -555,26 +560,9 @@ Page({
       return util.floatObj().subtract(pre, cur)
     }, payPrice)
     console.log(payPrice)
-
-    let {
-      free_amount,
-      free_secret
-    } = this.data.balanceInfo, {
-      useBalance,
-      verifyed
-    } = this.data
-    free_amount = parseFloat(free_amount)
     payPrice = parseFloat(payPrice)
-    if (useBalance) {
-      if (free_secret == 1 && free_amount > payPrice) {
-        verifyed = true
-      } else {
-        verifyed = false
-      }
-    }
-
+    
     this.setData({
-      verifyed: verifyed,
       preUseBalancePrice: payPrice,
       payPrice: payPrice
     })
@@ -599,16 +587,41 @@ Page({
   setBalancePrice() {
     let balanceNum = parseFloat(this.data.balance),
       payPrice = parseFloat(this.data.payPrice),
-      useBalance = this.data.useBalance
+      balanceTxt = ''
+
+    let {
+      free_amount,
+      free_secret,
+      pwd_set
+    } = this.data.balanceInfo, {
+      useBalance,
+      verifyed
+    } = this.data
+    free_amount = parseFloat(free_amount)
+
     //扣除原麦余额
     if (useBalance) {
       if (balanceNum >= payPrice) {
         payPrice = 0
+        balanceTxt = this.data.preUseBalancePrice
       } else {
         payPrice = util.floatObj().subtract(payPrice, balanceNum)
+        balanceTxt = balanceNum
+      }
+      //使用余额是否需要验证
+      if(pwd_set==0){
+        verifyed = false
+      }else{
+        if (free_secret == 1 && free_amount > balanceTxt) {
+          verifyed = true
+        } else {
+          verifyed = false
+        }
       }
       this.setData({
-        payPrice: payPrice,
+        verifyed: verifyed,
+        balanceTxt:parseFloat(balanceTxt),
+        payPrice: payPrice
       })
     } else {
       this.setData({
@@ -706,7 +719,7 @@ Page({
       delivery,
       ziti,
       payQueue,
-      preUseBalancePrice,
+      balanceTxt,
       hasPolicy,
       curId,
       useCoupon,
@@ -715,9 +728,10 @@ Page({
       useBalance,
       verifyed,
       zitiName,
-      balanceInfo
+      balanceInfo,
+      pay_style
     } = this.data
-    let balance_price = useBalance == "1" ? preUseBalancePrice : 0
+    let balance_price = useBalance == "1" ? balanceTxt : 0
     if (!address.address_allow_delivery) {
       wx.showToast({
         icon: "none",
@@ -725,37 +739,22 @@ Page({
       })
       return
     }
+
+    if (ziti != "0" && zitiName == '') {
+      wx.showToast({
+        icon: "none",
+        title: "请填写提货人姓名"
+      })
+      return
+    }
+
     if (!selectDateTxt || !selectTimeTxt) {
       this.setData({
         pop: 'showTime'
       })
-      wx.showToast({
-        icon: "none",
-        title: "请选择配送时间"
-      })
       return
     }
 
-    if (!verifyed && balanceInfo.pwd_set == 0) {
-      this.setData({
-        popShow: true,
-        poptitle: "请设置余额密码",
-        step: 2
-      })
-      return
-    }
-    if (!verifyed && balanceInfo.pwd_set == 1) {
-      this.setData({
-        popShow: true,
-        poptitle: "请输入设置的余额密码",
-        step: 1
-      })
-      return
-    }
-
-
-    console.log(payQueue)
-    console.log(balance_price)
     if (!hasPolicy) {
       wx.showToast({
         icon: "none",
@@ -763,6 +762,30 @@ Page({
       })
       return
     }
+    
+    if(pay_style.balance==1){
+      if (!verifyed && balanceInfo.pwd_set == 0) {
+        this.setData({
+          popShow: true,
+          poptitle: "请设置余额密码",
+          step: 2
+        })
+        return
+      }
+      if (!verifyed && balanceInfo.pwd_set == 1) {
+        this.setData({
+          popShow: true,
+          poptitle: "请输入设置的余额密码",
+          step: 1
+        })
+        return
+      }
+    }
+    
+
+    console.log(payQueue)
+    console.log(balance_price)
+    
 
     console.log(addressInfo)
     let deliveryPrice = Math.abs(payQueue[0])
@@ -779,13 +802,6 @@ Page({
       point_price: payQueue[1],
     }
     if (ziti != "0") {
-      if (zitiName == '') {
-        wx.showToast({
-          icon: "none",
-          title: "请填写提货人姓名"
-        })
-        return
-      }
       data.ziti = '1'
       data.name = zitiName
     }
@@ -821,10 +837,6 @@ Page({
       wx.hideLoading();
       console.log(res)
       if (!res) {
-        wx.showToast({
-          icon: "error",
-          title: "提交订单失败，刷新页面"
-        })
         return
       }
       if(res==app.globalData.bindPhoneStat){
@@ -1070,7 +1082,12 @@ Page({
             useBalance: true,
             verifyed: true
           })
-          this.setBalancePrice()
+          if(this.data.balanceInfo.pwd_set==0){
+            //this.setBalancePrice()
+            this.setData({
+              'balanceInfo.pwd_set':1
+            })
+          }
           this.submmitOrder()
         }
       })
@@ -1101,8 +1118,16 @@ Page({
           icon: 'none',
           duration: 2000
         })
+        this.setData({
+          verifyed: true
+        })
         this.closePanel()
-        this.setBalancePrice()
+        if(this.data.balanceInfo.pwd_set==0){
+          //this.setBalancePrice()
+          this.setData({
+            'balanceInfo.pwd_set':1
+          })
+        }
         this.submmitOrder()
 
       })
@@ -1148,7 +1173,7 @@ Page({
       popShow: true,
       poptitle: "设置余额密码",
       step: 2,
-      confirmText: "下一步",
+      confirmText: "确定",
     })
   },
   /**

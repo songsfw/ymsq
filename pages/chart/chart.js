@@ -408,9 +408,12 @@ Page({
     })
   },
   getChartData() {
+    let proType = app.globalData.proType
     let data = {
-      type: app.globalData.proSource, //此type为跳转过来的参数，不同于页面中其他type
       city_id: this.data.city_id
+    }
+    if(proType){
+      data.type=proType
     }
     api.getChartData(data).then(res => {
       console.log(res);
@@ -606,15 +609,8 @@ Page({
   },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
-    if (total_num && total_num > 0) {
-      wx.setTabBarBadge({
-        index: 2,
-        text: total_num.toString()
-      })
-    } else {
-      wx.removeTabBarBadge({
-        index: 2
-      })
+    if (total_num) {
+      util.setTabBarBadge(total_num)
     }
 
   },
