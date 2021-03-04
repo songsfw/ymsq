@@ -115,7 +115,7 @@
     <image src="../../image/no-pro.png"></image>
   </view>
   <view class="txt">购物车还是空的</view>
-  <navigator url="/pages/index/index" open-type="switchTab" class="btn">去逛逛</navigator>
+  <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去逛逛</navigator>
 </view>
 <!-- <view class="logo">
   <image src="../../image/logo.png"></image>

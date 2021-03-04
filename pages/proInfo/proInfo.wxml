@@ -1,7 +1,8 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <view class="banner">
-  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}" indicator-dots>
+  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"
+    current="{{currentSwiper}}" indicator-dots>
     <block wx:for="{{proInfo.banner}}" wx:for-index="index">
       <swiper-item>
         <image src="{{item}}" class="slide-image" mode="aspectFill" />
@@ -29,29 +30,42 @@
     </view>
   </view>
 </view>
-<view class="option flex" style="padding-bottom:{{btmHolder}}px">
-  <navigator class="home" open-type="switchTab" url="/pages/index/index">
-    <view class="iconfont icon-home"></view>
-    <text >首页</text>
-  </navigator>
-  <navigator class="cart" bind:tap="toCart" open-type="switchTab" url="/pages/chart/chart">
-    <block wx:if="{{totalNum>0}}">
-      <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
-      <view class="num num99" wx:else>99+</view>
-    </block>
-    
-    <view class="iconfont icon-chart"></view>
-    <text >购物车</text>
-  </navigator>
-  <view class="btn add-btn" data-action="0" bind:tap="showPop" data-pop="bread-panel">加入购物车</view>
-  <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="bread-panel">立即购买</view>
+<view id="bottom_menu" class="option flex" style="padding-bottom:{{btmHolder}}px;display:{{!is_show?'none':'flex'}}">
+  <view class="flex">
+    <navigator class="home" open-type="switchTab" url="/pages/index/index">
+      <view class="iconfont icon-home"></view>
+      <text>首页</text>
+    </navigator>
+    <navigator class="cart" bind:tap="toCart" open-type="switchTab" url="/pages/chart/chart">
+      <block wx:if="{{totalNum>0}}">
+        <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
+        <view class="num num99" wx:else>99+</view>
+      </block>
+
+      <view class="iconfont icon-chart"></view>
+      <text>购物车</text>
+    </navigator>
+  </view>
+
+  <view class="flex">
+    <view wx:if="{{proInfo.stock_number == 0}}" class="btn add-btn" style="color:#C9C9C9;background:#F5F5F5;width:250px;margin-right: 15px;box-shadow: none;">已售罄</view>
+
+    <view wx:if="{{proInfo.stock_number != 0}}" class="btn add-btn" data-action="0" bind:tap="showPop"
+      data-pop="bread-panel">加入购物车</view>
+    <view wx:if="{{proInfo.stock_number != 0}}" class="btn buy-btn" data-action="1" bind:tap="showPop"
+      data-pop="bread-panel">立即购买</view>
+  </view>
+
+
 </view>
 
 <view class="pop-panel score-panel {{pop=='bread-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
-      <view class="pic"><image src="{{proInfo.image}}" mode="scaleToFill"></image></view>
+      <view class="pic">
+        <image src="{{proInfo.image}}" mode="scaleToFill"></image>
+      </view>
       <view class="h3 flex">
         <view class="tit">{{proInfo.name}}</view>
         <view class="price"><text>￥</text>{{proInfo.price}}</view>
@@ -67,7 +81,7 @@
     </view>
     <view class="confirm-btn btn" bind:tap="confirmBread" data-id="{{proInfo.id}}">确定</view>
   </view>
-  
+
 </view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 <view style="height:{{60+btmHolder}}px"></view>
