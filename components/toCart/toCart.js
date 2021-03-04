@@ -18,7 +18,7 @@ Component({
       this.setData({
         hide_good_box: false
       })
-      console.log('startAnimation')
+
       let index = 0,
         bezier_points = this.linePos['bezier_points'];
       let timeT = 0;

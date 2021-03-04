@@ -133,10 +133,12 @@ Page({
   addChart: function (e) {
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
-      idx = e.currentTarget.dataset.idx
+      idx = e.currentTarget.dataset.idx,
+      itemIdx = e.currentTarget.dataset.itemidx
+
     let pageNum = parseInt(this.data.breadInfo.pageNum)
     let index = pageNum - 1
-    this.data.totalNum = this.data.totalNum+1;
+    this.data.totalNum = this.data.totalNum + 1;
     let {
       currentTab,
       curProId,
@@ -156,46 +158,8 @@ Page({
     }
     if (currentTab == "1") {
       if (proNum < curStock) {
-
         if (!this.data.hide_good_box) return;
-        //当前点击位置的x，y坐标
-        this.finger = {};
-        var topPoint = {};
-        this.finger['x'] = e.touches["0"].clientX;
-        this.finger['y'] = e.touches["0"].clientY - 20;
-
-
-        if (this.finger['y'] < this.busPos['y']) {
-          topPoint['y'] = this.finger['y'] - 100;
-        } else {
-          topPoint['y'] = this.busPos['y'] - 100;
-        }
-
-        if (this.finger['x'] < this.busPos['x']) {
-          topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
-          this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
-        } else {
-          this.finger['x'] = e.touches["0"].clientX - 20;
-          this.finger['y'] = e.touches["0"].clientY - 20
-          topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
-          this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
-        }
-        this.linePos['bezier_points'].push({x:1000,y:1000});
-        tocartParams['proid'] = proId;
-        tocartParams['img'] = img;
-        tocartParams['position'] = {
-          'linePos': this.linePos
-        };
-        this.selectComponent('#componentsToCart').start(tocartParams)
-        // this.startAnimation();
-
         proNum++
-        this.setData({
-          finger: this.finger,
-          topPoint: topPoint,
-          busPos: this.busPos,
-          curPro: img
-        })
       } else {
         wx.showToast({
           icon: "none",
@@ -217,9 +181,7 @@ Page({
         number: proNum
       }
       proNum = 0
-      console.log(data);
       api.setChart(data).then(res => {
-        console.log(res);
         if (res) {
           //更新数量
           for (let tval of breadList) {
@@ -249,10 +211,50 @@ Page({
             totalNum: totalNum,
             ['breadList[' + idx + ']']: this.getCurrList(breadList, idx + 1),
           })
+
+          //动画开启
+          //当前点击位置的x，y坐标
+          this.finger = {};
+          var topPoint = {};
+          this.finger['x'] = e.touches["0"].clientX;
+          this.finger['y'] = e.touches["0"].clientY - 20;
+
+
+          if (this.finger['y'] < this.busPos['y']) {
+            topPoint['y'] = this.finger['y'] - 100;
+          } else {
+            topPoint['y'] = this.busPos['y'] - 100;
+          }
+
+          if (this.finger['x'] < this.busPos['x']) {
+            topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
+            this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
+          } else {
+            this.finger['x'] = e.touches["0"].clientX - 20;
+            this.finger['y'] = e.touches["0"].clientY - 20
+            topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
+            this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
+          }
+          this.linePos['bezier_points'].push({
+            x: 1000,
+            y: 1000
+          });
+          tocartParams['proid'] = proId;
+          tocartParams['img'] = img;
+          tocartParams['position'] = {
+            'linePos': this.linePos
+          };
+          this.selectComponent('#componentsToCart').start(tocartParams)
         } else {
-          this.setData({
-            ['breadList[' + index + '][' + idx + '].soldStat']: 1
+          wx.showToast({
+            title: '该商品已达到最大购买量',
+            icon: 'none',
+            duration: 2000
           })
+
+          // this.setData({
+          //   ['breadList[' + index + '][' + idx + '].soldStat']: 1
+          // })
         }
       })
     }, 300)
@@ -343,7 +345,7 @@ Page({
     util.setTabBarBadge(total_num)
   },
   getProList: function (cityid) {
-
+    console.log('getProList  --- start')
     let {
       city_id,
       breadTag,

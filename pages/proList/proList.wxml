@@ -43,7 +43,7 @@
       <block wx:for="{{breadList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
-            <view class="pic {{stock[pro.meal_id]==0 || pro.soldStat==1?'sold-out':''}}">
+            <view class="pic {{stock[pro.meal_id]==0?'sold-out':''}}">
               <view class="tag">已售罄</view>
               <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
             </view>
@@ -60,7 +60,7 @@
                 <view class="num">￥<text>{{pro.price}}</text></view>
                 <view wx:if="{{stock[pro.meal_id]!=0 || pro.soldStat==0}}"
                   class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}"
-                  data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}">
+                  data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}">
                   <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
                     style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
                 </view>
