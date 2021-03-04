@@ -1,6 +1,6 @@
 <wxs module="move" src="../../utils/move.wxs"></wxs>
 <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
-  <view class="tips flex"><text class="iconfont icon-notice"></text> <text>因面包与蛋糕产品的配送时间、配送范围、优惠活动不同，面包与蛋糕需分开支付</text>
+  <view class="tips flex"><text class="iconfont icon-notice"></text> <text>{{instructions}}</text>
   </view>
 </view>
 
@@ -11,6 +11,7 @@
     </view>
     <text>面包</text>
   </view>
+  <view class="pro-tip"><text class="tag">免邮</text>{{tipsBread}}</view>
   <view class="pro-list" data-itemIds="{{breadItemIds}}">
     <!-- <view class="item flex" wx:for="{{breadLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"> -->
     <view staticStyle="{{delStatus}}" change:staticStyle="{{move.reset}}" class="item flex item_{{item.cart_id}}"
@@ -26,7 +27,7 @@
           <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
         </view>
         <view class="txt flex-1 flex">
-          <view class="tit">{{item.sku_name}}</view>
+          <view class="tit flex-center"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
           <view class="price flex">
             <view class="num">￥<text>{{item.sku_price}}</text></view>
             <view class="set-chart flex">
@@ -52,6 +53,7 @@
     </view>
     <text>蛋糕</text>
   </view>
+  <view class="pro-tip"><text class="tag">免邮</text>{{tipsCake}}</view>
   <view class="pro-list cakeList" data-itemIds="{{cakeItemIds}}">
     <!-- <view class="item flex" wx:for="{{cakeLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove"
       bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}"
@@ -66,7 +68,7 @@
           <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
         </view>
         <view class="txt flex-1 flex">
-          <view class="tit">{{item.sku_name}} {{item.sku_unit}}</view>
+          <view class="tit"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text>{{item.sku_name}} {{item.sku_unit}}</view>
           <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
             <text wx:if="{{item.size}}">{{item.size}}</text>
             <text wx:if="{{item.edible}}">{{item.edible}}</text>

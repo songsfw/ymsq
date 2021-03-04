@@ -20,6 +20,7 @@ page{background: #F6F6F6;height: auto;}
 .item .tag{margin-bottom: 10px;    display: flex;
     flex-wrap: wrap;}
 .item .tag text{background: #F6F6F6;color: #aaa;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin:0 5px 5px 0; }
+.item .tit .tag{color: #fff;font-size: 10px;padding:2rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;vertical-align: middle;}
 .item .price{justify-content: space-between;align-items: center;font-weight: 500;}
 .item .price .num{font-size: 13px;color: #FA603D;}
 .item .price .num text{font-size: 16px;font-weight:500 ;}
@@ -45,9 +46,9 @@ page{background: #F6F6F6;height: auto;}
   }
 
 .set-chart text,
-.set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}
-.set-chart .count{color: #333;border-left: 0;border-right: 0;}
-
+.set-chart .count{width:27px;height: 24px;line-height: 24px;text-align: center;color: #C1996B;background-color: #F6F6F6;}
+.set-chart .count{color: #333;margin: 0 4rpx;}
+.set-chart{border-radius: 4rpx;overflow: hidden;}
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
 
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 11;justify-content: flex-end;align-items: center;padding: 0 20rpx;box-sizing: border-box;}
@@ -100,3 +101,5 @@ page{background: #F6F6F6;height: auto;}
 .fittings .info .txt view{margin-bottom:30rpx ;font-size: 13px;}
 .basic{max-height: 80px;-webkit-overflow-scrolling: touch;overflow-y: auto;}
 .basic text{font-weight: bold;color: #C1996B;}
+.pro-tip{padding-top: 24rpx;font-size: 13px;color:#666;}
+.pro-tip .tag{display: inline-block; height: 21px;line-height: 21px;margin-right: 16rpx; padding: 0 16rpx;background: linear-gradient(118deg, #FF6674 0%, #F10215 100%);border-radius: 8rpx;color: #fff;font-size: 12px;}

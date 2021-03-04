@@ -60,8 +60,8 @@ Page({
     let {proInfo} = this.data
     return {
       title: `好友邀你购买${proInfo.name}`,
-      path:'/pages/proInfo/proInfo?id=2&proId=' + proInfo.proId,
-      imageUrl: proInfo.price
+      path:'/pages/cakeInfo/cakeInfo?id=2&proId=' + proInfo.id,
+      imageUrl: proInfo.image
     }
   },
   toCart(){

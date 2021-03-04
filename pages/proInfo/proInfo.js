@@ -14,11 +14,6 @@ Page({
     circular: true,
     currentSwiper: 0,
 
-    share: {
-      tit: "原麦山丘",
-      path: "/pages/proInfo/proInfo",
-      imageUrl: ''
-    },
     pop: 0,
     skuNum:1
   },
@@ -96,10 +91,11 @@ Page({
   },300,true),
   onShareAppMessage: function (res) {
     let {proInfo} = this.data
+    console.log(proInfo);
     return {
       title: `好友邀你购买${proInfo.name}`,
-      path:'/pages/proInfo/proInfo?id=2&proId=' + proInfo.proId,
-      imageUrl: proInfo.price
+      path:'/pages/proInfo/proInfo?id=2&proId=' + proInfo.id,
+      imageUrl: proInfo.image
     }
   },
   addCart(toCart){

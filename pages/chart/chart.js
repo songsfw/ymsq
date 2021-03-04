@@ -628,6 +628,20 @@ Page({
 
     let btmHolder = wx.getStorageSync('btmHolder')
 
+    api.getIntroduction().then(res=>{
+      console.log(res);
+      if(res){
+        let txt =res.instructions['cart-top'],
+            tipsBread = res.instructions['cart-bread-tips'],
+            tipsCake = res.instructions['cart-cake-tips']
+        this.setData({
+          tipsBread,
+          tipsCake,
+          instructions:txt
+        })
+      }
+    })
+
     this.setData({
       btmHolder: btmHolder || 0
     })
