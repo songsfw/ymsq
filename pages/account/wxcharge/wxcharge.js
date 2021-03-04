@@ -92,18 +92,38 @@ Page({
         paySign: res.paySign,
         success(payres) {
           console.log(payres);
-          wx.showToast({
-            title: '支付成功',
-            icon: 'none',
-            duration: 1000,
-            success: function () {
-              setTimeout(function () {
-                wx.navigateBack({
-                  delta: 1
-                })
-              }, 1000)
+
+          wx.showModal({
+            title: '充值成功',
+            content: '恭喜您获得一张优惠券呦,可在会员中心 > 优惠券，查看使用',
+            showCancel: false,
+            confirmText: '我知道了',
+            success: function success(res) {
+              wx.navigateBack({
+                delta: 1
+              })  
+              if (res.confirm) {
+                console.log('用户点击确定');
+              }
             }
-          })
+          });
+
+
+
+          return true;
+          // return false;
+          // wx.showToast({
+          //   title: '支付成功',
+          //   icon: 'none',
+          //   duration: 1000,
+          //   success: function () {
+          //     setTimeout(function () {
+          //       wx.navigateBack({
+          //         delta: 1
+          //       })
+          //     }, 1000)
+          //   }
+          // })
 
         },
         fail(res) {

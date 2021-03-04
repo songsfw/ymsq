@@ -1,6 +1,8 @@
 // pages/user/user.js
 const api = require('../../../utils/api.js')
 const app = getApp()
+let tempOrderNo = '';
+let tempAfter = 0;
 Page({
 
   /**
@@ -10,8 +12,28 @@ Page({
     pop: 0,
   },
   close() {
-    this.setData({
-      pop: 0
+    let  that = this;
+    if (tempAfter == 1) {
+      wx.showModal({
+        title: '分享成功',
+        content: '恭喜您获得一张优惠券呦,可在会员中心 > 优惠券，查看使用',
+        showCancel: false,
+        confirmText: '我知道了',
+        success: function success(res) {
+          tempAfter = 0;
+          tempOrderNo = '';
+          that.setData({
+            pop: 0,
+          })
+
+          if (res.confirm) {
+            console.log('用户点击确定');
+          }
+        }
+      });
+    }
+    that.setData({
+      pop: 0,
     })
   },
   showPop(e) {
@@ -76,6 +98,9 @@ Page({
         if (!res) {
           return
         }
+
+        tempOrderNo = order_code;
+        tempAfter = 1;
         this.setData({
           'shareInfo.action': "share"
         })
