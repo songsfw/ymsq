@@ -158,6 +158,7 @@ Page({
       console.log(res)
       if(res){
         this.setData({
+          is_show:true,
           proInfo:res
         })
       }
@@ -169,6 +170,7 @@ Page({
     let totalNum = wx.getStorageSync("total_num")
     let city_id = JSON.parse(addressInfo).city_id
     this.setData({
+      is_show:false,
       totalNum:totalNum,
       city_id:city_id,
       proId: proId
@@ -181,6 +183,9 @@ Page({
       })
     
     //this.initData()
+  },
+  onReady:function(){
+    // this.getProInfo()
   }
 
 })

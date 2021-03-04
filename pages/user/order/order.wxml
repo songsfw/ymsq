@@ -88,7 +88,7 @@
     <view><image src="../../../image/no-order.png"></image></view>
     <block wx:if="{{totalNum==0}}">
       <view class="txt">现在还没有订单，快去下单吧～</view>
-      <navigator url="/pages/index/index" open-type="switchTab" class="btn">去点单</navigator>
+      <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去点单</navigator>
     </block>
     <block wx:else>
       <view class="txt">暂时没有相关订单～</view>
