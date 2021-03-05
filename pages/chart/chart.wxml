@@ -64,23 +64,12 @@
     <!-- <view class="item flex" wx:for="{{cakeLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove"
       bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}"
       data-type="2" data-id="{{item.cart_id}}"> -->
-    <view staticStyle="{{delStatus}}" change:staticStyle="{{move.reset}}" class="item flex item_{{item.cart_id}}"
-      wx:for="{{cakeLi}}" bindtouchstart="{{move.recodeMoveStart}}" bindtouchmove="{{move.recordMove}}"
-      bindtouchend="{{move.recodeMoveEnd}}" data-width="{{windowWidth}}" bind:tap="select" data-idx="{{index}}"
-      data-type="2" data-id="{{item.cart_id}}">
-      <view class="checkbox {{item.is_selected=='1'?'on':''}}">
-        <view class="iconfont icon-check"></view>
-      </view>
-      <view class="pro-info flex flex-1">
-        <view class="pic">
-          <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
-        </view>
-        <view class="txt flex-1 flex">
-          <view class="tit">{{item.sku_name}} {{item.sku_unit}}</view>
-          <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
-            <text wx:if="{{item.size}}">{{item.size}}</text>
-            <text wx:if="{{item.edible}}">{{item.edible}}</text>
-            <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+    <movable-area class="item cake-item" wx:for="{{cakeLi}}" wx:for-index="index">
+      <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
+        <view class="item-wrap flex-center item_{{item.cart_id}}"
+          bind:tap="select" bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+          <view class="checkbox {{item.is_selected=='1'?'on':''}}">
+            <view class="iconfont icon-check"></view>
           </view>
           <view class="pro-info flex flex-1">
             <view class="pic">
@@ -193,7 +182,7 @@
         <view wx:for="{{fitting.basic}}"><text>{{index}}</text>：{{fitting.basic[index]}}</view>
       </view>
     </block>
-
+    
     <view class="confirm-btn btn" bind:tap="confirmFitting" data-sku="{{fitting.sku}}">确定</view>
   </view>
 
