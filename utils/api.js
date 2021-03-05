@@ -1,6 +1,7 @@
 const {GET,POST} = require('request.js')
 
 var baseUrl = 'http://api-beta.withwheat.com/v1'
+// var baseUrl = 'http://api.withwheat.cc/v1'
 var isLogin = 0
 const returnData = res=>{
   if(res.statusCode == 200){

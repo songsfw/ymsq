@@ -448,7 +448,7 @@ Page({
       if (app.globalData.proType == '1') {
         breadList = []
         breadList = res.list
-
+        console.log('breadList::',breadList)
         for (let breadVal of breadList) {
           let selectNumberLength = breadVal.selected > 0 ? breadVal.selected.toString().length : 0;
           breadVal['selectNumberLength'] = selectNumberLength;
@@ -468,9 +468,15 @@ Page({
           // console.log(selectNumberLength);
         }
 
-
         let stock = res.stock
         count = breadList.length
+        //计算商品列表分页
+        let pageCount = Math.ceil(count/10);
+        let tempList = [];
+        for(let i = 0;i<pageCount;i++){
+          tempList[i] = breadList.slice(((i+1)-1)*10,  (i+1)*10)
+        }
+
         noMoreData = count - 1 * 10 <= 0
         if (count == 0) {
           this.setData({
@@ -485,7 +491,8 @@ Page({
               pageNum: 1,
               noMoreData: noMoreData
             },
-            'breadList[0]': this.getCurrList(breadList, 1),
+            breadList:tempList,
+            // 'breadList[0]': this.getCurrList(breadList, 1),
           })
         }
 
@@ -522,7 +529,8 @@ Page({
 
     this.setData({
       currentTab: proType,
-      city_id: city_id || '10216'
+      city_id: city_id || '10216',
+      showLoading:true
     })
     trueStock = {};
     this.getCartInfo()

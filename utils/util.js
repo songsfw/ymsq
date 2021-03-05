@@ -264,12 +264,16 @@ const throttle = (func, interval = 250) => {
 function debounce(func, wait = 250, immediate = false) {
   let timer;
   return function () {
+    console.log('wait:============',wait);
+    console.log('immediate',immediate);
     let context = this,
       args = arguments;
 
     if (timer) clearTimeout(timer);
     if (immediate) {
       let callNow = !timer;
+      console.log('callNow',callNow);
+      console.log('timer',timer)
       timer = setTimeout(() => {
         timer = null;
       }, wait);

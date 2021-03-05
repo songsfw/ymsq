@@ -187,9 +187,33 @@
           "scene": null
         },
         {
+          "name": "选择地址页面",
+          "pathName": "pages/user/selectAdd/selectAdd",
+          "query": "type=1",
+          "scene": null
+        },
+        {
+          "name": "支付成功页面",
+          "pathName": "pages/chart/paySuccess/paySuccess",
+          "query": "orderCode=1000210224002538",
+          "scene": null
+        },
+        {
+          "name": "订单详情",
+          "pathName": "pages/user/order/order",
+          "query": "orderCode=1000210224002538",
+          "scene": null
+        },
+        {
           "name": "分享",
           "pathName": "pages/share/share",
           "query": "orderCode=1000201130001906",
+          "scene": null
+        },
+        {
+          "name": "订单列表",
+          "pathName": "pages/user/order/order",
+          "query": "orderCode=1000210224002538",
           "scene": null
         }
       ]
