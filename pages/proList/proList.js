@@ -7,7 +7,8 @@ const app = getApp()
 let timer = null,
   proNum = 0,
   breadList = null,
-  cakeList = null
+  cakeList = null,
+  trueStock = {}
 Page({
   data: {
     curProId: -1,
@@ -46,7 +47,9 @@ Page({
     showLoading: true,
     cornerTagStyle: '', //加号角标样式
     //掉入购物车开关
-    toCart: 0
+    toCart: 0,
+    //最大销售数量
+    order_max_bread: 99
   },
   switchTab: function (e) {
     var that = this;
@@ -130,11 +133,59 @@ Page({
   freshData: function () {
     this.getProList()
   },
+  addChartPreView(idx, itemIdx, totalNum) {
+    let tempBread = this.data.breadList[idx][itemIdx];
+    let prostock = this.data.stock[tempBread.meal_id] || 0;
+    if (tempBread.selected >= prostock) {
+      let msg = '该商品库存不足';
+      if (tempBread.selected >= this.data.order_max_bread) {
+        msg = '该商品已达到最大购买数量';
+      }
+      wx.showToast({
+        icon: "none",
+        title: msg
+      })
+      return false;
+    }
+
+    tempBread.selected = parseInt(tempBread.selected) + 1;
+    let selectNumberLength = tempBread.selected > 0 ? tempBread.selected.toString().length : 0;
+    let style = "";
+
+    switch (selectNumberLength) {
+      case 1:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+        break;
+      case 2:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+      default:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+    }
+    tempBread['cornerTagStyle'] = style;
+    tempBread['selectNumberLength'] = selectNumberLength;
+    util.setTabBarBadge(totalNum)
+    this.setData({
+      ['breadList[' + idx + '][' + itemIdx + ']']: tempBread,
+    })
+    return true;
+  },
   addChart: function (e) {
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
       idx = e.currentTarget.dataset.idx,
       itemIdx = e.currentTarget.dataset.itemidx
+
+    //存储真实库存
+    if(typeof(trueStock[proId]) == 'undefined'){
+      trueStock[proId] = false;
+    }
+    for (let tval of breadList) {
+      if (trueStock[proId] === false && tval['meal_id'] == proId) {
+        trueStock[proId] = tval.selected;
+      }
+    }
 
     let pageNum = parseInt(this.data.breadInfo.pageNum)
     let index = pageNum - 1
@@ -169,24 +220,44 @@ Page({
       }
     }
 
+    //前置 样式处理
+    let flag = this.addChartPreView(idx, itemIdx, totalNum);
+    if (!flag) {
+      return false;
+    }
     if (timer) {
       clearTimeout(timer);
     }
-
     timer = setTimeout(() => {
+      //多余库存处理
+      let tempBread = this.data.breadList[idx][itemIdx];
+      let prostock = this.data.stock[tempBread.meal_id] || 0;
       let data = {
         city_id: city_id,
         type: currentTab,
         tab_id: proId,
         number: proNum
       }
+      if (tempBread.selected >= prostock) {
+        data.number = prostock - trueStock[proId];
+        if(data.number <=0){
+          return false;
+        }
+      } 
       proNum = 0
       api.setChart(data).then(res => {
         if (res) {
+          wx.showToast({
+            title: '加入购物车成功',
+            icon: 'none',
+            duration: 2000
+          })
+          
           //更新数量
           for (let tval of breadList) {
             if (tval['meal_id'] == proId) {
-              tval['selected'] = parseInt(tval.selected) + parseInt(data.number);
+              selectedNum = tval.selected;
+              tval['selected'] = parseInt(tval.selected);
               let selectNumberLength = tval.selected > 0 ? tval.selected.toString().length : 0;
               tval['selectNumberLength'] = selectNumberLength;
               let style = "";
@@ -211,41 +282,42 @@ Page({
             totalNum: totalNum,
             ['breadList[' + idx + ']']: this.getCurrList(breadList, idx + 1),
           })
-
+          trueStock[proId] = false;
           //动画开启
           //当前点击位置的x，y坐标
-          this.finger = {};
-          var topPoint = {};
-          this.finger['x'] = e.touches["0"].clientX;
-          this.finger['y'] = e.touches["0"].clientY - 20;
+          // this.finger = {};
+          // var topPoint = {};
+          // this.finger['x'] = e.touches["0"].clientX;
+          // this.finger['y'] = e.touches["0"].clientY - 20;
 
 
-          if (this.finger['y'] < this.busPos['y']) {
-            topPoint['y'] = this.finger['y'] - 100;
-          } else {
-            topPoint['y'] = this.busPos['y'] - 100;
-          }
+          // if (this.finger['y'] < this.busPos['y']) {
+          //   topPoint['y'] = this.finger['y'] - 100;
+          // } else {
+          //   topPoint['y'] = this.busPos['y'] - 100;
+          // }
 
-          if (this.finger['x'] < this.busPos['x']) {
-            topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
-            this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
-          } else {
-            this.finger['x'] = e.touches["0"].clientX - 20;
-            this.finger['y'] = e.touches["0"].clientY - 20
-            topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
-            this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
-          }
-          this.linePos['bezier_points'].push({
-            x: 1000,
-            y: 1000
-          });
-          tocartParams['proid'] = proId;
-          tocartParams['img'] = img;
-          tocartParams['position'] = {
-            'linePos': this.linePos
-          };
-          this.selectComponent('#componentsToCart').start(tocartParams)
+          // if (this.finger['x'] < this.busPos['x']) {
+          //   topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
+          //   this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
+          // } else {
+          //   this.finger['x'] = e.touches["0"].clientX - 20;
+          //   this.finger['y'] = e.touches["0"].clientY - 20
+          //   topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
+          //   this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
+          // }
+          // this.linePos['bezier_points'].push({
+          //   x: 1000,
+          //   y: 1000
+          // });
+          // tocartParams['proid'] = proId;
+          // tocartParams['img'] = img;
+          // tocartParams['position'] = {
+          //   'linePos': this.linePos
+          // };
+          // this.selectComponent('#componentsToCart').start(tocartParams)
         } else {
+          console.log(res)
           wx.showToast({
             title: '该商品已达到最大购买量',
             icon: 'none',
@@ -258,30 +330,6 @@ Page({
         }
       })
     }, 300)
-  },
-  //开始动画
-  startAnimation: function () {
-    var index = 0,
-      that = this,
-      bezier_points = that.linePos['bezier_points'];
-    this.setData({
-      hide_good_box: false,
-      bus_x: that.finger['x'],
-      bus_y: that.finger['y']
-    })
-    this.timer2 = setInterval(function () {
-      index++;
-      that.setData({
-        bus_x: bezier_points[index]['x'],
-        bus_y: bezier_points[index]['y']
-      })
-      if (index >= 28) {
-        clearInterval(that.timer2);
-        that.setData({
-          hide_good_box: true
-        })
-      }
-    }, 20);
   },
   getMoreData() {
     let pageNum, noMoreData
@@ -378,6 +426,7 @@ Page({
       if (!res) {
         return false
       }
+
       let menu = res.type,
         choose_type = res.choose_type
       if (!currentTab) {
@@ -386,10 +435,12 @@ Page({
 
       this.setData({
         menu: menu,
-        currentTab: app.globalData.proType
+        currentTab: app.globalData.proType,
+        order_max_bread: res.order_max_bread
       })
 
       if (app.globalData.proType == '1') {
+        breadList = []
         breadList = res.list
 
         for (let breadVal of breadList) {
@@ -467,11 +518,12 @@ Page({
       currentTab: proType,
       city_id: city_id || '10216'
     })
+    trueStock = {};
     this.getCartInfo()
     this.getProList();
   },
   onPageScroll(e) {
-    console.log(e.scrollTop);
+    // console.log(e.scrollTop);
     let stop = e.scrollTop
     if (stop > 46) {
       this.setData({
