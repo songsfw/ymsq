@@ -7,7 +7,10 @@ const app = getApp()
 let timer = null,
   proNum = 0,
   breadList = null,
+<<<<<<< Updated upstream
   cakeList = null,
+=======
+>>>>>>> Stashed changes
   timer1 = null,
   trueStock = {}
 Page({
