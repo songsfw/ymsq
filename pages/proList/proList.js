@@ -7,6 +7,7 @@ const app = getApp()
 let timer = null,
   proNum = 0,
   breadList = null,
+  cakeList = null,
   timer1 = null,
   trueStock = {}
 Page({
