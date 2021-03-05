@@ -13,7 +13,7 @@ page{background:#F6F6F6;height: auto;}
 .proInfo .tags text{background: #FFE42A;height: 22px;line-height: 22px;border-radius: 11px;padding: 0 20rpx;margin:0 20rpx 20rpx 0;flex-shrink: 0;}
 .banner{width: 750rpx;height: 750rpx;}
 .banner swiper{width: 100%;height: 100%;}
-.option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 0 20rpx 0 0;background: #fff;box-shadow: 0px -4px 10px 0px rgba(102, 102, 102, 0.05);align-items: center;}
+.option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 0 20rpx 0 0;background: #fff;box-shadow: 0px -4px 10px 0px rgba(102, 102, 102, 0.05);align-items: center;z-index: 11;}
 
 .price{justify-content: space-between;padding: 28rpx 0 0 0;color: #C1996B;align-items: center;font-weight: bold;}
 .price view{font-size: 14px;}
@@ -25,6 +25,12 @@ page{background:#F6F6F6;height: auto;}
 .tips .txt view{margin-bottom: 20rpx}
 .tips .txt text{margin-right:10px ;}
 .tips .txt view:last-child{margin-bottom: 0}
+
+.detail{background: #fff;}
+.detail .tit{position: relative; text-align: center;padding: 40rpx 0;font-size: 15px;}
+.detail .tit text{background: #fff;padding: 0 26rpx;position:relative;z-index: 1;}
+.detail .tit::after{content: "";position: absolute;width:172px;height: 1px;background: #222; left: 50%;top: 50%;transform: translate(-50%,50%);}
+
 .option .home .iconfont,
 .option .cart .iconfont{font-size: 40rpx;color: #222;}
 .option .home,

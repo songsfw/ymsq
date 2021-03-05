@@ -1,5 +1,6 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+const app =getApp()
 Page({
 
   /**
@@ -36,6 +37,7 @@ Page({
     console.log(this.data.address)
     let {id,address, address_detail, mobile, name,is_default,location,district,province,title,is_ziti,city_id} = this.data.address
     console.log(this.data)
+    let source = this.data.source
     let newAdd = {address:address}
     
     if(!name){
@@ -109,47 +111,80 @@ Page({
       api.editAddress(data).then(res => {
         console.log(res);
         if(res){
-          if(is_default==1){
-            let addressInfo = {
-              address: address,
-              id: id,
-              city_id: res.city_id,
-              // city_name: city_name,
-              address_detail:address_detail,
-              is_default:is_default,
-              mobile:mobile,
-              name:name,
-              is_ziti:res.is_ziti
-            }
-            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          let addressInfo = {
+            address: address,
+            id: id,
+            city_id: res.city_id,
+            // city_name: city_name,
+            address_detail:address_detail,
+            is_default:is_default,
+            mobile:mobile,
+            name:name,
+            is_ziti:res.is_ziti
           }
-          wx.navigateBack({
-            delta: 1
-          })
+          
+          if(source=='1'){
+            //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+            app.globalData.proType=''
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 3];//上一个页面
+            //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+            prevPage.setData({
+              changedId: id
+            })
+            wx.navigateBack({
+              delta: 2
+            })
+          }else{
+            if(is_default==1){
+              wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            }
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+         
         }
       })
     }else{
       console.log(data)
       api.addAddress(data).then(res => {
         console.log(res);
+        console.log(id);
         if(res){
-          if(is_default==1){
-            let addressInfo = {
-              address: address,
-              id: id,
-              city_id: res.city_id,
-              //city_name: city_name,
-              address_detail:address_detail,
-              is_default:is_default,
-              mobile:mobile,
-              name:name,
-              is_ziti:res.is_ziti
-            }
-            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          let addressInfo = {
+            address: address,
+            id: '',
+            city_id: res.city_id,
+            //city_name: city_name,
+            address_detail:address_detail,
+            is_default:is_default,
+            mobile:mobile,
+            name:name,
+            is_ziti:res.is_ziti
           }
-          wx.navigateBack({
-            delta: 1
-          })
+          if(source=='1'){
+            //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+            app.globalData.proType=''
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 3];//上一个页面
+            //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+            prevPage.setData({
+              changedId: ''
+            })
+            wx.navigateBack({
+              delta: 2
+            })
+          }else{
+            if(is_default==1){
+              wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            }
+            wx.navigateBack({
+              delta: 1
+            })
+          }
         }
       })
     }
@@ -195,7 +230,7 @@ Page({
     options = Object.assign(options,currPage.__data__.options || {}) 
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,province = options.province,district=options.district,title=options.title
     console.log(options);
-
+    let source = options.source
     if(type==1){
       wx.setNavigationBarTitle({
         title: '修改地址' 
@@ -226,6 +261,7 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     this.setData({
+      source:source,
       btmHolder:btmHolder,
       type:type,
       address:oldAddress,

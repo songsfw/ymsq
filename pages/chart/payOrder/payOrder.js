@@ -233,7 +233,6 @@ Page({
   confirmSore() {
     this.close()
   },
-
   close() {
     this.setData({
       pop: 0,
@@ -1164,11 +1163,9 @@ Page({
     this.setData({
       unuse: true
     })
-
   },
   changePwd(e) {
     console.log(e)
-
     this.setData({
       popShow: true,
       poptitle: "设置余额密码",
@@ -1200,10 +1197,26 @@ Page({
   //   console.log(addressInfo)
   // },
   onLoad: function (options) {
-
     //this.getUserLocation()
     let userInfo = wx.getStorageSync('userInfo')
     let btmHolder = wx.getStorageSync('btmHolder')
+    let type = options.type
+    console.log(type);
+    //用户地址列表
+    let addressInfo = wx.getStorageSync("addressInfo")
+    addressInfo = addressInfo && JSON.parse(addressInfo)
+    if (addressInfo) {
+      this.setData({
+        type: type,
+        is_ziti: addressInfo.is_ziti,
+        city_id: addressInfo.city_id,
+        address_id: addressInfo.id,
+        addressInfo: addressInfo,
+        'address.is_address': true
+      })
+    }
+    console.log("2",addressInfo.id);
+    this.initOrderData();
 
     util.setWatcher(this);
 
@@ -1222,6 +1235,27 @@ Page({
       }
 
       this.setPayPrice(value)
+    },
+    'changedId': function (value, oldValue) {
+      console.log("watch");
+      console.log(value);
+      if (value == oldValue) {
+        return
+      }
+      let addressInfo = wx.getStorageSync("addressInfo")
+      addressInfo = addressInfo && JSON.parse(addressInfo)
+      if (addressInfo) {
+        this.setData({
+          is_ziti: addressInfo.is_ziti,
+          city_id: addressInfo.city_id,
+          address_id: addressInfo.id,
+          addressInfo: addressInfo,
+          'address.is_address': true
+        })
+      }
+      console.log("1",addressInfo.id);
+      this.initOrderData();
+      //this.setPayPrice(value)
     }
   },
   /**
@@ -1230,30 +1264,30 @@ Page({
   onReady: function () {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let pages = getCurrentPages();
-    let currentPage = pages[pages.length - 1];
-    let type = currentPage.options.type
-    console.log(type);
-    //用户地址列表
-    let addressInfo = wx.getStorageSync("addressInfo")
-    addressInfo = addressInfo && JSON.parse(addressInfo)
-    if (addressInfo) {
-      this.setData({
-        type: type,
-        is_ziti: addressInfo.is_ziti,
-        city_id: addressInfo.city_id,
-        address_id: addressInfo.id,
-        addressInfo: addressInfo,
-        'address.is_address': true
-      })
+    // let pages = getCurrentPages();
+    // let currentPage = pages[pages.length - 1];
+    // let type = currentPage.options.type
+    // console.log(type);
+    // //用户地址列表
+    // let addressInfo = wx.getStorageSync("addressInfo")
+    // addressInfo = addressInfo && JSON.parse(addressInfo)
+    // if (addressInfo) {
+    //   this.setData({
+    //     type: type,
+    //     is_ziti: addressInfo.is_ziti,
+    //     city_id: addressInfo.city_id,
+    //     address_id: addressInfo.id,
+    //     addressInfo: addressInfo,
+    //     'address.is_address': true
+    //   })
 
-    }
-    this.initOrderData();
+    // }
+    // console.log("2",addressInfo.id);
+    // this.initOrderData();
   },
 
   /**

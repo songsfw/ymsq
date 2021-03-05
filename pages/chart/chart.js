@@ -65,7 +65,6 @@ Page({
     // })
     this.setData({
       startX: e.changedTouches[0].clientX,
-      startY: e.changedTouches[0].clientY,
     })
   },
   //滑动事件处理

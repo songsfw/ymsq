@@ -1,6 +1,11 @@
 <wxs module="move" src="../../utils/move.wxs"></wxs>
 <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
-  <view class="tips flex"><text class="iconfont icon-notice"></text> <text>{{instructions}}</text>
+  <view class="tips flex">
+    <text class="iconfont icon-notice"></text> 
+    <view class="txt flex-1">
+      <text>{{instructions}}</text>
+      <text>{{instructions}}</text>
+    </view>
   </view>
 </view>
 

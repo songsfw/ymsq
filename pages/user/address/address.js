@@ -82,6 +82,7 @@ Page({
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
   },
   toAdddata(e){
+    let source = this.data.source
     let type = e.currentTarget.dataset.type
     if(type==1){
       let idx = e.currentTarget.dataset.idx
@@ -105,7 +106,7 @@ Page({
       wx.setStorageSync('address', '{}')
     }
     wx.navigateTo({
-      url:"/pages/user/adddata/adddata?type="+type
+      url:"/pages/user/adddata/adddata?type="+type+"&source="+source
     })
   },
   setDefAddress(e){
@@ -238,9 +239,16 @@ Page({
           name:name,
           is_ziti:res.is_ziti
         }
+
         wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         //切换城市后 重置所选商品类型 1 面包 2 蛋糕
         app.globalData.proType=''
+        var pages = getCurrentPages();
+        var prevPage = pages[pages.length - 2];//上一个页面
+        //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+        prevPage.setData({
+          changedId: id
+        })
         wx.navigateBack({
           delta: 1
         })

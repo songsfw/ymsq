@@ -2,7 +2,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .strongTxt{color: #F5222D !important;}
 .order-wp{padding:0 24rpx 20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
-.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;}
+.option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;border-top: 1rpx solid #F6F6F6;}
 .option .flex-center{margin-left: 20rpx;font-size: 13px;}
 .checkbox{width: 18px;height: 18px;line-height: 1;border: 1px solid #ccc;border-radius: 50%;box-sizing: border-box;}
 .checkbox view{display: none; width: 100%;height: 100%;font-size: 18px;color:#C1996B;}
@@ -13,7 +13,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .option .price view{font-size: 13px;}
 .option .price .num{color: #FA603D;}
 .option .price .num text{font-size:16px;}
-.buy-btn{width: 88px;height: 36px;background: linear-gradient(176deg, #E2C9A4 0%, #C1996B 100%);color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;font-size: 13px;}
+.buy-btn{width: 88px;height: 36px;background:#C1996B;color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;font-size: 13px;}
 
 .address{padding:30rpx 20rpx;margin-bottom: 20rpx;border-radius: 8rpx;background:#fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x !important;background-size:29px 4px !important;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}

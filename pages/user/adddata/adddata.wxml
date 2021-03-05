@@ -24,6 +24,6 @@
   </view>
 </view>
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
-  <view class="btn" bindtap="addAddress">保存</view>
+  <view class="btn" bindtap="addAddress">{{source==1?'保存并使用':'保存'}}</view>
 </view>
 <view style="height:{{56+btmHolder}}px"></view>

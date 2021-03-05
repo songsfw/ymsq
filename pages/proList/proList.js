@@ -8,6 +8,7 @@ let timer = null,
   proNum = 0,
   breadList = null,
   cakeList = null,
+  timer1 = null,
   trueStock = {}
 Page({
   data: {
@@ -105,7 +106,12 @@ Page({
         showLoading: true
       })
     }
-    this.getProList()
+    if(timer1){
+      clearTimeout(timer1)
+    }
+    timer1=setTimeout(() => {
+      this.getProList()
+    }, 500);
 
   },
   getStock() {
