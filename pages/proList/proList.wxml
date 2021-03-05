@@ -38,6 +38,7 @@
       <view class="txt">暂无内容</view>
     </view>
   </block>
+  
   <block wx:else>
     <view class="listItemwp flex">
       <block wx:for="{{breadList}}" wx:for-index="idx">
