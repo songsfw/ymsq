@@ -185,7 +185,7 @@
         <!-- <image src="../../../image/icon-coupon.png"></image> -->
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
-        <block wx:if="{{useCoupon}}">-￥{{payQueue[2]}}{{useDiscount?'.00':''}}</block>
+        <block wx:if="{{useCoupon}}">-￥{{payQueue[2]}}</block>
         <block wx:else><text style="color:red">{{cart_data.can_promotion_count}}张可用</text></block>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
@@ -225,7 +225,7 @@
     <view class="total-price flex">
       <text>合计：</text>
       <view>
-        <text>￥</text>{{payPrice}}.00<text class="arrow-r"></text>
+        <text>￥</text>{{payPrice}}<text class="arrow-r"></text>
       </view>
     </view>
   </view>
@@ -240,7 +240,7 @@
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px">
   <view class="flex-center">
     <text>合计:</text>
-    <view class="num">￥<text>{{payPrice}}.00</text>
+    <view class="num">￥<text>{{payPrice}}</text>
     </view>
   </view>
   <view class="buy-btn" bind:tap="submmitOrder">支付</view>

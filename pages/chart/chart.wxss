@@ -3,7 +3,7 @@ view{font-size:12px}
 image{width: 100%;height: 100%}
 page{background: #F6F6F6;height: auto;}
 .fixed-holder{height: 38px;}
-.pro-box{margin:20rpx 24rpx;border-radius: 8rpx;background-color: #fff;padding:0 20rpx;}
+.pro-box{margin:20rpx 24rpx;border-radius: 16rpx;background-color: #fff;padding:0 20rpx;}
 .pro-box .hd{line-height: 46px;border-bottom: 1px solid #F6F6F6;align-items: center;}
 .checkbox{position: relative; width: 20px;height: 20px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 20rpx;box-sizing: border-box;}
 .checkbox view{position: absolute;left: 0;top: 0; display: none; width: 100%;height: 100%;font-size: 20px;color:#C1996B;}
@@ -12,26 +12,26 @@ page{background: #F6F6F6;height: auto;}
 .pro-box .hd text{font-size: 16px;font-weight: bold;}
 .pro-list{padding: 26rpx 0;overflow: hidden;}
 .pro-list .item:last-child{margin-bottom: 0;}
-.pro-info .pic{width: 90px;height: 90px;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4rpx;}
+.pro-info .pic{width: 90px;height: 90px;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4px;}
 .pro-info .checkbox{margin-right: 20rpx;}
 .pro-info .txt{justify-content: space-between;flex-direction: column;}
 .item{position: relative;width: 100%; align-items: center;margin-bottom: 40rpx;}
 .bread-item{height: 90px;}
-.cake-item{height: 108px;}
+.cake-item{height: 100px;}
 .item-wrap{width:662rpx;height: 100%;}
 .move-area{width:820rpx;height:100%;}
 .item .tit{font-size: 15px;color: #222;margin-bottom: 8px;font-weight: 500;margin-top: 2px;}
 .item .tag{margin-bottom: 10px;    display: flex;
     flex-wrap: wrap;}
-.item .tag text{color: #aaa; font-size: 12px; margin:0 5px 5px 0; }
+.item .tag text{color: #aaa; font-size: 12px; margin:0 5px 2px 0; }
 .item .tit .tag{color: #fff;font-size: 10px;padding:4rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;vertical-align: middle;}
-.item .tag text:first-child:after{content: "|"; display: inline-block; padding:0 5rpx;}
+.item .tag text:first-child:after{content: "|"; font-size: 10px; display: inline-block; margin-left: 10rpx;}
 .item .price{justify-content: space-between;align-items: center;font-weight: 500;}
 .item .price .num{font-size: 13px;color: #FA603D;}
 .item .price .num text{font-size: 16px;font-weight:500 ;}
 .item .price .add{width:44rpx;height: 44rpx;color: #FA603D;
     font-size: 22px;}
-.icon-minus.one{background: #FAFAFA !important;}
+.icon-minus.one{background: #FAFAFA !important;color: #ccc !important;}
 .item .pro-option{position: absolute;right:0;top: 0;height: 100%;width: 148rpx;}
 .chartdel{display: flex;align-items: center;justify-content: center; width: 148rpx; color: #fff;background: #E02020;height: 100%;}
 
@@ -66,9 +66,9 @@ page{background: #F6F6F6;height: auto;}
 .buy-btn{width: 88px;height: 36px;background: #C1996B;color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;}
 
 .tips{position: fixed;left: 0;top: 0;width: 100%; padding-left: 20px; background: #FEFBF3;font-size: 13px;color: #FF7D06;padding:10px 20rpx;margin-bottom: 24rpx;z-index: 2;align-items: center;box-sizing: border-box;overflow: hidden;}
-.tips .iconfont{ margin-right: 20rpx;}
+.tips .iconfont{ margin-right: 20rpx;font-weight: 500;}
 .tips .txt{white-space: nowrap;overflow:hidden ;}
-.tips .txt text{display: inline-block; animation: remindMessage 14s linear infinite;padding-right: 10rpx;}
+.tips .txt text{display: inline-block; animation: remindMessage 14s linear infinite;padding-right: 10rpx;font-size: 13px;}
 
 @keyframes remindMessage {
   0% {

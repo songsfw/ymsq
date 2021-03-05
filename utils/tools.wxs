@@ -85,11 +85,26 @@ function fixedFloatNum(opt, a, b) {
     }
 }
 
+function formatePrice(num){
+    console.log(num);
+    var price = num.toString()
+    var rs = price.indexOf('.'); 
+    if (rs < 0) { 
+      rs = price.length; 
+      price += '.'; 
+    } 
+    while (price.length <= rs + 2) { 
+      price += '0'; 
+    }
+    return price
+}
+
 module.exports = {
     hidenPhone:hidenPhone,
     getDate: dateFormat,
     isPremiere: isPremiere,
     fixedFloatNum: fixedFloatNum,
     paseIntNum:paseIntNum,
-    formatNumber:formatNumber
+    formatNumber:formatNumber,
+    formatePrice:formatePrice
 }

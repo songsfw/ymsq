@@ -96,7 +96,7 @@ Page({
       useCoupon= true,
       couponCheck=curId
     }
-    newPayQueue[2] = coupon
+    newPayQueue[2] = util.formatePrice(coupon)
     this.setData({
       useDiscount:useDiscount,
       useCoupon: useCoupon,
@@ -540,7 +540,7 @@ Page({
     //填入待减值
     newPayQueue[1] = mai
     newPayQueue[0] = delivery
-    newPayQueue[2] = coupon
+    newPayQueue[2] = util.formatePrice(coupon)
 
     console.log(newPayQueue)
 
@@ -620,11 +620,11 @@ Page({
       this.setData({
         verifyed: verifyed,
         balanceTxt:parseFloat(balanceTxt),
-        payPrice: payPrice
+        payPrice: util.formatePrice(payPrice)
       })
     } else {
       this.setData({
-        payPrice: this.data.preUseBalancePrice
+        payPrice: util.formatePrice(this.data.preUseBalancePrice)
       })
     }
   },
