@@ -9,12 +9,13 @@ let timer = null,
   breadList = null,
   cakeList = null,
   timer1 = null,
-  trueStock = {}
+  trueStock = {}, //真实购物车数量
+  typeTagInfo = {},//标签索引
+  canCheck = false;//加载中 是否允许点击
 Page({
   data: {
     curProId: -1,
     currentTab: '',
-    currentTag: '',
     breadList: [],
     cakeList: [],
 
@@ -33,7 +34,7 @@ Page({
 
     breadTag: '',
     cakeTag: '',
-
+    cakeTagName: '',
     share: {
       tit: "原麦山丘",
       path: "/pages/index/index",
@@ -50,40 +51,98 @@ Page({
     //掉入购物车开关
     toCart: 0,
     //最大销售数量
-    order_max_bread: 99
+    order_max_bread: 99,
+    // canCheck:false,
   },
-  switchTab: function (e) {
-    var that = this;
+  switchTab: util.debounce(function (e) {
+    if(!canCheck){
+      return false;
+    }
     var currentId = e.currentTarget.dataset.tabid
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
       return false;
     } else {
-      if (!breadList || breadList.length == 0) {
-        this.setData({
-          showLoading: true
-        })
-        this.getProList()
-      }
-      if (!cakeList || cakeList.length == 0) {
-        this.setData({
-          showLoading: true
-        })
-        this.getProList()
-      }
+      //更新列表
+      // this.getProList();
 
-      that.setData({
-        currentTab: currentId
-      })
+      //缓存操作
+      var tagId = '全部'
+      var tagName = '全部'
+      let currentTab = currentId
+      let currentTag;
+
+      if (currentTab == 1) {
+        currentTag = '';
+        this.setData({
+          breadInfo: {
+            count: 0,
+            pageNum: 1,
+            noMoreData: false
+          },
+          breadTag: tagId,
+          breadList: [],
+          showLoading: true,
+        })
+      } else {
+        currentTag = tagId == '全部' ? '' : tagId
+        let currentTagName = tagName; //cakeTagName
+        this.setData({
+          cakeInfo: {
+            count: 0,
+            pageNum: 1,
+            noMoreData: false
+          },
+          cakeTag: currentTag,
+          cakeTagName: currentTagName,
+          cakeList: [],
+          showLoading: true
+        })
+        currentTag = currentTagName == '全部' ? '' : currentTagName;
+      }
+      let pagelist = this.getCachePage(1, currentTab, currentTag)
+      // console.log("select tag: ", currentTab, currentTag, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+
+      let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
+      if (currentTab == 1) {
+        this.setData({
+          breadInfo: {
+            count: pagelist['count'],
+            pageNum: 1,
+            noMoreData: noMoreData,
+            pageCount: pagelist['pageCount'],
+          },
+          showLoading: noMoreData,
+          ['breadList[0]']: pagelist['pagelist'],
+          currentTag: currentTag,
+          currentTab:currentTab,
+          breadTag:'',
+        });
+      } else {
+        this.setData({
+          cakeInfo: {
+            count: pagelist['count'],
+            pageNum: 1,
+            noMoreData: false,
+            pageCount: pagelist['pageCount'],
+          },
+          showLoading: false,
+          ['cakeList[0]']: pagelist['pagelist'],
+          currentTag: currentTag,
+          currentTab:currentTab,
+        });
+      }
+      return false;
     }
-  },
+  }, 200, true),
   selectTag(e) {
     var tagId = e.currentTarget.dataset.id
+    var tagName = e.currentTarget.dataset.tagname
     let currentTab = this.data.currentTab
-    let currentTag = tagId == '全部' ? '' : tagId
+    let currentTag;
 
     if (currentTab == 1) {
-      console.log(currentTag);
+      currentTag = tagId == '全部' ? '' : tagId
       this.setData({
         breadInfo: {
           count: 0,
@@ -92,9 +151,11 @@ Page({
         },
         breadTag: currentTag,
         breadList: [],
-        showLoading: true
+        showLoading: true,
       })
     } else {
+      currentTag = tagId == '全部' ? '' : tagId
+      let currentTagName = tagName; //cakeTagName
       this.setData({
         cakeInfo: {
           count: 0,
@@ -102,17 +163,42 @@ Page({
           noMoreData: false
         },
         cakeTag: currentTag,
+        cakeTagName: currentTagName,
         cakeList: [],
         showLoading: true
       })
+      currentTag = currentTagName == '全部' ? '' : currentTagName;
     }
-    if(timer1){
-      clearTimeout(timer1)
+    let pagelist = this.getCachePage(1, currentTab, currentTag)
+    // console.log("select tag: ", currentTab, currentTag, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+    let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
+    if (currentTab == 1) {
+      this.setData({
+        breadInfo: {
+          count: pagelist['count'],
+          pageNum: 1,
+          noMoreData: noMoreData,
+          pageCount: pagelist['pageCount'],
+        },
+        showLoading: noMoreData,
+        ['breadList[0]']: pagelist['pagelist'],
+        currentTag: currentTag,
+      });
+    } else {
+      this.setData({
+        cakeInfo: {
+          count: pagelist['count'],
+          pageNum: 1,
+          noMoreData: false,
+          pageCount: pagelist['pageCount'],
+        },
+        showLoading: false,
+        ['cakeList[0]']: pagelist['pagelist'],
+        currentTag: currentTag,
+      });
     }
-    timer1=setTimeout(() => {
-      this.getProList()
-    }, 500);
 
+    return true;
   },
   getStock() {
     let {
@@ -133,9 +219,9 @@ Page({
     })
   },
 
-  getCurrList(list, pageNum) {
-    return list.slice(pageNum * 10 - 10, pageNum * 10)
-  },
+  // getCurrList(list, pageNum) {
+  //   return list.slice(pageNum * 10 - 10, pageNum * 10)
+  // },
   freshData: function () {
     this.getProList()
   },
@@ -184,7 +270,7 @@ Page({
       itemIdx = e.currentTarget.dataset.itemidx
 
     //存储真实库存
-    if(typeof(trueStock[proId]) == 'undefined'){
+    if (typeof (trueStock[proId]) == 'undefined') {
       trueStock[proId] = false;
     }
     for (let tval of breadList) {
@@ -198,6 +284,7 @@ Page({
     this.data.totalNum = this.data.totalNum + 1;
     let {
       currentTab,
+      breadTag,
       curProId,
       stock,
       city_id,
@@ -246,10 +333,10 @@ Page({
       }
       if (tempBread.selected >= prostock) {
         data.number = prostock - trueStock[proId];
-        if(data.number <=0){
+        if (data.number <= 0) {
           return false;
         }
-      } 
+      }
       proNum = 0
       api.setChart(data).then(res => {
         if (res) {
@@ -258,11 +345,13 @@ Page({
             icon: 'none',
             duration: 2000
           })
-          
           //更新数量
           for (let tval of breadList) {
             if (tval['meal_id'] == proId) {
+<<<<<<< HEAD
               //selectedNum = tval.selected;
+=======
+>>>>>>> master
               tval['selected'] = parseInt(tval.selected);
               let selectNumberLength = tval.selected > 0 ? tval.selected.toString().length : 0;
               tval['selectNumberLength'] = selectNumberLength;
@@ -284,44 +373,13 @@ Page({
           }
           util.setTabBarBadge(totalNum)
           wx.setStorageSync("total_num", totalNum)
+          // console.log(idx, currentTab, breadTag)
+          let pagelist = this.getCachePage(idx + 1, currentTab, breadTag);
           this.setData({
             totalNum: totalNum,
-            ['breadList[' + idx + ']']: this.getCurrList(breadList, idx + 1),
+            ['breadList[' + idx + ']']: pagelist['pagelist'],
           })
           trueStock[proId] = false;
-          //动画开启
-          //当前点击位置的x，y坐标
-          // this.finger = {};
-          // var topPoint = {};
-          // this.finger['x'] = e.touches["0"].clientX;
-          // this.finger['y'] = e.touches["0"].clientY - 20;
-
-
-          // if (this.finger['y'] < this.busPos['y']) {
-          //   topPoint['y'] = this.finger['y'] - 100;
-          // } else {
-          //   topPoint['y'] = this.busPos['y'] - 100;
-          // }
-
-          // if (this.finger['x'] < this.busPos['x']) {
-          //   topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
-          //   this.linePos = util.bezier([this.finger, topPoint, this.busPos], 30);
-          // } else {
-          //   this.finger['x'] = e.touches["0"].clientX - 20;
-          //   this.finger['y'] = e.touches["0"].clientY - 20
-          //   topPoint['x'] = this.finger['x'] - (this.finger['x'] - this.busPos['x']) / 2
-          //   this.linePos = util.bezier([this.busPos, topPoint, this.finger], 30, true);
-          // }
-          // this.linePos['bezier_points'].push({
-          //   x: 1000,
-          //   y: 1000
-          // });
-          // tocartParams['proid'] = proId;
-          // tocartParams['img'] = img;
-          // tocartParams['position'] = {
-          //   'linePos': this.linePos
-          // };
-          // this.selectComponent('#componentsToCart').start(tocartParams)
         } else {
           console.log(res)
           wx.showToast({
@@ -337,44 +395,143 @@ Page({
       })
     }, 300)
   },
-  getMoreData() {
-    let pageNum, noMoreData
+  getMoreCacheData() {
+    let pageNum
     let {
       currentTab,
       breadInfo,
-      cakeInfo
+      cakeInfo,
+      breadTag,
+      cakeTag
     } = this.data
     currentTab = parseInt(currentTab)
+    let pagelist;
     switch (currentTab) {
       case 1:
-        if (breadInfo.noMoreData) {
+        pageNum = breadInfo.pageNum + 1
+        pagelist = this.getCachePage(pageNum, currentTab, breadTag);
+        if (pagelist === false) {
           return false
         }
-        pageNum = breadInfo.pageNum + 1
-        noMoreData = breadInfo.count - pageNum * 10 <= 0
         this.setData({
           ['breadInfo.pageNum']: pageNum,
-          ['breadInfo.noMoreData']: noMoreData,
-          ['breadList[' + (pageNum - 1) + ']']: this.getCurrList(breadList, pageNum),
+          ['breadList[' + (pageNum - 1) + ']']: pagelist.pagelist,
         })
 
         break;
       case 2:
-        if (cakeInfo.noMoreData) {
+        pageNum = cakeInfo.pageNum + 1
+        pagelist = this.getCachePage(pageNum, currentTab, cakeTag);
+        if (pagelist === false) {
           return false
         }
-        pageNum = cakeInfo.pageNum + 1
-        noMoreData = cakeInfo.count - pageNum * 10 <= 0
         this.setData({
           ['cakeInfo.pageNum']: pageNum,
-          ['cakeInfo.noMoreData']: noMoreData,
-          ['cakeList[' + (pageNum - 1) + ']']: this.getCurrList(cakeList, pageNum),
+          ['cakeList[' + (pageNum - 1) + ']']: pagelist.pagelist,
         })
-
         break;
       default:
         break;
     }
+  },
+  // getMoreData() {
+  //   let pageNum, noMoreData
+  //   let {
+  //     currentTab,
+  //     breadInfo,
+  //     cakeInfo
+  //   } = this.data
+  //   currentTab = parseInt(currentTab)
+  //   switch (currentTab) {
+  //     case 1:
+  //       if (breadInfo.noMoreData) {
+  //         return false
+  //       }
+  //       pageNum = breadInfo.pageNum + 1
+  //       noMoreData = breadInfo.count - pageNum * 10 <= 0
+  //       //设置的时候 breadInfo 设置 type  tag 的id 进行区分  重点是划分  count 与 pageNum
+
+  //       this.setData({
+  //         ['breadInfo.pageNum']: pageNum,
+  //         ['breadInfo.noMoreData']: noMoreData,
+  //         ['breadList[' + (pageNum - 1) + ']']: this.getCurrList(breadList, pageNum),
+  //       })
+
+  //       break;
+  //     case 2:
+  //       if (cakeInfo.noMoreData) {
+  //         return false
+  //       }
+  //       pageNum = cakeInfo.pageNum + 1
+  //       noMoreData = cakeInfo.count - pageNum * 10 <= 0
+  //       this.setData({
+  //         ['cakeInfo.pageNum']: pageNum,
+  //         ['cakeInfo.noMoreData']: noMoreData,
+  //         ['cakeList[' + (pageNum - 1) + ']']: this.getCurrList(cakeList, pageNum),
+  //       })
+
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // },
+  getCachePage(pageNum, type, tag) {
+    // console.log("开始分页：", pageNum, type, tag)
+    type = parseInt(type);
+    tag = tag == '' ? 0 : tag
+
+    // breadList = null;
+    // console.log(breadList);
+    if ((type == 1 && !breadList) || (type == 2 && !cakeList)) {
+      // console.log('------------')
+      this.getProList();
+      return false;
+    }
+
+    let tempQuoteList;
+    let pageList = [];
+    let pagesize = 10;
+    let tempList = [];
+    if (tag == 0) {
+      //全部
+      if (type == 1) {
+        for (let key in breadList) {
+          tempList.push(key)
+        }
+      } else if (type == 2) {
+        for (let key in cakeList) {
+          tempList.push(key)
+        }
+      }
+    } else {
+      //tag
+      tag = type == 1 ? parseInt(tag) : tag;
+      tempList = typeTagInfo[type][tag];
+    }
+    if (typeof (tempList) == "undefined") {
+      tempList = [];
+    }
+    let count = tempList.length;
+    let pageCount = Math.ceil(count / pagesize);
+    if (pageNum > pageCount) {
+      return false; //已达最大页数
+    }
+
+    if (pageNum <= 0) {
+      pageNum = 1;
+    }
+    let tempPageList = tempList.slice((pageNum - 1) * pagesize, pageNum * pagesize)
+    tempQuoteList = type == 1 ? breadList : cakeList;
+    for (let key in tempPageList) {
+      pageList.push(tempQuoteList[tempPageList[key]])
+    }
+    return {
+      'pageCount': pageCount,
+      'count': count,
+      'pagesize': pagesize,
+      page: pageNum,
+      pagelist: pageList
+    };
   },
   toProInfo: function (e) {
     let proId = e.currentTarget.dataset.proid
@@ -389,7 +546,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.getMoreData()
+    this.getMoreCacheData();
+    // this.getMoreData()
   },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
@@ -398,12 +556,56 @@ Page({
     })
     util.setTabBarBadge(total_num)
   },
+  refreshTypeTagInfo(type, list) {
+    type = parseInt(type)
+    //初始化
+    console.log(list)
+    let typeTagInfoRe = {};
+    typeTagInfo[type] = {};
+
+    switch (type) {
+      case 1:
+        //面包
+        typeTagInfoRe[type] = {}
+        for (let key in list) {
+          if (!typeTagInfoRe[type].hasOwnProperty(list[key].category_id)) {
+            typeTagInfoRe[type][list[key].category_id] = [];
+            typeTagInfoRe[type][list[key].category_id].push(key)
+          } else {
+            typeTagInfoRe[type][list[key].category_id].push(key)
+          }
+        }
+        // console.log(typeTagInfo)
+        break;
+      case 2:
+        //蛋糕
+        typeTagInfoRe[type] = {}
+        // console.log(list)
+        for (let key in list) {
+          // console.log(list[key])
+          for (let tagKey in list[key]['tags']) {
+            // console.log(list[key]['tags'][tagKey])
+            if (!typeTagInfoRe[type].hasOwnProperty(list[key]['tags'][tagKey])) {
+              typeTagInfoRe[type][list[key]['tags'][tagKey]] = [];
+              typeTagInfoRe[type][list[key]['tags'][tagKey]].push(key)
+            } else {
+              typeTagInfoRe[type][list[key]['tags'][tagKey]].push(key)
+            }
+          }
+        }
+        break;
+    }
+    typeTagInfo[type] = typeTagInfoRe[type];
+    console.log('初始化==', typeTagInfo)
+    return true;
+  },
   getProList: function (cityid) {
-    console.log('getProList  --- start')
+    // console.log('getProList  --- start')
     let {
       city_id,
       breadTag,
-      cakeTag
+      cakeTag,
+      cakeTagName,
     } = this.data
     let count, noMoreData, currentTab = app.globalData.proType
     city_id = cityid ? cityid : city_id
@@ -415,20 +617,43 @@ Page({
       data.type = ""
     }
     if (currentTab == '1') {
-      data.tag = breadTag
+      // data.tag = breadTag
       data.type = "1"
+
+      this.setData({
+        breadInfo: {
+          count: 0,
+          pageNum: 1,
+          noMoreData: false
+        },
+        breadTag: breadTag,
+        breadList: [],
+        cakeList: [],
+        showLoading: true,
+      })
     }
     if (currentTab == '2') {
-      data.tag = cakeTag
+      // data.tag = cakeTag
       data.type = "2"
+      this.setData({
+        cakeInfo: {
+          count: 0,
+          pageNum: 1,
+          noMoreData: false
+        },
+        cakeTag: cakeTag == '全部' ? '' : cakeTag,
+        cakeTagName: cakeTagName,
+        cakeList: [],
+        breadList: [],
+        showLoading: true
+      })
     }
-    console.log(city_id);
 
     api.getProList(data).then(res => {
       this.setData({
         showLoading: false
       })
-      console.log(res);
+      // console.log(res);
       if (!res) {
         return false
       }
@@ -448,7 +673,6 @@ Page({
       if (app.globalData.proType == '1') {
         breadList = []
         breadList = res.list
-        console.log('breadList::',breadList)
         for (let breadVal of breadList) {
           let selectNumberLength = breadVal.selected > 0 ? breadVal.selected.toString().length : 0;
           breadVal['selectNumberLength'] = selectNumberLength;
@@ -469,59 +693,60 @@ Page({
         }
 
         let stock = res.stock
-        count = breadList.length
-        //计算商品列表分页
-        let pageCount = Math.ceil(count/10);
-        let tempList = [];
-        for(let i = 0;i<pageCount;i++){
-          tempList[i] = breadList.slice(((i+1)-1)*10,  (i+1)*10)
-        }
-
-        noMoreData = count - 1 * 10 <= 0
-        if (count == 0) {
+        this.refreshTypeTagInfo(res.choose_type, breadList);
+        let pagelist = this.getCachePage(1, res.choose_type, breadTag)
+        if (!pagelist) {
           this.setData({
             breadList: null
           })
-        } else {
-          this.setData({
-            breadTags: res.tags,
-            stock: stock,
-            breadInfo: {
-              count: count,
-              pageNum: 1,
-              noMoreData: noMoreData
-            },
-            breadList:tempList,
-            // 'breadList[0]': this.getCurrList(breadList, 1),
-          })
+          return false;
         }
-
+        count = pagelist.count;
+        noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
+        this.setData({
+          breadTags: res.tags,
+          stock: stock,
+          breadInfo: {
+            count: count,
+            pageNum: 1,
+            noMoreData: noMoreData
+          },
+          'breadList[0]': pagelist['pagelist'],
+        })
       }
       if (app.globalData.proType == '2') {
         cakeList = res.list
-        count = cakeList.length
-        noMoreData = count - 1 * 10 <= 0
-        if (count == 0) {
+        let stock = res.stock
+        this.refreshTypeTagInfo(res.choose_type, cakeList);
+        let cakeTagTrue = cakeTag == "" ? cakeTag : cakeTagName;
+        let pagelist = this.getCachePage(1, res.choose_type, cakeTagTrue)
+        if (!pagelist) {
           this.setData({
-            cakeList: null
+            breadList: null
           })
-        } else {
-          this.setData({
-            cakeTags: res.tags,
-            cakeInfo: {
-              count: count,
-              pageNum: 1,
-              noMoreData: noMoreData
-            },
-            'cakeList[0]': this.getCurrList(cakeList, 1),
-          })
+          return false;
         }
+
+        count = pagelist.count;
+        noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
+        this.setData({
+          cakeTags: res.tags,
+          stock: stock,
+          cakeInfo: {
+            count: count,
+            pageNum: 1,
+            noMoreData: noMoreData
+          },
+          'cakeList[0]': pagelist['pagelist'],
+        })
       }
+      canCheck = true;
       wx.stopPullDownRefresh() //停止下拉刷新
     })
 
   },
   onShow() {
+    canCheck =false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
@@ -530,7 +755,7 @@ Page({
     this.setData({
       currentTab: proType,
       city_id: city_id || '10216',
-      showLoading:true
+      showLoading: true
     })
     trueStock = {};
     this.getCartInfo()
@@ -564,6 +789,9 @@ Page({
     // let addressInfo = wx.getStorageSync("addressInfo")
     // let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     let btmHolder = wx.getStorageSync('btmHolder')
+
+    //设置临时页面分类等
+    // this.setTempTypeTag(1,0);
 
     this.setData({
       //city_id:city_id,
