@@ -1,4 +1,8 @@
 /* pages/user/user.wxss */
+page{
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 view{font-size:12px}
 image{width: 100%;height: 100%}
 page{background: #F6F6F6;height: auto;}
@@ -21,8 +25,7 @@ page{background: #F6F6F6;height: auto;}
 .item-wrap{width:662rpx;height: 100%;}
 .move-area{width:820rpx;height:100%;}
 .item .tit{font-size: 15px;color: #222;margin-bottom: 8px;font-weight: 500;margin-top: 2px;}
-.item .tag{margin-bottom: 10px;    display: flex;
-    flex-wrap: wrap;}
+.item .tag{margin-bottom: 10px;display: flex;flex-wrap: wrap;}
 .item .tag text{color: #aaa; font-size: 12px; margin:0 5px 2px 0; }
 .item .tit .tag{color: #fff;font-size: 10px;padding:4rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;vertical-align: middle;}
 .item .tag text:after{content: "|"; font-size: 10px; display: inline-block; margin-left: 10rpx;}

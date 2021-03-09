@@ -50,9 +50,7 @@
   right: 0;
   top: 0px;
   width: 30px;
-  height: 30px;}
-.pop-panel .close:after,
-.pop-panel .close::before{background-color: #333;}
+  height: 30px;line-height: 30px;}
 .pop-con{height: 500rpx;position: relative;z-index: 2;}
 .inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 40px;line-height: 40px;}
 .inputxt text{width:70px;}

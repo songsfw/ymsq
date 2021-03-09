@@ -12,5 +12,5 @@
     <view class="btn cancle-btn flex-1" bind:tap="cancel" wx:if="{{showCancel}}">{{cancelText}}</view>
     <view class="btn confirm-btn flex-1 {{unuse?'unuse':''}}" bind:tap="confirm" wx:if="{{showConfirm}}">{{confirmText}}</view>
   </view>
-  <view class="pop-close close-btn icon-close" bind:tap="close"></view>
+  <view class="iconfont pop-close close-btn icon-close" bind:tap="close"></view>
 </view>

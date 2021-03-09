@@ -1,4 +1,3 @@
-<wxs module="move" src="../../utils/move.wxs"></wxs>
 <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
   <view class="tips flex">
     <text class="iconfont icon-notice"></text> 
@@ -124,13 +123,13 @@
 </view>
 <view class="nodata" wx:if="{{breadLi.length==0 && cakeLi.length==0}}">
   <view>
-    <image src="../../image/no-pro.png"></image>
+    <image src="../../../image/no-pro.png"></image>
   </view>
   <view class="txt">购物车还是空的</view>
   <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去逛逛</navigator>
 </view>
 <!-- <view class="logo">
-  <image src="../../image/logo.png"></image>
+  <image src="/../logo.png"></image>
 </view> -->
 
 <view class="option flex" wx:if="{{breadLi.length>0 || cakeLi.length>0}}">

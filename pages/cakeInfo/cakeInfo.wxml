@@ -14,7 +14,7 @@
     <view>￥<text>{{proInfo.price}}</text></view>
     <!-- <view class="tag">最快次日达</view> -->
   </view>
-  <view class="tit">{{proInfo.name}} <text wx:if="{{proInfo.free_delivery}}">免邮</text></view>
+  <view class="tit">{{proInfo.name}} <text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text></view>
   <view class="desc" style="margin-bottom:20rpx">{{proInfo.chinese_brief}}</view>
   <view class="desc">{{proInfo.french_brief}}</view>
   <view class="tags flex"><text wx:for="{{proInfo.fname}}">{{item}}</text></view>
@@ -40,10 +40,10 @@
 </view>
 <view class="option flex" style="padding-bottom:{{btmHolder}}px">
   <navigator class="home" open-type="switchTab" url="/pages/index/index">
-    <view class="iconfont icon-home"></view>
+    <view class="iconfont icon-index"></view>
     <text >首页</text>
   </navigator>
-  <navigator class="cart" bind:tap="toCart" open-type="switchTab" url="/pages/chart/chart">
+  <navigator class="cart" bind:tap="toCart" url="/pages/chart/cart/cart">
     <block wx:if="{{totalNum>0}}">
       <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
       <view class="num num99" wx:else>99+</view>
@@ -55,8 +55,8 @@
   <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="cake-panel">立即购买</view>
 </view>
 
-<view class="pop-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
-  <view class="icon-close close" bind:tap="close"></view>
+<view class="pop-panel btm-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
       <view class="pic"><image src="{{proInfo.img}}" ></image></view>

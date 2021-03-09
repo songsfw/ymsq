@@ -24,11 +24,7 @@ Component({
     tips:"获取验证码"
   },
   attached: function() {
-    let userInfo = wx.getStorageSync("userInfo")
-    userInfo = userInfo && JSON.parse(userInfo)
-    this.setData({
-      userInfo
-    })
+    
   },
   methods: {
     inputMobi:util.debounce(function(e){
@@ -61,7 +57,10 @@ Component({
     },
     bindPhone(){
       let mobile = this.data.mobile,code=this.data.code
-  
+      let userInfo = wx.getStorageSync("userInfo")
+        console.log(userInfo);
+      userInfo = userInfo && JSON.parse(userInfo)
+      
       if(!mobile){
         wx.showToast({
           title: '请输入手机号',
@@ -94,12 +93,12 @@ Component({
       api.bindPhone(data).then(res=>{
         console.log(res);
         if(res){
+          userInfo.phone=mobile
+          userInfo.is_mobile=1
           this.setData({
-            popShow:false,
-            'userInfo.phone':mobile,
-            'userInfo.is_mobile':1
+            popShow:false
           })
-          wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
+          wx.setStorageSync("userInfo", JSON.stringify(userInfo))
           this.triggerEvent('phoneSucess')
         }
         

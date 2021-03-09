@@ -9,7 +9,7 @@
           </view>
       </view>
       <view class="homebtn" wx:if="{{hasHome}}" bindtap="toHome">
-        <view class="iconfont icon-home"></view>
+        <view class="iconfont icon-index"></view>
       </view>
       <view class="return" wx:if="{{hasReturn}}" bindtap="return">
         <view class="arrow-left"></view>

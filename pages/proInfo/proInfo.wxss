@@ -56,7 +56,6 @@ page{background:#F6F6F6;height: auto;}
 .pop-panel .close::before{border-color: #999;}
 .pop-con{padding: 40rpx 40rpx 20rpx 40rpx;}
 .confirm-btn{margin-top: 50rpx;}
-.score-panel{transform: translateY(100%);transition: all .3s linear;}
 .score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
 .score-panel .h3{justify-content:space-between; flex-direction: column;}
 .score-panel .tit{font-size: 16px;font-weight: bold;margin-top: 16rpx;}

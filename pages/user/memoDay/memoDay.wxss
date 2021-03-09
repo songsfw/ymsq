@@ -9,14 +9,16 @@ page{background: #F6F6F6;}
 .item .tit{margin-right: 16px;}
 .tips-panel .popPanel{overflow: initial;top: 40%;}
 .popPanel .txt{max-height: 200px;overflow-y: scroll; line-height: 1.8;font-size: 13px;}
-.popPanel .pop-close{    left: 50%;
+.popPanel .pop-close{
+  width: 60rpx;
+  height: 60rpx;
+  left: 50%;
   bottom: -50px;
   top: auto;
   transform: translateX(-50%);
   border: 1px solid #fff;
-  border-radius: 50%;}
-  .popPanel .icon-close:before,
-  .popPanel .icon-close:after{background-color: #fff;}
+  border-radius: 50%;
+color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 
 .date-panel{position: fixed;left: 0;bottom: 0;transform: translateY(100%); width: 100%;z-index: 11;background: #fff;
   border-radius: 16rpx 16rpx 0 0;overflow: hidden;transition: all .3s ease-in;}

@@ -1,7 +1,7 @@
 <view class="mask" wx:if="{{popShow}}" bind:tap="touchMask"></view>
 
 <view class="pop-panel" wx:if="{{popShow}}">
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="inputxt flex">
     <text style="width:50px">手机号</text>
     <input class="flex-1" type="number" bindinput="inputMobi" placeholder="请输入手机号" />

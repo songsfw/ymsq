@@ -27,6 +27,7 @@
     "pages/login/login",
     "pages/chart/chart",
     "pages/chart/payOrder/payOrder",
+    "pages/chart/cart/cart",
     "pages/chart/paySuccess/paySuccess",
     "pages/web/web",
     "pages/commit/commit",

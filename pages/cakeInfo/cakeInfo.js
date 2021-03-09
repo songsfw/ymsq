@@ -101,8 +101,8 @@ Page({
         })
         if(action==1){
           app.globalData.proType = "2"
-          wx.switchTab({
-            url:"/pages/chart/chart"
+          wx.navigateTo({
+            url:"/pages/chart/cart/cart"
           })
         }
         

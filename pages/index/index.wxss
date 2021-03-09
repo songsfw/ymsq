@@ -30,7 +30,13 @@ view{font-size:12px}
 
 .mask{position: fixed;left: 0;top: 0;right:0;bottom: 0;background: rgba(0,0,0,.3);z-index:10}
 
-.menu{position: relative; padding:20rpx 30rpx 40rpx 30rpx;justify-content: space-around;box-sizing: border-box;background-color: #fff;}
+.menu{position: relative;
+    padding: 32rpx 20rpx;
+    justify-content: space-around;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin: -104rpx 24rpx 30rpx 24rpx;
+    border-radius: 8rpx;}
 .menu view{margin-right: 20rpx;width:342rpx;height: 170rpx;overflow: hidden;}
 .menu view:last-child{margin-right: 0;}
 .menu view image{border-radius:8rpx;}
@@ -83,7 +89,8 @@ color: #666;
 
 .moreBtn{text-align: center;padding-top: 20rpx}
 
-.banner{width: 702rpx; height: 400rpx;overflow: hidden; margin-top: 2%; margin-left:24rpx;border-radius: 16rpx;transform: translateY(0);background-color: #D7D7D7;}
+.banner{position: relative; width: 750rpx; height:502rpx;overflow: hidden;transform: translateY(0);background-color: #D7D7D7;}
+.banner-mask{position: absolute;width: 112%;height: 100%;left: -40rpx;bottom: -170rpx;border-bottom:176rpx solid #F6F6F6;border-radius:0 0 50% 50%; box-sizing: border-box;pointer-events: none;}
 .banner swiper,
 .banner swiper view{width: 100%;height: 100%;}
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}

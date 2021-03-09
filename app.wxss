@@ -10,7 +10,6 @@ image{width: 100%;height: 100%;}
 .flex-2{flex: 2}
 .flex-center{display:flex;align-items: center;}
 .contain{height: 100%;}
-
 .iconAll{background-image: url(http://api-beta.withwheat.com/img/icon-box.png?03);background-size:85px 299px;background-repeat: no-repeat;}
 
 /*单箭头*/
@@ -40,11 +39,12 @@ image{width: 100%;height: 100%;}
 .triangle-left{border-color:transparent transparent transparent #000}
 
 /*-关闭图标-*/
-.icon-close{position: relative;display:inline-block; width: 30px;height: 30px}
+.icon-close{text-align: center;width: 38px;height: 38px;text-align: center; line-height: 38px;color: #999;font-size: 12px;}
+/* .icon-close{position: relative;display:inline-block; width: 30px;height: 30px}
 .icon-close:after,
 .icon-close:before{content:"";display:block;width:50%;height: 1px;background:#666;position: absolute;left:24%;top:50%;}
 .icon-close:after{transform: rotate(45deg);}
-.icon-close:before{transform: rotate(-45deg);}
+.icon-close:before{transform: rotate(-45deg);} */
 
 .icon-arrow{width:32rpx;height: 32rpx;margin-left: 16rpx}
 
@@ -85,7 +85,7 @@ image{max-width: 100%}
 .col-2 .item{width: 50%;}
 .col-3 .item{width: 33.33%;}
 
-.btn{width: 100%;height:88rpx;line-height: 88rpx;background:#C1996B;border-radius:44rpx;color: #fff;text-align: center;font-size: 30rpx}
+.btn{width: 100%;height:78rpx;line-height: 78rpx;background:#C1996B;border-radius:44rpx;color: #fff;text-align: center;font-size: 30rpx}
 .fixedBtn{position: fixed;padding: 24rpx;box-sizing: border-box; left: 0;bottom: 0; width:100%;z-index: 2;}
 .btn.unuse{opacity: .5;}
 
@@ -134,7 +134,7 @@ image{max-width: 100%}
 .nodata .txt{margin: 38rpx 0 60rpx 0;font-size: 14px;color: #666;}
 .nodata .btn{margin: 0 auto; width: 320rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #fff;background: #C1996B;font-size: 15px;}
 .pop-panel.upPanel{transform: translateY(0);}
-
+.btm-panel{transform: translateY(100%);transition: all .3s linear;}
 
 .upmotion{animation: uplist .3s;}
 @keyframes uplist{

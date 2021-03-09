@@ -193,7 +193,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let use = options.use,type=options.type,cardPrice=options.cardPrice,isUse = options.isUse
+    let use = options.use,type=options.type||1,cardPrice=options.cardPrice,isUse = options.isUse
     console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder==0?12:btmHolder

@@ -18,7 +18,7 @@
     </view>
     <view class="flex input-box">
       <view class="tit">名称</view>
-      <input type="text" class="flex-1" value="{{item.title}}" placeholder="请为纪念日设置名称" bindinput="inputName" data-idx = "{{index}}" />
+      <input type="text" class="flex-1" value="{{item.title}}" placeholder="请为纪念日设置名称" placeholder-style="color:#aaa" bindinput="inputName" data-idx = "{{index}}" />
       
     </view>
     <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate">

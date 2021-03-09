@@ -32,7 +32,7 @@
 .homebtn{display: flex;
     
     align-items: center;
-    left: 30rpx;
+    left: 10rpx;
     padding-left: 0;
     justify-content: center;
     width: 36px;

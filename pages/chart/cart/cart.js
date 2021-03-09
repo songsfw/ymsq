@@ -1,6 +1,6 @@
 // pages/user/user.js
-const api = require('../../utils/api.js')
-const util = require('../../utils/util.js')
+const api = require('../../../utils/api.js')
+const util = require('../../../utils/util.js')
 const app = getApp()
 let timer = null,
   proNum = 0
@@ -408,7 +408,7 @@ Page({
       if (res) {
         let breadLi = res.bread.detail,
           cakeLi = res.cake.detail
-        util.setTabBarBadge(res.total_num)
+        //util.setTabBarBadge(res.total_num)
         wx.setStorageSync('total_num', res.total_num)
         let breadItemIds = [];
         if (breadLi.length > 0) {
@@ -664,7 +664,7 @@ Page({
 
 
     this.getChartData()
-    this.getCartInfo()
+    //this.getCartInfo()
   },
 
   /**

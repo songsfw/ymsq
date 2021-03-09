@@ -348,10 +348,6 @@ Page({
           //更新数量
           for (let tval of breadList) {
             if (tval['meal_id'] == proId) {
-<<<<<<< HEAD
-              //selectedNum = tval.selected;
-=======
->>>>>>> master
               tval['selected'] = parseInt(tval.selected);
               let selectNumberLength = tval.selected > 0 ? tval.selected.toString().length : 0;
               tval['selectNumberLength'] = selectNumberLength;

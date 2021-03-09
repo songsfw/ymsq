@@ -36,9 +36,7 @@ page{background: #F6F6F6;}
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
-.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
-.pop-panel .close:after,
-.pop-panel .close::before{border-color: #999;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;}
 .pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
 .pop-con{height: 500rpx;}
 

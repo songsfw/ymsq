@@ -177,8 +177,9 @@ Page({
     // }
   },
   showAllPro() {
+    let showAll = this.data.showAll ? false : true
     this.setData({
-      showAll: true
+      showAll: showAll
     })
   },
   tabCoupon(e) {

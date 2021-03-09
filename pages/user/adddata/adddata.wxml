@@ -2,21 +2,21 @@
 <view class="address">
   <view class="inputxt">
     <text>联系人</text>
-    <input class="flex-1" placeholder="请填写收货的姓名" value="{{address.name}}" bindinput="inputName" />
+    <input class="flex-1" placeholder="请填写收货的姓名" value="{{address.name}}" bindinput="inputName" placeholder-style="color:#aaa;font-weight:normal" />
   </view>
   <view class="inputxt">
     <text>手机号</text>
-    <input class="flex-1" placeholder="请填写收货的手机号" type="number" value="{{address.mobile}}" bindinput="inputMobi" />
+    <input class="flex-1" placeholder="请填写收货的手机号" type="number" value="{{address.mobile}}"  placeholder-style="color:#aaa;font-weight:normal" bindinput="inputMobi" />
   </view>
   <view class="inputxt" bind:tap="selectAdd">
     <text>收货地址</text>
     <!-- <text style="width:auto" wx:if="{{address.city_name}}">{{address.city_name}}</text> -->
-    <input class="flex-1" value="{{address.address}}" placeholder="点击选择" disabled="true" />
+    <input class="flex-1" value="{{address.address}}" placeholder-style="color:#aaa;font-weight:normal" placeholder="点击选择" disabled="true" />
     <view class="iconfont icon-arrow-r"></view>
   </view>
   <view class="inputxt">
     <text>门牌号</text>
-    <input class="flex-1" placeholder="请填写详细地，例A座7楼101室" value="{{address.address_detail}}" bindinput="inputAdd" />
+    <input class="flex-1" placeholder-style="color:#aaa;font-weight:normal" placeholder="请填写详细地，例A座7楼101室" value="{{address.address_detail}}" bindinput="inputAdd" />
   </view>
   <view class="inputxt default {{address.is_default==1?'checked':''}}" bindtap="setDefault" style="border:none">
     <view class="checkbox"><text class="check-icon"></text></view>

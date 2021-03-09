@@ -41,7 +41,7 @@
       </block>
     </block>
 
-    <view class="iconfont icon-arrow-r"></view>
+    <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
   </view>
   <view class="ziti-info" wx:if="{{ziti=='1'}}">
     <view class="inputbox flex-center">
@@ -53,7 +53,7 @@
       <view class="time flex-center flex-1">
         <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
         <text wx:else>请选择自提时间</text>
-        <view class="iconfont icon-arrow-r"></view>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
   </view>
@@ -62,7 +62,7 @@
     <view class="time flex-center">
       <text wx:if="{{checkDate!==null}}">{{dateStr}} {{selectTimeTxt}}</text>
       <text wx:else>请选择配送时间</text>
-      <view class="iconfont icon-arrow-r"></view>
+      <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
     </view>
   </view>
   <view class="pro-info">
@@ -94,14 +94,15 @@
             </view>
           </view>
         </view>
-        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
-          <view class="h4" wx:if="{{item.is_mcake_message==1}}">巧克力牌</view>
+        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
+          <view class="h4">巧克力牌</view>
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
             placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard"
             disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
             data-cartid="{{item.cart_id}}" />
-          <view class="iconfont icon-edit" wx:if="{{item.is_mcake_message==1}}"></view>
+          <view class="iconfont icon-edit"></view>
         </view>
+        <view class="spec-txt" wx:if="{{item.special_message}}"><text class="iconfont icon-notice"></text>{{item.special_message}}</view>
       </view>
       <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
         <view class="flex">
@@ -126,32 +127,37 @@
             </view>
           </view>
         </view>
-        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0}}">
+        <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
           <view class="h4">巧克力牌</view>
-          <input class="inputxt flex-1" type="text" placeholder="happy birthday!" maxlength="9" bindinput="inputCard" />
+          <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
+            placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard"
+            disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
+            data-cartid="{{item.cart_id}}" />
           <view class="iconfont icon-edit"></view>
         </view>
+        <view class="spec-txt" wx:if="{{item.special_message}}"><text class="iconfont icon-notice"></text>{{item.special_message}}</view>
       </view>
     </view>
-    <view class="more-pro flex-center" wx:if="{{proList.length>3 && !showAll}}" bind:tap="showAllPro">
-      <view>查看更多商品</view>
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{proList.length>3}}" bind:tap="showAllPro">
+      <view wx:if="{{!showAll}}">查看更多商品</view>
+      <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
   </view>
   <view class="fittings-info flex" wx:if="{{fittings_desc}}">
     <view class="tit">配件说明</view>
     <view class="txt flex-1">
-      <view wx:for="{{fittings_desc}}" style="{{item.marked==1?'color:#fa603d':''}}"><text>◉</text> {{item.desc}}</view>
+      <view wx:for="{{fittings_desc}}" class="{{item.marked==1?'on':''}}"><text>◉</text> {{item.desc}}</view>
     </view>
   </view>
   <view class="inputbox flex-center" wx:if="{{type==2}}">
     <view>订单备注</view>
-    <input class="flex-1" type="text" placeholder="请输入内容" bindinput="inputRemark" />
+    <input class="flex-1" type="text" placeholder="请输入内容" bindinput="inputRemark" placeholder-style="color:#aaa" />
   </view>
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>
-      <view class="val" style="color:#222">￥{{cart_data.price}}<text class="arrow-r"></text></view>
+      <view class="val"><text style="color:#222">￥{{cart_data.price}}</text><text class="arrow-r"></text></view>
     </view>
     <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
@@ -185,7 +191,7 @@
         <!-- <image src="../../../image/icon-coupon.png"></image> -->
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
-        <block wx:if="{{useCoupon}}">-￥{{payQueue[2]}}</block>
+        <block wx:if="{{useCoupon}}"><text>-￥{{payQueue[2]}}</text></block>
         <block wx:else><text style="color:red">{{cart_data.can_promotion_count}}张可用</text></block>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
@@ -218,7 +224,7 @@
         </view>
 
         <image wx:if="{{balance == 0 || balance == '0.00'}}" class="arrow-r" style="width:15px;height:15px;margin-left:3px;" src="../../../image/disabled1.png"></image>
-        <switch wx:else  checked="{{useBalance}}" bindchange="switch" color="#C1996B" />
+        <switch wx:else checked="{{useBalance}}" bindchange="switch" color="#C1996B" />
         
       </view>
     </view>
@@ -238,15 +244,15 @@
     收货后，非质量问题不予退换</view>
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px">
-  <view class="flex-center">
-    <text>合计:</text>
+  <view class="flex">
+    <text>合计：</text>
     <view class="num">￥<text>{{payPrice}}</text>
     </view>
   </view>
   <view class="buy-btn" bind:tap="submmitOrder">支付</view>
 </view>
-<view class="pop-panel time-panel" style="padding-bottom:{{btmHolder}}px" wx:if="{{pop=='showTime'}}">
-  <view class="icon-close close" bind:tap="close"></view>
+<view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block>
     <block wx:else>自提</block>时间
   </view>
@@ -275,8 +281,8 @@
   </view>
   <view class="confirm-btn btn" bind:tap="confirmDate">确定</view>
 </view>
-<view style="padding-bottom:{{btmHolder}}px" class="pop-panel coupon-panel" wx:if="{{pop=='showCoupon'}}">
-  <view class="icon-close close" bind:tap="closeCoupon"></view>
+<view style="padding-bottom:{{btmHolder}}px" class="pop-panel coupon-panel btm-panel {{pop=='showCoupon'?'upPanel':''}}">
+  <view class="iconfont icon-close close" bind:tap="closeCoupon"></view>
   <view class="tit flex">优惠券</view>
   <view class="flex hd">
     <view class="{{curtabid==1?'on':''}} flex-1" bind:tap="tabCoupon" data-tabid="1">可使用</view>
@@ -420,7 +426,7 @@
   <view class="confirm-btn btn" bind:tap="confirmCoupon">确定</view>
 </view>
 <view style="padding-bottom:{{btmHolder}}px" class="pop-panel score-panel" wx:if="{{pop=='showScore'}}">
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="tit flex">
     <text>麦点</text>
     <!-- <view>使用规则</view> -->

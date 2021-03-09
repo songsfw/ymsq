@@ -81,8 +81,8 @@ Page({
         })
         if(action==1){
           app.globalData.proType = "1"
-          wx.switchTab({
-            url:"/pages/chart/chart"
+          wx.navigateTo({
+            url:"/pages/chart/cart/cart"
           })
         }
       }
@@ -129,8 +129,8 @@ Page({
             title:'加入购物车成功'
           })
           if(toCart==1){
-            wx.switchTab({
-              url:"/pages/chart/chart"
+            wx.navigateTo({
+              url:"/pages/chart/cart/cart"
             })
           }
         }
