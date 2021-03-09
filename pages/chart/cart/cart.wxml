@@ -131,21 +131,23 @@
 <!-- <view class="logo">
   <image src="/../logo.png"></image>
 </view> -->
-
-<view class="option flex" wx:if="{{breadLi.length>0 || cakeLi.length>0}}">
-  <!-- <view class="select flex-center">
-    <view class="checkbox">
-      <view class="iconfont icon-check"></view>
+<view class="ios-padding option-wp">
+  <view class="option flex-center" wx:if="{{breadLi.length>0 || cakeLi.length>0}}">
+    <!-- <view class="select flex-center">
+      <view class="checkbox">
+        <view class="iconfont icon-check"></view>
+      </view>
+      <text>全选</text>
+    </view> -->
+    <view class="price flex">
+      <view class="flex-center"><text>合计：</text>
+        <view class="num">￥<text>{{totalPrice}}</text></view>
+      </view>
+      <view class="buy-btn" bind:tap="getOrder">结算</view>
     </view>
-    <text>全选</text>
-  </view> -->
-  <view class="price flex">
-    <view class="flex-center"><text>合计：</text>
-      <view class="num">￥<text>{{totalPrice}}</text></view>
-    </view>
-    <view class="buy-btn" bind:tap="getOrder">结算</view>
   </view>
 </view>
+
 
 
 <view class="pop-panel btm-panel score-panel {{pop=='fittings-panel'?'upPanel':''}}">
