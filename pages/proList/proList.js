@@ -55,6 +55,7 @@ Page({
     // canCheck:false,
   },
   switchTab: util.debounce(function (e) {
+    console.log('switchTab')
     if(!canCheck){
       return false;
     }
@@ -430,47 +431,6 @@ Page({
         break;
     }
   },
-  // getMoreData() {
-  //   let pageNum, noMoreData
-  //   let {
-  //     currentTab,
-  //     breadInfo,
-  //     cakeInfo
-  //   } = this.data
-  //   currentTab = parseInt(currentTab)
-  //   switch (currentTab) {
-  //     case 1:
-  //       if (breadInfo.noMoreData) {
-  //         return false
-  //       }
-  //       pageNum = breadInfo.pageNum + 1
-  //       noMoreData = breadInfo.count - pageNum * 10 <= 0
-  //       //设置的时候 breadInfo 设置 type  tag 的id 进行区分  重点是划分  count 与 pageNum
-
-  //       this.setData({
-  //         ['breadInfo.pageNum']: pageNum,
-  //         ['breadInfo.noMoreData']: noMoreData,
-  //         ['breadList[' + (pageNum - 1) + ']']: this.getCurrList(breadList, pageNum),
-  //       })
-
-  //       break;
-  //     case 2:
-  //       if (cakeInfo.noMoreData) {
-  //         return false
-  //       }
-  //       pageNum = cakeInfo.pageNum + 1
-  //       noMoreData = cakeInfo.count - pageNum * 10 <= 0
-  //       this.setData({
-  //         ['cakeInfo.pageNum']: pageNum,
-  //         ['cakeInfo.noMoreData']: noMoreData,
-  //         ['cakeList[' + (pageNum - 1) + ']']: this.getCurrList(cakeList, pageNum),
-  //       })
-
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // },
   getCachePage(pageNum, type, tag) {
     // console.log("开始分页：", pageNum, type, tag)
     type = parseInt(type);
@@ -649,17 +609,22 @@ Page({
       this.setData({
         showLoading: false
       })
+
       // console.log(res);
       if (!res) {
         return false
       }
-
       let menu = res.type,
         choose_type = res.choose_type
       if (!currentTab) {
         app.globalData.proType = choose_type
       }
 
+      //防止出现更新
+      if(app.globalData.proType != res.choose_type){
+        console.log('=================')
+        return false;
+      }
       this.setData({
         menu: menu,
         currentTab: app.globalData.proType,
