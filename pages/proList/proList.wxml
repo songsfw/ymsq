@@ -13,16 +13,16 @@
     <scroll-view class="sub {{isFixed?'fixed':''}}" scroll-x="{{true}}">
       <view class="flex">
         <block wx:if="{{currentTab==1}}">
-          <text data-id="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+          <text data-id="全部" data-tagname="全部" wx:if="{{breadTags}}" class="{{breadTag==''?'on':''}}" bind:tap="selectTag">全部</text>
           <block wx:for="{{breadTags}}" wx:for-index="index">
-            <text data-id="{{index}}" class="{{breadTag==index?'on':''}}"
+            <text data-id="{{index}}" data-tagname="{{breadTags[index]}}" class="{{breadTag==index?'on':''}}"
               bind:tap="selectTag">{{breadTags[index]}}</text>
           </block>
         </block>
         <block wx:else>
-          <text data-id="全部" wx:if="{{cakeTags}}" class="{{cakeTag==''?'on':''}}" bind:tap="selectTag">全部</text>
+          <text data-id="全部" data-tagname="全部" wx:if="{{cakeTags}}" class="{{cakeTag==''?'on':''}}" bind:tap="selectTag">全部</text>
           <block wx:for="{{cakeTags}}" wx:for-index="index">
-            <text data-id="{{index}}" class="{{cakeTag==index?'on':''}}" bind:tap="selectTag">{{cakeTags[index]}}</text>
+            <text data-id="{{index}}" data-tagname="{{cakeTags[index]}}" class="{{cakeTag==index?'on':''}}" bind:tap="selectTag">{{cakeTags[index]}}</text>
           </block>
         </block>
 
