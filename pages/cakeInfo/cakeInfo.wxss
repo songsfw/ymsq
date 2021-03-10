@@ -7,10 +7,19 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 .item{box-sizing: border-box}
 .proInfo{padding: 0 20rpx 46rpx 20rpx;background: #fff;margin-bottom: 20rpx;}
 .proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;font-weight: bold;}
-.proInfo .tit text{background: #64C000;color:#fff;line-height: 18px;border-radius:4px;padding: 0 10rpx;font-size: 12px;}
-.proInfo .desc{color: #666;}
+.proInfo .tit text{    color: #fff;
+    font-size: 10px;
+    padding: 4rpx 4rpx;
+    margin-right: 10rpx;
+    background: linear-gradient(to right,#ffa052,#f52422);
+    border-radius: 8rpx;
+    margin-bottom: 0;
+    vertical-align: middle;}
+.proInfo .desc{color: #999;font-size: 13px;}
 .proInfo .tags{margin-top: 30rpx;}
-.proInfo .tags text{background: #FFE42A;height: 22px;line-height: 22px;border-radius: 11px;padding: 0 20rpx;margin:0 20rpx 20rpx 0;flex-shrink: 0;}
+.proInfo .tags text{margin:0 20rpx 20rpx 0;flex-shrink: 0;}
+.proInfo .tags text:after{content: "|";margin-left:20rpx ;color: #aaa;}
+.proInfo .tags text:last-child:after{display: none;}
 .banner{width: 750rpx;height: 750rpx;}
 .banner swiper{width: 100%;height: 100%;}
 .option{position: fixed;width: 100%;height: 110rpx;justify-content: space-between;left: 0;bottom: 0;padding: 0 20rpx 0 0;background: #fff;
@@ -21,23 +30,23 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 .price view text{font-size: 25px;}
 .price .tag{font-size: 12px;border: 1px solid #C1996B;line-height: 1;padding:2px 5px ;border-radius: 8rpx;height: 17px;box-sizing: border-box;}
 .tips{background-color: #fff;padding: 30rpx 24rpx;margin-bottom: 20rpx;}
-.tips .tit{width:54px;flex-shrink: 0;font-size: 13px;margin-right: 30rpx}
+.tips .tit{width:54px;flex-shrink: 0;font-size: 13px;margin-right: 30rpx;font-weight: 500;}
 .tips .txt{color: #FA603D;font-size: 13px}
 .tips .txt view{margin-bottom: 20rpx}
 .tips .txt text{margin-right:10px ;}
 .tips .txt view:last-child{margin-bottom: 0}
 
-.option .home .iconfont,
-.option .cart .iconfont{font-size: 40rpx;color: #222;}
+.option .home .icon,
+.option .cart .icon{width: 50rpx;height: 50rpx;margin: 0 auto;}
 .option .home,
 .option .cart{position: relative; width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
-.option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;border-radius: 40rpx;}
-.option .add-btn{margin: 0 20rpx;background: linear-gradient(270deg, #E0B27D 0%, #C1996B 100%);}
-.option .buy-btn{margin-right: 20rpx;background:#F5222D;}
+.option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;font-weight: 500;}
+.option .add-btn{background: rgba(193, 153, 107, .25);border-radius: 40rpx 0 0 40rpx;color: #AC7D46;}
+.option .buy-btn{margin-right: 20rpx;background: #C1996B;border-radius:  0 40rpx 40rpx 0;color: #fff;}
 
 .option .cart .num{position: absolute;
-    right: 8px;
-    top: -6px;
+    right: 12px;
+    top: -3px;
     color: #fff;
     width: 18px;
     height: 18px;

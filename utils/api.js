@@ -54,6 +54,7 @@ const returnData = res=>{
 
 //微信登录
 const getLoginInfo = (data) => {
+  console.log(data);
   return POST(baseUrl+"/user/xcx-check-login", data,false)
 }
 

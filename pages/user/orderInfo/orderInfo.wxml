@@ -204,14 +204,14 @@
 <view style="height:{{56+btmHolder}}px" wx:if="{{stat!=4}}"></view>
 
 <view class="pop-panel coupon-panel {{pop=='showCoupon'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="tit flex">分享好友您可以获取优惠券</view>
 
   <view class="pop-con">
     <view class="coupon-box">
         <scroll-view class="list" scroll-y="{{true}}">
           <view class="item" data-id="{{shareInfo.promotion_info.id}}">
-            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}" wx:if="{{shareInfo.promotion_info.ta}}">{{item.tag}}</view>
             <view class="flex">
               <view class="coupon-num flex">
                 <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
@@ -256,7 +256,7 @@
 
 <view class="pop-panel post-panel" style="position:fixed;top:50%;left:50%;" wx:if="{{pop=='showPoster'}}">
   <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="share-remark" bind:tap="saveImg">
     <view class="share-remark-tip">保存分享给好友</view>
     <view class="share-remark-save">保存海报</view>

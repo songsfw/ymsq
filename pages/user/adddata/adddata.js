@@ -81,14 +81,16 @@ Page({
     }
     
     location = JSON.parse(location)
-    if(this.data.type=="1"){
-      let city_area = this.data.address.city_name.split(',')
-      newAdd['province']=city_area[0];
-      newAdd['district']=city_area[1];
-    }else{
-      newAdd['province']=this.data.address.province;
-      newAdd['district']=this.data.address.district;
-    }
+    // if(this.data.type=="1"){
+    //   let city_area = this.data.address.city_name.split(',')
+    //   newAdd['province']=province
+    //   newAdd['district']=district
+    // }else{
+    //   newAdd['province']=this.data.address.province;
+    //   newAdd['district']=this.data.address.district;
+    // }
+    newAdd['province']=province
+    newAdd['district']=district
    
     newAdd.location = location
     newAdd.title=title
@@ -227,7 +229,7 @@ Page({
     var currPage = pages[pages.length - 1];
     console.log(currPage)
     let options = currPage.options
-    options = Object.assign(options,currPage.__data__.options || {}) 
+    options = Object.assign(options,currPage.__data__.options || {})
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,province = options.province,district=options.district,title=options.title
     console.log(options);
     let source = options.source

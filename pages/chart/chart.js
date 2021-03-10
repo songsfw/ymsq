@@ -132,56 +132,29 @@ Page({
   },
   getSelectedPro() {
     let {
-      type,
       cakeLi,
-      breadLi
     } = this.data
-    let selectedBread = null,
-      selectedCake = null,
-      totalPrice = 0
+    let selectedCake = null
+      //totalPrice = 0
 
     function getSelected(type) {
       return pro => pro.is_selected == type;
     }
-    switch (type) {
-      case "1":
-        selectedBread = breadLi.filter(getSelected("1"))
-        if (selectedBread.length > 0) {
-          totalPrice = selectedBread.reduce((pre, cur) => {
-            let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
-            return util.floatObj().add(pre, curPrice, 2)
-          }, 0)
-          this.setData({
-            fittings: false
-          })
-        }
-        break;
-      case "2":
-        selectedCake = cakeLi.filter(getSelected("1"))
-        if (selectedCake.length > 0) {
-          totalPrice = selectedCake.reduce((pre, cur) => {
-            let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
-            return util.floatObj().add(pre, curPrice, 2)
-          }, 0)
-          this.setData({
-            fittings: true
-          })
-        } else {
-          this.setData({
-            fittings: false
-          })
-        }
-        break;
-      default:
-        break;
+    
+    selectedCake = cakeLi.filter(getSelected("1"))
+    if (selectedCake.length > 0) {
+      // totalPrice = selectedCake.reduce((pre, cur) => {
+      //   let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
+      //   return util.floatObj().add(pre, curPrice, 2)
+      // }, 0)
+      this.setData({
+        fittings: true
+      })
+    } else {
+      this.setData({
+        fittings: false
+      })
     }
-    console.log(totalPrice)
-    totalPrice = util.formatePrice(totalPrice)
-    console.log(totalPrice)
-
-    this.setData({
-      totalPrice: totalPrice
-    })
   },
   getOrder: util.debounce(function () {
     let {
@@ -199,10 +172,7 @@ Page({
       return item.is_selected == "1"
     })
     if (isBread && isCake) {
-      wx.showToast({
-        icon: "none",
-        title: "蛋糕与面包需分开支付，先支付面包"
-      })
+      
       return false
     }
 
@@ -454,6 +424,7 @@ Page({
           cakeLi: cakeLi,
           fittingsList: res.fittings,
           delStatus:this.data.delStatus,
+          totalPrice:res.total_price
         })
         this.data.delStatus = 0;
         this.getSelectedPro()
@@ -485,7 +456,8 @@ Page({
           noallBread: noallBread,
           noallCake: noallCake,
           breadLi: res.bread.detail,
-          cakeLi: res.cake.detail
+          cakeLi: res.cake.detail,
+          totalPrice:res.total_price
         })
         this.getSelectedPro()
       }
@@ -546,7 +518,8 @@ Page({
         this.setData({
           type: type,
           breadLi: res.bread.detail,
-          cakeLi: res.cake.detail
+          cakeLi: res.cake.detail,
+          totalPrice:res.total_price
         })
 
         this.getSelectedPro()

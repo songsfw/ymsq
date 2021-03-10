@@ -10,7 +10,7 @@
   </view>
   <view class="inputxt" bind:tap="selectAdd">
     <text>收货地址</text>
-    <!-- <text style="width:auto" wx:if="{{address.city_name}}">{{address.city_name}}</text> -->
+    <text style="width:auto" wx:if="{{options}}">{{address.province}}{{address.district}}</text>
     <input class="flex-1" value="{{address.address}}" placeholder-style="color:#aaa;font-weight:normal" placeholder="点击选择" disabled="true" />
     <view class="iconfont icon-arrow-r"></view>
   </view>

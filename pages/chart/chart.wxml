@@ -1,5 +1,5 @@
 <wxs module="move" src="../../utils/move.wxs"></wxs>
-<view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
+<!-- <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
   <view class="tips flex">
     <text class="iconfont icon-notice"></text> 
     <view class="txt flex-1">
@@ -7,7 +7,7 @@
       <text>{{instructions}}</text>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
@@ -184,6 +184,20 @@
     </block>
     
     <view class="confirm-btn btn" bind:tap="confirmFitting" data-sku="{{fitting.sku}}">确定</view>
+  </view>
+
+</view>
+<view class="pop-panel btm-panel score-panel {{pop=='cart-panel'?'upPanel':''}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="tit">选择结算商品</view>
+  <view class="tips">{{instructions}}</view>
+  <view class="pop-con">
+    <view class="pro-type">
+      <view class=""></view>
+
+    </view>
+    
+    
   </view>
 
 </view>

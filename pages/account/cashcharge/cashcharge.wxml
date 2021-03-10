@@ -13,12 +13,12 @@
 <view class="form">
   <view class="inputxt">
     <text>卡号</text>
-    <input placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
+    <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
     <view class="icon iconfont icon-scan" wx:if="{{type==1}}" bind:tap="scan"></view>
   </view>
   <view class="inputxt">
     <text>卡密码</text>
-    <input placeholder="请输入现金卡密码" password="{{!show}}" type="number" value="{{pwd}}" class="flex-1" bindinput="inputPwd" />
+    <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡密码" password="{{!show}}" type="number" value="{{pwd}}" class="flex-1" bindinput="inputPwd" />
     <view class="icon" bindtap="changeShow">
       <text class="iconfont icon-eye" wx:if="{{show}}"></text>
       <text class="iconfont icon-eye2" wx:else></text>
@@ -44,7 +44,7 @@
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 
 <view class="rule-panel" wx:if="{{pop=='rules'}}">
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <scroll-view class="pop-con">
     <view wx:for="{{instructions}}">{{item}}</view>
   </scroll-view>

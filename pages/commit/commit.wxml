@@ -1,8 +1,44 @@
 <!-- pages/user/user.wxml -->
   <view class="code">订单号：{{orderCode}}</view>
 <view class="address">
+  <view class="main" wx:if="{{commentStat}}">
+    <view class="hd">
+      您对原麦山丘的商品还满意吗？
+    </view>
+    <view class="bd">
+      <view class="scoreitem flex">
+        <text>订单评分:</text>
+        <view class="score flex">
+          <block wx:for="{{5}}">
+            <text class="iconAll {{score[index]==1?'selected':''}}" data-idx="{{index}}"></text>
+          </block>
+        </view>
+      </view>
+      <view class="tags flex"><text class="on" data-idx="{{index}}" wx:for="{{curTags}}">{{item}}</text></view>
+      <view class="inputxt">
+        <textarea value="{{commentContent}}" disabled />
+        <!-- <view class="count">{{count||0}}/50</view> -->
+      </view>
+      <view class="pro-list">
+        <view class="item flex" wx:for="{{proList}}">
+          <view class="flex-center" style="overflow:hidden">
+            <image src="{{item.image_url}}" mode="aspectFill"></image>
+            <text class="name text-overflow">{{item.name}}</text>
+          </view>
+          <view class="flex">
+            <view class="opt down flex-center">
+              <image wx:if="{{commentDetail[item.id].grade==0}}" src="../../image/down2.png"></image><image wx:else src="../../image/down.png"></image>踩
+            </view>
+            <view class="opt up flex-center">
+              <image wx:if="{{commentDetail[item.id].grade==1 || commentDetail.length==0}}" src="../../image/up2.png"></image><image wx:else src="../../image/up.png"></image>赞
+            </view>
+          </view>
+        </view>
+      </view>
 
-  <view class="main">
+    </view>
+  </view>
+  <view class="main" wx:else>
     <view class="hd">
       您对原麦山丘的商品还满意吗？
     </view>
@@ -39,10 +75,10 @@
 
     </view>
   </view>
-
+  
 </view>
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
-  <view class="btn" bindtap="addComment">提交评价</view>
+  <view class="btn" bindtap="addComment">{{commentStat?"查看红包":"提交评价"}}</view>
 </view>
 <view class="logo">
   <image src="../../image/logo.png"></image>
@@ -58,7 +94,7 @@
     <view class="tip">已存入余额, 付款时可抵用现金</view>
     <button class="share-btn" open-type="share">去分享抢红包</button>
   </view>
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
 </view>
 
 <phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

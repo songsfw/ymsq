@@ -81,7 +81,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
 .pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;text-align: center;line-height: 38px;color: #999;}
 
-.pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
+.pop-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;font-weight: 500;}
 .pop-con{height: 580rpx;position: relative;}
 .time-box .date{width: 246rpx;height: 580rpx;background:#F6F6F6;color: #aaa;}
 .time-box .time{height: 580rpx;}

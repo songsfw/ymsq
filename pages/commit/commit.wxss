@@ -22,17 +22,15 @@ page{background: #F6F6F6;}
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
-.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
-.pop-panel .close:after,
-.pop-panel .close::before{border-color: #999;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;}
+
 .pop-panel .tit{text-align: center;}
 .pop-con{height: 500rpx;position: relative;z-index: 2;}
 
 .hongbao-panel{width: 646rpx;height: 814rpx;left: 50%;top: 40%;transform: translate(-50%,-50%);background: none;text-align: center;padding-top: 190rpx;box-sizing: border-box;text-align: center;}
 .hongbao-panel image{position: absolute;left: 0;top: 0;}
-.hongbao-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;}
-.hongbao-panel .close:after,
-.hongbao-panel .close::before{background-color: #fff;}
+.hongbao-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;line-height: 30px;}
+
 .hongbao-panel .tit{font-weight: bold; font-size: 40rpx;color: #AB0D03;line-height: 56rpx;}
 .hongbao-panel .tit2{font-size: 34rpx;color: #AB0D03;line-height: 48rpx;}
 .price{font-size: 130rpx;color: #B6120C;margin-top: 10rpx;}

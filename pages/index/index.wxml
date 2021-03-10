@@ -39,7 +39,7 @@
 
 <!-- 开始 -->
 <view class="wrap" style="padding-top:{{notice.length>0 ? fixedTop+30:fixedTop}}px;">
-  <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" scroll-with-animation="true" bindrefresherrefresh="refresh">
+  <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
     <!-- 组件部分 -->
     <block wx:for="{{components}}" wx:for-index="index">
       <!-- 轮播图 -->

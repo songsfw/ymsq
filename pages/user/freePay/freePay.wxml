@@ -43,28 +43,28 @@
     <block wx:if="{{pwd_set==1}}">
       <view class="inputxt flex">
         <text>旧密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" value="{{oldPwd}}" password placeholder="请输入6位数字密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" placeholder-style="color:#aaa" value="{{oldPwd}}" password placeholder="请输入6位数字密码" />
       </view>
       <view class="inputxt flex">
         <text>新密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" value="{{newPwd}}" password placeholder="请输入6位数字密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" placeholder-style="color:#aaa" value="{{newPwd}}" password placeholder="请输入6位数字密码" />
       </view>
     </block>
     <block wx:else>
       <view class="inputxt flex">
         <text>密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" value="{{initPwd}}" password placeholder="请输入6位数字密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" placeholder-style="color:#aaa" value="{{initPwd}}" password placeholder="请输入6位数字密码" />
       </view>
       <view class="inputxt flex">
         <text>确认密码</text>
-        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" value="{{confirmPwd}}" password placeholder="请再次输入密码" />
+        <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" placeholder-style="color:#aaa" value="{{confirmPwd}}" password placeholder="请再次输入密码" />
       </view>
     </block>
   </view>
   <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>
     <view class="inputxt flex">
-      <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder="请输入验证码" />
+      <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder-style="color:#aaa" placeholder="请输入验证码" />
     </view>
     <view class="get-code color-b" bind:tap="getCode" wx:if="{{!isSend}}"><text>{{tips}}</text></view>
     <view class="get-code color-b" wx:else><text>{{second}}</text></view>

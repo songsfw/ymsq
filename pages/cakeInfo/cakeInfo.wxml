@@ -14,7 +14,7 @@
     <view>￥<text>{{proInfo.price}}</text></view>
     <!-- <view class="tag">最快次日达</view> -->
   </view>
-  <view class="tit">{{proInfo.name}} <text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text></view>
+  <view class="tit"><text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text>{{proInfo.name}}</view>
   <view class="desc" style="margin-bottom:20rpx">{{proInfo.chinese_brief}}</view>
   <view class="desc">{{proInfo.french_brief}}</view>
   <view class="tags flex"><text wx:for="{{proInfo.fname}}">{{item}}</text></view>
@@ -39,20 +39,24 @@
   </view>
 </view>
 <view class="option flex" style="padding-bottom:{{btmHolder}}px">
-  <navigator class="home" open-type="switchTab" url="/pages/index/index">
-    <view class="iconfont icon-index"></view>
-    <text >首页</text>
-  </navigator>
-  <navigator class="cart" bind:tap="toCart" url="/pages/chart/cart/cart">
-    <block wx:if="{{totalNum>0}}">
-      <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
-      <view class="num num99" wx:else>99+</view>
-    </block>
-    <view class="iconfont icon-chart"></view>
-    <text >购物车</text>
-  </navigator>
-  <view class="btn add-btn" data-action="0" bind:tap="showPop" data-pop="cake-panel">加入购物车</view>
-  <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="cake-panel">立即购买</view>
+  <view class="flex">
+    <navigator class="home" open-type="switchTab" url="/pages/index/index">
+      <view class="icon"><image src="../../image/icon-home.png"></image></view>
+      <text >首页</text>
+    </navigator>
+    <navigator class="cart" bind:tap="toCart" url="/pages/chart/cart/cart">
+      <block wx:if="{{totalNum>0}}">
+        <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
+        <view class="num num99" wx:else>99+</view>
+      </block>
+      <view class="icon"><image src="../../image/icon-chart.png"></image></view>
+      <text >购物车</text>
+    </navigator>
+  </view>
+  <view class="flex">
+    <view class="btn add-btn" data-action="0" bind:tap="showPop" data-pop="cake-panel">加入购物车</view>
+    <view class="btn buy-btn" data-action="1" bind:tap="showPop" data-pop="cake-panel">立即购买</view>
+  </view>
 </view>
 
 <view class="pop-panel btm-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">

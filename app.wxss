@@ -40,7 +40,7 @@ image{width: 100%;height: 100%;}
 .triangle-left{border-color:transparent transparent transparent #000}
 
 /*-关闭图标-*/
-.icon-close{text-align: center;width: 38px;height: 38px;text-align: center; line-height: 38px;color: #999;font-size: 12px;}
+.icon-close{width: 38px;height: 38px;text-align: center; line-height: 38px;color: #999;font-size: 12px;}
 /* .icon-close{position: relative;display:inline-block; width: 30px;height: 30px}
 .icon-close:after,
 .icon-close:before{content:"";display:block;width:50%;height: 1px;background:#666;position: absolute;left:24%;top:50%;}

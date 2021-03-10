@@ -78,7 +78,7 @@ Page({
     
   },
 
-  onPageScroll: util.throttle(function (e) {
+  //onPageScroll: util.throttle(function (e) {
     //debounce()
     // var scrollTop = e.scrollTop
     // var hdTop = this.data.hdTop
@@ -103,7 +103,7 @@ Page({
     //     isFold: false
     //   })
     // }
-  },100),
+  //},100),
   onShareAppMessage: function (res) {
 
   },
@@ -152,7 +152,11 @@ Page({
         })
       }
 
-      wx.stopPullDownRefresh() //停止下拉刷新
+      this.setData({
+        triggered: false,
+      })
+      this._freshing = false
+      //wx.stopPullDownRefresh() //停止下拉刷新
     })
 
   },
@@ -193,6 +197,13 @@ Page({
   // onPullDownRefresh() { //下拉刷新
   //   this.freshData()
   // },
+  refresh(){
+    if (this._freshing) return
+    this._freshing = true
+    this.getIndexInfo()
+    console.log("111");
+    
+  },
   getMoreData() {
     let pageNum = this.data.pageNum + 1
     this.setData({

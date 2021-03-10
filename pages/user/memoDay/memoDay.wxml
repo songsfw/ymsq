@@ -48,13 +48,13 @@
   </view>
   <picker-view indicator-class="picker-view" value="{{value}}" bindchange="bindDateChange" mask-style="background:#F6F6F6;z-index:0">
     <picker-view-column>
-      <view wx:for="{{years}}" wx:key="{{years}}"  style="line-height: 50px; text-align: center;">{{item}}年</view>
+      <view class="{{val[0]==index?'pickerSelected':''}}"  wx:for="{{years}}" wx:key="{{years}}"  style="line-height: 50px; text-align: center;">{{item}}年</view>
     </picker-view-column>
     <picker-view-column>
-      <view wx:for="{{months}}" wx:key="{{months}}" style="line-height: 50px; text-align: center;">{{item}}月</view>
+      <view class="{{val[1]==index?'pickerSelected':''}}" wx:for="{{months}}" wx:key="{{months}}" style="line-height: 50px; text-align: center;">{{item}}月</view>
     </picker-view-column>
     <picker-view-column>
-      <view wx:for="{{days}}" wx:key="{{days}}" style="line-height: 50px; text-align: center;">{{item}}{{type==0?'日':''}}</view>
+      <view class="{{val[2]==index?'pickerSelected':''}}" wx:for="{{days}}" wx:key="{{days}}" style="line-height: 50px; text-align: center;">{{item}}{{type==0?'日':''}}</view>
     </picker-view-column>
   </picker-view>
   <view class="opt-btn flex">

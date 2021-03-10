@@ -81,7 +81,13 @@ Page({
     })
   },
   addComment(){
-    let {orderCode,comment,star,selectTag,proList}=this.data
+    let {orderCode,comment,star,selectTag,proList,commentStat}=this.data
+    if(commentStat){
+      this.setData({
+        pop: 'hongbao'
+      })
+      return
+    }
     let detail=[]
     proList.find(item=>{
       if(item.stat){
@@ -152,7 +158,31 @@ Page({
     }
     api.getComment(data).then(res=>{
       console.log(res);
+      let commentStat = res.hasComment
       let detail=res.orderReader.detail
+
+      if(commentStat){
+        let score = this.data.score,star = parseInt(res.defaultStar)-1
+        let commentDetail = res.commentDetailReader
+        score.forEach((item,index)=>{
+          if(star<index){
+            initScore[index]=0
+          }else{
+            initScore[index]=1
+          }
+        })
+        this.setData({
+          commentStat:commentStat,
+          commentDetail:commentDetail,
+          commentContent:res.commentContent,
+          curTags:res.commentTags,
+          proList:detail,
+          score:initScore,
+          reward_price:res.reward_price
+        })
+        return
+      }
+      
       detail.forEach(item=>{
         item.stat=1
       })
@@ -166,6 +196,7 @@ Page({
       delivery_status=res.orderReader.delivery_status
       old_status=res.orderReader.old_status
       this.setData({
+        commentStat:commentStat,
         curTags:tags['1'],
         proList:detail
       })

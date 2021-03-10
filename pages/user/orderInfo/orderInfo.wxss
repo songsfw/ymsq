@@ -58,7 +58,7 @@ page{background: #F6F6F6;height: auto;}
 .order-tips.on{color: #F5222D;}
 .pay-info{padding: 0 20rpx 20rpx 20rpx;}
 .pay-info .hd{margin:0 0 30rpx 0}
-.pay-info>view{justify-content: space-between;height: 86rpx;line-height: 86rpx;}
+.pay-info>view{justify-content: space-between;height: 76rpx;line-height: 76rpx;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
@@ -79,15 +79,13 @@ page{background: #F6F6F6;height: auto;}
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom:0;width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx;}
-.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
-.pop-panel .close:after,
-.pop-panel .close::before{border-color: #999;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;}
 .pop-panel .tit{text-align: center;}
 .pop-con{max-height: 500rpx;position: relative;z-index: 2;}
 .pop-con scroll-view{max-height: 500rpx;}
 
 .coupon-panel{transform: translateY(100%);transition: all .3s linear;}
-.coupon-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;}
+.coupon-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;font-weight: 500;}
 .coupon-panel .hd{height: 50px;line-height: 50px; color: #666;font-size: 14px;text-align: center;}
 .coupon-panel .hd view{position: relative;}
 .coupon-panel .hd view:after{content: ""; display: none; position: absolute;left: 50%;transform: translateX(-50%);bottom: 5px;width:45px;height: 3px;background-color: #C1996B ;}
