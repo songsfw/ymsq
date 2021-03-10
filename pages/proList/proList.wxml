@@ -44,7 +44,7 @@
       <block wx:for="{{breadList}}" wx:for-index="idx">
         <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
           <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
-            <view class="pic {{stock[pro.meal_id]==0?'sold-out':''}}">
+            <view class="pic {{breadInfo['stock'][pro.meal_id]==0?'sold-out':''}}">
               <view class="tag">已售罄</view>
               <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
             </view>
