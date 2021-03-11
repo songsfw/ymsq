@@ -24,12 +24,14 @@ Page({
     breadInfo: {
       count: 0,
       pageNum: 1,
-      noMoreData: false
+      noMoreData: false,
+      stock:[]
     },
     cakeInfo: {
       count: 0,
       pageNum: 1,
-      noMoreData: false
+      noMoreData: false,
+      stock:[]
     },
 
     breadTag: '',
@@ -59,11 +61,15 @@ Page({
     if(!canCheck){
       return false;
     }
+    console.log('switchTab-1')
     var currentId = e.currentTarget.dataset.tabid
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
+      console.log('switchTab-2')
       return false;
     } else {
+      console.log('switchTab-3')
+      console.log(this.data.breadInfo)
       //更新列表
       // this.getProList();
 
@@ -79,10 +85,11 @@ Page({
           breadInfo: {
             count: 0,
             pageNum: 1,
-            noMoreData: false
+            noMoreData: false,
+            stock:this.data.breadInfo.stock
           },
           breadTag: tagId,
-          breadList: [],
+          breadList: null,
           showLoading: true,
         })
       } else {
@@ -92,7 +99,8 @@ Page({
           cakeInfo: {
             count: 0,
             pageNum: 1,
-            noMoreData: false
+            noMoreData: false,
+            stock:this.data.cakeInfo.stock
           },
           cakeTag: currentTag,
           cakeTagName: currentTagName,
@@ -112,6 +120,7 @@ Page({
             pageNum: 1,
             noMoreData: noMoreData,
             pageCount: pagelist['pageCount'],
+            stock:this.data.breadInfo.stock
           },
           showLoading: noMoreData,
           ['breadList[0]']: pagelist['pagelist'],
@@ -126,6 +135,7 @@ Page({
             pageNum: 1,
             noMoreData: false,
             pageCount: pagelist['pageCount'],
+            stock:this.data.cakeInfo.stock
           },
           showLoading: false,
           ['cakeList[0]']: pagelist['pagelist'],
@@ -148,7 +158,8 @@ Page({
         breadInfo: {
           count: 0,
           pageNum: 1,
-          noMoreData: false
+          noMoreData: false,
+          stock:this.data.breadInfo.stock
         },
         breadTag: currentTag,
         breadList: [],
@@ -161,7 +172,8 @@ Page({
         cakeInfo: {
           count: 0,
           pageNum: 1,
-          noMoreData: false
+          noMoreData: false,
+          stock:this.data.cakeInfo.stock
         },
         cakeTag: currentTag,
         cakeTagName: currentTagName,
@@ -180,6 +192,7 @@ Page({
           pageNum: 1,
           noMoreData: noMoreData,
           pageCount: pagelist['pageCount'],
+          stock:this.data.breadInfo.stock
         },
         showLoading: noMoreData,
         ['breadList[0]']: pagelist['pagelist'],
@@ -192,6 +205,7 @@ Page({
           pageNum: 1,
           noMoreData: false,
           pageCount: pagelist['pageCount'],
+          stock:this.data.cakeInfo.stock
         },
         showLoading: false,
         ['cakeList[0]']: pagelist['pagelist'],
@@ -666,11 +680,12 @@ Page({
         noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
         this.setData({
           breadTags: res.tags,
-          stock: stock,
+          // stock: stock,
           breadInfo: {
             count: count,
             pageNum: 1,
-            noMoreData: noMoreData
+            noMoreData: noMoreData,
+            stock: stock,
           },
           'breadList[0]': pagelist['pagelist'],
         })
@@ -692,11 +707,12 @@ Page({
         noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
         this.setData({
           cakeTags: res.tags,
-          stock: stock,
+          // stock: stock,
           cakeInfo: {
             count: count,
             pageNum: 1,
-            noMoreData: noMoreData
+            noMoreData: noMoreData,
+            stock: stock,
           },
           'cakeList[0]': pagelist['pagelist'],
         })
