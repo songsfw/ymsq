@@ -61,8 +61,9 @@ Page({
     if(!canCheck){
       return false;
     }
-    console.log('switchTab-1')
+  
     var currentId = e.currentTarget.dataset.tabid
+    console.log(currentId);
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
       console.log('switchTab-2')
@@ -88,7 +89,7 @@ Page({
             noMoreData: false,
             stock:this.data.breadInfo.stock
           },
-          breadTag: tagId,
+          breadTag: tagId == '全部'?'':tagId,
           breadList: null,
           showLoading: true,
         })
@@ -110,8 +111,8 @@ Page({
         currentTag = currentTagName == '全部' ? '' : currentTagName;
       }
       let pagelist = this.getCachePage(1, currentTab, currentTag)
-      // console.log("select tag: ", currentTab, currentTag, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
-
+      console.log("select tag: ", currentTab,'currentTag:', currentTag, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+      // return 
       let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
       if (currentTab == 1) {
         this.setData({
@@ -446,14 +447,14 @@ Page({
     }
   },
   getCachePage(pageNum, type, tag) {
-    // console.log("开始分页：", pageNum, type, tag)
+    console.log("开始分页：", pageNum, type, tag)
     type = parseInt(type);
     tag = tag == '' ? 0 : tag
 
     // breadList = null;
-    // console.log(breadList);
+    console.log(breadList);
     if ((type == 1 && !breadList) || (type == 2 && !cakeList)) {
-      // console.log('------------')
+      console.log('------------')
       this.getProList();
       return false;
     }
@@ -478,12 +479,15 @@ Page({
       tag = type == 1 ? parseInt(tag) : tag;
       tempList = typeTagInfo[type][tag];
     }
+    console.log(tempList)
     if (typeof (tempList) == "undefined") {
       tempList = [];
     }
+    console.log(tempList)
     let count = tempList.length;
     let pageCount = Math.ceil(count / pagesize);
     if (pageNum > pageCount) {
+      console.log('已达最大页数')
       return false; //已达最大页数
     }
 
@@ -636,7 +640,7 @@ Page({
 
       //防止出现更新
       if(app.globalData.proType != res.choose_type){
-        console.log('=================')
+        console.log('=========防更新========')
         return false;
       }
       this.setData({
@@ -759,7 +763,7 @@ Page({
       sysInfo = wx.getSystemInfoSync()
     }
     //可视窗口x,y坐标
-    console.log(sysInfo.screenHeight)
+    // console.log(sysInfo.screenHeight)
     this.busPos = {};
     this.busPos['x'] = sysInfo.screenWidth * .6;
     this.busPos['y'] = sysInfo.screenHeight * .85;
@@ -780,14 +784,14 @@ Page({
   },
   watch: {
     'city_id': function (value, oldValue) {
-      console.log("watch");
+      // console.log("watch");
 
       if (value == oldValue || this.data.currentTab == '') {
         return
       }
       breadList = null
       cakeList = null
-      app.globalData.proType = ''
+      // app.globalData.proType = ''
       this.setData({
         breadList: null,
         cakeList: null,
