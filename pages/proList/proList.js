@@ -734,6 +734,8 @@ Page({
     let proType = app.globalData.proType
 
     this.setData({
+      cakeList:null,
+      breadList:null,
       currentTab: proType,
       city_id: city_id || '10216',
       showLoading: true
