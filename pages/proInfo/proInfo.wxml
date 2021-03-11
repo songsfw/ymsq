@@ -44,13 +44,13 @@
       <view class="icon"><image src="../../image/icon-home.png"></image></view>
       <text>首页</text>
     </navigator>
-    <navigator class="cart" bind:tap="toCart" url="/pages/chart/cart/cart">
+    <navigator class="cart" bind:tap="toCart" url="/pages/cart/cart/cart">
       <block wx:if="{{totalNum>0}}">
         <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
         <view class="num num99" wx:else>99+</view>
       </block>
 
-      <view class="icon"><image src="../../image/icon-chart.png"></image></view>
+      <view class="icon"><image src="../../image/icon-cart.png"></image></view>
       <text>购物车</text>
     </navigator>
   </view>

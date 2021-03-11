@@ -1,4 +1,4 @@
-<!-- chart -->
+<!-- cart -->
 <navBar navType="transparent" hasReturn isFold="{{isFold}}" title="订单详情"></navBar>
 <view class="banner-bg"></view>
 <view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">

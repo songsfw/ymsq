@@ -874,7 +874,7 @@ Page({
               success: function () {
                 setTimeout(function () {
                   wx.redirectTo({
-                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+                    url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
                   })
                 }, 1000)
               }
@@ -900,7 +900,7 @@ Page({
         })
         setTimeout(function () {
           wx.redirectTo({
-            url: '/pages/chart/paySuccess/paySuccess?orderCode=' + order_code,
+            url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
           })
         }, 2000)
       }

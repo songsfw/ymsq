@@ -82,7 +82,7 @@ Page({
         if(action==1){
           app.globalData.proType = "1"
           wx.navigateTo({
-            url:"/pages/chart/cart/cart"
+            url:"/pages/cart/cart/cart"
           })
         }
       }
@@ -130,7 +130,7 @@ Page({
           })
           if(toCart==1){
             wx.navigateTo({
-              url:"/pages/chart/cart/cart"
+              url:"/pages/cart/cart/cart"
             })
           }
         }

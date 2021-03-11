@@ -169,7 +169,7 @@ Page({
             success: function () {
               setTimeout(function () {
                 wx.redirectTo({
-                  url: '/pages/chart/paySuccess/paySuccess?orderCode=' + orderCode,
+                  url: '/pages/cart/paySuccess/paySuccess?orderCode=' + orderCode,
                 })
               }, 1000)
             }

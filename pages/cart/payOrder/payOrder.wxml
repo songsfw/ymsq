@@ -1,4 +1,4 @@
-<!-- chart -->
+<!-- cart -->
 <wxs module="filter" src="../../../utils/tools.wxs"></wxs>
 <view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">

@@ -197,7 +197,7 @@ Page({
               success: function () {
                 setTimeout(function () {
                   wx.redirectTo({
-                    url: '/pages/chart/paySuccess/paySuccess?orderCode=' + code,
+                    url: '/pages/cart/paySuccess/paySuccess?orderCode=' + code,
                   })
                 }, 1000)
               }

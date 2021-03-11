@@ -102,7 +102,7 @@ Page({
         if(action==1){
           app.globalData.proType = "2"
           wx.navigateTo({
-            url:"/pages/chart/cart/cart"
+            url:"/pages/cart/cart/cart"
           })
         }
         

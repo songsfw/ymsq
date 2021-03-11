@@ -1,6 +1,6 @@
 const api = require('../../../utils/api.js')
 const app =getApp()
-var timer=null
+var timer=null,startX=0
 Page({
 
   /**
@@ -22,7 +22,7 @@ Page({
       //手指移动结束后触摸点位置的X坐标
       var endX = e.changedTouches[0].clientX;
       //触摸开始与结束，手指移动的距离
-      var disX = that.data.startX - endX;
+      var disX = startX - endX;
       //如果距离小于删除按钮的1/2，不显示删除按钮
       var txtStyle = disX > 100 / 2 ? -336 : 0;
 
@@ -53,9 +53,10 @@ Page({
     //     ['address['+index+'].txtStyle']: 0
     //   });
     // })
-    this.setData({
-      startX: e.changedTouches[0].clientX,
-    })
+    startX= e.changedTouches[0].clientX
+    // this.setData({
+    //   startX: e.changedTouches[0].clientX,
+    // })
   },
   //滑动事件处理
   touchmove: function (e) {
