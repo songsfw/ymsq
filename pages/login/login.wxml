@@ -21,4 +21,4 @@
     </view>
   </view>
 </view>
-<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
+<!-- <phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel> -->

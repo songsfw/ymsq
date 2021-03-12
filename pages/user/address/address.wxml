@@ -1,10 +1,9 @@
 <!-- pages/user/user.wxml -->
 <view class="address-list">
   <navigator class="notice" url="/pages/user/deliveryArea/deliveryArea"><text class="iconfont icon-notice2"></text> 配送范围说明</navigator>
-  <movable-area class="item" wx:for="{{address}}" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}">
-
-      <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
-        <view class="item-wrap flex-center" data-id="{{item.id}}" data-index='{{index}}' bindtouchstart="touchstart" bindtouchend="touchE">
+  <movable-area class="item" wx:for="{{address}}" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}" bindtouchstart="touchstart" bindtouchend="touchE">
+      <movable-view damping="50" x="{{index==curIdx?item.txtStyle:0}}" class="move-area" direction="horizontal" out-of-bounds="true" friction="50">
+        <view class="item-wrap flex-center">
           <view wx:if="{{source==1}}" class="checkbox {{addressTxt == item.address+item.address_detail?'on':''}}" >
             <view class="iconfont icon-check"></view>
           </view>
@@ -24,7 +23,6 @@
         </view>
       </movable-view>
   </movable-area>
-
   <view wx:if="{{address.length==0}}" class="nodata">
     <view><image src="../../../image/no-addre.png"></image></view>
     <view class="txt">暂无收货地址</view>

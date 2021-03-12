@@ -81,16 +81,14 @@ Page({
     }
     
     location = JSON.parse(location)
-    // if(this.data.type=="1"){
-    //   let city_area = this.data.address.city_name.split(',')
-    //   newAdd['province']=province
-    //   newAdd['district']=district
-    // }else{
-    //   newAdd['province']=this.data.address.province;
-    //   newAdd['district']=this.data.address.district;
-    // }
-    newAdd['province']=province
-    newAdd['district']=district
+    if(this.data.type=="1"){
+      let city_area = this.data.address.city_name.split(',')
+      newAdd['province']= city_area[0]
+      newAdd['district']= city_area[1]
+    }else{
+      newAdd['province']=this.data.address.province;
+      newAdd['district']=this.data.address.district;
+    }
    
     newAdd.location = location
     newAdd.title=title
@@ -157,7 +155,7 @@ Page({
         if(res){
           let addressInfo = {
             address: address,
-            id: '',
+            id: res.address_id,
             city_id: res.city_id,
             //city_name: city_name,
             address_detail:address_detail,
@@ -229,7 +227,11 @@ Page({
     var currPage = pages[pages.length - 1];
     console.log(currPage)
     let options = currPage.options
+
+    //合并新老options
     options = Object.assign(options,currPage.__data__.options || {})
+
+    //中途跳出到地图选址页后带参数返回来
     let newAddress = options.address,lng=options.lng,lat=options.lat,type=options.type,province = options.province,district=options.district,title=options.title
     console.log(options);
     let source = options.source
@@ -243,7 +245,6 @@ Page({
       })
     }
 
-
     let oldAddress = this.data.address
     console.log(oldAddress);
 
@@ -251,6 +252,8 @@ Page({
     console.log(address);
 
     address = JSON.parse(address)
+
+    //地图选址页返回后
     if(newAddress){
       address.address = newAddress
       address.province = province
@@ -258,6 +261,7 @@ Page({
       address.location = `{"lng":${lng},"lat":${lat}}`
       address.title=title
     }
+    //合并新老地址信息
     Object.assign(oldAddress,address)
     console.log(oldAddress);
     let btmHolder = wx.getStorageSync('btmHolder')

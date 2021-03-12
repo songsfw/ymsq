@@ -221,7 +221,7 @@ Page({
       console.log(res)
       if (res) {
         wx.navigateTo({
-          url: "/pages/chart/payOrder/payOrder?type=" + type
+          url: "/pages/cart/payOrder/payOrder?type=" + type
         })
       }
     })

@@ -12,51 +12,30 @@ Page({
     page: 1,
     address: null,
     source:0,
-    
+    curIdx:null
   },
   touchE: function (e) {
-    let address = this.data.address,curItemId=this.data.curItemId
-    // console.log(e);
-    var that = this
+    //按钮宽度(px)
+    let btnW = 168
     if (e.changedTouches.length == 1) {
-      //手指移动结束后触摸点位置的X坐标
+      //获取手指结束滑动的坐标
       var endX = e.changedTouches[0].clientX;
-      //触摸开始与结束，手指移动的距离
+      //计算手指移动的距离
       var disX = startX - endX;
       //如果距离小于删除按钮的1/2，不显示删除按钮
-      var txtStyle = disX > 100 / 2 ? -336 : 0;
-
-      //获取手指触摸的是哪一项
-      var id = e.currentTarget.dataset.id;
-      var idx = e.currentTarget.dataset.index;
-      if(id!=curItemId){
-        address.find((item,index)=>{
-          if(item.id==curItemId){
-            this.setData({
-              ['address['+index+'].txtStyle']: 0
-            })
-          }
-        })
-      }
+      var txtStyle = disX > btnW / 2 ? -btnW : 0;
+      //获取当前滑动项
+      var idx = e.currentTarget.dataset.idx;
       //更新列表的状态
-      that.setData({
-        curItemId:id,
+      this.setData({
+        curIdx:idx,
         ['address['+idx+'].txtStyle']: txtStyle
       });
     }
   },
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
-    //开始触摸时 重置所有删除
-    // this.data.address.forEach((item,index)=> {
-    //   this.setData({
-    //     ['address['+index+'].txtStyle']: 0
-    //   });
-    // })
     startX= e.changedTouches[0].clientX
-    // this.setData({
-    //   startX: e.changedTouches[0].clientX,
-    // })
   },
   //滑动事件处理
   touchmove: function (e) {

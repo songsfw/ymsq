@@ -6,8 +6,8 @@ page{height: auto;}
 .name text{font-size: 30rpx;color: #222;margin-right: 22rpx;font-weight: bold;}
 .item .address{font-size: 14px;color: #666;width: 500rpx;}
 .item .tag{margin-left: 16rpx; font-size: 10px;color: #fff;background: #C1996B;padding: 10rpx;line-height: 1;border-radius: 4rpx;}
-.item-wrap{width:750rpx;height: 100%; padding:16px 0 16px 12px;box-sizing: border-box;}
-.move-area{position: relative;width:1086rpx;height:100%;}
+.item-wrap{width:750rpx; padding:16px 0 16px 12px;box-sizing: border-box;}
+.move-area{position: relative;width:1086rpx;height:auto;}
 
 .item .option{position: absolute;right:0;top: 0;height: 100%;width: 336rpx;}
 .del,.set-def{display: flex;align-items: center;justify-content: center; width: 168rpx; color: #fff;background: #E02020;height: 100%;}

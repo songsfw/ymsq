@@ -56,15 +56,15 @@ Page({
           wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
         }
         
-        if(is_mobile==1){
+        //if(is_mobile==1){
           wx.navigateBack({
             delta: 1
           })
-        }else{
-          this.setData({
-            popShow:true
-          })
-        }
+        //}else{
+        //  this.setData({
+        //    popShow:true
+        //  })
+        //}
         
       })
     }
