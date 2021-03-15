@@ -243,7 +243,7 @@ Page({
   },
   addChartPreView(idx, itemIdx, totalNum) {
     let tempBread = this.data.breadList[idx][itemIdx];
-    let prostock = this.data.stock[tempBread.meal_id] || 0;
+    let prostock = this.data.breadInfo.stock[tempBread.meal_id] || 0;
     if (tempBread.selected >= prostock) {
       let msg = '该商品库存不足';
       if (tempBread.selected >= this.data.order_max_bread) {
@@ -309,7 +309,7 @@ Page({
 
     let tocartParams = {};
     totalNum = parseInt(totalNum)
-    let curStock = parseInt(stock[proId])
+    let curStock = parseInt(this.data.breadInfo.stock[proId])
     if (proId != curProId) {
       proNum = 0
       this.setData({
@@ -340,7 +340,7 @@ Page({
     timer = setTimeout(() => {
       //多余库存处理
       let tempBread = this.data.breadList[idx][itemIdx];
-      let prostock = this.data.stock[tempBread.meal_id] || 0;
+      let prostock = this.data.breadInfo.stock[tempBread.meal_id] || 0;
       let data = {
         city_id: city_id,
         type: currentTab,
@@ -732,7 +732,8 @@ Page({
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let proType = app.globalData.proType
-
+    //默认不存在的城市 显示全国
+    city_id = city_id == 0 ? '10216':city_id;
     this.setData({
       cakeList:null,
       breadList:null,
@@ -740,6 +741,7 @@ Page({
       city_id: city_id || '10216',
       showLoading: true
     })
+    console.log(this.data.city_id)
     trueStock = {};
     this.getCartInfo()
     this.getProList();
