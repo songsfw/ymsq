@@ -75,8 +75,8 @@
         },
         {
           "name": "购物车",
-          "pathName": "pages/chart/chart",
-          "query": "orderCode=1000210115002230",
+          "pathName": "pages/cart/cart",
+          "query": "",
           "scene": null
         },
         {
@@ -87,7 +87,7 @@
         },
         {
           "name": "支付成功",
-          "pathName": "pages/chart/paySuccess/paySuccess",
+          "pathName": "pages/cart/paySuccess/paySuccess",
           "query": "orderCode=1000210205002451",
           "scene": null
         },

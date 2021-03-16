@@ -201,6 +201,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let sysInfo = app.globalSystemInfo;
+    let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     let order_code = options.orderCode
@@ -209,6 +211,7 @@ Page({
       order_code: order_code
     }
     this.setData({
+      fixedTop,
       btmHolder: btmHolder,
       order_code: order_code
     })

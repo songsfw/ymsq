@@ -60,7 +60,7 @@ Page({
     let {proInfo} = this.data
     return {
       title: `好友邀你购买${proInfo.name}`,
-      path:'/pages/cakeInfo/cakeInfo?id=2&proId=' + proInfo.id,
+      path:'/pages/cakeInfo/cakeInfo?id=2&proId=' + proInfo.sku_id,
       imageUrl: proInfo.image
     }
   },
@@ -115,8 +115,9 @@ Page({
     let skuid = e.currentTarget.dataset.skuid
     let sku_list = this.data.proInfo.sku_list
     let selectSku = Object.assign({},sku_list[skuid])
+    console.log(selectSku);
     this.setData({
-      'selectSku.sku_id':skuid,
+      //'selectSku.sku_id':skuid,
       selectSku:selectSku
     })
   },
@@ -144,7 +145,7 @@ Page({
     let totalNum = wx.getStorageSync("total_num")
     let city_id = JSON.parse(addressInfo).city_id
     let proId = options.proId
-    console.log(proId)
+    console.log('---------',proId)
     let btmHolder = wx.getStorageSync('btmHolder')
 
     this.setData({

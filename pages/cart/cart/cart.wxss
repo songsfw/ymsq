@@ -67,10 +67,18 @@ image{width: 100%;height: 100%}
 .option .price .num text{font-size:20px;font-weight: 500;}
 .buy-btn{width: 88px;height: 36px;background: #C1996B;color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;font-weight: 500;}
 
-.tips{position: fixed;left: 0;top: 0;width: 100%; padding-left: 20px; background: #FEFBF3;font-size: 13px;color: #FF7D06;padding:10px 20rpx;margin-bottom: 24rpx;z-index: 2;align-items: center;box-sizing: border-box;overflow: hidden;}
+.tips{padding-left: 20px; background: #FEFBF3;font-size: 13px;color: #FF7D06;padding:10px 20rpx;margin-bottom: 24rpx;z-index: 2;align-items: center;box-sizing: border-box;overflow: hidden;}
 .tips .iconfont{ margin-right: 20rpx;font-weight: 500;}
 .tips .txt{white-space: nowrap;overflow:hidden ;}
 .tips .txt text{display: inline-block; animation: remindMessage 14s linear infinite;padding-right: 10rpx;font-size: 13px;}
+
+.pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
+.pic-box .pic{position: relative; width: 120rpx;height: 120rpx;border-radius:8rpx ;margin-right: 20rpx;overflow: hidden;flex-shrink: 0;}
+.pic-box .pic1{width: 100%;}
+.pic-box .pic1>view{justify-content: space-between;flex-direction: column;}
+.pic-box .pic1 .num{color: #999;}
+.pic-box .pic1 .h3{font-size: 14px;}
+.pic-box .count{position: absolute;right: 0;bottom: 0;background: rgba(0, 0, 0, .4);line-height: 1; color: #fff;font-size: 22rpx;border-radius: 8rpx 0 0 0 ;padding: 4rpx 6rpx;}
 
 @keyframes remindMessage {
   0% {

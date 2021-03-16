@@ -11,8 +11,8 @@ page{border-top: 1px solid #F6F6F6;}
     padding: 20rpx;
     box-sizing: border-box;}
 .inputxt{display: flex; border-bottom: 1px solid #F6F6F6;height: 49px;line-height: 49px;border-bottom: 1px solid #E9E9E9;align-items: center;padding-left:30rpx;}
-.inputxt>text{display: block;width:77px; color: #333;font-size: 14px;}
-.inputxt input{height: 100%;font-weight: 500;}
+.inputxt>text{display: block;width:77px; color: #333;font-size: 15px;}
+.inputxt input{height: 100%;font-weight: 500;font-size: 14px;}
 .inputxt .icon{width: 49px;height: 49px;text-align: center;line-height: 49px;color: #C1996B;}
 .form{padding:0 24rpx;border-radius:32rpx 32rpx 0 0 ;margin-top: -20rpx;background-color: #fff;}
 .tips{padding: 26rpx 50rpx;color: #999;font-size: 12px;}

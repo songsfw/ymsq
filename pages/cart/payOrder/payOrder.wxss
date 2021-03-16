@@ -88,9 +88,9 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .time-box .date view,
 .time-box .time .item{padding: 32rpx 0;text-align: center;font-size: 15px;}
 .time-box .time{padding: 0 40rpx;}
-.time-box .date view.on{background: #fff;color: #222;font-weight: 500;}
+.time-box .date view.on{background: #fff;color: #222;font-weight: bold;}
 .time-box .time .item{border-bottom: 1px solid #F6F6F6;padding-left: 42rpx;justify-content: space-between;}
-.time-box .time .item.on{color:#C1996B;font-weight: 500;}
+.time-box .time .item.on{color:#C1996B;font-weight: bold;}
 .time-box .time .item .checkbox{margin-right: 2px;box-sizing: border-box;}
 .time-box .time .item.on .checkbox{border: none;}
 .time-box .time .item.on .checkbox view{display: block;}

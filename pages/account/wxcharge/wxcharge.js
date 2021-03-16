@@ -139,6 +139,7 @@ Page({
   },
   onLoad: function (options) {
     let btmHolder = wx.getStorageSync('btmHolder')
+    btmHolder = btmHolder>0?btmHolder:12
     this.setData({
       btmHolder:btmHolder||0,
     })

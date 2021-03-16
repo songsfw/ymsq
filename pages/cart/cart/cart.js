@@ -100,7 +100,11 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
-              this.getChartData()
+              this.setData({
+                breadLi: res.bread.detail,
+                cakeLi: res.cake.detail,
+                totalPrice:res.total_price,
+              })
             } else {
               wx.showToast({
                 title: '删除失败',
@@ -183,15 +187,9 @@ Page({
       totalPrice: totalPrice
     })
   },
-  getOrder: util.debounce(function () {
-    let {
-      totalPrice,
-      type,
-      cakeLi,
-      breadLi,
-      city_id
-    } = this.data
-
+  Settlement(){
+    let that = this
+    let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {
       return item.is_selected == "1"
     })
@@ -199,12 +197,23 @@ Page({
       return item.is_selected == "1"
     })
     if (isBread && isCake) {
-      wx.showToast({
-        icon: "none",
-        title: "蛋糕与面包需分开支付，先支付面包"
+      this.setData({
+        pop:"order-panel"
       })
-      return false
+      
+    }else{
+      util.debounce(function(e){
+        that.getOrder()
+      })
     }
+  },
+  getOrder: function () {
+    console.log("111");
+    let {
+      totalPrice,
+      type,
+      city_id
+    } = this.data
 
     let data = {
       city_id: city_id,
@@ -226,7 +235,7 @@ Page({
       }
     })
 
-  }),
+  },
   //改变商品数量
   minusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
@@ -420,7 +429,7 @@ Page({
             item['txtStyle'] = 0;
             if(this.data.delStatus == 1){
               item['txtStyle'] = 1;
-            }           
+            }
             // console.log(item)
           })
         }
@@ -449,6 +458,7 @@ Page({
           noallCake: noallCake,
           type: type,
           breadLi: breadLi,
+          totalPrice:res.total_price,
           breadItemIds: this.data.breadItemIds,
           cakeItemIds: this.data.cakeItemIds,
           cakeLi: cakeLi,
@@ -456,7 +466,7 @@ Page({
           delStatus:this.data.delStatus,
         })
         this.data.delStatus = 0;
-        this.getSelectedPro()
+        //this.getSelectedPro()
       }
     })
   },
@@ -485,9 +495,10 @@ Page({
           noallBread: noallBread,
           noallCake: noallCake,
           breadLi: res.bread.detail,
-          cakeLi: res.cake.detail
+          cakeLi: res.cake.detail,
+          totalPrice:res.total_price,
         })
-        this.getSelectedPro()
+        //this.getSelectedPro()
       }
 
     })
@@ -546,10 +557,11 @@ Page({
         this.setData({
           type: type,
           breadLi: res.bread.detail,
-          cakeLi: res.cake.detail
+          cakeLi: res.cake.detail,
+          totalPrice:res.total_price,
         })
 
-        this.getSelectedPro()
+        //this.getSelectedPro()
       }
 
     })

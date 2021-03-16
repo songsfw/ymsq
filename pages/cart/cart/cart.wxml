@@ -1,4 +1,4 @@
-<view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
+<!-- <view class="fixed-holder" wx:if="{{breadLi.length>0 && cakeLi.length>0}}">
   <view class="tips flex">
     <text class="iconfont icon-notice"></text> 
     <view class="txt flex-1">
@@ -6,7 +6,7 @@
       <text>{{instructions}}</text>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
@@ -102,7 +102,7 @@
   </view>
 </view>
 <view class="pro-box">
-  <view class="fittings" wx:if="{{fittingsList.length>0 && fittings}}">
+  <view class="fittings" wx:if="{{fittingsList.length>0}}">
     <view class="hd"><text>蛋糕配件</text></view>
     <scroll-view scroll-x="{{true}}">
       <view class="flex list">
@@ -143,7 +143,7 @@
       <view class="flex-center"><text>合计：</text>
         <view class="num">￥<text>{{totalPrice}}</text></view>
       </view>
-      <view class="buy-btn" bind:tap="getOrder">结算</view>
+      <view class="buy-btn" bind:tap="Settlement">结算</view>
     </view>
   </view>
 </view>
@@ -184,9 +184,39 @@
       </view>
     </block>
     
-    <view class="confirm-btn btn" bind:tap="confirmFitting" data-sku="{{fitting.sku}}">确定</view>
+    <view class="confirm-btn btn" bind:tap="confirmFitting" style="margin-bottom:{{btmHolder}}px" data-sku="{{fitting.sku}}">确定</view>
   </view>
 
 </view>
+
+<view class="pop-panel btm-panel {{pop=='order-panel'?'upPanel':''}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="title">请结算商品</view>
+    <view class="tips">{{instructions}}</view>
+    <view class="flex-center">
+      <scroll-view scroll-x="{{true}}" class="pic-box">
+        <view class="flex">
+          <view class="pic" wx:for="{{breadLi}}" wx:if="{{item.is_selected==1}}">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+            <view class="count">X{{item.sku_number}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="flex-center">
+      <scroll-view scroll-x="{{true}}" class="pic-box">
+        <view class="flex">
+          <view class="pic" wx:for="{{cakeLi}}" wx:if="{{item.is_selected==1}}">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+            <view class="count">X{{item.sku_number}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+</view>
+
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
-<view style="height:50px"></view>
+<view style="height:{{50+btmHolder}}px"></view>
