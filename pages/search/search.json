@@ -2,6 +2,7 @@
   "navigationBarTitleText": "搜索",
   "backgroundTextStyle": "dark",
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "toCart":"/components/toCart/toCart"
   }
 }

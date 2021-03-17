@@ -18,7 +18,6 @@ let debug = 1; //服务器结构错误屏蔽循环
 let debugTime;
 Page({
   data: {
-    curProId: -1,
     cakeTagName: '',
     share: {
       tit: "原麦山丘",
@@ -26,10 +25,7 @@ Page({
       imageUrl: ''
     },
 
-    hideCount: true, //角标初始是隐藏的
-    count: 0, //角标数
-    curPro: "",
-
+    pop: 0, //角标初始是隐藏的
     showLoading: true,
     cornerTagStyle: '', //加号角标样式
     //掉入购物车开关
@@ -45,14 +41,11 @@ Page({
     showList: {}, //显示列表分页容器
     showCategory: {},
     showStock: {},
-    //定义控制变量
-    // canAddBtn: {
-    //   '1': true
-
-    // }, //允许添加购物车按钮
     cateChosed: {}, //小分类选中项
     pageInfo: {}, //分页变量
 
+    //弹框
+    skuNum: 1,
   },
   switchTab: util.debounce(function (e) {
     console.log('switchTab')
@@ -93,8 +86,8 @@ Page({
     if (this.data.cateChosed[currentTab] == cateId) {
       return false;
     }
-    console.log(cateId, currentTab)
-    console.log(this.data.cateChosed)
+    // console.log(cateId, currentTab)
+    // console.log(this.data.cateChosed)
     //初始化
     this.setData({
       // currentTag: currentTag,
@@ -122,13 +115,11 @@ Page({
     // }
 
     let pagelist = this.getCachePage(1, currentTab, cateId)
-    console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
-    let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0;
+    // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
     this.setData({
       currentCategory: cateId,
       showLoading: false,
       ['showList[' + currentTab + '][0]']: pagelist['pagelist'],
-      // 'noMoreData':noMoreData,
     });
     return true;
   },
@@ -136,12 +127,10 @@ Page({
     this.getProList()
   },
   addChartPreView(currentTab, idx, itemIdx, totalNum) {
-    // console.log(currentTab, idx, itemIdx, totalNum)
-    // console.log(this.data.showList[currentTab][idx][itemIdx])
     let tempList = this.data.showList[currentTab][idx][itemIdx];
     let proStock = tempList.type == 1 ? this.data.showStock[currentTab][tempList['meal_id']] : this.data.order_max_bread;
 
-    console.log(tempList, 'tempList.selected', tempList.selected, 'proStock', proStock)
+    // console.log(tempList, 'tempList.selected', tempList.selected, 'proStock', proStock)
     tempList.selected = parseInt(tempList.selected);
     if (tempList.selected >= proStock) {
       let msg = '该商品库存不足';
@@ -186,8 +175,8 @@ Page({
       curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
     //如果是蛋糕触发函数
     if (curType == 2) {
-      console.log('----------------')
-      return 
+      this.showPop(e);
+      return
     }
 
     let {
@@ -250,19 +239,23 @@ Page({
       //多余库存处理
       let tempList = this.data.showList[currentTab][proInPage][itemIdx];
       let proStock = tempList.type == 1 ? this.data.showStock[currentTab][tempList['meal_id']] : this.data.order_max_bread;
+      proStock = parseInt(proStock);
       let data = {
         city_id: city_id,
         type: curType,
         tab_id: proId,
         number: proNum
       }
+
+      let refNum = proNum;
       if (tempList.selected >= proStock) {
         data.number = proStock - trueStock[typeMealIdSpuId];
+        refNum = data.number;
         if (data.number <= 0) {
           return false;
         }
       }
-
+      console.log(tempList.selected, proStock, trueStock[typeMealIdSpuId], refNum)
       proNum = 0
       api.setChart(data).then(res => {
         if (res) {
@@ -270,13 +263,16 @@ Page({
             title: '加入购物车成功',
             icon: 'none',
             duration: 2000
-          })        
+          })
           util.setTabBarBadge(this.data.totalNum)
           wx.setStorageSync("total_num", this.data.totalNum)
-          let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
+          //全局更新
+
+          this.refreshProList(proId, curSpuid, curType, (parseInt(refNum)+parseInt(trueStock[typeMealIdSpuId])));
+          // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
           this.setData({
             totalNum: this.data.totalNum,
-            ['showList[' + currentTab + '][' + proInPage + ']']: pagelist['pagelist'],
+            // ['showList[' + currentTab + '][' + proInPage + ']']: pagelist['pagelist'],
           })
           trueStock[typeMealIdSpuId] = false;
         } else {
@@ -510,7 +506,7 @@ Page({
         case 1:
           console.log('switch  = 1-------------')
           for (let tmpVal of proList[app.globalData.proType]) {
-            console.log(tmpVal)
+            // console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
             let style = "";
@@ -530,7 +526,26 @@ Page({
           }
           break;
         case 2:
-          // console.log('switch  = 2')
+          console.log('switch  = 2')
+          for (let tmpVal of proList[app.globalData.proType]) {
+            console.log(tmpVal)
+            let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
+            tmpVal['selectNumberLength'] = selectNumberLength;
+            let style = "";
+            switch (selectNumberLength) {
+              case 1:
+                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+                break;
+              case 2:
+                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+                break;
+              default:
+                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+                break;
+            }
+            tmpVal['cornerTagStyle'] = style;
+            // console.log(selectNumberLength);
+          }
           break;
         case 3:
           console.log('switch  = 3')
@@ -587,6 +602,163 @@ Page({
     })
 
   },
+  showPop(e) {
+    let proId = e.currentTarget.dataset.id,
+      img = e.currentTarget.dataset.img,
+      typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
+      proInPage = e.currentTarget.dataset.idx, //当前商品所在页
+      itemIdx = e.currentTarget.dataset.itemidx,
+      curType = e.currentTarget.dataset.type,
+      curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
+    let {
+      currentTab
+    } = this.data
+    let product = this.data.showList[currentTab][proInPage][itemIdx];
+    let cakeTempParams = {
+      proId: proId,
+      proInPage,
+      proInPage,
+      itemIdx,
+      itemIdx,
+      curType,
+      curType,
+      curSpuid,
+      selected: product.selected
+    };
+
+
+    let data = {
+      spu_id: curSpuid
+    }
+    api.getCakeProInfo(data).then(res => {
+      wx.stopPullDownRefresh()
+      console.log(res)
+      let selectSku = Object.assign({}, res.sku_list[res.sku_id])
+      if (res) {
+        this.setData({
+          proInfo: res,
+          selectSku: selectSku,
+          pop: 'cake-panel',
+          cakeTempParams: cakeTempParams,
+        })
+      }
+    })
+    // console.log(proId, product)
+    // console.log(111111)
+    // this.setData({
+    //   product: product,
+    //   pop: 'cake-panel'
+    // })
+  },
+  close() {
+    this.setData({
+      pop: 0
+    })
+  },
+  addFitting: util.debounce(function () {
+    let skuNum = this.data.skuNum
+    skuNum++
+    this.setData({
+      skuNum: skuNum
+    })
+  }),
+  //改变商品数量
+  minusFitting: util.debounce(function () {
+    let skuNum = this.data.skuNum
+    if (skuNum == 1) {
+      this.setData({
+        skuNum: 1
+      })
+      return
+    }
+    skuNum--
+    this.setData({
+      skuNum: skuNum
+    })
+  }),
+  selectSku(e) {
+    let skuid = e.currentTarget.dataset.skuid
+    let sku_list = this.data.proInfo.sku_list
+    let selectSku = Object.assign({}, sku_list[skuid])
+    this.setData({
+      'selectSku.sku_id': skuid,
+      selectSku: selectSku
+    })
+  },
+  confirmCake: util.debounce(function (e) {
+    let proId = e.currentTarget.dataset.sku
+    let {
+      city_id,
+      skuNum,
+      action,
+      totalNum
+    } = this.data
+
+    let data = {
+      city_id: city_id,
+      type: '2',
+      tab_id: proId,
+      number: skuNum
+    }
+    totalNum = totalNum + skuNum
+    api.setChart(data).then(res => {
+      if (res) {
+        util.setTabBarBadge(totalNum)
+        wx.setStorageSync('total_num', totalNum)
+        wx.showToast({
+          icon: "none",
+          title: '加入购物车成功'
+        })
+
+        this.refreshProList(this.data.cakeTempParams.proId, this.data.cakeTempParams.curSpuid, this.data.cakeTempParams.curType, (parseInt(skuNum)+parseInt(this.data.cakeTempParams.selected)))
+        this.setData({
+          totalNum: totalNum,
+          pop: 0
+        })
+        // if (action == 1) {
+        //   app.globalData.proType = "2"
+        //   wx.navigateTo({
+        //     url: "/pages/cart/cart/cart"
+        //   })
+        // }
+      }
+    })
+  }, 300, true),
+  refreshProList(mealId, spuId, typeId, num = null) {
+    console.log(mealId, spuId, typeId);
+    let tmpId = mealId + '_' + spuId + '_' + typeId;
+    for (let key1 in proList) {
+      for (let value of proList[key1]) {
+        if (tmpId == (value.meal_id + "_" + value.spu_id + "_" + value.type)) {
+          console.log('key1', key1, 'value', value)
+          if (num !== null) {
+            console.log(num, value)
+            value.selected = parseInt(num);
+          }
+          let selectNumberLength = value.selected > 0 ? value.selected.toString().length : 0;
+          value['selectNumberLength'] = selectNumberLength;
+          let style = "";
+          switch (selectNumberLength) {
+            case 1:
+              style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+              break;
+            case 2:
+              style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+              break;
+            default:
+              style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+              break;
+          }
+          value['cornerTagStyle'] = style;
+        }
+      }
+    }
+    this.setData({
+      showList: this.data.showList
+    })
+    console.log(proList);
+    return
+  },
   onShow() {
     canCheck = false;
     //自定义tabbar选中
@@ -600,7 +772,8 @@ Page({
       // breadList: null,
       currentTab: proType,
       city_id: city_id || '10216',
-      showLoading: true
+      showLoading: true,
+      skuNum: 1
     })
     // console.log(this.data.city_id)
     trueStock = {};
