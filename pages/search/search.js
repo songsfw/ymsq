@@ -1,138 +1,200 @@
 //index.js
 const util = require('../../utils/util.js')
-const ajax = require('../../utils/request.js')
-const auth = require('../../utils/auth.js')
+const api = require('../../utils/api.js')
 
 const app = getApp()
-
+let syncflag = true; //异步数据开关
+let lastWord = ''; //异步搜索对比字符
+let getWord = ''; //触发存储搜索关键字
+let timer = null;
 Page({
+  customData: {
+    scrollTop: 0,
+  },
   data: {
-    isShowAuth:false,
-    popup: false,
-    pageNum: 1,
-
-    currentCity:"",
-    curBsid:"",
-    
-    filter:0,
-     history:[],
-    maskShow:false,
-
-    share:{
-      tit:"分享文字",
-      path:"/pages/index/index",
-      imageUrl:"/image/share.png"
-    },
-
-    initvalue:''
+    currentKeyword: '',
+    keywordTag: {},
+    searchList: {},
   },
   onPageScroll: function (e) {
-    this.setData({
-      scrollTop: e.scrollTop
-    })
+    this.customData.scrollTop = e.scrollTop;
   },
-  cancle:function(){
+  //取消
+  cancle: function () {
+    getWord = '';
     this.setData({
-      initvalue:''
+      currentKeyword: '',
+      searchList: {},
     })
+    this.flashTap();
   },
-  search:function(e){
-    let that = this
+  //onblur
+  getWords: function (e) {
     let val = e.detail.value
-    console.log(e)
-    if(val == ''){
-      wx.showToast({
-        title: '搜索不能为空',
-        icon: 'none',
-        duration: 2000
-      })
-      return false
-    }else{
+    getWord = val;
+    if (getWord == '') {
       this.setData({
-        schvalue:val
+        currentKeyword: '',
+        searchList: {},
       })
+      this.flashTap();
     }
   },
-  delHistory(){
-    wx.setStorageSync("schvalue",'')
-    wx.setStorageSync("schvalueArr", null)
-    this.setData({
-      schvalue:'',
-      schvalueArr: null
-    })
+  //搜索按钮事件
+  search: function (e) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    timer = setTimeout(() => {
+      syncflag = true;
+      this.toSearch(getWord)
+    }, 100)
+    return;
   },
-  
-  toListPage(e){
-
-    let schvalue = this.data.schvalue || e.currentTarget.dataset.val
-
-    if(!schvalue){
-      wx.showToast({
-        title: '搜索不能为空',
-        icon: 'none',
-        duration: 2000
+  //标签点击
+  clickTap(e) {
+    let word = e.currentTarget.dataset.word
+    getWord = word;
+    syncflag = true;
+    this.toSearch(word)
+  },
+  //主体搜索
+  toSearch(word) {
+    lastWord = word;
+    if (!word) {
+      syncflag = false;
+      this.setData({
+        currentKeyword: '',
+        searchList: {},
       })
+      this.flashTap();
       return false
     }
 
-    let schvalueArr = wx.getStorageSync("schvalueArr") || []
-    if(schvalueArr.indexOf(schvalue) == -1){
-      if (schvalueArr.length<5){
-        schvalueArr.unshift(schvalue)
-      }else{
-        schvalueArr.unshift(schvalue)
-        schvalueArr.pop()
-      }
-      wx.setStorageSync("schvalueArr", schvalueArr)
-    }
-
-    wx.redirectTo({
-      url: '/pages/gym/gymList/gymList?value=' + schvalue,
-    })
-  },
-
-  hidePop:function(){
+    // //关闭搜索列表
     this.setData({
-      filter: 0
+      currentKeyword: word,
+    })
+
+    let cityId = JSON.parse(wx.getStorageSync("addressInfo")).city_id;
+    cityId = cityId == 0 ? '10216' : cityId;
+    // console.log(JSON.parse(wx.getStorageSync("addressInfo")))
+    //延迟请求 也可以关闭凭借点击
+    api.keywordSearch({
+      keyword: word,
+      city_id: cityId || '10216'
+    }).then(res => {
+      if (!syncflag || lastWord != word) {
+        console.log('syncflag:', syncflag, 'lastWord:', lastWord, 'word:', word)
+        return false;
+      }
+      let searchList = {};
+      searchList['list'] = res['list'];
+      searchList['stock'] = res['stock'];
+
+      // if(word != getWord){
+      //快速编辑重置解决 暂时等待确定是否解决
+      // word = getWord
+      // }
+      console.log(searchList)
+      // 设置搜索结果
+      this.setData({
+        currentKeyword: word,
+        searchList: searchList,
+      })
+    })
+  },
+  //更新标签
+  flashTap() {
+    api.keywordList().then(res => {
+      if (res) {
+        console.log('this.flashTap();')
+        this.setData({
+          keywordTag: res
+        })
+      }
     })
   },
 
-  noActTip:function(){
-    wx.showToast({
-      icon:"none",
-      title: '暂无活动',
+  toProInfo: function (e) {
+    let proId = e.currentTarget.dataset.proid
+    let spu = e.currentTarget.dataset.spu;
+    let url = "/pages/" + (proId == 0 ? 'cakeInfo/cakeInfo' : 'proInfo/proInfo') + "?proId=" + (proId == 0 ? spu : proId) + "";
+    console.log(url);
+    wx.navigateTo({
+      url: url
     })
   },
-  timeFormat(param) {//小于10的格式化函数
-    return param < 10 ? '0' + param : param;
-  },
-  uniq:function(arr){   //简单去个重
-    var temp = [];
-    for (var i = 0; i < arr.length; i++) {
-      if (temp.indexOf(arr[i]) == -1) {
-        temp.push(arr[i]);
-      }else{
-        temp.push('0')
+  addCart(e) {
+    console.log('start  addCart');
+    console.log(this.data.searchList);
+
+    let proId = e.currentTarget.dataset.id,
+      img = e.currentTarget.dataset.img,
+      idx = e.currentTarget.dataset.idx,
+      itemIdx = e.currentTarget.dataset.itemidx
+
+    //存储真实库存
+    if (typeof (trueStock[proId]) == 'undefined') {
+      trueStock[proId] = false;
+    }
+    for (let tval of breadList) {
+      if (trueStock[proId] === false && tval['meal_id'] == proId) {
+        trueStock[proId] = tval.selected;
       }
     }
-    return temp;
+
+    let pageNum = parseInt(this.data.breadInfo.pageNum)
+    let index = pageNum - 1
+    this.data.totalNum = this.data.totalNum + 1;
+    let {
+      currentTab,
+      breadTag,
+      curProId,
+      stock,
+      city_id,
+      totalNum
+    } = this.data
+
+    let tocartParams = {};
+    totalNum = parseInt(totalNum)
+    let curStock = parseInt(this.data.breadInfo.stock[proId])
+    if (proId != curProId) {
+      proNum = 0
+      this.setData({
+        curProId: proId
+      })
+    }
+    if (currentTab == "1") {
+      if (proNum < curStock) {
+        if (!this.data.hide_good_box) return;
+        proNum++
+      } else {
+        wx.showToast({
+          icon: "none",
+          title: `库存暂时不足`
+        })
+        proNum = curStock
+      }
+    }
+
+    //前置 样式处理
+    let flag = this.addChartPreView(idx, itemIdx, totalNum);
+    if (!flag) {
+      return false;
+    }
   },
   onShow: function () {
-    var sysInfo = app.globalSystemInfo
-    var fixedTop = sysInfo.navBarHeight
-    this.setData({
-      fixedTop: fixedTop
-    })
+
+    // this.setData({
+    //   fixedTop: fixedTop
+    // })
   },
 
-  onLoad: function () {
-    var that = this;
-    //var schvalue = wx.getStorageSync("schvalue")
-    var schvalueArr = wx.getStorageSync("schvalueArr")
-    this.setData({
-      schvalue:'',
-      schvalueArr: schvalueArr
-    })
-    
-  }
+  onLoad: function (option) {
+    //请求记录接口
+    this.flashTap();
+    this.toCart = this.selectComponent('#toCartId');
+  },
 })
