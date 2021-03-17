@@ -16,12 +16,13 @@
         <text data-id="null" data-tagname="全部" wx:if="{{showCategory[currentTab]}}" class="{{!cateChosed[currentTab]?'on':''}}"
           bind:tap="selectCategory">全部</text>
         <block wx:for="{{showCategory[currentTab]}}" wx:for-index="index">
-          <text data-id="{{index}}" data-tagname="{{item}}" class="{{cateChosed[currentTab]==index?'on':''}}"
-            bind:tap="selectCategory">{{item}}</text>
+          <text data-id="{{item.tid}}" data-tagname="{{item.name}}" class="{{cateChosed[currentTab]==item.tid?'on':''}}"
+            bind:tap="selectCategory">{{item.name}}</text>
         </block>
       </view>
     </scroll-view>
   </view>
+  <view wx:else  style="padding-top:24rpx;"></view>
 </view>
 
 <!-- 组合 -->
@@ -53,8 +54,8 @@
                   <view class="num">￥<text>{{pro.price}}</text></view>
                   <view wx:if="{{showStock[currentTab][pro.meal_id]!=0 }}"
                     class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addCart" data-img="{{pro.img}}"
-                    data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}"
-                    data-itemidx="{{itemIdx}}">
+                    data-id="{{pro.meal_id}}" data-idx="{{idx}}"
+                    data-itemidx="{{itemIdx}}" data-typeMealIdSpuId="{{pro.type}}_{{pro.meal_id}}_{{pro.spu_id}}" data-type="{{pro.type}}" data-spuid="{{pro.spu_id}}">
                     <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
                       style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
                   </view>
@@ -74,63 +75,4 @@
     </block>
   </view>
 </block>
-
-
-<!--面包-->
-<!-- <view class="pro-box" wx:if="{{currentTab=='1'}}">
-  <block wx:if="{{!breadList}}">
-    <view class="nodata">
-      <image src="../../image/no-data.png"></image>
-      <view class="txt">暂无内容</view>
-    </view>
-  </block>
-
-  <block wx:else>
-    <view class="listItemwp flex">
-      <block wx:for="{{breadList}}" wx:for-index="idx">
-        <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
-          <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}">
-            <view class="pic {{breadInfo['stock'][pro.meal_id]==0?'sold-out':''}}">
-              <view class="tag">已售罄</view>
-              <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
-            </view>
-            <view class="info">
-              <view class="tit text-overflow">{{pro.name}}</view>
-              <view class="tags text-overflow">
-                <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
-              </view>
-              <view class="price flex">
-
-                <view class="num">￥<text>{{pro.price}}</text></view>
-                <view wx:if="{{stock[pro.meal_id]!=0 || pro.soldStat==0}}"
-                  class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addChart" data-img="{{pro.img}}"
-                  data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}"
-                  data-itemidx="{{itemIdx}}">
-                  <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
-                    style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
-                </view>
-
-
-              </view>
-            </view>
-          </view>
-        </block>
-      </block>
-    </view>
-    <view wx:if="{{breadInfo.noMoreData}}" class="more-btn">我可是有底线的</view>
-  </block>
-</view> -->
-<!--蛋糕-->
-<!-- <view wx:if="{{!currentTab}}">
-  <view class="loading"></view>
-</view> -->
-<!-- <view class="logo">
-  <image src="../../image/logo.png"></image>
-</view> -->
-<!-- <view style="height:{{50+btmHolder}}px" id="haha"></view> -->
-
-<!-- <view class="good_box" hidden="{{hide_good_box}}" style="transform:translate3d({{bus_x}}px,{{bus_y}}px,0);">
-  <image src="{{curPro}}"></image>
-</view> -->
-
 <!-- <toCart style="position:absolute;top:0;right: 0;" id="componentsToCart"></toCart> -->
