@@ -72,7 +72,7 @@ image{width: 100%;height: 100%}
 .tips .txt{white-space: nowrap;overflow:hidden ;}
 .tips .txt text{display: inline-block; animation: remindMessage 14s linear infinite;padding-right: 10rpx;font-size: 13px;}
 
-.pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
+.pic-box{width: 500rpx; align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
 .pic-box .pic{position: relative; width: 120rpx;height: 120rpx;border-radius:8rpx ;margin-right: 20rpx;overflow: hidden;flex-shrink: 0;}
 .pic-box .pic1{width: 100%;}
 .pic-box .pic1>view{justify-content: space-between;flex-direction: column;}

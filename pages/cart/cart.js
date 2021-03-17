@@ -377,9 +377,10 @@ Page({
         noallCake = true
       if (res) {
         let breadLi = res.bread.detail,
-          cakeLi = res.cake.detail
-        util.setTabBarBadge(res.total_num)
-        wx.setStorageSync('total_num', res.total_num)
+          cakeLi = res.cake.detail,
+          total_num = breadLi.length+cakeLi.length
+        util.setTabBarBadge(total_num)
+        wx.setStorageSync('total_num', total_num)
         let breadItemIds = [];
         if (breadLi.length > 0) {
           breadLi.forEach(item => {
