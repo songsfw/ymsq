@@ -23,8 +23,12 @@ page{background: #f8f8f8;height: auto;}
 .menu{width: 100%;z-index: 11;border-top: 1rpx solid #F6F6F6;}
 .main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
 .main view:after{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 10rpx;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;}
-.main view.on{color: #C1996B;font-weight:bold;}
-.main view.on:after{display: block;}
+.main view.on{color: #222222;font-weight:bold;font-size:17px}
+/* .main view.on:after{display: block;margin-bottom:22rpx} */
+.main view.menuline{position: absolute;top:0;width:100%;z-index: -1;justify-content:center}
+.main view.menuline .menuline-1{width:0;height:0;}
+.main view.menuline .menuline-1.show{width:101%;height:1px;border-bottom:5px solid #C1996B;padding-top: 56rpx}
+.main view.linegroup{display: inline-block;position: relative;z-index: 1;font-size:17px;width:44%}
 .sub-wrap{position: relative;height: 54px;}
 .sub{ width: 100%;box-sizing: border-box; background: #F6F6F6;padding: 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
