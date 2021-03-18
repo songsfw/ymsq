@@ -46,15 +46,28 @@ Page({
 
     //弹框
     skuNum: 1,
+    canshow: true,
+    allCakeCateImg:"",
   },
   switchTab: util.debounce(function (e) {
+    var currentId = e.currentTarget.dataset.tabid
+    if(currentId == 2){
+      this.setData({
+        allCakeCateImg:'/image/d1.png',
+      })
+    }else{
+      this.setData({
+        allCakeCateImg:'',
+      })
+    }
+   
     console.log('switchTab')
-    console.log(this.data.showStock)
+    // console.log(this.data.showStock)
     // if (!canCheck) {
     //   return false;
     // }
 
-    var currentId = e.currentTarget.dataset.tabid
+    
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
       console.log('switchTab-2')
@@ -66,10 +79,11 @@ Page({
       //缓存操作
       let currentTab = currentId
       let currentTag = null;
-      console.log('this.data.showList', this.data.showList, 'this.data.showTags', this.data.showTags);
+      // console.log('this.data.showList', this.data.showList, 'this.data.showTags', this.data.showTags);
       let pagelist = this.getCachePage(1, currentTab, currentTag)
-      let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
-      console.log('noMoreData:', noMoreData, "currentTab: ", currentTab, 'currentTag:', currentTag, 'pagelist::', pagelist)
+      // let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
+      // console.log('noMoreData:', noMoreData, "currentTab: ", currentTab, 'currentTag:', currentTag, 'pagelist::', pagelist)
+      
       this.setData({
         currentTag: currentTag,
         currentTab: currentTab,
@@ -268,7 +282,7 @@ Page({
           wx.setStorageSync("total_num", this.data.totalNum)
           //全局更新
 
-          this.refreshProList(proId, curSpuid, curType, (parseInt(refNum)+parseInt(trueStock[typeMealIdSpuId])));
+          this.refreshProList(proId, curSpuid, curType, (parseInt(refNum) + parseInt(trueStock[typeMealIdSpuId])));
           // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
           this.setData({
             totalNum: this.data.totalNum,
@@ -529,7 +543,7 @@ Page({
         case 2:
           console.log('switch  = 2')
           for (let tmpVal of proList[app.globalData.proType]) {
-            console.log(tmpVal)
+            // console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
             let style = "";
@@ -598,7 +612,6 @@ Page({
         ['showStock[' + res.choose_type + ']']: res.stock,
         ['showCategory[' + res.choose_type + ']']: res.category,
       });
-
       wx.stopPullDownRefresh() //停止下拉刷新
     })
 
@@ -711,7 +724,7 @@ Page({
           title: '加入购物车成功'
         })
 
-        this.refreshProList(this.data.cakeTempParams.proId, this.data.cakeTempParams.curSpuid, this.data.cakeTempParams.curType, (parseInt(skuNum)+parseInt(this.data.cakeTempParams.selected)))
+        this.refreshProList(this.data.cakeTempParams.proId, this.data.cakeTempParams.curSpuid, this.data.cakeTempParams.curType, (parseInt(skuNum) + parseInt(this.data.cakeTempParams.selected)))
         this.setData({
           totalNum: totalNum,
           pop: 0
@@ -757,10 +770,11 @@ Page({
     this.setData({
       showList: this.data.showList
     })
-    console.log(proList);
+    // console.log(proList);
     return
   },
   onShow() {
+    console.log("------------------------------------load-----")
     canCheck = false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
@@ -774,7 +788,7 @@ Page({
       currentTab: proType,
       city_id: city_id || '10216',
       showLoading: true,
-      skuNum: 1
+      skuNum: 1,
     })
     // console.log(this.data.city_id)
     trueStock = {};
@@ -821,6 +835,12 @@ Page({
 
     util.setWatcher(this);
   },
+  onReady() {
+    console.log('==========redeay');
+  },
+  onUnload(){
+    console.log('==========unload');
+  },
   watch: {
     'city_id': function (value, oldValue) {
       // console.log("watch");
@@ -828,7 +848,7 @@ Page({
       if (value == oldValue || this.data.currentTab == '') {
         return
       }
-      proList={}
+      proList = {}
       // app.globalData.proType = ''
       proList = {};
       let setData = {};

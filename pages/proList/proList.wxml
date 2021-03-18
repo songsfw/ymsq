@@ -16,7 +16,7 @@
       </view>
     </block>
   </view>
-  <view class="sub-wrap" style="" wx:if="{{showCategory[currentTab].length!=0}}">
+  <view class="sub-wrap" style="" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
     <scroll-view class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}">
       <view class="flex">
         <block wx:if="{{currentTab == 1}}">
@@ -28,16 +28,19 @@
           </block>
         </block>
         <block wx:else>
-          <view class="category-cake-item" bind:tap="selectCategory" data-id="null" data-tagnam ="全部">
-            <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
-              <image src="/image/d1.png"></image>
+          <block hidden="{{showCategory[currentTab].length<=0}}">
+            <view class="category-cake-item" bind:tap="selectCategory" data-id="null" data-tagnam="全部">
+              <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
+                <image src="{{allCakeCateImg}}"></image>
+              </view>
+              <text data-id="null" data-tagnam="全部" wx:if="{{showCategory[currentTab]}}"
+                class="txt {{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
             </view>
-            <text  data-id="null" data-tagnam ="全部" wx:if="{{showCategory[currentTab]}}"
-              class="txt {{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
-          </view>
+          </block>
 
           <block wx:for="{{showCategory[currentTab]}}" wx:for-index="index">
-            <view class="category-cake-item" bind:tap="selectCategory" data-id="{{item.tid}}" data-tagname="{{item.name}}">
+            <view class="category-cake-item" bind:tap="selectCategory" data-id="{{item.tid}}"
+              data-tagname="{{item.name}}">
               <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
                 <image src="{{item.image || '/image/d1.png'}}"></image>
               </view>
@@ -112,8 +115,8 @@
     <view>11111</view>
     <view>11111</view>
     <view>11111</view>
-    <!-- <web-view src="http://www.withwheat.com/m/class.html"></web-view> -->
   </view>
+  <!-- <web-view src="http://www.withwheat.com/m/class.html"></web-view> -->
 
 </block>
 
