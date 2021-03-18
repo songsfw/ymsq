@@ -398,6 +398,7 @@ Page({
   },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
+    console.log(total_num)
     this.setData({
       totalNum: total_num || 0
     })
@@ -827,29 +828,16 @@ Page({
       if (value == oldValue || this.data.currentTab == '') {
         return
       }
-      breadList = null
-      cakeList = null
+      proList={}
       // app.globalData.proType = ''
-      this.setData({
-        breadList: null,
-        cakeList: null,
-        currentTab: '',
-        currentTag: '',
-
-        breadInfo: {
-          count: 0,
-          pageNum: 1,
-          noMoreData: false
-        },
-        cakeInfo: {
-          count: 0,
-          pageNum: 1,
-          noMoreData: false
-        },
-
-        breadTag: '',
-        cakeTag: '',
-      })
+      proList = {};
+      let setData = {};
+      setData['showList'] = {};
+      setData['showTags'] = {};
+      setData['showStock'] = {};
+      setData['cateChosed'] = {};
+      setData['pageInfo'] = {};
+      this.setData(setData)
       this.getProList(value);
       console.log(value);
     }
