@@ -23,10 +23,9 @@ Page({
     fittings: false,
     pop: 0,
     skuNum: 1,
-    windowWidth: wx.getSystemInfoSync().windowWidth,
     //delStatus: 0,
-    breadItemIds: {}, //move
-    cakeItemIds: {}, //move
+    //breadItemIds: {}, //move
+    //cakeItemIds: {}, //move
 
   },
   touchE: function (e) {
@@ -103,7 +102,7 @@ Page({
               this.setData({
                 breadLi: res.bread.detail,
                 cakeLi: res.cake.detail,
-                totalPrice:res.total_price,
+                totalPrice:res.select_price,
               })
             } else {
               wx.showToast({
@@ -134,59 +133,26 @@ Page({
       pop: 0
     })
   },
-  getSelectedPro() {
-    let {
-      type,
-      cakeLi,
-      breadLi
-    } = this.data
-    let selectedBread = null,
-      selectedCake = null,
-      totalPrice = 0
+  // getSelectedPro() {
+  //   let {
+  //     cakeLi,
+  //     breadLi
+  //   } = this.data
+  //   let selectedBread = null,
+  //     selectedCake = null
 
-    function getSelected(type) {
-      return pro => pro.is_selected == type;
-    }
-    switch (type) {
-      case "1":
-        selectedBread = breadLi.filter(getSelected("1"))
-        if (selectedBread.length > 0) {
-          totalPrice = selectedBread.reduce((pre, cur) => {
-            let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
-            return util.floatObj().add(pre, curPrice, 2)
-          }, 0)
-          this.setData({
-            fittings: false
-          })
-        }
-        break;
-      case "2":
-        selectedCake = cakeLi.filter(getSelected("1"))
-        if (selectedCake.length > 0) {
-          totalPrice = selectedCake.reduce((pre, cur) => {
-            let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
-            return util.floatObj().add(pre, curPrice, 2)
-          }, 0)
-          this.setData({
-            fittings: true
-          })
-        } else {
-          this.setData({
-            fittings: false
-          })
-        }
-        break;
-      default:
-        break;
-    }
-    console.log(totalPrice)
-    totalPrice = util.formatePrice(totalPrice)
-    console.log(totalPrice)
+  //   function getSelected(type) {
+  //     return pro => pro.is_selected == type;
+  //   }
+  //   selectedBread = breadLi.filter(getSelected("1"))
+  //   selectedCake = cakeLi.filter(getSelected("1"))
 
-    this.setData({
-      totalPrice: totalPrice
-    })
-  },
+
+  //   this.setData({
+  //     selectedBread: selectedBread,
+  //     selectedCake:selectedCake
+  //   })
+  // },
   Settlement(){
     let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {
@@ -276,19 +242,6 @@ Page({
       skuNum
     } = this.data
 
-    // let cartItem = this.data.cakeLi.find(i=>{
-    //   return i.sku_id == proId && i.is_fittings==1
-    // })
-    // if(cartItem){
-    //   let oldNum = cartItem.sku_number
-
-    //   if(parseInt(oldNum)>skuNum){
-    //     skuNum = -(oldNum - skuNum)
-    //   }else{
-    //     skuNum = skuNum - oldNum
-    //   }
-    // }
-
     let data = {
       city_id: city_id,
       type: '2',
@@ -320,17 +273,8 @@ Page({
   selectFittings(e) {
 
     let idx = e.currentTarget.dataset.idx
-
-    // let cartItem = this.data.cakeLi.find(i=>{
-    //   return i.sku_id == id && i.is_fittings==1
-    // })
     let item = this.data.fittingsList[idx]
 
-    // if(cartItem){
-    //   skuNum=cartItem.sku_number
-    // }else{
-    //   skuNum=1
-    // }
     this.setData({
       skuNum: 1,
       fitting: item,
@@ -400,13 +344,19 @@ Page({
         noallCake = true
     let breadLi = bread.detail,
         cakeLi = cake.detail,
-        breadSelectedNum = parseInt(bread.number),
-        cakeSelectedNum = parseInt(cake.number)
+        breadSelectedNum = 0,
+        cakeSelectedNum = 0
+
+    function getSelected(type) {
+      return pro => pro.is_selected == type;
+    }
 
     if (breadLi&&breadLi.length > 0) {
+      breadSelectedNum = breadLi.filter(getSelected("1")).length
       noallBread = breadSelectedNum == breadLi.length ? false : true
     }
     if (cakeLi&&cakeLi.length > 0) {
+      cakeSelectedNum = cakeLi.filter(getSelected("1")).length
       noallCake = cakeSelectedNum == cakeLi.length ? false : true
     }
     if(breadSelectedNum>0 && cakeSelectedNum>0){
@@ -446,67 +396,21 @@ Page({
         let bread = res.bread,
           cake = res.cake
         //util.setTabBarBadge(res.total_num)
-        wx.setStorageSync('total_num', bread.detail.length+cake.detail.length)
-
+        wx.setStorageSync('total_num', res.total_number)
         let selectType = this.getSelectType(bread,cake)
-
-        //let breadItemIds = [];
-        // if (breadLi.length > 0) {
-        //   breadLi.forEach(item => {
-        //     if (item.is_selected == "1") {
-        //       breadSelectedNum++
-        //     }
-        //     // breadItemIds.push(item.cart_id)
-        //     // item['txtStyle'] = 0;
-        //     // if(this.data.delStatus == 1){
-        //     //   item['txtStyle'] = 1;
-        //     // }
-        //     // console.log(item)
-        //   })
-        // }
-        //this.data.breadItemIds = breadItemIds.join(',');
-
-        //let cakeItemIds = [];
-        // if (cakeLi.length > 0) {
-        //   cakeLi.forEach(item => {
-        //     if (item.is_selected == "1") {
-        //       cakeSelectedNum++
-        //     }
-        //     // cakeItemIds.push(item.cart_id)
-        //     // item['txtStyle'] = 0;
-        //     // if(this.data.delStatus == 1){
-        //     //   item['txtStyle'] = 1;
-        //     // }   
-        //   })
-        // }
-        // if(breadSelectedNum>0 && cakeSelectedNum>0){
-        //   type=''
-        // }else{
-        //   type = breadSelectedNum > 0 ? "1" : "2"
-        // }
-        //this.data.cakeItemIds = cakeItemIds.join(',');
-        // type = breadSelectedNum > 0 ? "1" : "2"
-        // noallBread = breadSelectedNum == res.bread.detail.length ? false : true
-        // noallCake = cakeSelectedNum == res.cake.detail.length ? false : true
-
         this.setData({
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
           cakeSelectedNum:selectType.cakeSelectedNum,
           breadSelectedNum:selectType.breadSelectedNum,
-          cakeSelectedPrice:cake.price,
-          breadSelectedPrice:bread.price,
+          cakeSelectedPrice:cake.select_price,
+          breadSelectedPrice:bread.select_price,
           breadLi: bread.detail,
-          totalPrice:res.total_price,
-          //breadItemIds: this.data.breadItemIds,
-          //cakeItemIds: this.data.cakeItemIds,
+          totalPrice:res.select_price,
           cakeLi: cake.detail,
           fittingsList: res.fittings,
-          //delStatus:this.data.delStatus,
         })
-        //this.data.delStatus = 0;
-        //this.getSelectedPro()
       }
     })
   },
@@ -531,14 +435,14 @@ Page({
         this.setData({
           cakeSelectedNum:selectType.cakeSelectedNum,
           breadSelectedNum:selectType.breadSelectedNum,
-          cakeSelectedPrice:cake.price,
-          breadSelectedPrice:bread.price,
+          cakeSelectedPrice:cake.select_price,
+          breadSelectedPrice:bread.select_price,
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
           breadLi: bread.detail,
           cakeLi: cake.detail,
-          totalPrice:res.total_price,
+          totalPrice:res.select_price,
         })
         //this.getSelectedPro()
       }
@@ -565,9 +469,9 @@ Page({
         // })
         data.action = "1"
       } else {
-        this.setData({
-          noallBread: true
-        })
+        // this.setData({
+        //   noallBread: true
+        // })
         data.action = "0"
       }
     }
@@ -602,14 +506,14 @@ Page({
         this.setData({
           cakeSelectedNum:selectType.cakeSelectedNum,
           breadSelectedNum:selectType.breadSelectedNum,
-          cakeSelectedPrice:cake.price,
-          breadSelectedPrice:bread.price,
+          cakeSelectedPrice:cake.select_price,
+          breadSelectedPrice:bread.select_price,
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
           breadLi: bread.detail,
           cakeLi: cake.detail,
-          totalPrice:res.total_price,
+          totalPrice:res.select_price,
         })
 
         //this.getSelectedPro()

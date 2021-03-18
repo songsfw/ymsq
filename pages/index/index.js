@@ -122,8 +122,8 @@ Page({
             block2 = components[3] && components[3].componentDetail,
             block3 = components[4] && components[4].componentDetail
 
-        wx.setStorageSync("total_num",res.cart.total_num)
-        util.setTabBarBadge(res.cart.total_num)
+        wx.setStorageSync("total_num",res.cart.total_number)
+        util.setTabBarBadge(res.cart.total_number)
         // if(res.cart.total_num>0){
         //   let  totalNum = res.cart.total_num.toString()|| '0'
         //   if(res.cart.total_num>=100){

@@ -88,7 +88,8 @@ color: #666;
 .swiper_item b{color: #000;font-weight: normal;}
 
 .moreBtn{text-align: center;padding-top: 20rpx}
-
+.bannerBg{position: fixed;left: -6%;top:0;width: 112%;height: 446rpx;z-index: -1;overflow:hidden;border-radius: 0 0 30% 30%;background: linear-gradient(to bottom,#F3D5A9,#C1996B);}
+.bannerBg image{width: 750rpx;height:100%;filter: blur(8px);}
 .banner{position: relative; width: 750rpx; height:502rpx;overflow: hidden;transform: translateY(0);background-color: #D7D7D7;}
 .banner-mask{position: absolute;width: 112%;height: 100%;left: -40rpx;bottom: -170rpx;border-bottom:176rpx solid #F6F6F6;border-radius:0 0 50% 50%; box-sizing: border-box;pointer-events: none;}
 .banner swiper,

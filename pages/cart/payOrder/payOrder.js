@@ -381,8 +381,8 @@ Page({
           delivery_price: cart_data.delivery_price,
           free_msg: cart_data.free_msg,
           free_type: cart_data.free_type,
-          number: cart_data.number,
-          price: cart_data.price,
+          number: cart_data.total_number,
+          price: cart_data.select_price,
           total_price: cart_data.total_price
         }
 
@@ -431,8 +431,8 @@ Page({
           delivery_price: cart_data.delivery_price,
           free_msg: cart_data.free_msg,
           free_type: cart_data.free_type,
-          number: cart_data.number,
-          price: cart_data.price,
+          number: cart_data.total_number,
+          price: cart_data.select_price,
           total_price: cart_data.total_price
         }
 
