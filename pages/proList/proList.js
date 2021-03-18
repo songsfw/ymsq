@@ -115,7 +115,7 @@ Page({
     // }
 
     let pagelist = this.getCachePage(1, currentTab, cateId)
-    // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+    console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
     this.setData({
       currentCategory: cateId,
       showLoading: false,

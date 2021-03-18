@@ -7,7 +7,7 @@
     <block wx:for="{{menu}}" wx:for-index="index">
       <view style="z-index:1;" bind:tap="switchTab" class="flex-1 {{currentTab==item.value ? 'on' : ''}}"
         data-tabid="{{item.value}}">
-        <view class="linegroup">
+        <view class="linegroup {{currentTab==item.value ? 'on' : ''}}">
           {{item.name}}
           <view class="menuline flex">
             <view class="menuline-1 {{currentTab==item.value ? 'show' : ''}}"></view>
@@ -16,15 +16,37 @@
       </view>
     </block>
   </view>
-  <view class="sub-wrap" wx:if="{{showCategory[currentTab].length!=0}}">
-    <scroll-view class="sub {{isFixed?'fixed':''}}" scroll-x="{{true}}">
+  <view class="sub-wrap" style="" wx:if="{{showCategory[currentTab].length!=0}}">
+    <scroll-view class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}">
       <view class="flex">
-        <text data-id="null" data-tagname="全部" wx:if="{{showCategory[currentTab]}}"
-          class="{{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
-        <block wx:for="{{showCategory[currentTab]}}" wx:for-index="index">
-          <text data-id="{{item.tid}}" data-tagname="{{item.name}}" class="{{cateChosed[currentTab]==item.tid?'on':''}}"
-            bind:tap="selectCategory">{{item.name}}</text>
+        <block wx:if="{{currentTab == 1}}">
+          <text data-id="null" data-tagname="全部" wx:if="{{showCategory[currentTab]}}"
+            class="{{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
+          <block wx:for="{{showCategory[currentTab]}}" wx:for-index="index">
+            <text data-id="{{item.tid}}" data-tagname="{{item.name}}"
+              class="{{cateChosed[currentTab]==item.tid?'on':''}}" bind:tap="selectCategory">{{item.name}}</text>
+          </block>
         </block>
+        <block wx:else>
+          <view class="category-cake-item" bind:tap="selectCategory" data-id="null" data-tagnam ="全部">
+            <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
+              <image src="/image/d1.png"></image>
+            </view>
+            <text  data-id="null" data-tagnam ="全部" wx:if="{{showCategory[currentTab]}}"
+              class="txt {{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
+          </view>
+
+          <block wx:for="{{showCategory[currentTab]}}" wx:for-index="index">
+            <view class="category-cake-item" bind:tap="selectCategory" data-id="{{item.tid}}" data-tagname="{{item.name}}">
+              <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
+                <image src="{{item.image || '/image/d1.png'}}"></image>
+              </view>
+              <text class="txt" data-id="{{item.tid}}" data-tagname="{{item.name}}"
+                class="txt {{cateChosed[currentTab]==item.tid?'on':''}}" bind:tap="selectCategory">{{item.name}}</text>
+            </view>
+          </block>
+        </block>
+
       </view>
     </scroll-view>
   </view>
