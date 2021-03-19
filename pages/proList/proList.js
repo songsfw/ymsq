@@ -48,6 +48,8 @@ Page({
     skuNum: 1,
     canshow: true,
     allCakeCateImg:"",
+    //文章默认页
+    articleDefaultPage:1,
   },
   switchTab: util.debounce(function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -469,6 +471,12 @@ Page({
       data.type = currentTab;
       setData['showList[' + currentTab + ']'] = null;
     }
+
+    //文章兼容
+    if(currentTab == 4){
+      data.page = this.data.articleDefaultPage
+    }
+
     //初始化数据
     setData['showLoading'] = true;
     setData['currentTag'] = null;
@@ -512,7 +520,13 @@ Page({
 
       this.setData(setData)
       proList[app.globalData.proType] = [];
-      proList[app.globalData.proType] = res.list;
+      if(app.globalData.proType == 4){
+        //文章
+        proList[app.globalData.proType] = res.article;
+      }else{
+        proList[app.globalData.proType] = res.list;
+      }
+      
       // console.log('接口返回：', res, 'prolist:', proList);
 
       //特殊处理
@@ -585,10 +599,33 @@ Page({
           }
           break;
         case 4:
-          // console.log(4)
+          console.log(4)
           break;
       }
 
+      if(app.globalData.proType == 4){
+        if (!this.data.pageInfo.hasOwnProperty(app.globalData.proType)) {
+          this.data.pageInfo[app.globalData.proType] = {}
+          this.data.pageInfo[app.globalData.proType]['all'] = {}
+        }
+
+        if (this.data.pageInfo[app.globalData.proType].hasOwnProperty('all')) {
+          this.data.pageInfo[app.globalData.proType]['all'] = {}
+        }
+        this.data.pageInfo[app.globalData.proType]['all'] = {
+          'pageCount': res.page_config.pages,//页总数
+          'pagesize': res.page_config.limit,
+          'cpage': res.page_config.page,
+          'total': res.page_config.total,
+        };
+        this.setData({
+          pageInfo: this.data.pageInfo,
+          ['showList[' + app.globalData.proType + '][0]']:proList[app.globalData.proType] ,
+        });
+        console.log(this.data.showList[app.globalData.proType]);
+        // console.log(this.data.pageInfo)
+        return true;
+      }
       this.refreshTypeTagInfo(res.choose_type, proList[app.globalData.proType]);
       let pagel = this.getCachePage(1, res.choose_type, null)
       console.log('proList', proList, 'pagel', pagel);
@@ -772,6 +809,13 @@ Page({
     })
     // console.log(proList);
     return
+  },
+  toLink(e){
+    let url = e.currentTarget.dataset.link;
+    console.log('toLink',url);
+    wx.navigateTo({
+      url: "/pages/web/web?url=" + url + "",
+    })
   },
   onShow() {
     console.log("------------------------------------load-----")

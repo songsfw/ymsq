@@ -120,3 +120,13 @@ page{background: #f8f8f8;height: auto;}
 .category-cake-item .txt.on{background:none;color: #222222;border-radius: 0;font-size: 12px;font-weight: bold;}
 .category-cake-item .img{width:54rpx;height:54rpx;display: flex;justify-content:center;margin:40rpx auto 0;}
 .category-cake-item .img.on{width:76rpx;height:76rpx;margin-top:20rpx}
+
+/* 关于我们 */
+.about-main{background:#F9F9F9;border-radius:5px 5px 0px 0px;}
+.a-m-item{display:flex;flex-direction: column;margin-bottom: 30rpx;background:#FFFFFF}
+.a-m-i-img{width:100%;height:320rpx;}
+.a-m-item image{width:100%;height:100%;border-radius:5px 5px 0px 0px;}
+
+.a-m-i-content{display:flex;flex-direction: column;padding:36rpx 30rpx}
+.a-m-i-c-title{font-size: 16px;color:#222222;margin-bottom: 15rpx;font-weight: 400;}
+.a-m-i-c-desc{font-size: 13px;color:#AAAAAA;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}

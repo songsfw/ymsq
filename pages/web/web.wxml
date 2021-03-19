@@ -1,1 +1,1 @@
-<web-view src="http://www.withwheat.com/m/index.html#main3"></web-view>
+<web-view src="{{webUrl || 'http://www.withwheat.com/m/index.html#main3'}}"></web-view>
