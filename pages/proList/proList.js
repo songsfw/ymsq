@@ -330,6 +330,10 @@ Page({
     let tempQuoteList;
     let pageList = [];
     let pagesize = 10;
+    //文章兼容
+    if(type == 4){
+      pagesize = this.data.pageInfo[type]['all']['pagesize'];
+    }
     let tempList = [];
     if (tag === null) {
       //全部
