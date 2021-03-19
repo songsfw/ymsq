@@ -112,7 +112,7 @@
   <view class="pro-box">
     <view class="about-main">
       <block wx:for="{{showList[currentTab][0]}}" wx:for-index="idx" >
-        <view class="a-m-item" bindtap="toLink" data-link="{{item['url']}}">
+        <view class="a-m-item" bindtap="toLink" data-link="{{item['url']}}" data-linktype="{{item['type']}}">
           <view class="a-m-i-img">
             <image src="{{item['image'] || 'http://images.imianfen.com/mall/202007/81/38/813825f1554509f9dc.jpg'}}">
             </image>

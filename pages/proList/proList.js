@@ -812,10 +812,18 @@ Page({
   },
   toLink(e){
     let url = e.currentTarget.dataset.link;
-    console.log('toLink',url);
-    wx.navigateTo({
-      url: "/pages/web/web?url=" + url + "",
-    })
+    let type = e.currentTarget.dataset.linktype
+    console.log('toLink',url,'type',type);
+    if(type == 3){
+      wx.navigateTo({
+        url: url,
+      })
+    }else{
+      wx.navigateTo({
+        url: "/pages/web/web?url=" + url + "",
+      })
+    }
+   
   },
   onShow() {
     console.log("------------------------------------load-----")

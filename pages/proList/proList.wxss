@@ -27,9 +27,9 @@ page{background: #f8f8f8;height: auto;}
 /* .main view.on:after{display: block;margin-bottom:22rpx} */
 .main view.menuline{position: absolute;top:0;left:0;width:100%;z-index: -1;justify-content:center}
 .main view.menuline .menuline-1{width:0;height:0;}
-.main view.menuline .menuline-1.show{width:88rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 56rpx}
-.main view.linegroup{display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
-.main view.linegroup.on{font-size:17px}
+.main view.menuline .menuline-1.show{width:80rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 56rpx}
+.main view.linegroup{columns: #222222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
+.main view.linegroup.on{font-size:17px;width:100%;}
 .sub-wrap{position: relative;}
 .sub{ width: 100%;box-sizing: border-box; background: #F6F6F6;padding: 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
@@ -122,11 +122,11 @@ page{background: #f8f8f8;height: auto;}
 .category-cake-item .img.on{width:76rpx;height:76rpx;margin-top:20rpx}
 
 /* 关于我们 */
-.about-main{background:#F9F9F9;border-radius:5px 5px 0px 0px;}
+.about-main{background:#F6F6F6;border-radius:8rpx; overflow: hidden;}
 .a-m-item{display:flex;flex-direction: column;margin-bottom: 30rpx;background:#FFFFFF}
 .a-m-i-img{width:100%;height:320rpx;}
-.a-m-item image{width:100%;height:100%;border-radius:5px 5px 0px 0px;}
+.a-m-item image{width:100%;height:100%;border-radius:8rpx 8rpx 0rpx 0rpx;}
 
-.a-m-i-content{display:flex;flex-direction: column;padding:36rpx 30rpx}
-.a-m-i-c-title{font-size: 16px;color:#222222;margin-bottom: 15rpx;font-weight: 400;}
+.a-m-i-content{display:flex;flex-direction: column;padding:30rpx 30rpx;border-radius:0rpx 0rpx 8rpx 8rpx;}
+.a-m-i-c-title{font-size: 16px;color:#222222;margin-bottom: 10rpx;font-weight: 400;}
 .a-m-i-c-desc{font-size: 13px;color:#AAAAAA;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
