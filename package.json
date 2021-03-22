@@ -1,0 +1,22 @@
+{
+  "name": "ymsq",
+  "version": "1.0.0",
+  "description": "request.js  目前只封装了GET,POST",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://songsfw:song.cn42@github.com/songsfw/ymsq.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/songsfw/ymsq/issues"
+  },
+  "homepage": "https://github.com/songsfw/ymsq#readme",
+  "dependencies": {
+    "umtrack-wx": "^2.6.2"
+  }
+}
