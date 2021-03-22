@@ -3,7 +3,7 @@
 <view class="bannerBg">
   <image src="../../image/user-bg.jpg"></image>
 </view>
-<view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
+<view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
 
     <view class="topinfo">
       <view class="user-top flex">
