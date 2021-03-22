@@ -1,19 +1,113 @@
 <!--index.wxml-->
-<navBar hasReturn="{{true}}"></navBar>
 <view class="topBar flex {{scrollTop>158 ? 'changebg' : ' '}}" style="top:{{fixedTop}}px">
   <view class='flex search flex-1'>
     <view class='flex flex-1'>
       <image src='/image/search.png'></image>
-      <input placeholder="输入影院或电影名称" class='flex-1' value='{{initvalue}}' auto-focus bindinput='search' bindconfirm="toListPage" confirm-type='搜索' /> 
+      <input placeholder="{{currentKeyword || '请输入关键字'}}" value="{{currentKeyword}}" class='flex-1' auto-focus
+        bindinput='getWords' bindconfirm="toListPage" confirm-type='搜索' />
+      <button bindtap="search">搜索</button>
     </view>
   </view>
   <view class='cancle-btn' bindtap='cancle'>取消</view>
 </view>
-<view class='main-content'>
-  <view class='flex history'><text>搜索历史</text><image src='/image/icon-del.png' class='icon-del' bindtap="delHistory"></image></view>
-    <view class='flex history' wx:if="{{schvalue}}"><text bindtap='toListPage' class='flex-1'>{{schvalue}}</text></view>
-    <block wx:for="{{schvalueArr}}" wx:key ="index" wx:if="{{schvalueArr}}">
-      <view class='flex history'><text bindtap='toListPage' data-val='{{item}}' class='flex-1'>{{item}}</text></view>
-    </block>
-</view>
 
+<view class="main">
+  <view class='mainSchTag' wx:if="{{!searchList.list}}">
+    <view wx:for="{{keywordTag}}" wx:for-index="index" class="mainSchTagGroup">
+      <!-- 热搜 -->
+      <block>
+        <view class='flex history' style="">
+          <text>{{item.name}}</text>
+        </view>
+
+        <view class='flex groupTag'>
+          <view wx:for="{{item.list}}" data-word="{{item}}" wx:key="index" class="groupTagItem" bindtap='clickTap'>
+            <text data-val='{{item.id}}' class='flex-1'>{{item}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 搜索列表 -->
+  <view class="sch-list flex" wx:if="{{searchList.list.length > 0}}">
+    <!-- <view wx:for="{{searchList.list}}" wx:key="index">
+      <navigator class="navigatorItem"
+        url="/pages/{{item.meal_id == 0 ? 'cakeInfo/cakeInfo':'proInfo/proInfo'}}?proId={{item.meal_id == 0 ?item.spu_id:item.meal_id}}">
+        <view>{{index}}</view>
+        <view bindtap="toProduct">{{item.name}}</view>
+
+        <view></view>
+      </navigator>
+    </view> -->
+
+    <!-- yuan -->
+    <view class="item" wx:for="{{searchList.list}}" wx:for-item="pro" wx:for-index="proIndex">
+      <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}" data-spu="{{pro.spu_id}}">
+        <view class="pic {{breadInfo['stock'][pro.meal_id]==0?'sold-out':''}}">
+          <view class="tag">已售罄</view>
+          <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
+        </view>
+        <view class="info">
+          <view class="tit text-overflow">{{pro.name}}</view>
+          <view class="tags text-overflow">
+            <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
+          </view>
+          <view class="price flex">
+            <view class="num">￥<text>{{pro.price}}</text></view>
+            <view wx:if="{{pro.meal_id!=0}}" class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addCart"
+              data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-itemidx="{{proIndex}}"
+                    data-typeMealIdSpuId="{{pro.type}}_{{pro.meal_id}}_{{pro.spu_id}}" data-type="{{pro.type}}"
+                    data-spuid="{{pro.spu_id}}">
+              <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
+                style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
+            </view>
+
+
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无内容 -->
+  <view class="empty-search" wx:elif="{{currentKeyword!='' && searchList.list.length == 0}}">
+    <!-- 无内容图标 -->
+    <view class="empty-tip">
+      <view>
+        无内容
+      </view>
+    </view>
+    <!-- 推荐 -->
+    <!-- <view class="recommend-list">
+      <view class="item" wx:for="{{recommendList}}" wx:for-item="pro" wx:key="proIndex">
+        <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}" data-spu="{{pro.spu_id}}">
+          <view class="pic {{breadInfo['stock'][pro.meal_id]==0?'sold-out':''}}">
+            <view class="tag">已售罄</view>
+            <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
+          </view>
+          <view class="info">
+            <view class="tit text-overflow">{{pro.name}}</view>
+            <view class="tags text-overflow">
+              <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{pro.price}}</text></view>
+              <view wx:if="{{pro.meal_id!=0}}" class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addCart"
+                data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-stock="{{stock[pro.meal_id]}}" data-idx="{{idx}}"
+                data-itemidx="{{itemIdx}}">
+                <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
+                  style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
+              </view>
+
+
+            </view>
+          </view>
+        </view>
+      </view>
+    </view> -->
+  </view>
+</view>
+<view style="width:100%;height:50px;background:#EAEAB0;display:none" bindtap="toLocal">
+  toLocal
+</view>

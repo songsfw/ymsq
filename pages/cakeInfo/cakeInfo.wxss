@@ -5,7 +5,7 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 .wrap-all{padding: 10px;}
 
 .item{box-sizing: border-box}
-.proInfo{padding: 0 20rpx 46rpx 20rpx;background: #fff;margin-bottom: 20rpx;}
+.proInfo{padding: 0 20rpx;background: #fff;margin-bottom: 20rpx;}
 .proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;font-weight: bold;}
 .proInfo .tit text{    color: #fff;
     font-size: 10px;

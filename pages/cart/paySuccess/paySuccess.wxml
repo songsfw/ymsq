@@ -43,14 +43,14 @@
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 
 <view class="pop-panel coupon-panel" wx:if="{{pop=='showCoupon'}}">
-  <view class="icon-close close" bind:tap="close"></view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="tit flex">分享好友您可以获取优惠券</view>
 
   <view class="pop-con">
     <view class="coupon-box">
         <scroll-view class="list" scroll-y="{{true}}">
           <view class="item" data-id="{{shareInfo.promotion_info.id}}">
-            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view>
+            <!-- <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view> -->
             <view class="flex">
               <view class="coupon-num flex">
                 <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
