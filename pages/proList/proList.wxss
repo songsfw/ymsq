@@ -1,9 +1,9 @@
 /**index.wxss**/
 @import "../../template/loading/loading.wxss";
 view{font-size:12px}
-page{background: #f8f8f8;height: auto;}
+page{background: #F9F9F9;height: auto;}
 
-.pro-box{position: relative;z-index: 12; padding:0 24rpx 0 24rpx;background-color: #F6F6F6;}
+.pro-box{position: relative;z-index: 12; padding:0 24rpx 0 24rpx;background-color: #F9F9F9;}
 .listItemwp{flex-wrap: wrap;}
 .item{box-sizing: border-box;background: #fff;width: 342rpx;margin: 0 18rpx 18rpx 0;border-radius: 16rpx ;overflow: hidden;}
 .listItemwp .item:nth-child(2n){margin-right: 0;}
@@ -15,12 +15,15 @@ page{background: #f8f8f8;height: auto;}
 
 .item .tit{font-size: 14px;color: #222;margin-bottom: 8px;padding: 0 20rpx;font-weight: 500;}
 .item .tags{padding: 0 20rpx;box-sizing: border-box;}
-.item .tags text{background: #F6F6F6;color: #999;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin-right: 5px;}
+.item .tags text{background: #F9F9F9;color: #999;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin-right: 5px;}
 .item .price{position: relative; justify-content: space-between;padding: 0 20rpx;height: 44px; align-items: center;}
 .item .price .num{font-size: 11px;color: #222222;}
 .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
 .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
-.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F6F6F6;}
+.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;background-color: #F9F9F9;}
+.menu-wrap{position: fixed;width: 100%;left: 0;top: 0;z-index: 23;padding-bottom: 12px;background-color: #F9F9F9;}
+
+
 .main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
 .main view:after{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 10rpx;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;}
 .main view.on{color: #222222;font-weight:bold;font-size:17px;overflow: hidden;}
@@ -31,7 +34,7 @@ page{background: #f8f8f8;height: auto;}
 .main view.linegroup{columns: #222222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
 .main view.linegroup.on{font-size:17px;width:100%;}
 .sub-wrap{position: relative;}
-.sub{ width: 100%;box-sizing: border-box; background: #F6F6F6;padding: 24rpx;}
+.sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 0 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
 .sub text{padding: 0 12px;line-height: 30px;background: #fff;border-radius: 15px;margin-right: 10px;flex-shrink: 0;font-size: 14px;}
 .sub text.on{background:#C1996B;color: #fff;}
@@ -105,7 +108,7 @@ page{background: #f8f8f8;height: auto;}
 .score-panel .h4 .tip{color: #4171FF;font-size: 13px;margin-left: 20rpx;}
 .score-panel .h4 .default-tip.tip{color: #999;}
 .sku-list{flex-wrap: wrap;margin-bottom: -30rpx;}
-.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;border: 1rpx solid #F6F6F6;font-size: 13px;}
+.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F9F9F9;color: #333;border: 1rpx solid #F9F9F9;font-size: 13px;}
 .sku-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);font-weight: bold;}
 .default-fitts{margin-top: 40rpx; justify-content:flex-start;flex-wrap: wrap; color: #333;font-size: 13px;}
 .set-chart text,
@@ -122,7 +125,7 @@ page{background: #f8f8f8;height: auto;}
 .category-cake-item .img.on{width:76rpx;height:76rpx;margin-top:20rpx}
 
 /* 关于我们 */
-.about-main{background:#F6F6F6;border-radius:8rpx; }
+.about-main{background:#F9F9F9;border-radius:8rpx; }
 .a-m-item{display:flex;flex-direction: column;margin-bottom: 30rpx;background:#FFFFFF}
 .a-m-i-img{width:100%;height:320rpx;}
 .a-m-item image{width:100%;height:100%;border-radius:8rpx 8rpx 0rpx 0rpx;}
