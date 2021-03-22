@@ -3,7 +3,7 @@
 view{font-size:12px}
 page{background: #F9F9F9;height: auto;}
 
-.pro-box{position: relative;z-index: 12; padding:0 24rpx 0 24rpx;background-color: #F9F9F9;}
+.pro-box{position: relative;z-index: 12; padding:12px 24rpx 0 24rpx;background-color: #F9F9F9;}
 .listItemwp{flex-wrap: wrap;}
 .item{box-sizing: border-box;background: #fff;width: 342rpx;margin: 0 18rpx 18rpx 0;border-radius: 16rpx ;overflow: hidden;}
 .listItemwp .item:nth-child(2n){margin-right: 0;}
@@ -20,9 +20,8 @@ page{background: #F9F9F9;height: auto;}
 .item .price .num{font-size: 11px;color: #222222;}
 .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
 .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
-.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;background-color: #F9F9F9;}
-.menu-wrap{position: fixed;width: 100%;left: 0;top: 0;z-index: 23;padding-bottom: 12px;background-color: #F9F9F9;}
-
+.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;}
+.isFixed{position: fixed;left:0;width: 100%;box-sizing: border-box;}
 
 .main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
 .main view:after{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 10rpx;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;}
@@ -33,10 +32,11 @@ page{background: #F9F9F9;height: auto;}
 .main view.menuline .menuline-1.show{width:80rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 56rpx}
 .main view.linegroup{columns: #222222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
 .main view.linegroup.on{font-size:17px;width:100%;}
-.sub-wrap{position: relative;}
-.sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 0 24rpx;}
+
+.sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 12px 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
 .sub text{padding: 0 12px;line-height: 30px;background: #fff;border-radius: 15px;margin-right: 10px;flex-shrink: 0;font-size: 14px;}
+.sub-wrap{height: 42px;}
 .sub text.on{background:#C1996B;color: #fff;}
 .sub-wrap>.sub.sub-cake{padding: 0; }
 .moreBtn{text-align: center;padding-top: 20rpx}
