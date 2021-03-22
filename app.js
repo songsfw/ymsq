@@ -1,8 +1,16 @@
 //app.js
+import'umtrack-wx';
 const auth = require('utils/auth.js')
 const api = require('utils/api.js')
 const util = require('utils/util.js')
 App({
+  umengConfig:{
+    appKey:'60584221b8c8d45c13a9a6bc',//由友盟分配的APP_KEY
+    useOpenid:true,// 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
+    autoGetOpenid:false,// 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
+    debug:true,//是否打开调试模式
+    uploadUserInfo:true// 上传用户信息，上传后可以查看有头像的用户分享信息，同时在查看用户画像时，公域画像的准确性会提升。
+  },
   onLaunch: function (options) {
     // wx.showLoading({
     //   title: '加载中...',
@@ -11,7 +19,6 @@ App({
     //     console.log('显示loading')
     //   }
     // })
-    
     this.init()
   },
   async init(){
@@ -29,6 +36,9 @@ App({
         is_mobile = result.is_mobile
 
         let {openid,user_info,user_id,address_info} = result
+        //给友盟openid
+        wx.uma.setOpenid(openid)
+        
         let userInfo = {
           user_id:user_id,
           is_authed:is_authed,
