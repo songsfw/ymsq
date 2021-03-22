@@ -1,5 +1,5 @@
 /**index.wxss**/
-page{background: #F6F6F6;}
+page{background: #F4F9F5;}
 view{font-size:12px}
 .wrap-all{padding: 10px;}
 .navigator-hover{background-color: none;}
@@ -26,38 +26,42 @@ view{font-size:12px}
 .about-us{position: relative;overflow: hidden;align-items: center;padding-top: 40rpx;color: #fff;z-index: 1;}
 .mainbg{position:absolute;left: 0;top: 0;width:750rpx;background:linear-gradient(to bottom,#E2C9A4#C1996B);height: 252rpx;z-index: 0;}
 
-.main-content{background: #fff;}
+.main-content{background: #F4F9F5;}
 
 .mask{position: fixed;left: 0;top: 0;right:0;bottom: 0;background: rgba(0,0,0,.3);z-index:10}
 
-.menu{position: relative;
-    padding: 32rpx 20rpx;
-    justify-content: space-around;
+.menu{
+    padding: 40rpx 50rpx 20rpx 50rpx;
     box-sizing: border-box;
-    background-color: #fff;
-    margin: -104rpx 24rpx 30rpx 24rpx;
-    border-radius: 8rpx;}
-.menu view{margin-right: 20rpx;width:342rpx;height: 170rpx;overflow: hidden;}
-.menu view:last-child{margin-right: 0;}
-.menu view image{border-radius:8rpx;}
-.notice .iconfont{color: #FA603D;}
+    background-color: #fff;border-bottom: 20rpx solid #f6f6f6;}
+.menu>view{margin-right:56rpx ;flex-shrink: 0;}
+.menu>view:last-child{margin-right: 0;}
+.menu .pic{width:120rpx;height: 120rpx;overflow: hidden;border-radius: 50%;padding: 10rpx;box-sizing: border-box;border:1px solid #f0f0f0;border-left-color:#C1996B;border-right-color:#C1996B;transform: rotate(45deg);}
+.menu .text{margin-top: 22rpx; text-align: center;font-size: 14px;}
+.menu view image{ border-radius:50%;transform: rotate(-45deg);}
+
 .pro-block{padding:0 24rpx;}
 .pro-block .title{position: relative;justify-content: space-between;align-items: center;margin-bottom: 20rpx;}
-.pro-block .title .more{position: absolute;right: 0;top: 0;height: 100%; color: #999;font-size: 14px;line-height: 37px;}
+.pro-block .title .more{position: absolute;right: 0;top: 0;height: 100%; color: #C1996B;font-size: 14px;line-height: 37px;}
 .pro-block .title .more text{font-size: 14px;margin-left: 6px;}
-.pro-block .h3{margin: 20rpx 0 12rpx 0;font-size: 30rpx;}
-.pro-block .txt{width: 100%; color: #666;font-size: 13px;line-height: 20px;height: 19px;overflow: hidden;}
+.pro-block .title .more image{width: 12px;height: 12px;margin-left: 10rpx;}
+.pro-block .h4{color: #333; font-size: 18px;}
+.pro-block .txt{padding:30rpx 20rpx; background: #fff;}
+.pro-block .txt .name{justify-content: space-between;}
 
-.pro-block .pic{width: 702rpx;height: 400rpx;}
+.pro-block .txt .price{font-size: 14px;color: #C1996B;}
+.pro-block .txt .price text{font-size: 22px;}
+.pro-block .desc{color: #999;}
+.pro-block .pic{width: 702rpx;height: 440rpx;}
 .pro-list .pro-list>view:last-child{margin-bottom: 0;}
 .block1 .pro-list>view,
 .block2 .pro-list>view,
 .block3 .pro-list>view{position: relative;margin-bottom:20rpx;}
 .block2 .pro-list>view,
-.block3 .pro-list>view{border-radius: 16rpx;overflow: hidden;}
-.pro-block .pic{border-radius: 16rpx;overflow: hidden;}
+.block3 .pro-list>view{border-radius: 8rpx;overflow: hidden;}
+.pro-block .pic{border-radius: 8rpx 8rpx 0 0;overflow: hidden;}
 .block2 .title,
-.block3 .title{position: relative;height: 37px;align-items: center;}
+.block3 .title{position: relative;align-items: center;}
 
 .block2 .title .h1,
 .block3 .title .h1{position: absolute;left:20rpx; bottom: 5rpx;height: 50rpx;line-height: 50rpx;font-size: 36rpx;}
@@ -86,29 +90,55 @@ font-size: 12px;
 color: #666;
 }
 .swiper_item b{color: #000;font-weight: normal;}
-
+.search{position: fixed;left: 0;top: 0;right:0;margin:0 24rpx;box-sizing: border-box;z-index: 2;color: #999;background-color: #fff;padding-left: 10px;border-radius: 4rpx;}
+.search text{font-size: 14px;}
+.search input{height:34px;line-height: 34px;margin-left: 10px;font-size: 14px;}
 .moreBtn{text-align: center;padding-top: 20rpx}
-.bannerBg{position: fixed;left: -6%;top:0;width: 112%;height: 446rpx;z-index: -1;overflow:hidden;border-radius: 0 0 30% 30%;background: linear-gradient(to bottom,#F3D5A9,#C1996B);}
-.bannerBg image{width: 750rpx;height:100%;filter: blur(8px);}
-.banner{position: relative; width: 750rpx; height:502rpx;overflow: hidden;transform: translateY(0);background-color: #D7D7D7;}
+/* .bannerBg{position: fixed;left: -6%;top:0;width: 112%;height: 446rpx;z-index: -1;overflow:hidden;border-radius: 0 0 30% 30%;background: linear-gradient(to bottom,#F3D5A9,#C1996B);}
+.bannerBg image{width: 750rpx;height:100%;filter: blur(8px);} */
+.banner{position: relative; width: 750rpx; height:704rpx;overflow: hidden;transform: translateY(0);background-color: #D7D7D7;}
 .banner-mask{position: absolute;width: 112%;height: 100%;left: -40rpx;bottom: -170rpx;border-bottom:176rpx solid #F6F6F6;border-radius:0 0 50% 50%; box-sizing: border-box;pointer-events: none;}
 .banner swiper,
 .banner swiper view{width: 100%;height: 100%;}
+.tips{position: absolute;left: 0;bottom: 0;width: 100%;height: 30px;line-height: 30px;font-size:11px;color: #fff;justify-content: space-between;padding: 0 12px;box-sizing: border-box;background: rgba(0, 0, 0, 0.4);border-radius: 10px 10px 0 0;overflow:hidden;}
+.tips text{vertical-align: middle;}
+.tips text:first-child{margin-right: 10rpx;}
+.swiper .wx-swiper-dot {
+    width: 21rpx;
+    height: 8rpx;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4rpx;
+    margin-bottom: 30px;
+  }
+   
+  /* 选中指示点的样式 */
+  .swiper .wx-swiper-dot.wx-swiper-dot-active {
+      width: 40rpx;
+      height: 8rpx;
+      background: #000;
+      border-radius: 15rpx;
+  }
+
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
 .gotop{position: fixed;right:50rpx ;bottom: 150rpx;width: 80rpx;height: 80rpx;z-index: 3;}
-.notice{position: fixed;width: 100%;left: 0;top: 0; height:28px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;}
-.notice .txt,.notice .tit{padding: 0 24rpx;height: 28px;line-height: 28px;background: #fff;}
+.notice{width: 100%;height: 46px;line-height: 46px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin-bottom: 25px;}
+.notice image{width: 58px;height: 40px;flex-shrink: 0;margin-right: 16rpx;}
+.notice .txt,.notice .tit{padding: 0 24rpx;height: 18px;line-height: 18px;background: #fff;}
+.notice .txt{width: auto; border-left: 1px solid #ccc;padding-left: 16rpx;}
 .notice .tit{font-size: 14px;font-weight: bold;justify-content: space-between;}
 .notice .tit .iconfont{transform: rotate(180deg);font-weight: normal;}
 .notice-panel{line-height: 28px;height: 0;transition: height .2s linear;}
 .notice.show .notice-panel{height: 300rpx;}
 .notice .icon-top{width: 17px;height: 9px;flex-shrink: 0;}
 .notice swiper{height: 100%;width: 100%;}
-.notice swiper view{height:28px;color: #FA603D;font-size: 14px;}
+.notice swiper view{height:18px;color: #333;font-size: 13px;}
 .notice swiper text{vertical-align: middle;}
-.notice-panel{position:absolute;left:0;top:28px; width:100%;height:0;background:#fff;z-index: 11;border-radius: 0 0 20rpx 20rpx;box-sizing: border-box;}
-.notice-panel .icon-close{position: absolute;left: 50%;transform: translateX(-50%);background-color: #fff;border-radius: 50%;bottom: -38px;}
-.notice-panel .item{line-height: 1.5;margin-bottom: 20rpx;font-size: 14px;color: #FA603D;}
+
 .pro-list>view:last-child{margin-bottom:0 ;}
-.show-btn{color: #FA603D;width: 50px;flex-shrink: 0;justify-content: flex-end;}
-.show-btn view{font-size: 13px;font-weight: normal;}
+.show-btn{color: #fff;width: 38px;flex-shrink: 0;text-align: center; background: #C1996B;height: 20px;line-height: 20px;border-radius: 4rpx; font-size: 11px;font-weight: normal;}
+
+.notice-panel{ position: fixed;left: 50%;top:50%; background:#fff;width: 592rpx;max-height: 712rpx;min-height: 300rpx; z-index: 22;transform: translate(-50%,-50%);background-size: 100% 100%; padding: 24rpx;box-sizing: border-box;border-radius: 16rpx;}
+.notice-panel .close{position: absolute;transform: translateX(-50%);left: 50%; bottom:-40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;line-height: 30px;color: #fff;}
+.notice-panel .pop-con{height: 100%;}
+.notice-panel .pop-con view{color: #333;font-size: 13px;line-height: 18px;}
+.iwx{width: 750rpx;height: 240rpx;margin-bottom: 50rpx;}

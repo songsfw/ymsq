@@ -2,6 +2,7 @@
 <import src="../../template/loading/loading.wxml" />
 <template is="loading" data="{{showLoading}}"></template>
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
+<navBar hasSearch></navBar>
 <view class="menu">
   <view class="main flex">
     <block wx:for="{{menu}}" wx:for-index="index">

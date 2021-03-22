@@ -20,7 +20,7 @@ Component({
       type: Boolean,
       value: false
     },
-    hasCallback:{ // 属性名
+    hasSearch:{ // 属性名
       type: Boolean,
       value: false
     },
@@ -98,17 +98,21 @@ Component({
 
       let rightDistance = windowWidth - capsulePosition.right; //胶囊按钮右侧到屏幕右侧的边距
       let leftWidth = windowWidth - capsulePosition.left; //胶囊按钮左侧到屏幕右侧的边距
-      let statusHeight = statusBarHeight
-
+      //let statusHeight = statusBarHeight
       let navWarpStyle = [
-        `height:${navBarHeight - statusBarHeight}px`,
-        `padding-right:${leftWidth}px`,
+        `padding-top:${navBarHeight}px`,
+      ].join(';');
+      let navStyle = [
+        `height:${navBarHeight-statusBarHeight}px`,
+        //`padding-right:${leftWidth}px`,
+        `padding-top:${statusBarHeight}px`,
       ].join(';');
 
       this.setData({
         navWarpStyle,
-        navBarHeight,
-        statusHeight,
+        //navBarHeight,
+        //statusHeight,
+        navStyle,
         capsulePosition,
         ios
       });

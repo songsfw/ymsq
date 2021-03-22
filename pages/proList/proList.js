@@ -871,6 +871,8 @@ Page({
     } else {
       sysInfo = wx.getSystemInfoSync()
     }
+    let fixedTop = sysInfo.navBarHeight;
+
     //可视窗口x,y坐标
     // console.log(sysInfo.screenHeight)
     this.busPos = {};
@@ -885,6 +887,7 @@ Page({
 
     this.setData({
       //city_id:city_id,
+      fixedTop:fixedTop,
       btmHolder: btmHolder || 0
     })
     //this.getProList();

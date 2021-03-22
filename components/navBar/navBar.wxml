@@ -1,13 +1,14 @@
 <!-- components/navBar/navBar.wxml -->
-<view class='navBarWrap {{ios ? "ios" : "android"}} {{navType? navType : "light"}} {{isFold?"fold":""}}'  id="navBar">
-  <view class="navBar" style="padding-top:{{statusHeight}}px">
-    <view class="flex navwrap" style="{{navWarpStyle}}">
+<view class='navBarWrap {{ios ? "ios" : "android"}} {{navType? navType : "light"}} {{isFold?"fold":""}}' id="navBar" style="{{navWarpStyle}}">
+  <view class="navBar" style="{{navStyle}}">
+    <view class="navwrap flex-center">
       <view class="searchBox flex" wx:if="{{hasAddress}}">
-          <view class='city flex' bind:tap="selectAdd" data-source="1">
-            <view class="icon"><image src="../../image/icon-local.png"></image></view>
-            <view class="citytxt">{{cityName.address}}</view>
-          </view>
+        <view class='city flex' bind:tap="selectAdd" data-source="1">
+          <view class="iconfont icon-local"></view>
+          <view class="citytxt">{{cityName.address}}</view>
+        </view>
       </view>
+      <navigator url="../../pages/search/search" wx:if="{{hasSearch}}" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="搜索" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
       <view class="homebtn" wx:if="{{hasHome}}" bindtap="toHome">
         <view class="iconfont icon-index"></view>
       </view>
@@ -15,6 +16,8 @@
         <view class="arrow-left"></view>
       </view>
       <view wx:if="{{title}}" style="color:{{titColor}}" class="title">{{title}}</view>
+
     </view>
   </view>
+
 </view>

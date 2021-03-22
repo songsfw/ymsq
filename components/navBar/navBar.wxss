@@ -1,25 +1,27 @@
 
-.navBarWrap{position: fixed;left: 0;top: 0;width: 100%; color: #fff;box-sizing: border-box;align-items: center;z-index: 20;}
-.navwrap{position: relative; padding:0 30rpx;width: 100%;box-sizing: border-box;align-items: center;}
+/* .navBarWrap{position: relative;box-sizing: border-box;}
+.navBarWrap.isFixed{position: fixed;left: 0;top: 0;width: 100%; color: #fff;align-items: center;z-index: 20;} */
+
+.navBarWrap .navBar{position: fixed;left: 0;top: 0;width: 100%;z-index: 22;}
+/* .navBarWrap.isFixed .navBar{position: relative;} */
+
+.navwrap{position: relative; padding:0 30rpx;width: 100%;box-sizing: border-box;height: 100%;}
 .searchBox{align-items: center;}
-.searchBox .city{max-width:400rpx;height: 56rpx;line-height: 56rpx;align-items: center;padding-right: 38rpx;justify-content: space-between;color: #222;font-size: 30rpx;}
+.searchBox .city{max-width:400rpx;height: 56rpx;line-height: 56rpx;align-items: center;padding-right: 38rpx;justify-content: space-between;color: #fff;font-size: 30rpx;}
 
 .searchBox .city .arrow-bottom:after{border-color: #fff;width: 6px;height: 6px;}
 .searchBox .city .icon{flex-shrink: 0; width:32rpx;height: 36rpx;margin-right: 20rpx;}
 .searchBox .city .citytxt{width: 100%;overflow: hidden;white-space: nowrap;text-align: left; text-overflow: ellipsis;font-size: 14px;}
 .searchBox .city{font-size: 18px;}
 .searchBox .city .icon-arrow-btm{font-size: 20rpx;}
-
-.searchBox .search{width: 260rpx; color: #fff;height: 60rpx;line-height:60rpx;overflow: hidden;background:rgba(255,255,255,.1);padding-left:28rpx;border-radius: 30rpx}
-.searchBox .search .img{width: 25rpx;height: 25rpx;margin-right: 10rpx;}
-.searchBox .search .navigator{align-items: center;}
-.searchBox .search .navigator.iconfont,
-.searchBox .city.iconfont{font-size: 20px;}
-.searchBox .city,
-.searchBox .search{text-align: center; transition: all .3s linear;}
+.search .navigator{align-items: center;}
+.search .navigator.iconfont,
+.searchBox .city .iconfont{font-size: 15px;margin-right: 14rpx;}
+.icon-search{color: #aaa;margin-right: 18rpx;}
+.search{width: 486rpx; color: #fff;height: 60rpx;line-height:60rpx;overflow: hidden;background:#F6F6F6;padding-left:16rpx;border-radius: 30rpx;font-size: 13px;}
 
 .fold .city,
-.fold .search{width: 60rpx;height: 60rpx;max-width: auto;min-width: auto; border-radius: 50%;background: rgba(0,0,0,.3);box-sizing: border-box;padding: 0;margin-right: 12rpx;line-height: 60rpx;}
+.fold .search{color: #222;}
 
 .title{position: absolute;top: 50%;left:50%; transform: translate(-50%,-50%); color: #222;font-size: 16px;}
 .homebtn,
@@ -48,8 +50,7 @@
 .navBarWrap.light .return .arrow-left:after{border-color: #5c5c5c}
 .navBarWrap.light .homebtn .iconfont{color: #5c5c5c;}
 
-.navBarWrap.light .city,
-.navBarWrap.light .search{color: #000;background: none;}
+.navBarWrap.light .city{color: #000;background: none;}
 
 .navBarWrap.dark .navBar{background: #F4F6F8;}
 .navBarWrap.dark .return .arrow-left:after{border-color: #5c5c5c}

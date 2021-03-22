@@ -159,10 +159,12 @@ Page({
   scroll(e){
     if(e.detail.scrollTop>200){
       this.setData({
+        fixedNav:true,
         showGoto:true
       })
     }else{
       this.setData({
+        fixedNav:false,
         showGoto:false
       })
     }
@@ -173,10 +175,6 @@ Page({
     })
   },
   showNotice(){
-
-    wx.navigateTo({
-      url:"/pages/search/search?test=111"
-    })
 
     this.setData({
       panel:'notice',
@@ -189,12 +187,12 @@ Page({
       mask:false
     })
   },
-  changeBg(e){
-    let curidx = e.detail.current
-    this.setData({
-      curBg:this.data.banner[curidx].image_url
-    })
-  },
+  // changeBg(e){
+  //   let curidx = e.detail.current
+  //   this.setData({
+  //     curBg:this.data.banner[curidx].image_url
+  //   })
+  // },
   // onPullDownRefresh() { //下拉刷新
   //   this.freshData()
   // },
