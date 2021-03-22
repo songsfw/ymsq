@@ -116,3 +116,15 @@ page{background: #f8f8f8;height: auto;}
 .item .price .num text{font-size: 18px;font-weight: 500;}
 .item .price .add{position: absolute;right: 0;top: 0; width:44px;height: 44px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
 
+/* 无内容 */
+.empty-search{}
+.empty-tip{
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+/* 底下注释等待 */
+.recommend-list{display: flex;flex-direction: row;}
+.recommend-list .item:nth-child(2n) {margin-right: 0;}
