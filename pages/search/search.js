@@ -11,21 +11,36 @@ let timer = null;
 // 购物车相关
 let lastTypeMealIdSpuId;
 let proNum;
+let testProNum = 0;
 let trueStock = {}; //真实购物车数量
 Page({
   customData: {
     scrollTop: 0,
   },
   data: {
+    inputHidden: false,
     currentKeyword: '',
     keywordTag: {},
     searchList: {},
-    recommendList:[
-      {'id':1,name:"商品1"},
-      {'id':2,name:"商品2"},
+    recommendList: [{
+        'id': 1,
+        name: "商品1"
+      },
+      {
+        'id': 2,
+        name: "商品2"
+      },
     ],
-    order_max_bread:100,
-    totalNum:0,
+    order_max_bread: 100,
+    totalNum: 0,
+    totalNumStyle: "",
+    skuNum: 1,
+    pop: 0, //角标初始是隐藏的
+    confirmCakeItemIdx: null, //蛋糕所在列表序号
+
+    //test
+    watchNumer: 0,
+    watchContainer: [],
   },
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
@@ -36,6 +51,7 @@ Page({
     this.setData({
       currentKeyword: '',
       searchList: {},
+      inputHidden: false,
     })
     this.flashTap();
   },
@@ -50,6 +66,13 @@ Page({
       })
       this.flashTap();
     }
+  },
+  toInput() {
+    console.log(1111)
+    this.setData({
+      inputHidden: false,
+
+    })
   },
   //搜索按钮事件
   search: function (e) {
@@ -86,6 +109,7 @@ Page({
     // //关闭搜索列表
     this.setData({
       currentKeyword: word,
+      inputHidden: true,
     })
 
     let cityId = JSON.parse(wx.getStorageSync("addressInfo")).city_id;
@@ -108,12 +132,36 @@ Page({
       //快速编辑重置解决 暂时等待确定是否解决
       // word = getWord
       // }
+
+      //重置小标样式
+      for (let tmpVal of searchList['list']) {
+        // console.log(tmpVal)
+        // return
+        let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
+        tmpVal['selectNumberLength'] = selectNumberLength;
+        let style = "";
+        switch (selectNumberLength) {
+          case 1:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+            break;
+          case 2:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+            break;
+          default:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+            break;
+        }
+        tmpVal['cornerTagStyle'] = style;
+        // console.log(selectNumberLength);
+      }
+
       console.log(searchList)
       // 设置搜索结果
       this.setData({
         currentKeyword: word,
         searchList: searchList,
-        order_max_bread:res['order_max_bread'] || 99,
+        order_max_bread: res['order_max_bread'] || 99,
+        inputHidden: true,
       })
     })
   },
@@ -131,14 +179,14 @@ Page({
 
   toProInfo: function (e) {
     let proId = e.currentTarget.dataset.proid
-    let spu = e.currentTarget.dataset.spu;
-    let url = "/pages/" + (proId == 0 ? 'cakeInfo/cakeInfo' : 'proInfo/proInfo') + "?proId=" + (proId == 0 ? spu : proId) + "";
-    console.log(url);
+    let spuId = e.currentTarget.dataset.spuid
+    let type = e.currentTarget.dataset.type
+    let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
     wx.navigateTo({
       url: url
     })
   },
-  addChartPreView(itemIdx, totalNum) {
+  addChartPreView(itemIdx) {
     let tempList = this.data.searchList['list'][itemIdx];
     let proStock = tempList.type == 1 ? this.data.searchList['stock'][tempList['meal_id']] : this.data.order_max_bread;
 
@@ -174,32 +222,23 @@ Page({
     // util.setTabBarBadge(totalNum)
     //此处报错。
     this.setData({
-      searchList:this.data.searchList
-      // ['searchList["list"]["' + itemIdx + '"]']: tempList,
+      searchList: this.data.searchList,
+      totalNum: this.data.totalNum,
+      totalNumStyle: this.getTotalNumStyle(this.data.totalNum),
     })
     return true;
   },
   addCart(e) {
-    console.log('start  addCart');
- 
-
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
-      // proInPage = e.currentTarget.dataset.idx, //当前商品所在页
       itemIdx = e.currentTarget.dataset.itemidx,
-      curType = e.currentTarget.dataset.type,
-      curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
+      curType = e.currentTarget.dataset.type;
     //如果是蛋糕触发函数
     if (curType == 2) {
       this.showPop(e);
       return
     }
-
-    let {
-      city_id,
-    } = this.data
-
 
     //如果切换商品，重置统一变量添加数量
     // console.log(lastTypeMealIdSpuId,'-',typeMealIdSpuId)
@@ -207,36 +246,20 @@ Page({
       proNum = 0;
     }
     lastTypeMealIdSpuId = typeMealIdSpuId;
-    console.log(proId, itemIdx,'typeMealIdSpuId',typeMealIdSpuId,'this.data.searchList',this.data.searchList);
+    // console.log(proId, itemIdx, 'typeMealIdSpuId', typeMealIdSpuId, 'this.data.searchList', this.data.searchList);
     //存储真实库存
     if (typeof (trueStock[typeMealIdSpuId]) == 'undefined') {
       trueStock[typeMealIdSpuId] = false;
     }
-    console.log(this.data.searchList['list'][itemIdx]);
 
     if (trueStock[typeMealIdSpuId] === false) {
-      trueStock[typeMealIdSpuId] = this.data.searchList['list'][itemIdx].selected || 0;
+      //确认第一次操作赋值已加入购物车数量
+      trueStock[typeMealIdSpuId] = parseInt(this.data.searchList['list'][itemIdx].selected) || 0; //30
     }
-    // console.log(trueStock,curType)
-    // for (let tIndex in this.data.searchList[itemIdx]) {
-    //   let tmpIDName = this.data.showList[currentTab][proInPage][tIndex].type + "_" + this.data.showList[currentTab][proInPage][tIndex].meal_id + "_" + this.data.showList[currentTab][proInPage][tIndex].spu_id;
-    //   if (trueStock[typeMealIdSpuId] === false && tmpIDName == typeMealIdSpuId) {
-    //     trueStock[typeMealIdSpuId] = this.data.showList[currentTab][proInPage][tIndex].selected || 0;
-    //   }
-    // }
-    //需要更新页码 序号  proInPage 0起
 
-    //容器中当前点击商品的 curIndexInShowlist
     //当前库存
     let curStock = this.data.searchList['stock'][proId] || this.data.order_max_bread;
-    console.log(curStock);
-    // if (curType == 1) {
-    //   curStock = this.data.showStock[currentTab][proId];
-    // } else {
-    //   curStock = this.data.showStock[currentTab][curSpuid] || this.data.order_max_bread;
-    // }
-
-    //验证变量数量是否超过 库存上限
+    //验证当前点击数量是否超过 库存上限 ，当前！
     if (proNum > curStock) {
       wx.showToast({
         icon: "none",
@@ -249,75 +272,276 @@ Page({
     }
 
     //前置样式处理 && 库存限制处理
-    let flag = this.addChartPreView(itemIdx, this.data.totalNum);
+    let flag = this.addChartPreView(itemIdx);
     if (!flag) {
       return false;
     }
 
+    //追加操作
     if (timer) {
       clearTimeout(timer);
     }
+
     timer = setTimeout(() => {
+      let refNum = proNum; //最终入库数量
+      proNum = 0;
+
       //多余库存处理
       let tempList = this.data.searchList['list'][itemIdx];
       let proStock = this.data.searchList['stock'][tempList['meal_id']] || this.data.order_max_bread;
       proStock = parseInt(proStock);
-      let data = {
-        city_id: city_id,
-        type: curType,
-        tab_id: proId,
-        number: proNum
-      }
 
-      let refNum = proNum;
       if (tempList.selected >= proStock) {
-        data.number = proStock - trueStock[typeMealIdSpuId];
-        refNum = data.number;
-        if (data.number <= 0) {
+        refNum = proStock - trueStock[typeMealIdSpuId];
+        trueStock[typeMealIdSpuId] = false; //进入程序后 整理传递数据 ，整理后清空状态
+        if (refNum <= 0) {
           return false;
         }
       }
-      // console.log(tempList.selected, proStock, trueStock[typeMealIdSpuId], refNum)
-      // return;
-      proNum = 0
-      api.setChart(data).then(res => {
-        if (res) {
-          wx.showToast({
-            title: '加入购物车成功',
-            icon: 'none',
-            duration: 2000
-          })
-          util.setTabBarBadge(this.data.totalNum)
-          wx.setStorageSync("total_num", this.data.totalNum)
-          //全局更新
-
-          this.refreshProList(proId, curSpuid, curType, (parseInt(refNum) + parseInt(trueStock[typeMealIdSpuId])));
-          // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
-          this.setData({
-            totalNum: this.data.totalNum,
-            // ['showList[' + currentTab + '][' + proInPage + ']']: pagelist['pagelist'],
-          })
-          trueStock[typeMealIdSpuId] = false;
-        } else {
-          console.log(res)
-          wx.showToast({
-            title: '该商品已达到最大购买量',
-            icon: 'none',
-            duration: 2000
-          })
-        }
+      trueStock[typeMealIdSpuId] = false;
+      wx.setStorageSync("total_num", this.data.totalNum)
+      //同步不考虑与前端数据一致
+      this.data.watchContainer.push({
+        addNum: refNum,
+        itemIdx: itemIdx,
+        curType: curType,
+        proId: proId,
+        typeMealIdSpuId: typeMealIdSpuId,
+        cityId: this.data.city_id,
+        selected: tempList.selected,
+        maxStock: proStock,
       })
+      this.data.watchNumer = this.data.watchNumer + refNum
+      console.log(refNum, this.data.watchContainer);
     }, 300)
-    return
+    return;
   },
-  onShow: function () {
+  showPop(e) {
+    let proId = e.currentTarget.dataset.id,
+      img = e.currentTarget.dataset.img,
+      typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
+      proInPage = e.currentTarget.dataset.idx, //当前商品所在页
+      itemIdx = e.currentTarget.dataset.itemidx,
+      curType = e.currentTarget.dataset.type,
+      curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
 
+    let product = this.data.searchList['list'][itemIdx];
+    console.log('this.data.searchList[list]', this.data.searchList['list'], 'itemIdx', itemIdx, product)
+    let cakeTempParams = {
+      proId: proId,
+      proInPage,
+      itemIdx,
+      curType,
+      curSpuid,
+      selected: product.selected
+    };
+
+
+    let data = {
+      spu_id: curSpuid
+    }
+    api.getCakeProInfo(data).then(res => {
+      wx.stopPullDownRefresh()
+      console.log(res)
+      let selectSku = Object.assign({}, res.sku_list[res.sku_id])
+      if (res) {
+        this.setData({
+          confirmCakeItemIdx: itemIdx,
+          proInfo: res,
+          selectSku: selectSku,
+          pop: 'cake-panel',
+          cakeTempParams: cakeTempParams,
+        })
+      }
+    })
+    // console.log(proId, product)
+    // console.log(111111)
+    // this.setData({
+    //   product: product,
+    //   pop: 'cake-panel'
+    // })
+  },
+  close() {
+    this.setData({
+      pop: 0
+    })
+  },
+  addFitting: util.debounce(function () {
+    let skuNum = this.data.skuNum
+    skuNum++
+    this.setData({
+      skuNum: skuNum
+    })
+  }),
+  //改变商品数量
+  minusFitting: util.debounce(function () {
+    let skuNum = this.data.skuNum
+    if (skuNum == 1) {
+      this.setData({
+        skuNum: 1
+      })
+      return
+    }
+    skuNum--
+    this.setData({
+      skuNum: skuNum
+    })
+  }),
+  confirmCake: util.debounce(function (e) {
+    let proId = e.currentTarget.dataset.sku;
+    let itemIdx = e.currentTarget.dataset.idx;
+    // console.log(itemIdx)
+    let {
+      city_id,
+      skuNum,
+      totalNum
+    } = this.data
+
+    let data = {
+      city_id: city_id,
+      type: '2',
+      tab_id: proId,
+      number: skuNum
+    }
+    totalNum = totalNum + skuNum;
+    this.data.totalNum = totalNum;
+    api.setChart(data).then(res => {
+      if (res) {
+        // util.setTabBarBadge(totalNum)
+        wx.setStorageSync('total_num', totalNum)
+        wx.showToast({
+          icon: "none",
+          title: '加入购物车成功'
+        })
+
+        let tempList = this.data.searchList['list'][itemIdx];
+        tempList.selected = parseInt(skuNum) + parseInt(tempList.selected);
+        let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
+        tempList['selectNumberLength'] = selectNumberLength;
+        let style = "";
+        switch (selectNumberLength) {
+          case 1:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+            break;
+          case 2:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+            break;
+          default:
+            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+            break;
+        }
+        tempList['cornerTagStyle'] = style;
+
+        // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
+        this.setData({
+          totalNum: this.data.totalNum,
+          searchList: this.data.searchList,
+          pop: 0,
+          totalNumStyle: this.getTotalNumStyle(this.data.totalNum),
+        })
+      }
+    })
+  }, 300, true),
+  getAddTapNumStyle(num) {
+    let selectNumberLength = num > 0 ? num.toString().length : 0;
+    // tempList['selectNumberLength'] = selectNumberLength;
+    let style = "";
+    switch (selectNumberLength) {
+      case 1:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+        break;
+      case 2:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+      default:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+    }
+    return style;
+  },
+  getTotalNumStyle(num) {
+    let selectNumberLength = num ? num.toString().length : 0;
+    let style = "";
+    switch (selectNumberLength) {
+      case 1:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+        break;
+      case 2:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+      default:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:40rpx;line-height:5px";
+        break;
+    }
+    return style;
+  },
+  toCartPage(e) {
+    let url = "/pages/cart/cart/cart";
+    console.log(url)
+    wx.navigateTo({
+      url: url
+    })
+  },
+  //同步库存
+  syncTocart(params) {
+    console.log('syncTocart:', params);
+    let data = {
+      city_id: params['cityId'],
+      type: params['curType'],
+      tab_id: params['proId'],
+      number: params['addNum'],
+    }
+
+    api.setChart(data).then(res => {
+      if (res) {
+        wx.showToast({
+          title: '加入购物车成功',
+          icon: 'none',
+          duration: 2000
+        })
+      } else {
+        console.log(res)
+        wx.showToast({
+          title: '该商品已达到最大购买量',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
+
+  //购物车返回处理
+  cartPageSyncList(params) {
+    if (this.data.searchList['list'].length > 0) {
+      for (let value of this.data.searchList['list']) {
+        if (value['type'] == params['type']) {
+          let tmpListProId = value['type'] == 2 ? value['spu_id'] : value['meal_id'];
+          if (tmpListProId == params['proId']) {
+            value['selected'] = params['selected'];
+            value['cornerTagStyle'] = this.getAddTapNumStyle(params['selected']);
+            this.setData({
+              searchList: this.data.searchList,
+              totalNum:wx.getStorageSync('total_num') || 0
+            })
+          }
+        }
+      }
+    }
+  },
+  onShow: function (e) {
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1]; //当前页面
+    var prevPage = pages[pages.length - 2]; //上一个页面
+
+    console.log(pages, currPage, prevPage)
+    console.log(e)
+    console.log('onshow')
     // this.setData({
     //   fixedTop: fixedTop
     // })
   },
-
   onLoad: function (option) {
+    console.log('onload')
     //请求记录接口
     this.flashTap();
     // this.toCart = this.selectComponent('#toCartId');
@@ -325,11 +549,31 @@ Page({
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     //默认不存在的城市 显示全国
     city_id = city_id == 0 ? '10216' : city_id;
+    let totalNumber = wx.getStorageSync('total_num') || 0;
     this.setData({
       city_id: city_id || '10216',
+      totalNum: totalNumber,
+      totalNumStyle: this.getTotalNumStyle(totalNumber) || '',
     })
+
+    util.setWatcher(this);
   },
-  toLocal(e){
+  watch: {
+    'watchNumer': function (value, oldValue) {
+      if (value == 0) {
+        return false;
+      }
+
+      if (this.data.watchNumer >= (Number.MAX_SAFE_INTEGER - 1000)) {
+        this.data.watchNumer = 0;
+      }
+
+      let info = this.data.watchContainer.shift();
+      console.log(value, oldValue, Number.MAX_SAFE_INTEGER, info)
+      this.syncTocart(info)
+    }
+  },
+  toLocal(e) {
     console.log("-------")
     wx.navigateTo({
       url: "/pages/localTest/localTest",
