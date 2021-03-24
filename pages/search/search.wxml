@@ -8,18 +8,18 @@
         </view>
 
         <view class="form" style="" bindtap='toInput'>
-          <view hidden="{{!inputHidden}}" style="display:{{!inputHidden?'none':'inline'}}">
-            <text class="">{{currentKeyword}}</text>
+          <view hidden="{{!inputHidden}}" style="display:{{!inputHidden?'none':'flex'}}">
+            <text class="form-txt">{{currentKeyword}}</text>
             <text bindtap='cancle' class="iconfont icon-close"></text>
           </view>
           
-          <input hidden="{{inputHidden}}" showinput="true" placeholder-style="color:#999999" placeholder="{{currentKeyword || '请输入搜索内容'}}"
-            value="{{currentKeyword}}" class='flex-1' auto-focus bindinput='getWords'
+          <input id="searchInput" hidden="{{inputHidden}}" bindfocus="" showinput="true" placeholder-style="color:#999999" placeholder="{{currentKeyword || '请输入搜索内容'}}"
+            value="{{currentKeyword}}" focus="{{focus}}" class='flex-1' auto-focus bindinput='getWords'
             confirm-type='搜索' bindconfirm="search"/>
         </view>
         <!-- <button bindtap="search">搜索</button> -->
         <view>
-          <image hidden="{{inputHidden}}" class="search-close" src='/image/search-close.png' bindtap='cancle'></image>
+          <image wx:if="{{currentKeyword}}"  hidden="{{inputHidden}}" class="search-close" src='/image/search-close.png' bindtap='cancle'></image>
         </view>
       </view>
     </view>

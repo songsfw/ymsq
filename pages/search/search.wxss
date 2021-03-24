@@ -78,26 +78,29 @@ page{background: #F9F9F9;height: 100%;}
 
 .topBar .search .form>view{
   display: flex;
-  position: relative;
-  padding:6rpx 40rpx 8rpx 16rpx;
+  width: max-content;
   background:#969696;
-  display: inline;
   border-radius: 40rpx;
+  height: 44rpx;
+  margin-top: 13rpx;
 }
 .topBar .search .form>view>text{
   font-size:14px;
   color:#FFFFFF;
 }
+.topBar .search .form .form-txt{
+  word-break: keep-all;
+  padding-left: 20rpx;
+  align-self: center;
+}
 .topBar .search .form>view>text.icon-close{
-  position: absolute;
-  top:-8px;
-  right: -10rpx;
-  font-size:8px;
-  margin-left:10rpx
+  width: 18rpx;
+  font-size: 8px;
+  padding: 0 18rpx 0 10rpx;
+  align-self: center;
 }
 .topBar .search input {
-  margin-top:16rpx;
-  margin-bottom: 14rpx;
+  height:100%;
   width:100%;
   font-size:14px;
   color:#222222;

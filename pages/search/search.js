@@ -41,6 +41,8 @@ Page({
     //test
     watchNumer: 0,
     watchContainer: [],
+
+    focus:true,
   },
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
@@ -69,9 +71,15 @@ Page({
   },
   toInput() {
     console.log(1111)
+    // let query = wx.createSelectorQuery()
+    // query.select('#searchInput').boundingClientRect(function (res) {
+    //   console.log('------drop3GetComponts---', res)
+
+    // }).exec()
+
     this.setData({
       inputHidden: false,
-
+      focus:true,
     })
   },
   //搜索按钮事件
@@ -92,6 +100,10 @@ Page({
     getWord = word;
     syncflag = true;
     this.toSearch(word)
+  },
+  clickClearHistory(e) {
+    this.flashTap(true)
+
   },
   //主体搜索
   toSearch(word) {
@@ -114,12 +126,16 @@ Page({
 
     let cityId = JSON.parse(wx.getStorageSync("addressInfo")).city_id;
     cityId = cityId == 0 ? '10216' : cityId;
-    // console.log(JSON.parse(wx.getStorageSync("addressInfo")))
-    //延迟请求 也可以关闭凭借点击
-    api.keywordSearch({
+    let data = {
       keyword: word,
       city_id: cityId || '10216'
-    }).then(res => {
+    }
+
+    // if(clearHis){
+    //   data['action'] = "delete";
+    // }
+    console.log(data)
+    api.keywordSearch(data).then(res => {
       if (!syncflag || lastWord != word) {
         console.log('syncflag:', syncflag, 'lastWord:', lastWord, 'word:', word)
         return false;
@@ -135,27 +151,10 @@ Page({
 
       //重置小标样式
       for (let tmpVal of searchList['list']) {
-        // console.log(tmpVal)
-        // return
         let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
         tmpVal['selectNumberLength'] = selectNumberLength;
-        let style = "";
-        switch (selectNumberLength) {
-          case 1:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-            break;
-          case 2:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-            break;
-          default:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-            break;
-        }
-        tmpVal['cornerTagStyle'] = style;
-        // console.log(selectNumberLength);
+        tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
       }
-
-      console.log(searchList)
       // 设置搜索结果
       this.setData({
         currentKeyword: word,
@@ -166,8 +165,12 @@ Page({
     })
   },
   //更新标签
-  flashTap() {
-    api.keywordList().then(res => {
+  flashTap(clearHis) {
+    let data = {};
+    if (clearHis) {
+      data['action'] = 'delete';
+    }
+    api.keywordList(data).then(res => {
       if (res) {
         console.log('this.flashTap();')
         this.setData({
@@ -205,19 +208,7 @@ Page({
     }
     tempList.selected = parseInt(tempList.selected) + 1;
     let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
-    let style = "";
-    switch (selectNumberLength) {
-      case 1:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-        break;
-      case 2:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-        break;
-      default:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-        break;
-    }
-    tempList['cornerTagStyle'] = style;
+    tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected);;
     tempList['selectNumberLength'] = selectNumberLength;
     // util.setTabBarBadge(totalNum)
     //此处报错。
@@ -418,19 +409,7 @@ Page({
         tempList.selected = parseInt(skuNum) + parseInt(tempList.selected);
         let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
         tempList['selectNumberLength'] = selectNumberLength;
-        let style = "";
-        switch (selectNumberLength) {
-          case 1:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-            break;
-          case 2:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-            break;
-          default:
-            style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-            break;
-        }
-        tempList['cornerTagStyle'] = style;
+        tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected);
 
         // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
         this.setData({
@@ -512,7 +491,12 @@ Page({
 
   //购物车返回处理
   cartPageSyncList(params) {
-    if (this.data.searchList['list'].length > 0) {
+    if(!params['type'] || !params['proId']||!params['selected']){
+      return
+    }
+    console.log(params)
+    console.log(this.data.searchList);
+    if (this.data.searchList['list'] && this.data.searchList['list'].length > 0) {
       for (let value of this.data.searchList['list']) {
         if (value['type'] == params['type']) {
           let tmpListProId = value['type'] == 2 ? value['spu_id'] : value['meal_id'];
@@ -521,7 +505,7 @@ Page({
             value['cornerTagStyle'] = this.getAddTapNumStyle(params['selected']);
             this.setData({
               searchList: this.data.searchList,
-              totalNum:wx.getStorageSync('total_num') || 0
+              totalNum: wx.getStorageSync('total_num') || 0
             })
           }
         }
@@ -529,16 +513,7 @@ Page({
     }
   },
   onShow: function (e) {
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1]; //当前页面
-    var prevPage = pages[pages.length - 2]; //上一个页面
-
-    console.log(pages, currPage, prevPage)
-    console.log(e)
-    console.log('onshow')
-    // this.setData({
-    //   fixedTop: fixedTop
-    // })
+    this.data.watchNumer = 0;
   },
   onLoad: function (option) {
     console.log('onload')
