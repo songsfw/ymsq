@@ -379,6 +379,16 @@ const submitOrder = (params) => {
   return POST(baseUrl + "/order/submitOrder", params)
 }
 
+const keywordList = (params) => {
+  //热词与历史列表
+  return POST(baseUrl + "/product/search-keyword", params).then(res => returnData(res));
+}
+
+const keywordSearch = (params) => {
+  //关键字搜索
+  return POST(baseUrl + "/product/search-list", params).then(res => returnData(res));
+}
+
 module.exports = {
   getIndexInfo:getIndexInfo,
   getUserLocation:getUserLocation,
@@ -441,5 +451,7 @@ module.exports = {
   feedBack,
   storeCoupon,
   deliveryInfo,
-  getIntroduction
+  getIntroduction,
+  keywordSearch,
+  keywordList
 }
