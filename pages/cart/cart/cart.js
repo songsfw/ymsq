@@ -83,7 +83,7 @@ Page({
     })
   },
   delPro(e) {
-    let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id,skuid = e.currentTarget.dataset.skuid,type = e.currentTarget.dataset.type
     let data = {
       cart_id: id
     }
@@ -99,6 +99,14 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
+              var pages = getCurrentPages();
+              if(pages.length > 1){
+                //上一个页面实例对象
+                var prePage = pages[pages.length - 2];
+                
+                prePage.cartPageSyncList && prePage.cartPageSyncList({type:type,proId:skuid,selected:0})
+              }
+      
               this.setData({
                 breadLi: res.bread.detail,
                 cakeLi: res.cake.detail,
@@ -404,16 +412,19 @@ Page({
           //上一个页面实例对象
           var prePage = pages[pages.length - 2];
           if(CurType==1){
-            var curNum = bread.detail.find(item=>{
+            var curItem = bread.detail.find(item=>{
               return item.sku_id == skuid
-            }).sku_number
+            })
+            
+            var curNum = curItem && curItem.sku_number || 0
           }
           if(CurType==2){
-            var curNum = cake.detail.find(item=>{
+            var curItem = cake.detail.find(item=>{
               return item.sku_id == skuid
-            }).sku_number
+            })
+            var curNum = curItem && curItem.sku_number || 0
           }
-          prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
+          prePage.cartPageSyncList && prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
         }
 
         this.setData({

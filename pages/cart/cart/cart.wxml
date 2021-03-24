@@ -44,7 +44,7 @@
             </view>
           </view>
           <view class="pro-option flex">
-            <view class="chartdel" data-type="1" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
+            <view class="chartdel" data-skuid="{{item.sku_id}}" data-type="1" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
           </view>
         </view>
       </movable-view>
@@ -94,7 +94,7 @@
             </view>
           </view>
           <view class="pro-option flex">
-            <view class="del chartdel" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
+            <view class="del chartdel" data-skuid="{{item.sku_id}}" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
           </view>
         </view>
       </movable-view>
