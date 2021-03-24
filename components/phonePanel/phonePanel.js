@@ -18,15 +18,61 @@ Component({
     popShow:{
       type: Boolean,
       value: false
-    },
+    }
   },
   data: {
-    tips:"获取验证码"
+    tips:"获取验证码",
+    step:1
   },
-  attached: function() {
-    
+  lifetimes: {
+    attached: function() {
+      // this.setData({
+      //   step:1
+      // })
+    }
   },
   methods: {
+    onGotUserPhone: function (e) {
+      console.log(e);
+      let detail = e.detail
+      let userInfo = wx.getStorageSync("userInfo")
+        console.log(userInfo);
+      userInfo = userInfo && JSON.parse(userInfo)
+      if(detail.errMsg=="getPhoneNumber:ok"){
+        let data = {
+          encryptedData:detail.encryptedData,
+          iv:detail.iv
+        }
+        api.wxPhone(data).then(res=>{
+          console.log(res);
+          if(!res){
+            wx.showToast({
+              icon:"none",
+              title:"绑定失败"
+            })
+            return
+          }
+          let mobile = res.mobile
+          userInfo.phone=mobile
+          userInfo.is_mobile=1
+          this.setData({
+            popShow:false
+          })
+          wx.setStorageSync("userInfo", JSON.stringify(userInfo))
+          this.triggerEvent('phoneSucess')
+        })
+      }else{
+        wx.showToast({
+          icon:"none",
+          title:"绑定失败"
+        })
+      }
+    },
+    bindUserPhone(){
+      this.setData({
+        step:2
+      })
+    },
     inputMobi:util.debounce(function(e){
       this.setData({
         mobile:e.detail.value
@@ -145,12 +191,16 @@ Component({
             icon: 'none',
             duration: 2000
           })
+          this.setData({
+            focus:true
+          })
         }
       })
     },
     close() {
       this.triggerEvent('close')
       this.setData({
+        step:1,
         popShow:false
       })
     },

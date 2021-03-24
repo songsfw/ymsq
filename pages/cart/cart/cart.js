@@ -334,7 +334,7 @@ Page({
     api.setChart(data).then(res => {
       console.log(res);
       if (res) {
-        this.getChartData()
+        this.getChartData(data.tab_id,data.type)
       }
     })
   },
@@ -373,7 +373,7 @@ Page({
       noallCake
     }
   },
-  getChartData() {
+  getChartData(skuid,CurType) {
     //let proType = app.globalData.proType
     let data = {
       city_id: this.data.city_id
@@ -398,6 +398,24 @@ Page({
         //util.setTabBarBadge(res.total_num)
         wx.setStorageSync('total_num', res.total_number)
         let selectType = this.getSelectType(bread,cake)
+
+        var pages = getCurrentPages();
+        if(pages.length > 1){
+          //上一个页面实例对象
+          var prePage = pages[pages.length - 2];
+          if(CurType==1){
+            var curNum = bread.detail.find(item=>{
+              return item.sku_id == skuid
+            }).sku_number
+          }
+          if(CurType==2){
+            var curNum = cake.detail.find(item=>{
+              return item.sku_id == skuid
+            }).sku_number
+          }
+          prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
+        }
+
         this.setData({
           type:selectType.type,
           noallBread: selectType.noallBread,

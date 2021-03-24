@@ -67,6 +67,7 @@
       <view class="h3 flex">
         <view class="tit">{{proInfo.name}}</view>
         <view class="price"><text>￥</text>{{selectSku.price}}</view>
+        <view class="tip">{{selectSku.spec}}</view>
       </view>
     </view>
     <view class="h4"><text>蛋糕尺寸</text><text class="tip">{{selectSku.ahead}}</text></view>

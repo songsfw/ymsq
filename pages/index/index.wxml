@@ -4,14 +4,14 @@
 <!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
 </view> -->
-<navigator wx:if="{{!fixedNav}}" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title}}" placeholder-style="color:#999" type="text" disabled="{{true}}"/></navigator>
+<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title}}" placeholder-style="color:#999" type="text" disabled="{{true}}"/></navigator>
 <!-- 开始 -->
-<view class="wrap" style="margin-top:-{{fixedTop}}px">
+<view class="wrap" style="margin-top:-{{fixedTop}}px;background:{{globalStyle.background_color || '#F4F9F5'}}">
   <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
     <!-- 组件部分 -->
     <block wx:for="{{components}}" wx:for-index="cidx">
       <!-- 轮播图 -->
-      <view class="banner" wx:if="{{item.block_type == 4}}">
+      <view class="banner" wx:if="{{item.block_type == 4}}" style="width:{{item.componentDetail.width!='' ? item.componentDetail.width : '750'}}rpx;height:{{item.componentDetail.height!='' ? item.componentDetail.height : '704'}}rpx">
         <swiper class="swiper" interval="{{interval}}" autoplay="{{true}}" duration="{{duration}}" circular="{{circular}}" indicator-dots>
           <block wx:for="{{banner}}" wx:for-index="index">
             <swiper-item>
@@ -49,10 +49,10 @@
         <view class="show-btn">查看</view>
       </view>
       <!-- 分类推荐 -->
-      <view class='main-content'>
-        <view class='pro-block block3' wx:if="{{item.block_type == 2}}">
+      <view class='main-content' style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius}}rpx {{item.componentDetail.box_style.border_top_radius}}rpx {{item.componentDetail.box_style.border_bottom_radius}}rpx {{item.componentDetail.box_style.border_bottom_radius}}rpx;margin:{{item.componentDetail.box_style.margin_top}}rpx {{item.componentDetail.box_style.margin_right}}rpx {{item.componentDetail.box_style.margin_bottom}}rpx {{item.componentDetail.box_style.margin_left}}rpx" wx:if="{{item.block_type == 2}}">
+        <view class='pro-block block3' >
           <view class="title flex">
-            <block  wx:if="{{item.componentDetail.box_style.background_image != ''}}">
+            <block wx:if="{{item.componentDetail.box_style.background_image != ''}}">
               <view style="height:84rpx"><image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image></view>
             </block>
             <block wx:elif="{{item}}">
@@ -65,24 +65,24 @@
           </view>
 
           <view class="pro-list">
-            <block wx:for="{{item.componentDetail.imageReader}}">
-              <view hover-class="none" bind:tap="toPro" data-url="{{item.url}}" data-type="{{item.url_type}}">
-                <view class="pic">
-                  <image src="{{item.image_url}}"></image>
+            <block wx:for="{{item.componentDetail.imageReader}}" wx:for-item="pro">
+              <view hover-class="none" bind:tap="toPro" data-url="{{pro.url}}" data-type="{{pro.url_type}}">
+                <view class="pic" style="height:{{pro.image_height!='' ? pro.image_height : '440'}}rpx; border-radius:{{pro.image_top_radius}}rpx {{pro.image_top_radius}}rpx {{pro.image_bottom_radius}}rpx {{pro.image_bottom_radius}}rpx">
+                  <image src="{{pro.image_url}}" mode="aspectFill"></image>
                 </view>
-                <view class="txt">
+                <view class="txt" style="background-color:{{item.componentDetail.box_style.inner_background_color}}">
                   <view class="name flex-center">
-                    <view class="h4">{{item.title}}</view>
-                    <view class="price">￥<text>{{item.price}}</text> </view>
+                    <view class="h4">{{pro.title}}</view>
+                    <view class="price">￥<text>{{pro.price}}</text> </view>
                   </view>
-                  <view class="desc">{{item.desc}}</view>
+                  <view class="desc">{{pro.desc}}</view>
                 </view>
               </view>
             </block>
           </view>
         </view>
       </view>
-      <view class="iwx" wx:if="{{cidx==2}}"><image src="../../image/iwx.jpg"></image></view>
+      <navigator url="../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="iwx" wx:if="{{cidx==2}}"><image src="../../image/iwx.jpg"></image></navigator>
     </block>
 
     <view class="logo">

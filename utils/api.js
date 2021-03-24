@@ -373,6 +373,11 @@ const getIntroduction = () => {
   return POST(baseUrl + "/base/instructions").then(res => returnData(res))
 }
 
+//绑定微信手机
+const wxPhone = (data) => {
+  return POST(baseUrl + "/user/wx-bind-mobile",data).then(res => returnData(res))
+}
+
 const submitOrder = (params) => {
   console.log(JSON.stringify(params))
   //如果需要自定义不同code对应的msg,可以不用在这调用then，去具体的方法中处理不同的code
@@ -451,6 +456,7 @@ module.exports = {
   feedBack,
   storeCoupon,
   deliveryInfo,
+  wxPhone,
   getIntroduction,
   keywordSearch,
   keywordList

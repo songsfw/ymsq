@@ -22,6 +22,10 @@ Page({
       pop: 0
     })
   },
+  onGotUserPhone: function (e) {
+    console.log(e.detail);
+    
+  },
   //授权用户信息
   onGotUserInfo: function (e) {
     var detailInfo = e.detail

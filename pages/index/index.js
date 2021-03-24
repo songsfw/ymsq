@@ -116,11 +116,12 @@ Page({
       if(res){
         let {notice,operate} = res
         let components = operate[0].components
+        let globalStyle = operate[0].box_style
         let banner = components[0].componentDetail.imageReader,
-            menu = components[1].componentDetail.imageReader,
-            block1 = components[2] && components[2].componentDetail,
-            block2 = components[3] && components[3].componentDetail,
-            block3 = components[4] && components[4].componentDetail
+            menu = components[1].componentDetail.imageReader
+            // block1 = components[2] && components[2].componentDetail,
+            // block2 = components[3] && components[3].componentDetail,
+            // block3 = components[4] && components[4].componentDetail
 
         wx.setStorageSync("total_num",res.cart.total_number)
         util.setTabBarBadge(res.cart.total_number)
@@ -141,13 +142,14 @@ Page({
         // }
         
         this.setData({
+          globalStyle,
           components,
           notice:notice,
           banner,
           menu,
-          block1:block1 || null,
-          block2:block2 || null,
-          block3:block3 || null,
+          // block1:block1 || null,
+          // block2:block2 || null,
+          // block3:block3 || null,
           curBg:banner[0].image_url
         })
       }

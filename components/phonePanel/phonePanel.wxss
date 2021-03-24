@@ -59,3 +59,10 @@
 
 .verify{text-align: center;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
+.wx-phone{text-align: center;}
+.wx-phone .logo3{width: 456rpx;height: 102rpx;margin: 40rpx auto;}
+.wx-phone .txt{text-align: center;color:#999;font-size: 11px;}
+.wx-phone .btn{background-color: #64C000;border-radius: 4rpx;height: 90rpx;line-height: 90rpx;color: #fff;text-align: center;margin: 90rpx auto 20rpx auto;}
+.wx-phone .icon-wx{margin-right: 20rpx;}
+.phone-login{text-align: center;color: #999;font-size: 11px;}
+.get-code{margin-top: 0 !important;}

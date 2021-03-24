@@ -477,4 +477,4 @@
   </view>
 </pop-panel>
 <view style="height:{{50+btmHolder}}px"></view>
-<phonePanel popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
+<phonePanel class="phonePanel" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

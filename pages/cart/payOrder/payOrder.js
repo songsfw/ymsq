@@ -841,6 +841,7 @@ Page({
       }
       if(res==app.globalData.bindPhoneStat){
         this.setData({
+          phoneStat:1,
           showPhonePanel:true
         })
         return

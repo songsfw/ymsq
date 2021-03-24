@@ -18,6 +18,9 @@
       <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
         获取授权
       </button>
+      <!-- <button class='authorizeBtn' open-type="getPhoneNumber" bindgetphonenumber="onGotUserPhone" wx:if="{{show}}">
+        获取手机号
+      </button> -->
     </view>
   </view>
 </view>
