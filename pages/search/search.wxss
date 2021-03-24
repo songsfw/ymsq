@@ -2,54 +2,115 @@
 /*--public style--*/
 @import "../../template/loading/loading.wxss";
 view{font-size:12px}
-page{background: #f8f8f8;height: auto;}
+page{background: #F9F9F9;height: 100%;}
+.main{background-color: #fff;min-height: 100%;}
+.main.main-show-search{}
 .topBar {
   width: 100%;
-  color: #fff;
   z-index: 100;
-  padding: 20rpx 30rpx;
   height: 96rpx;
   box-sizing: border-box;
   transition: all .2s linear;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
+  padding:0rpx 24rpx 0 24rpx;
 }
 
 .topBar .search {
   color: #999;
-  height: 60rpx;
+  width:622rpx;
+  height: 68rpx;
   line-height: 60rpx;
   overflow: hidden;
-  background: #F5F5F5;
-  padding: 0 10rpx;
-  border-radius: 30rpx;
+  background: #F6F6F6;
+  border-radius: 4rpx;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #E6E6EA
+  /* border: 1px solid #E6E6EA */
 }
 
-.topBar .search input:placeholder {
-  color: #CBCBCB
-}
 
 .topBar .search view {
-  align-items: center
+  /* align-items: center */
 }
 
-.topBar .cancle-btn {
+.topBar .cart {
   width: 50px;
   text-align: center;
   margin-right: -16rpx;
   font-size: 24rpx;
-  color: #333
+  color: #333;
+  position: relative;
+  height:68rpx;
+}
+.topBar .cart .card-num{
+  background:#F5222D;
+  font-size:8px;
+  /* width:28rpx; */
+  /* height:28rpx; */
+  color:#FFFFFF;
+  position: absolute;
 }
 
-.topBar .search image {
-  width: 25rpx;
-  height: 25rpx;
-  vertical-align: middle
+.cart image{
+  width:53rpx;
+  height:50rpx;
+  margin-top:10rpx;
+}
+.topBar .search .search-container{
+  width:622rpx;
+  flex-direction: row;
 }
 
+.topBar .search image.search-tip {
+  width: 28rpx;
+  height: 28rpx;
+  vertical-align: middle;
+  padding:20rpx;
+}
+
+
+.topBar .search .form{
+  width:100%;
+  height:68rpx;
+ 
+}
+
+.topBar .search .form>view{
+  display: flex;
+  position: relative;
+  padding:6rpx 40rpx 8rpx 16rpx;
+  background:#969696;
+  display: inline;
+  border-radius: 40rpx;
+}
+.topBar .search .form>view>text{
+  font-size:14px;
+  color:#FFFFFF;
+}
+.topBar .search .form>view>text.icon-close{
+  position: absolute;
+  top:-8px;
+  right: -10rpx;
+  font-size:8px;
+  margin-left:10rpx
+}
+.topBar .search input {
+  margin-top:16rpx;
+  margin-bottom: 14rpx;
+  width:100%;
+  font-size:14px;
+  color:#222222;
+  font-weight: normal;
+}
+.topBar .search image.search-close{
+  width: 36rpx;
+  height: 36rpx;
+  vertical-align: middle;
+  margin-right:20rpx;
+  margin-top:18rpx;
+  margin-bottom: 14rpx;
+}
 .topBar.changebg {
   background: #fff;
   color: #999
@@ -63,28 +124,83 @@ page{background: #f8f8f8;height: auto;}
   background: #E5E5E5
 }
 
+.list-show{
+  padding:50rpx 24rpx 0 24rpx;
+  /* position: absolute; */
+  background:#fff;
+  /* min-height: 100%; */
+}
 
-.main {position: relative;z-index: 12; padding:0 24rpx 0 24rpx;background-color: #F6F6F6;}
+.list-show-search{
+  background: #F9F9F9;
+  position: absolute;
+  left:0;
+  right:0;
+  min-height:100%;
+}
 
 .mainSchTagGroup {
   align-self: stretch;
-  margin-bottom: 10px;
-  background: rgba(219, 219, 90, 0.452);
+  margin-bottom: 50rpx;
+  /* background: rgba(219, 219, 90, 0.452); */
 }
 
+.mainSchTag{
+  display:flex;flex-direction: column;
+}
+
+.mainSchTag .history{
+  font-size:14px;
+  color:#222222;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.history-del{
+  display: flex;
+  margin-top:4rpx;
+}
+
+.history-del image{
+  width:26rpx;
+  height:26rpx;
+  margin-right:10rpx;
+}
+.history-del text{
+  font-size:12px;
+  color:#AAAAAA;
+  font-weight: normal;
+}
 .groupTag {
   /* 父级实用 */
   /* justify-content:space-between; */
   flex-wrap: wrap;
-  padding: 5px;
+
 }
 .groupTag .groupTagItem{
-  padding:5px;
-  background:yellowgreen;
+  color:#333333;
+  padding:14rpx 20rpx 10rpx;
+  background:#F6F6F6;
   border-radius: 3px;
-  margin:2px 2px;
-}
+  margin-right:20rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: center;
 
+}
+.groupTag .groupTagItem image{
+  width:40rpx;
+  height:40rpx;
+  margin-right:8rpx;
+}
+.groupTag .groupTagItem text{
+  white-space:nowrap; 
+  font-size:13px;
+  line-height: 26px;
+}
 /* 所搜列表 */
 .sch-list {
   flex-wrap: wrap;
@@ -95,7 +211,7 @@ page{background: #f8f8f8;height: auto;}
   background: rgb(184, 235, 160);
   width: 342rpx;
   margin: 0 18rpx 18rpx 0;
-  border-radius: 16rpx;
+  border-radius: 0rpx;
   overflow: hidden;
 }
 
@@ -103,18 +219,49 @@ page{background: #f8f8f8;height: auto;}
   margin-right: 0;
 }
 
+.item{box-sizing: border-box;background: #fff;width: 342rpx;margin: 0 18rpx 18rpx 0;border-radius: 0rpx ;overflow: hidden;}
+.listItemwp .item:nth-child(2n){margin-right: 0;}
 .item .info{padding-top: 20rpx;}
 .item .pic{position: relative; width: 342rpx;height: 342rpx;overflow: hidden;background: #fff;}
 .item .pic.sold-out image{opacity: .9;}
 .item .pic .tag{display: none;}
 .item .pic.sold-out .tag{display: block; position: absolute;left: 50%;top: 50%; font-size: 14px;color: #fff;width: 124rpx; line-height: 124rpx;height: 124rpx;text-align: center;border-radius: 50%;transform: translate(-50%,-50%);z-index: 2;background-color: rgba(0, 0, 0, 0.4);}
+
 .item .tit{font-size: 14px;color: #222;margin-bottom: 8px;padding: 0 20rpx;font-weight: 500;}
 .item .tags{padding: 0 20rpx;box-sizing: border-box;}
-.item .tags text{background: #F6F6F6;color: #999;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin-right: 5px;}
+.item .tags text{background: #F9F9F9;color: #999;height: 18px;line-height: 18px; padding: 0 8px;border-radius:9px;margin-right: 5px;}
 .item .price{position: relative; justify-content: space-between;padding: 0 20rpx;height: 44px; align-items: center;}
-.item .price .num{font-size: 13px;color: #FA603D;}
-.item .price .num text{font-size: 18px;font-weight: 500;}
-.item .price .add{position: absolute;right: 0;top: 0; width:44px;height: 44px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.item .price .num{font-size: 11px;color: #222222;}
+.item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
+.item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.cart-motion-t{padding:4rpx;color:white;font-size:8px;line-height:14rpx;position:absolute;right: 0;top: 4px;height: 10rpx;z-index: 2;background: #f5222d;opacity: 1;border-radius: 20%;}
+
+/* 弹窗 */
+.mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
+.pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius: 0 ;}
+.pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
+.pop-panel .close:after,
+.pop-panel .close::before{border-color: #999;}
+.pop-con{padding: 40rpx 40rpx 20rpx 40rpx;}
+.confirm-btn{margin-top: 100rpx;}
+.score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
+.score-panel .h3{justify-content:space-between; flex-direction: column;}
+.score-panel .tit{font-size: 16px;font-weight: bold;margin-top: 16rpx;}
+.score-panel .price{font-size: 14px;color: #FA603D;}
+
+.score-panel .h4{margin-top: 60rpx;justify-content: space-between;align-items: center;margin-bottom: 40rpx;}
+.score-panel .h4>text{font-size: 14px;color: #333;font-weight: bold;}
+.score-panel .h4 .tip{color: #4171FF;font-size: 13px;margin-left: 20rpx;}
+.score-panel .h4 .default-tip.tip{color: #999;}
+.sku-list{flex-wrap: wrap;margin-bottom: -30rpx;}
+.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F9F9F9;color: #333;border: 1rpx solid #F9F9F9;font-size: 13px;}
+.sku-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);font-weight: bold;}
+.default-fitts{margin-top: 40rpx; justify-content:flex-start;flex-wrap: wrap; color: #333;font-size: 13px;}
+.set-chart text,
+.set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}
+.set-chart .count{color: #333;border-left: 0;border-right: 0;}
+.default-fitts image{margin-right:10rpx ; width:32rpx;height: 32rpx;vertical-align: bottom;}
+.default-fitts>view{margin-bottom: 20rpx;margin-right: 40rpx;}
 
 /* 无内容 */
 .empty-search{}
