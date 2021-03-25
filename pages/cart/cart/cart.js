@@ -408,7 +408,7 @@ Page({
         let selectType = this.getSelectType(bread,cake)
 
         var pages = getCurrentPages();
-        if(pages.length > 1){
+        if(pages.length > 1 && skuid){
           //上一个页面实例对象
           var prePage = pages[pages.length - 2];
           if(CurType==1){

@@ -1,7 +1,7 @@
 <!-- login.wxml -->
 <navBar hasHome title="授权登录"></navBar>
 <view class="auth-wp" style="padding-top:{{fixedTop}}px;">
-  <view class='auth-content'>
+  <view class='auth-content flex'>
     <view class='pic'>
       <image src="/image/logo2.png" class="pic1"></image>
       <image src="/image/20210207.png" class="pic2"></image>
@@ -11,16 +11,14 @@
           <image animation="{{num==index?showpic:hidepic}}" src="{{item}}" mode="aspectFit" class="slide-image" />
         </block>
     </view>
-    <view class="txt">
-      <view>为了您更便捷购物，请先微信授权</view>
-    </view>
+    
     <view class='getWXAuth'>
+      <view class="txt">
+        <view>为了您更便捷购物，请先微信授权</view>
+      </view>
       <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
         获取授权
       </button>
-      <!-- <button class='authorizeBtn' open-type="getPhoneNumber" bindgetphonenumber="onGotUserPhone" wx:if="{{show}}">
-        获取手机号
-      </button> -->
     </view>
   </view>
 </view>

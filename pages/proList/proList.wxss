@@ -93,6 +93,7 @@ page{background: #F9F9F9;height: auto;}
 }
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius: 0 ;}
+.btm-panel{border-radius: 16rpx 16rpx 0 0;}
 .pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
 .pop-panel .close:after,
 .pop-panel .close::before{border-color: #999;}
@@ -101,15 +102,17 @@ page{background: #F9F9F9;height: auto;}
 .score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
 .score-panel .h3{justify-content:space-between; flex-direction: column;}
 .score-panel .tit{font-size: 16px;font-weight: bold;margin-top: 16rpx;}
-.score-panel .price{font-size: 14px;color: #FA603D;}
+.score-panel .price{font-size: 18px;color:#C1996B;}
+.score-panel .price text{font-size: 13px;}
+.score-panel .h3 .tip{color: #aaa;font-size: 12px;font-weight: normal;}
 
 .score-panel .h4{margin-top: 60rpx;justify-content: space-between;align-items: center;margin-bottom: 40rpx;}
 .score-panel .h4>text{font-size: 14px;color: #333;font-weight: bold;}
-.score-panel .h4 .tip{color: #4171FF;font-size: 13px;margin-left: 20rpx;}
+.score-panel .h4 .tip{color: #aaa;font-size: 12px;margin-left: 20rpx;font-weight: normal;}
 .score-panel .h4 .default-tip.tip{color: #999;}
 .sku-list{flex-wrap: wrap;margin-bottom: -30rpx;}
-.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F9F9F9;color: #333;border: 1rpx solid #F9F9F9;font-size: 13px;}
-.sku-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);font-weight: bold;}
+.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;font-size: 13px;}
+.sku-list view.on{color: #fff;background: #C1996B;}
 .default-fitts{margin-top: 40rpx; justify-content:flex-start;flex-wrap: wrap; color: #333;font-size: 13px;}
 .set-chart text,
 .set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}

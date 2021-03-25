@@ -3,7 +3,7 @@
 <view class="bg">
   <image src="http://api-beta.withwheat.com/img/mai-bg.png"></image>
 </view>
-<view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
+<view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
   <scroll-view scroll-y="true" class="contain">
     <view class="info">
       <view class="tit">我的麦点</view>
