@@ -16,7 +16,7 @@
           </view>
           
           <input id="searchInput" hidden="{{inputHidden}}" bindfocus="" showinput="true" placeholder-style="color:#999999" placeholder="{{currentKeyword || '请输入搜索内容'}}"
-            value="{{currentKeyword}}" focus="{{focus}}" class='flex-1' auto-focus bindinput='getWords'
+            value="{{currentKeyword}}" maxlength="40" focus="{{focus}}" class='flex-1' auto-focus bindinput='getWords'
             confirm-type='search' bindconfirm="search"/>
         </view>
         <!-- <button bindtap="search">搜索</button> -->
