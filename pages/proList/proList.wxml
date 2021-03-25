@@ -19,7 +19,7 @@
     </view>
   <!-- <view wx:else style="padding-top:24rpx;"></view> -->
 </view>
-<view class="sub-wrap" style="height:{{currentTab!=2?'42':'72'}}px" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
+<view class="sub-wrap" style="height:{{currentTab!=2?'42':'73'}}px" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
   <scroll-view class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}" style="top:{{fixedTop}}px">
     <view class="flex">
       <block wx:if="{{currentTab == 1}}">
@@ -80,7 +80,8 @@
               <view class="info">
                 <view class="tit text-overflow">{{pro.name}}</view>
                 <view class="tags text-overflow">
-                  <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text>
+                  <!-- <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text> -->
+                  <text>{{pro.selling_point}}</text>
                 </view>
                 <view class="price flex">
                   <view class="num">￥<text>{{pro.price}}</text></view>
@@ -171,7 +172,7 @@
         <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
       </view>
     </view>
-    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" data->确定</view>
+    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" >确定</view>
   </view>
 
 </view>

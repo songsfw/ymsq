@@ -50,6 +50,10 @@ Page({
     allCakeCateImg:"",
     //文章默认页
     articleDefaultPage:1,
+
+    //
+    watchNumer: 0,
+    watchContainer: [],
   },
   switchTab: util.debounce(function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -63,13 +67,7 @@ Page({
       })
     }
    
-    console.log('switchTab')
-    // console.log(this.data.showStock)
-    // if (!canCheck) {
-    //   return false;
-    // }
-
-    
+    // console.log('switchTab')
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
       console.log('switchTab-2')
@@ -102,8 +100,7 @@ Page({
     if (this.data.cateChosed[currentTab] == cateId) {
       return false;
     }
-    // console.log(cateId, currentTab)
-    // console.log(this.data.cateChosed)
+
     //初始化
     this.setData({
       // currentTag: currentTag,
@@ -131,7 +128,7 @@ Page({
     // }
 
     let pagelist = this.getCachePage(1, currentTab, cateId)
-    console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+    // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
     this.setData({
       currentCategory: cateId,
       showLoading: false,
@@ -161,19 +158,7 @@ Page({
     }
     tempList.selected = parseInt(tempList.selected) + 1;
     let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
-    let style = "";
-    switch (selectNumberLength) {
-      case 1:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-        break;
-      case 2:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-        break;
-      default:
-        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-        break;
-    }
-    tempList['cornerTagStyle'] = style;
+    tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected); 
     tempList['selectNumberLength'] = selectNumberLength;
     util.setTabBarBadge(totalNum)
     this.setData({
@@ -219,9 +204,7 @@ Page({
         trueStock[typeMealIdSpuId] = this.data.showList[currentTab][proInPage][tIndex].selected || 0;
       }
     }
-    //需要更新页码 序号  proInPage 0起
 
-    //容器中当前点击商品的 curIndexInShowlist
     //当前库存
     let curStock;
     if (curType == 1) {
@@ -252,56 +235,64 @@ Page({
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
+      let refNum = proNum;
+      proNum = 0;
+
       //多余库存处理
       let tempList = this.data.showList[currentTab][proInPage][itemIdx];
       let proStock = tempList.type == 1 ? this.data.showStock[currentTab][tempList['meal_id']] : this.data.order_max_bread;
       proStock = parseInt(proStock);
-      let data = {
-        city_id: city_id,
-        type: curType,
-        tab_id: proId,
-        number: proNum
-      }
 
-      let refNum = proNum;
       if (tempList.selected >= proStock) {
-        data.number = proStock - trueStock[typeMealIdSpuId];
-        refNum = data.number;
-        if (data.number <= 0) {
+        refNum = proStock - trueStock[typeMealIdSpuId];
+        trueStock[typeMealIdSpuId] = false; 
+        if (refNum <= 0) {
           return false;
         }
       }
-      console.log(tempList.selected, proStock, trueStock[typeMealIdSpuId], refNum)
-      proNum = 0
-      api.setChart(data).then(res => {
-        if (res) {
-          wx.showToast({
-            title: '加入购物车成功',
-            icon: 'none',
-            duration: 2000
-          })
-          util.setTabBarBadge(this.data.totalNum)
-          wx.setStorageSync("total_num", this.data.totalNum)
-          //全局更新
+      trueStock[typeMealIdSpuId] = false;
+      wx.setStorageSync("total_num", this.data.totalNum)
 
-          this.refreshProList(proId, curSpuid, curType, (parseInt(refNum) + parseInt(trueStock[typeMealIdSpuId])));
-          // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
-          this.setData({
-            totalNum: this.data.totalNum,
-            // ['showList[' + currentTab + '][' + proInPage + ']']: pagelist['pagelist'],
-          })
-          trueStock[typeMealIdSpuId] = false;
-        } else {
-          console.log(res)
-          wx.showToast({
-            title: '该商品已达到最大购买量',
-            icon: 'none',
-            duration: 2000
-          })
-        }
+      this.data.watchContainer.push({
+        addNum: refNum,
+        itemIdx: itemIdx,
+        curType: curType,
+        proId: proId,
+        typeMealIdSpuId: typeMealIdSpuId,
+        cityId: this.data.city_id,
+        selected: tempList.selected,
+        maxStock: proStock,
       })
+      this.data.watchNumer = this.data.watchNumer + refNum
+      console.log(refNum, this.data.watchContainer);
     }, 300)
     return
+  },
+  syncTocart(params) {
+    console.log('syncTocart:', params);
+    let data = {
+      city_id: params['cityId'],
+      type: params['curType'],
+      tab_id: params['proId'],
+      number: params['addNum'],
+    }
+
+    api.setChart(data).then(res => {
+      if (res) {
+        wx.showToast({
+          title: '加入购物车成功',
+          icon: 'none',
+          duration: 2000
+        })
+      } else {
+        console.log(res)
+        wx.showToast({
+          title: '该商品已达到最大购买量',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
   },
   getMoreCacheData() {
     let currentTab = parseInt(this.data.currentTab);
@@ -418,7 +409,7 @@ Page({
   },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
-    console.log(total_num)
+    console.log('-----------------------',total_num)
     this.setData({
       totalNum: total_num || 0
     })
@@ -539,23 +530,9 @@ Page({
         case 1:
           console.log('switch  = 1-------------')
           for (let tmpVal of proList[app.globalData.proType]) {
-            // console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
-            let style = "";
-            switch (selectNumberLength) {
-              case 1:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-                break;
-              case 2:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-              default:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-            }
-            tmpVal['cornerTagStyle'] = style;
-            // console.log(selectNumberLength);
+            tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);           
           }
           break;
         case 2:
@@ -564,20 +541,7 @@ Page({
             // console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
-            let style = "";
-            switch (selectNumberLength) {
-              case 1:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-                break;
-              case 2:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-              default:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-            }
-            tmpVal['cornerTagStyle'] = style;
-            // console.log(selectNumberLength);
+            tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);       
           }
           break;
         case 3:
@@ -586,20 +550,7 @@ Page({
             console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
-            let style = "";
-            switch (selectNumberLength) {
-              case 1:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
-                break;
-              case 2:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-              default:
-                style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
-                break;
-            }
-            tmpVal['cornerTagStyle'] = style;
-            // console.log(selectNumberLength);
+            tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);       
           }
           break;
         case 4:
@@ -626,7 +577,7 @@ Page({
           pageInfo: this.data.pageInfo,
           ['showList[' + app.globalData.proType + '][0]']:proList[app.globalData.proType] ,
         });
-        console.log(this.data.showList[app.globalData.proType]);
+        // console.log(this.data.showList[app.globalData.proType]);
         // console.log(this.data.pageInfo)
         return true;
       }
@@ -829,8 +780,24 @@ Page({
     }
    
   },
+  getAddTapNumStyle(num) {
+    let selectNumberLength = num > 0 ? num.toString().length : 0;
+    // tempList['selectNumberLength'] = selectNumberLength;
+    let style = "";
+    switch (selectNumberLength) {
+      case 1:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px;width:5px;";
+        break;
+      case 2:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+      default:
+        style += "padding:4px 4px;right:7px;top:5px;border-radius:50%;line-height:5px";
+        break;
+    }
+    return style;
+  },
   onShow() {
-    console.log("------------------------------------load-----")
     canCheck = false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
@@ -895,10 +862,10 @@ Page({
     util.setWatcher(this);
   },
   onReady() {
-    console.log('==========redeay');
+   
   },
   onUnload(){
-    console.log('==========unload');
+
   },
   watch: {
     'city_id': function (value, oldValue) {
@@ -919,6 +886,20 @@ Page({
       this.setData(setData)
       this.getProList(value);
       console.log(value);
+    },
+    'watchNumer': function (value, oldValue) {
+      console.log(value,oldValue)
+      if (value == 0) {
+        return false;
+      }
+
+      if (this.data.watchNumer >= (Number.MAX_SAFE_INTEGER - 1000)) {
+        this.data.watchNumer = 0;
+      }
+
+      let info = this.data.watchContainer.shift();
+      console.log(value, oldValue, Number.MAX_SAFE_INTEGER, info)
+      this.syncTocart(info)
     }
   }
 
