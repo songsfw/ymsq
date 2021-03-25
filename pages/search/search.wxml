@@ -1,4 +1,6 @@
 <!--index.wxml-->
+<import src="../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
 <view class='main {{!searchList.list ?"main.main-show-search":""}}'>
   <view class="topBar flex {{scrollTop>158 ? 'changebg' : ' '}}" style="top:{{fixedTop}}px">
     <view class='flex search flex-1'>
@@ -15,11 +17,11 @@
           
           <input id="searchInput" hidden="{{inputHidden}}" bindfocus="" showinput="true" placeholder-style="color:#999999" placeholder="{{currentKeyword || '请输入搜索内容'}}"
             value="{{currentKeyword}}" focus="{{focus}}" class='flex-1' auto-focus bindinput='getWords'
-            confirm-type='搜索' bindconfirm="search"/>
+            confirm-type='search' bindconfirm="search"/>
         </view>
         <!-- <button bindtap="search">搜索</button> -->
-        <view>
-          <image wx:if="{{currentKeyword}}"  hidden="{{inputHidden}}" class="search-close" src='/image/search-close.png' bindtap='cancle'></image>
+        <view bindtap='cancle'>
+          <image wx:if="{{currentKeyword}}"  hidden="{{inputHidden}}" class="search-close" src='/image/search-close.png' ></image>
         </view>
       </view>
     </view>
@@ -30,7 +32,7 @@
   </view>
 
   <view class="list-show {{searchList.list.length > 0?'list-show-search':''}}">
-    <view class='mainSchTag' wx:if="{{!searchList.list}}">
+    <view class='mainSchTag' wx:if="{{!searchList.list && !showLoading}}">
       <view wx:for="{{keywordTag}}" wx:for-index="index" class="mainSchTagGroup">
         <block>
           <view class='flex history' style="">

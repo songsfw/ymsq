@@ -110,9 +110,9 @@ page{background: #F9F9F9;height: 100%;}
   width: 36rpx;
   height: 36rpx;
   vertical-align: middle;
-  margin-right:20rpx;
-  margin-top:18rpx;
-  margin-bottom: 14rpx;
+  padding-right:20rpx;
+  padding-top:18rpx;
+  padding-bottom: 14rpx;
 }
 .topBar.changebg {
   background: #fff;
@@ -192,6 +192,7 @@ page{background: #F9F9F9;height: 100%;}
   margin-bottom: 20rpx;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 
 }
 .groupTag .groupTagItem image{
@@ -203,6 +204,9 @@ page{background: #F9F9F9;height: 100%;}
   white-space:nowrap; 
   font-size:13px;
   line-height: 26px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 /* 所搜列表 */
 .sch-list {

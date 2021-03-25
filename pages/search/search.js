@@ -18,6 +18,7 @@ Page({
     scrollTop: 0,
   },
   data: {
+    showLoading:true,
     inputHidden: false,
     currentKeyword: '',
     keywordTag: {},
@@ -42,7 +43,7 @@ Page({
     watchNumer: 0,
     watchContainer: [],
 
-    focus:true,
+    focus: true,
   },
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
@@ -70,20 +71,19 @@ Page({
     }
   },
   toInput() {
+    if(this.data.showLoading){
+      return false;
+    }
     console.log(1111)
-    // let query = wx.createSelectorQuery()
-    // query.select('#searchInput').boundingClientRect(function (res) {
-    //   console.log('------drop3GetComponts---', res)
-
-    // }).exec()
 
     this.setData({
       inputHidden: false,
-      focus:true,
+      focus: true,
     })
   },
   //搜索按钮事件
   search: function (e) {
+    this.setData({showLoading:true});
     if (timer) {
       clearTimeout(timer)
     }
@@ -96,14 +96,31 @@ Page({
   },
   //标签点击
   clickTap(e) {
+    this.setData({
+      showLoading: true,
+    })
     let word = e.currentTarget.dataset.word
     getWord = word;
     syncflag = true;
     this.toSearch(word)
   },
   clickClearHistory(e) {
-    this.flashTap(true)
+    wx.showModal({
+      title: '',
+      content: '确定清除所有历史搜索吗？',
+      cancelText: "再想想",
+      confirmText: "确定",
+      confirmColor: "#C1996B",
+      success: res => {
+        if (res.confirm) {
+          this.flashTap(true)
+        } else if (res.cancel) {
+          return
+        }
+      }
+    })
 
+    
   },
   //主体搜索
   toSearch(word) {
@@ -161,6 +178,7 @@ Page({
         searchList: searchList,
         order_max_bread: res['order_max_bread'] || 99,
         inputHidden: true,
+        showLoading: false,
       })
     })
   },
@@ -174,7 +192,8 @@ Page({
       if (res) {
         console.log('this.flashTap();')
         this.setData({
-          keywordTag: res
+          keywordTag: res,
+          showLoading: false,
         })
       }
     })
@@ -491,7 +510,8 @@ Page({
 
   //购物车返回处理
   cartPageSyncList(params) {
-    if(!params['type'] || !params['proId']||!params['selected']){
+    console.log(params)
+    if (typeof(params['type']) == "undefined" || typeof(params['proId']) == "undefined" || typeof(params['selected']) == "undefined") {
       return
     }
     console.log(params)
