@@ -70,9 +70,9 @@ Page({
     // console.log('switchTab')
     app.globalData.proType = currentId
     if (this.data.currentTab == currentId) {
-      console.log('switchTab-2')
       return false;
     } else {
+      this.setData({showLoading: true})
       console.log('switchTab-3')
       //更新列表
       // this.getProList();
@@ -87,7 +87,7 @@ Page({
       this.setData({
         currentTag: currentTag,
         currentTab: currentTab,
-        showLoading: false,
+        // showLoading: false,
         ['showList[' + currentTab + '][0]']: pagelist['pagelist'],
       });
       return;
@@ -344,6 +344,7 @@ Page({
     let pageCount = Math.ceil(count / pagesize);
     if (pageNum > pageCount) {
       console.log('已达最大页数')
+      this.setData({showLoading:false})
       return false; //已达最大页数
     }
 
@@ -375,7 +376,8 @@ Page({
     };
 
     this.setData({
-      pageInfo: this.data.pageInfo
+      pageInfo: this.data.pageInfo,
+      showLoading:false,
     })
     // console.log('分页变量：：',this.data.pageInfo)
     return {
@@ -576,6 +578,7 @@ Page({
         this.setData({
           pageInfo: this.data.pageInfo,
           ['showList[' + app.globalData.proType + '][0]']:proList[app.globalData.proType] ,
+          showLoading:false,
         });
         // console.log(this.data.showList[app.globalData.proType]);
         // console.log(this.data.pageInfo)
@@ -591,6 +594,7 @@ Page({
           ['showList[' + res.choose_type + '][0]']: null,
           ['showStock[' + res.choose_type + ']']: res.stock,
           ['showCategory[' + res.choose_type + ']']: res.category,
+          showLoading:false,
         });
         return false;
       }
@@ -603,6 +607,7 @@ Page({
         ['showList[' + res.choose_type + '][0]']: pagel['pagelist'],
         ['showStock[' + res.choose_type + ']']: res.stock,
         ['showCategory[' + res.choose_type + ']']: res.category,
+        showLoading:false,
       });
       wx.stopPullDownRefresh() //停止下拉刷新
     })
