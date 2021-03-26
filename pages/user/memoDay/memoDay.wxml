@@ -9,7 +9,8 @@
   </view>
 </view>
 <view class="card">
-  <view class="item" wx:for="{{dateList}}">
+  <view class="item {{showbg?'showbg':''}}" wx:for="{{dateList}}">
+    <image src="../../../image/0325.jpg" class="bg"></image>
     <view class="hd flex">
       <view>
         <image src="{{dayLi[index].img}}"></image>
@@ -18,7 +19,7 @@
     </view>
     <view class="flex input-box">
       <view class="tit">名称</view>
-      <input type="text" class="flex-1" value="{{item.title}}" placeholder="请为纪念日设置名称" placeholder-style="color:#aaa" bindinput="inputName" data-idx = "{{index}}" />
+      <input type="text" class="flex-1" bindblur="onblur" bindfocus="onfocus" value="{{item.title}}" placeholder="请为纪念日设置名称" placeholder-style="color:#aaa" bindinput="inputName" data-idx = "{{index}}" />
       
     </view>
     <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate">

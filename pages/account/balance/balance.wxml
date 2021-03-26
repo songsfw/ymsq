@@ -18,7 +18,13 @@
       <view class="money">{{action.num}}元</view>
     </view>
   </block>
-  <view wx:if="{{noMoreData && list[0].length==0}}" class="more-btn">暂无数据</view>
+  <view class="nodata" wx:if="{{noMoreData && list[0].length==0}}">
+    <view><image src="../../../image/no-order.png"></image></view>
+
+    <view class="txt">暂无数据</view>
+
+  </view>
+  <!-- <view wx:if="{{noMoreData && list[0].length==0}}" class="more-btn">暂无数据</view> -->
   <!-- <view wx:elif="{{noMoreData}}" class="more-btn">我可是有底线的</view> -->
   
 </view>

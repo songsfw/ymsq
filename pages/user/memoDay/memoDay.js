@@ -36,6 +36,16 @@ Page({
     ],
     dateList : null
   },
+  onfocus(){
+    this.setData({
+      showbg:true
+    })
+  },
+  onblur(){
+    this.setData({
+      showbg:false
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

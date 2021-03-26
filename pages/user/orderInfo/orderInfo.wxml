@@ -42,7 +42,7 @@
         <view class="item" wx:if="{{index<3}}" wx:for="{{cart_data}}">
           <view class="flex">
             <view class="pic">
-              <image src="{{item.image_url}}" mode="aspectFill"></image>
+              <image src="{{item.image_url2}}" mode="aspectFill"></image>
             </view>
             <view class="info flex-1 flex text-overflow">
               <view class="tit">
@@ -71,7 +71,7 @@
         <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{cart_data}}">
           <view class="flex">
             <view class="pic">
-              <image src="{{item.image_url}}" mode="aspectFill"></image>
+              <image src="{{item.image_url2}}" mode="aspectFill"></image>
             </view>
             <view class="info flex-1 flex">
               <view class="tit">

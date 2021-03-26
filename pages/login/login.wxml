@@ -4,7 +4,6 @@
   <view class='auth-content flex'>
     <view class='pic'>
       <image src="/image/logo2.png" class="pic1"></image>
-      <image src="/image/20210207.png" class="pic2"></image>
     </view>
     <view class="gallery">
         <block wx:for="{{pics}}" wx:for-index="index">
@@ -13,12 +12,13 @@
     </view>
     
     <view class='getWXAuth'>
-      <view class="txt">
-        <view>为了您更便捷购物，请先微信授权</view>
-      </view>
+      
       <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
         获取授权
       </button>
+      <view class="txt">
+        <view>为了您更便捷购物，请先微信授权</view>
+      </view>
     </view>
   </view>
 </view>

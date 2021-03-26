@@ -38,7 +38,7 @@
           <view class="flex">
             <view class="pic1 flex" wx:if="{{order.detail.length==1}}">
               <view class="pic">
-                <image src="{{order.detail[0].image_url}}" mode="aspectFill"></image>
+                <image src="{{order.detail[0].image_url2}}" mode="aspectFill"></image>
               </view>
               <view class="flex">
                 <view class="h3">{{order.detail[0].name}}</view>
@@ -47,7 +47,7 @@
             </view>
             <block wx:else>
               <view class="pic" wx:for="{{order.detail}}" wx:for-item="pic">
-                <image src="{{pic.image_url}}" mode="aspectFill"></image>
+                <image src="{{pic.image_url2}}" mode="aspectFill"></image>
                 <view class="count">X{{pic.count}}</view>
               </view>
             </block>

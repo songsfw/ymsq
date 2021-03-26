@@ -3,7 +3,7 @@ page{background: #F6F6F6;}
 
 .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
 .card .hd image{width: 44rpx;height: 40rpx;margin-right: 20rpx;}
-.item{margin: 0 24rpx 18rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 0 20rpx;}
+.item{position: relative; margin: 0 24rpx 18rpx 24rpx;border-radius:8rpx ;background: #fff;padding: 0 20rpx;overflow: hidden;}
 .input-box{padding: 14px 0;border-bottom: 1px solid #F6F6F6;font-size: 14px;}
 .item .input-box:last-child{border: none;}
 .item .tit{margin-right: 16px;}
@@ -36,3 +36,6 @@ picker-view view{color: #999;transition: font-size linear .1s;}
 .rule-btn .iconfont{margin-right: 5px;}
 .rule-btn{width: 50px;flex-shrink: 0;justify-content: flex-end;}
 .item .tip{margin-left: 20rpx;color: #999;}
+.item>view{position: relative;z-index: 2;}
+.item .bg{position: absolute;left: 0;top: 0;display: none;width: 702rpx;height: 252rpx;}
+.item.showbg .bg{display: block;}
