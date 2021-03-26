@@ -42,6 +42,8 @@ Page({
     //test
     watchNumer: 0,
     watchContainer: [],
+    prePushWatchlist: [], //预处理栈
+    prePushWatchHash: {}, //预处理堆
 
     focus: true,
   },
@@ -250,13 +252,6 @@ Page({
       return
     }
 
-    //如果切换商品，重置统一变量添加数量
-    // console.log(lastTypeMealIdSpuId,'-',typeMealIdSpuId)
-    if (lastTypeMealIdSpuId != typeMealIdSpuId) {
-      proNum = 0;
-    }
-    lastTypeMealIdSpuId = typeMealIdSpuId;
-    // console.log(proId, itemIdx, 'typeMealIdSpuId', typeMealIdSpuId, 'this.data.searchList', this.data.searchList);
     //存储真实库存
     if (typeof (trueStock[typeMealIdSpuId]) == 'undefined') {
       trueStock[typeMealIdSpuId] = false;
@@ -269,22 +264,27 @@ Page({
 
     //当前库存
     let curStock = this.data.searchList['stock'][proId] || this.data.order_max_bread;
-    //验证当前点击数量是否超过 库存上限 ，当前！
-    if (proNum > curStock) {
-      wx.showToast({
-        icon: "none",
-        title: `库存暂时不足`
-      })
-      proNum = curStock
-    } else {
-      proNum++;
-      this.data.totalNum++
-    }
-
+    this.data.totalNum++
     //前置样式处理 && 库存限制处理
     let flag = this.addChartPreView(itemIdx);
     if (!flag) {
       return false;
+    }
+
+    if (typeof (this.data.prePushWatchHash[typeMealIdSpuId]) == "undefined") {
+      this.data.prePushWatchlist.push(typeMealIdSpuId);
+      this.data.prePushWatchHash[typeMealIdSpuId] = {
+        addNum: 1,
+        curStock: curStock,
+        curType: curType,
+        proId: proId,
+        typeMealIdSpuId: typeMealIdSpuId,
+        cityId: this.data.city_id,
+        selected: this.data.searchList['list'][itemIdx].selected,
+        itemIdx: itemIdx,
+      };
+    } else {
+      this.data.prePushWatchHash[typeMealIdSpuId]['addNum'] += 1;
     }
 
     //追加操作
@@ -293,37 +293,23 @@ Page({
     }
 
     timer = setTimeout(() => {
-      let refNum = proNum; //最终入库数量
-      proNum = 0;
-
-      //多余库存处理
-      let tempList = this.data.searchList['list'][itemIdx];
-      let proStock = this.data.searchList['stock'][tempList['meal_id']] || this.data.order_max_bread;
-      proStock = parseInt(proStock);
-
-      if (tempList.selected >= proStock) {
-        refNum = proStock - trueStock[typeMealIdSpuId];
-        trueStock[typeMealIdSpuId] = false; //进入程序后 整理传递数据 ，整理后清空状态
-        if (refNum <= 0) {
-          return false;
-        }
+      let info;
+      while (info = this.data.prePushWatchlist.shift()) {
+        this.data.watchContainer.push({
+          addNum: this.data.prePushWatchHash[info]['addNum'],
+          itemIdx: this.data.prePushWatchHash[info]['itemIdx'],
+          curType: this.data.prePushWatchHash[info]['curType'],
+          proId: this.data.prePushWatchHash[info]['proId'],
+          typeMealIdSpuId: this.data.prePushWatchHash[info]['typeMealIdSpuId'],
+          cityId: this.data.prePushWatchHash[info]['cityId'],
+          selected: this.data.prePushWatchHash[info]['selected'],
+          maxStock: this.data.prePushWatchHash[info]['curStock'],
+        })
+        this.data.watchNumer = this.data.watchNumer + this.data.prePushWatchHash[info]['addNum']
+        delete this.data.prePushWatchHash[info];
       }
-      trueStock[typeMealIdSpuId] = false;
-      wx.setStorageSync("total_num", this.data.totalNum)
-      //同步不考虑与前端数据一致
-      this.data.watchContainer.push({
-        addNum: refNum,
-        itemIdx: itemIdx,
-        curType: curType,
-        proId: proId,
-        typeMealIdSpuId: typeMealIdSpuId,
-        cityId: this.data.city_id,
-        selected: tempList.selected,
-        maxStock: proStock,
-      })
-      this.data.watchNumer = this.data.watchNumer + refNum
-      console.log(refNum, this.data.watchContainer);
-    }, 300)
+      return
+    }, 200)
     return;
   },
   showPop(e) {
