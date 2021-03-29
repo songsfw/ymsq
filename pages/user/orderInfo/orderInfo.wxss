@@ -2,7 +2,7 @@ page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
 
-.order-type{width: 100%;height: 180rpx;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
+.order-type{width: 100%;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
 .return .arrow-left:after{border-color: #333 !important;}
 .order-type .txt{font-size:18px;}
 .order-type .txt image{width: 48rpx;height: 40rpx;vertical-align: bottom;}
@@ -27,7 +27,7 @@ page{background: #F6F6F6;height: auto;}
 .delivery-info image{width:36rpx;height: 32rpx;margin-right:22rpx ;flex-shrink: 0;}
 .address{padding:40rpx 20rpx;background: #fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x ;background-size: 29px 4px;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
-.address .tit{font-size: 14px;margin-bottom: 6rpx;}
+.address .tit{font-size: 14px;margin-bottom: 6rpx;font-weight: 500;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;text-align: right;}
 .address .txt{width: 498rpx;}
 .address .tit text{margin-right: 20rpx;}
@@ -37,7 +37,7 @@ page{background: #F6F6F6;height: auto;}
 .send-time{padding:34rpx 20rpx;justify-content: space-between;}
 .send-time text{font-size: 15px;}
 .send-time .time text{color: #C1996B;margin-right: 20rpx;}
-.pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 100rpx;margin:0 20rpx 30rpx 20rpx;}
+.pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height:92rpx;margin:0 20rpx 30rpx 20rpx;}
 .pro-info .hd view{font-size: 15px;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
@@ -47,7 +47,7 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}
 .pro-info .item .tit{font-size: 14px;}
 .pro-info .price{justify-content: space-between;}
-.pro-info .price .num{font-size: 11px;color: #FA603D;}
+.pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px}
 .pro-info .price .count{color: #999;}
 .pro-wp{padding-bottom: 36rpx;}
@@ -56,9 +56,9 @@ page{background: #F6F6F6;height: auto;}
 .order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
 .order-tips input{text-align: right;}
 .order-tips.on{color: #F5222D;}
-.pay-info{padding: 0 20rpx 20rpx 20rpx;}
+.pay-info{padding: 20px 20rpx 20rpx 20rpx;}
 .pay-info .hd{margin:0 0 30rpx 0}
-.pay-info>view{justify-content: space-between;height: 76rpx;line-height: 76rpx;}
+.pay-info>view{justify-content: space-between;margin-bottom:20px;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}

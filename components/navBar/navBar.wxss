@@ -11,7 +11,7 @@
 
 .searchBox .city .arrow-bottom:after{border-color: #fff;width: 6px;height: 6px;}
 .searchBox .city .icon{flex-shrink: 0; width:32rpx;height: 36rpx;margin-right: 20rpx;}
-.searchBox .city .citytxt{width: 100%;overflow: hidden;white-space: nowrap;text-align: left; text-overflow: ellipsis;font-size: 14px;}
+.searchBox .city .citytxt{width: 100%;overflow: hidden;white-space: nowrap;text-align: left; text-overflow: ellipsis;font-size: 14px;font-weight: 500;}
 .searchBox .city{font-size: 18px;}
 .searchBox .city .icon-arrow-btm{font-size: 20rpx;}
 .search .navigator{align-items: center;}

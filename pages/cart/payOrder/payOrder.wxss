@@ -46,7 +46,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 60px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
 .txt-card .icon-edit{position: absolute;right: 0;top: 0; color: #C1996B;font-size: 16px;margin-right: 10px;pointer-events:none;}
 .txt-card input{margin-left: 10px;font-size: 13px;}
-.pro-info .price .num{font-size: 11px;color: #FA603D;}
+.pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px}
 .pro-info .price .count{color: #999;}
 .pro-wp{padding-bottom: 36rpx;}
@@ -60,8 +60,8 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .inputbox input{text-align: right;}
 .inputbox input::placeholder{color: #ccc;font-size: 13px;}
 .inputbox.on{color: #F5222D;}
-.pay-info{padding: 10rpx 20rpx 0 20rpx;}
-.pay-info>view{justify-content: space-between;height: 76rpx;line-height: 76rpx;}
+.pay-info{padding: 20px 20rpx 0 20rpx;}
+.pay-info>view{justify-content: space-between;margin-bottom: 20px}
 .pay-info>view .tip{color: #aaa;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
@@ -185,7 +185,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .fittings-info .tit{font-size: 13px;margin-right: 40rpx;}
 .fittings-info .txt{color: #666;}
 .fittings-info .txt text{color: #666;}
-.fittings-info .txt view{margin-bottom:30rpx ;font-size: 13px;}
+.fittings-info .txt view{margin-bottom:25rpx ;font-size: 13px;}
 .fittings-info .txt .on,
 .fittings-info .txt .on text{color: #FA603D;}
 

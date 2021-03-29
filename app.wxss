@@ -133,8 +133,8 @@ image{max-width: 100%}
 .footer{text-align: center;font-size: 12px;color: #999;padding: 30rpx 0;background: #fff;}
 .nodata{text-align: center;margin-top: 20vh;}
 .nodata image{width: 608rpx;height:312rpx;}
-.nodata .txt{margin: 38rpx 0 60rpx 0;font-size: 14px;color: #999;}
-.nodata .btn{margin: 0 auto; width: 320rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #fff;background: #C1996B;font-size: 15px;}
+.nodata .txt{margin: 82rpx 0 60rpx 0;font-size: 14px;color: #999;}
+.nodata .btn{margin: 0 auto; width: 254rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #fff;background: #C1996B;font-size: 15px;}
 .pop-panel.upPanel{transform: translateY(0);}
 .btm-panel{transform: translateY(100%);transition: all .3s linear;}
 

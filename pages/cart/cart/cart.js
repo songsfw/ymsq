@@ -102,9 +102,9 @@ Page({
               var pages = getCurrentPages();
               if(pages.length > 1){
                 //上一个页面实例对象
-                var prePage = pages[pages.length - 2];
-                
-                prePage.cartPageSyncList && prePage.cartPageSyncList({type:type,proId:skuid,selected:0})
+                //var prePage = pages[pages.length - 2];
+                app.inCartRefreshList({type:type,proId:skuid,selected:0});
+                //prePage.cartPageSyncList && prePage.cartPageSyncList({type:type,proId:skuid,selected:0})
               }
       
               this.setData({

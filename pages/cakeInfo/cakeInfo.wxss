@@ -78,7 +78,7 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
 .score-panel .h4 .tip{color: #aaa;font-size: 12px;margin-left: 20rpx;font-weight: normal;}
 .score-panel .h4 .default-tip.tip{color: #999;}
 .sku-list{flex-wrap: wrap;margin-bottom: -30rpx;}
-.sku-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;font-size: 13px;}
+.sku-list view{margin: 0 15px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;font-size: 13px;}
 .sku-list view.on{color: #fff;background: #C1996B;}
 .default-fitts{margin-top: 20rpx;
     justify-content: flex-start;

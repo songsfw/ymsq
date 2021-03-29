@@ -29,7 +29,7 @@ page{background: #F6F6F6;height: auto;}
 .item .tag text:last-child:after{display: none;}
 .item .price{justify-content: space-between;align-items: center;font-weight: 500;}
 .item .price .num{font-size: 13px;color: #222;}
-.item .price .num text{font-size: 16px;font-weight:500 ;}
+.item .price .num text{font-size: 14px;font-weight:500 ;}
 .item .price .add{width:44rpx;height: 44rpx;color: #C1996B;
     font-size: 22px;}
 .icon-minus.one,
@@ -72,7 +72,7 @@ page{background: #F6F6F6;height: auto;}
 .tips .txt{white-space: nowrap;overflow:hidden ;}
 .tips .txt text{display: inline-block; animation: remindMessage 14s linear infinite;padding-right: 10rpx;font-size: 13px;}
 
-.pic-box{width: 426rpx; align-items: center;margin: 30rpx 0;box-sizing: border-box;margin-right: 74rpx;}
+.pic-box{width: 426rpx; align-items: center;margin: 16rpx 0;box-sizing: border-box;margin-right: 74rpx;}
 .pic-box .pic{position: relative; width: 120rpx;height: 120rpx;border-radius:8rpx ;margin-right: 20rpx;overflow: hidden;flex-shrink: 0;}
 .pic-box .pic1{width: 100%;}
 .pic-box .pic1>view{justify-content: space-between;flex-direction: column;}
@@ -117,8 +117,8 @@ page{background: #F6F6F6;height: auto;}
 .fittings .item .tit{font-size: 13px;height: 34px;overflow: hidden;}
 .fittings .item .tit,.fittings .item .price{padding:0 20rpx;margin: 16rpx 0;}
 .fittings .item .price{justify-content: space-between;}
-.fittings .item .price .num{font-size: 11px;color: #C1996B;}
-.fittings .item .price .num text{font-size: 15px;}
+.fittings .item .price .num{font-size: 11px;}
+
 .fittings .item .price .add{width:20px;height: 20px;color: #C1996B;font-size: 20px;}
 .fittings .info{margin-top: 30rpx;}
 .fittings .info .tit{font-size: 13px;margin-right: 40rpx;}
@@ -130,8 +130,8 @@ page{background: #F6F6F6;height: auto;}
 .pro-tip{padding-top: 22rpx;font-size: 13px;color:#666;}
 .pro-tip .tag{display: inline-block; height: 18px;line-height: 18px;margin-right: 16rpx; padding: 0 16rpx;background: rgba(100,192,0,.15);color:#64C000; border-radius: 8rpx;font-size: 12px;}
 .order-panel{background-color: #F6F6F6;overflow:hidden;}
-.order-panel .pop-con{padding: 0;margin:24rpx;border-radius: 4rpx;margin-bottom: 40rpx;}
+.order-panel .pop-con{padding: 0;margin:24rpx;border-radius: 4rpx;margin-bottom: 230rpx;}
 .order-panel .title{font-size: 16px;font-weight: bold;height: 48px;line-height: 48px;text-align: center;background-color: #fff;}
-.order-panel .item{background-color: #fff;margin-bottom: 20rpx;padding: 20rpx;}
+.order-panel .item{background-color: #fff;margin-bottom: 20rpx;padding: 26rpx 20rpx;}
 .order-panel .h3{font-size: 14px;font-weight: bold;}
 .charge{height: 26px; background-color: #C1996B;color: #fff;padding: 0 12px;border-radius: 13px;line-height: 26px; flex-shrink: 0;}

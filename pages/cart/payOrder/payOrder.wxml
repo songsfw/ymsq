@@ -90,9 +90,7 @@
               <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
             </view>
             <view class="price flex">
-              <view class="num">
-                ￥
-                <text>{{item.sku_price}}</text>
+              <view class="num">￥<text>{{item.sku_price}}</text>
               </view>
               <view class="count">x{{item.sku_number}}</view>
             </view>
@@ -123,9 +121,7 @@
               <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
             </view>
             <view class="price flex">
-              <view class="num">
-                ￥
-                <text>{{item.sku_price}}</text>
+              <view class="num">￥<text>{{item.sku_price}}</text>
               </view>
               <view class="count">x{{item.sku_number}}</view>
             </view>
