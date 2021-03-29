@@ -270,13 +270,13 @@ Page({
     }, 200)
     return
   },
-  testAsync() {
-    console.log("jinru testAsync")
-    setTimeout(() => {
-      console.log("yibu  处理中......")
-      console.log(this.data.showList);
-    }, 5000)
-  },
+  // testAsync() {
+  //   console.log("jinru testAsync")
+  //   setTimeout(() => {
+  //     console.log("yibu  处理中......")
+  //     console.log(this.data.showList);
+  //   }, 5000)
+  // },
   syncTocart(params) {
     // console.log('syncTocart:', params);
     let data = {
@@ -764,7 +764,7 @@ Page({
     })
   }, 300, true),
   refreshProList(mealId, spuId, typeId, num = null) {
-    console.log(mealId, spuId, typeId);
+    // console.log(mealId, spuId, typeId);
     let tmpId = mealId + '_' + spuId + '_' + typeId;
     for (let key1 in app.data.ProductList_ProList) {
       for (let value of app.data.ProductList_ProList[key1]) {
@@ -879,20 +879,6 @@ Page({
   setDetailBack(backNum = 0) {
     this.data.backFrom = backNum;
   },
-  cartPageSyncList(params) {
-    console.log(params)
-    if (typeof (params['type']) == "undefined" || typeof (params['idx']) == "undefined" || typeof (params['itemidx']) == "undefined") {
-      return
-    }
-    if (this.data.showList[params['currentTab']][params['idx']][params['itemidx']]) {
-      console.log(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected)
-
-      this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected = parseInt(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected) - 1 + parseInt(params['skuNum']);
-      console.log(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected)
-    }
-    this.data.totalNum = params['totalNum'];
-    this.addChartPreView(params['currentTab'], params['idx'], params['itemidx'], params['totalNum']);
-  },
   onLoad: function () {
     let sysInfo = null
     if (app.globalSystemInfo) {
@@ -903,7 +889,6 @@ Page({
     let fixedTop = sysInfo.navBarHeight;
 
     //可视窗口x,y坐标
-    // console.log(sysInfo.screenHeight)
     this.busPos = {};
     this.busPos['x'] = sysInfo.screenWidth * .6;
     this.busPos['y'] = sysInfo.screenHeight * .85;

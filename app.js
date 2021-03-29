@@ -199,7 +199,7 @@ App({
   refreshList(ctabTypeMealIdSpuId, num,allFlag=null) {
     // console.log(ctabTypeMealIdSpuId)
     let params = ctabTypeMealIdSpuId.split("_");
-    console.log(params)
+    console.log(params,num,allFlag)
     console.log(this.data)
 
     if (params.length == 3) {
@@ -215,13 +215,13 @@ App({
       //分类
       if (typeof (this.data.ProductList_ProListIndex[ctabTypeMealIdSpuId]) != "undefined") {
         let tmpVal = this.data.ProductList_ProList[params[0]][this.data.ProductList_ProListIndex[ctabTypeMealIdSpuId]];
-        tmpVal.selected = parseInt(tmpVal.selected) + parseInt(num);
+        tmpVal.selected = allFlag ? parseInt(num):parseInt(tmpVal.selected) + parseInt(num);
         let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
         tmpVal['selectNumberLength'] = selectNumberLength;
         tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
       }
     }
-    console.log(this.data)
+    // console.log(this.data)
 
   },
   inCartRefreshList(params) {
