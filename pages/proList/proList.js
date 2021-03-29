@@ -174,12 +174,6 @@ Page({
     return true;
   },
   addCart: function (e) {
-
-    //后期给松哥
-    // app.inCartRefreshList({type:2,proId:15717,selected:3});
-    
-
-    console.log(app.data);
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
@@ -196,6 +190,11 @@ Page({
       currentTab,
       city_id,
     } = this.data
+
+    if(this.data.showStock[currentTab][proId] == 0){
+      return 
+    }
+  
 
     // console.log(proId, proInPage, itemIdx,currentTab,'typeMealIdSpuId',typeMealIdSpuId);
     //存储真实库存

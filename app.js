@@ -225,7 +225,7 @@ App({
 
   },
   inCartRefreshList(params) {
-    // console.log('app- params', params);
+    console.log('app- params', params);
     // console.log(this.data)
     let diffStr = params['type'];
     diffStr = params['type'] == 1 ? diffStr + '_' + params['proId'] + "_0" : diffStr + '_' + params['proId'] + '_' + params['proId'];
