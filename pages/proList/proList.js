@@ -43,7 +43,7 @@ Page({
     //弹框
     skuNum: 1,
     canshow: true,
-    allCakeCateImg: "",
+    allCakeCateImg: "/image/d1.png",
     //文章默认页
     articleDefaultPage: 1,
 
@@ -176,7 +176,7 @@ Page({
   addCart: function (e) {
 
     //后期给松哥
-    app.inCartRefreshList({type:2,proId:15717,selected:3});
+    // app.inCartRefreshList({type:2,proId:15717,selected:3});
     
 
     console.log(app.data);
@@ -854,7 +854,6 @@ Page({
       this.data.backFrom = 0;
       return true;
     }
-
 
     canCheck = false;
     //自定义tabbar选中

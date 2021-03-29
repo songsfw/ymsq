@@ -196,7 +196,7 @@ App({
     },
   },
   //更新列表中的数据 指定格式索引  追加的数量
-  refreshList(ctabTypeMealIdSpuId, num) {
+  refreshList(ctabTypeMealIdSpuId, num,allFlag=null) {
     // console.log(ctabTypeMealIdSpuId)
     let params = ctabTypeMealIdSpuId.split("_");
     console.log(params)
@@ -206,7 +206,7 @@ App({
       //搜索
       if (typeof (this.data.SearchSearch_SearchListIndex[ctabTypeMealIdSpuId]) != "undefined") {
         let tmpVal = this.data.SearchSearch_SearchList['list'][this.data.SearchSearch_SearchListIndex[ctabTypeMealIdSpuId]]
-        tmpVal.selected = parseInt(tmpVal.selected) + parseInt(num);
+        tmpVal.selected = allFlag ? parseInt(num) : parseInt(tmpVal.selected) + parseInt(num);
         let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
         tmpVal['selectNumberLength'] = selectNumberLength;
         tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
@@ -234,13 +234,13 @@ App({
       let keyParams = key.substr(key.indexOf('_') + 1);
       if (keyParams == diffStr) {
         //更新
-        this.refreshList(key, params['selected'])
+        this.refreshList(key, params['selected'],true)
         break;
       }
     }
 
     //搜索
-    this.refreshList(diffStr, params['selected'])
+    this.refreshList(diffStr, params['selected'],true)
   },
   getAddTapNumStyle(num) {
     let selectNumberLength = num > 0 ? num.toString().length : 0;
