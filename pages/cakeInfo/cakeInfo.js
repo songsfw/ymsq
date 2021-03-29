@@ -19,7 +19,21 @@ Page({
       imageUrl: ''
     },
     pop: 0,
-    skuNum:1
+    skuNum:1,
+
+    //本页全局计数
+    totalNum:0,
+    proNum:0,
+    //
+    // backListType: null,
+    // backListIdx: null,
+    // backListItemidx: null,
+    // backListCurrentTab:null,
+    ctabTypeMealIdSpuId:null,
+    backNum:1,
+
+    //从购物车返回相关
+    toCartParams:"",//去往购物车的数据
   },
   //改变商品数量
   minusFitting:util.debounce(function(){
@@ -86,7 +100,6 @@ Page({
     }
 
     totalNum = totalNum+skuNum
-    console.log(data);
     api.setChart(data).then(res => {
       console.log(res);
       if(res){
@@ -95,10 +108,17 @@ Page({
           icon:"none",
           title:'加入购物车成功'
         })
+        this.data.proNum = skuNum;
+        this.data.totalNum = totalNum;
         this.setData({
           totalNum:totalNum,
           pop:0
         })
+
+        if(this.data.ctabTypeMealIdSpuId){
+          app.refreshList(this.data.ctabTypeMealIdSpuId,skuNum);
+        }
+
         if(action==1){
           app.globalData.proType = "2"
           wx.navigateTo({
@@ -111,6 +131,11 @@ Page({
       
     })
   },300,true),
+  cartPageSyncData(){
+    let pages = getCurrentPages(); // 子页面
+    console.log("-----------------2222")
+    console.log(pages);
+  },
   selectSku(e){
     let skuid = e.currentTarget.dataset.skuid
     let sku_list = this.data.proInfo.sku_list
@@ -140,6 +165,21 @@ Page({
       }
     })
   },
+  toIndexPage(){
+    let pages = getCurrentPages(); // 子页面
+    if (pages.length > 1) {
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      if(prePage.route=="pages/proList/proList"){
+        this.data.backNum = 0;
+        prePage.setDetailBack && prePage.setDetailBack(this.data.backNum);
+        this.data.backListType = null;
+        this.data.backListIdx = null;
+        this.data.backListItemidx = null;
+        this.data.backListCurrentTab = null;
+      }  
+    }
+  },
   onLoad: function (options) {
     let addressInfo = wx.getStorageSync("addressInfo")
     let totalNum = wx.getStorageSync("total_num")
@@ -147,16 +187,37 @@ Page({
     let proId = options.proId
     console.log('---------',proId)
     let btmHolder = wx.getStorageSync('btmHolder')
-
-    this.setData({
+    let sData = {
       totalNum:totalNum,
       btmHolder:btmHolder||0,
       city_id:city_id,
       proId: proId,
-    })
+    }
+
+    if (options.ctabTypeMealIdSpuId) {
+      this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId;
+      // this.data.backListType = options.type
+      // this.data.backListIdx = options.idx
+      // this.data.backListItemidx = options.itemidx
+      // this.data.backListCurrentTab = options.currenttab
+      // sData['toCartParams'] = '?'+"type="+options.type+"&idx="+options.idx+"&itemidx="+options.itemidx+"&currenttab="+options.currenttab
+    }
+
+    this.setData(sData)
     this.getProInfo()
     
     //this.initData()
+  },
+  onUnload: function (e) {
+    let pages = getCurrentPages(); // 子页面
+    if (pages.length > 1) {
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      if(prePage.route=="pages/proList/proList" && this.data.backNum){
+        prePage.setDetailBack && prePage.setDetailBack(this.data.backNum);
+      }  
+    }
+    this.data.ctabTypeMealIdSpuId = null;
   }
 
 })
