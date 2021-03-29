@@ -9,8 +9,6 @@ let timer = null,
   typeTagInfo = {}, //标签索引
   canCheck = false; //加载中 是否允许点击
 // curIndexInShowlist = null;//容器中商品索引
-//重构代码
-let proList = {}; //商品信息容器
 
 let debug = 1; //服务器结构错误屏蔽循环
 let debugTime;
@@ -54,6 +52,8 @@ Page({
     watchContainer: [],
     prePushWatchlist: [], //预处理栈
     prePushWatchHash: {}, //预处理堆
+
+    backFrom: 0, //1为详情页
   },
   switchTab: util.debounce(function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -162,13 +162,24 @@ Page({
     let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
     tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected);
     tempList['selectNumberLength'] = selectNumberLength;
-    util.setTabBarBadge(totalNum)
     this.setData({
       ['showList[' + currentTab + '][' + idx + '][' + itemIdx + ']']: tempList,
     })
+    try {
+      util.setTabBarBadge(totalNum)
+    } catch (err) {
+      console.log(err.description)
+    }
+
     return true;
   },
   addCart: function (e) {
+
+    //后期给松哥
+    app.inCartRefreshList({type:2,proId:15717,selected:3});
+    
+
+    console.log(app.data);
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
@@ -181,7 +192,6 @@ Page({
       this.showPop(e);
       return
     }
-
     let {
       currentTab,
       city_id,
@@ -268,7 +278,7 @@ Page({
     }, 5000)
   },
   syncTocart(params) {
-    console.log('syncTocart:', params);
+    // console.log('syncTocart:', params);
     let data = {
       city_id: params['cityId'],
       type: params['curType'],
@@ -312,8 +322,8 @@ Page({
   getCachePage(pageNum, type, tag) {
     // console.log("开始分页：", 'pageNum:', pageNum, 'type:', type, 'tag:', tag)
     type = parseInt(type);
-    if (!proList[type]) {
-      console.log('getcachePage , !proList[type]不存在。调用接口 getProList（）。')
+    if (!app.data.ProductList_ProList[type]) {
+      console.log('getcachePage , !app.data.ProductList_ProList[type]不存在。调用接口 getProList（）。')
       this.getProList();
       return false;
     }
@@ -328,7 +338,7 @@ Page({
     let tempList = [];
     if (tag === null) {
       //全部
-      for (let key in proList[type]) {
+      for (let key in app.data.ProductList_ProList[type]) {
         tempList.push(key)
       }
     } else {
@@ -354,7 +364,7 @@ Page({
       pageNum = 1;
     }
     let tempPageList = tempList.slice((pageNum - 1) * pagesize, pageNum * pagesize)
-    tempQuoteList = proList[type];
+    tempQuoteList = app.data.ProductList_ProList[type];
     for (let key in tempPageList) {
       pageList.push(tempQuoteList[tempPageList[key]])
     }
@@ -394,9 +404,14 @@ Page({
   },
   toProInfo: function (e) {
     let proId = e.currentTarget.dataset.proid
+    let idx = e.currentTarget.dataset.idx
+    let itemidx = e.currentTarget.dataset.itemidx
     let spuId = e.currentTarget.dataset.spuid
     let type = e.currentTarget.dataset.type
+    let currenttab = e.currentTarget.dataset.currenttab
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
+    url += '&ctabTypeMealIdSpuId=' + currenttab+"_"+ type +"_"+proId+"_"+spuId;
+    console.log(url)
     wx.navigateTo({
       url: url
     })
@@ -451,8 +466,9 @@ Page({
     debugTime = setTimeout(function () {
       debug = 0;
       console.log("debug-----")
-    }, 1000)
+    }, 5000)
     debug++;
+    // console.log(debug)
     let {
       city_id,
     } = this.data
@@ -491,7 +507,6 @@ Page({
         return false
       }
       let menu = res.type;
-      console.log(app.globalData.proType)
 
       //防止出现更新
       if (app.globalData.proType != '' && app.globalData.proType != res.choose_type) {
@@ -506,10 +521,11 @@ Page({
         order_max_bread: res.order_max_bread,
         ['cateChosed[' + res.choose_type + ']']: null,
       };
-
+      // console.log(app.data.ProductList_ProList)
       //重置数据
       if (refresh) {
-        proList = {};
+        app.data.ProductList_ProList = {};
+        app.data.ProductList_ProListIndex = {};
         setData['showList'] = {};
         setData['showTags'] = {};
         setData['showStock'] = {};
@@ -518,22 +534,26 @@ Page({
       }
 
       this.setData(setData)
-      proList[app.globalData.proType] = [];
+      app.data.ProductList_ProList[app.globalData.proType] = [];
       if (app.globalData.proType == 4) {
         //文章
-        proList[app.globalData.proType] = res.article;
+        app.data.ProductList_ProList[app.globalData.proType] = res.article;
       } else {
-        proList[app.globalData.proType] = res.list;
+        app.data.ProductList_ProList[app.globalData.proType] = res.list;
       }
 
       // console.log('接口返回：', res, 'prolist:', proList);
 
       //特殊处理
       // console.log('app.globalData.proType', app.globalData.proType)
+      // console.log('app.data.ProductList_ProList', app.data.ProductList_ProList)
       switch (parseInt(app.globalData.proType)) {
         case 1:
           console.log('switch  = 1-------------')
-          for (let tmpVal of proList[app.globalData.proType]) {
+          for (let tmpKey in app.data.ProductList_ProList[app.globalData.proType]) {
+            let tmpVal = app.data.ProductList_ProList[app.globalData.proType][tmpKey];
+            let ctabTypeMealIdSpuId = app.globalData.proType + '_' + tmpVal['type'] + '_' + tmpVal['meal_id'] + "_" + tmpVal['spu_id'];
+            app.data.ProductList_ProListIndex[ctabTypeMealIdSpuId] = tmpKey;
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
             tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
@@ -541,8 +561,10 @@ Page({
           break;
         case 2:
           console.log('switch  = 2')
-          for (let tmpVal of proList[app.globalData.proType]) {
-            // console.log(tmpVal)
+          for (let tmpKey in app.data.ProductList_ProList[app.globalData.proType]) {
+            let tmpVal = app.data.ProductList_ProList[app.globalData.proType][tmpKey];
+            let ctabTypeMealIdSpuId = app.globalData.proType + '_' + tmpVal['type'] + '_' + tmpVal['meal_id'] + "_" + tmpVal['spu_id'];
+            app.data.ProductList_ProListIndex[ctabTypeMealIdSpuId] = tmpKey;
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
             tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
@@ -550,8 +572,11 @@ Page({
           break;
         case 3:
           console.log('switch  = 3')
-          for (let tmpVal of proList[app.globalData.proType]) {
-            console.log(tmpVal)
+          for (let tmpKey in app.data.ProductList_ProList[app.globalData.proType]) {
+            let tmpVal = app.data.ProductList_ProList[app.globalData.proType][tmpKey];
+            let ctabTypeMealIdSpuId = app.globalData.proType + '_' + tmpVal['type'] + '_' + tmpVal['meal_id'] + "_" + tmpVal['spu_id'];
+            app.data.ProductList_ProListIndex[ctabTypeMealIdSpuId] = tmpKey;
+            // console.log(tmpVal)
             let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
             tmpVal['selectNumberLength'] = selectNumberLength;
             tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
@@ -579,7 +604,7 @@ Page({
         };
         this.setData({
           pageInfo: this.data.pageInfo,
-          ['showList[' + app.globalData.proType + '][0]']: proList[app.globalData.proType],
+          ['showList[' + app.globalData.proType + '][0]']: app.data.ProductList_ProList[app.globalData.proType],
           showLoading: false,
         });
         // console.log(this.data.showList[app.globalData.proType]);
@@ -587,9 +612,9 @@ Page({
         wx.stopPullDownRefresh()
         return true;
       }
-      this.refreshTypeTagInfo(res.choose_type, proList[app.globalData.proType]);
+      this.refreshTypeTagInfo(res.choose_type, app.data.ProductList_ProList[app.globalData.proType]);
       let pagel = this.getCachePage(1, res.choose_type, null)
-      console.log('proList', proList, 'pagel', pagel);
+      console.log('proList', app.data.ProductList_ProList, 'pagel', pagel);
 
       setData = {};
       if (!pagel) {
@@ -741,8 +766,8 @@ Page({
   refreshProList(mealId, spuId, typeId, num = null) {
     console.log(mealId, spuId, typeId);
     let tmpId = mealId + '_' + spuId + '_' + typeId;
-    for (let key1 in proList) {
-      for (let value of proList[key1]) {
+    for (let key1 in app.data.ProductList_ProList) {
+      for (let value of app.data.ProductList_ProList[key1]) {
         if (tmpId == (value.meal_id + "_" + value.spu_id + "_" + value.type)) {
           console.log('key1', key1, 'value', value)
           if (num !== null) {
@@ -805,7 +830,32 @@ Page({
     }
     return style;
   },
+  onPageScroll(e) {
+    // console.log(e.scrollTop);
+    let stop = e.scrollTop
+    if (stop > 46) {
+      this.setData({
+        isFixed: true
+      })
+    } else {
+      this.setData({
+        isFixed: false
+      })
+    }
+  },
   onShow() {
+    console.log('onshow ---------------')
+    if (this.data.backFrom == 1) {
+      console.log("详情")
+      util.setTabBarBadge(wx.getStorageSync("total_num"));
+      this.setData({
+        showList:this.data.showList,
+      })
+      this.data.backFrom = 0;
+      return true;
+    }
+
+
     canCheck = false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
@@ -826,18 +876,23 @@ Page({
     this.getCartInfo()
     this.getProList(this.data.city_id, true);
   },
-  onPageScroll(e) {
-    // console.log(e.scrollTop);
-    let stop = e.scrollTop
-    if (stop > 46) {
-      this.setData({
-        isFixed: true
-      })
-    } else {
-      this.setData({
-        isFixed: false
-      })
+  //确认返回途径
+  setDetailBack(backNum = 0) {
+    this.data.backFrom = backNum;
+  },
+  cartPageSyncList(params) {
+    console.log(params)
+    if (typeof (params['type']) == "undefined" || typeof (params['idx']) == "undefined" || typeof (params['itemidx']) == "undefined") {
+      return
     }
+    if (this.data.showList[params['currentTab']][params['idx']][params['itemidx']]) {
+      console.log(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected)
+
+      this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected = parseInt(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected) - 1 + parseInt(params['skuNum']);
+      console.log(this.data.showList[params['currentTab']][params['idx']][params['itemidx']].selected)
+    }
+    this.data.totalNum = params['totalNum'];
+    this.addChartPreView(params['currentTab'], params['idx'], params['itemidx'], params['totalNum']);
   },
   onLoad: function () {
     let sysInfo = null
@@ -882,9 +937,8 @@ Page({
       if (value == oldValue || this.data.currentTab == '') {
         return
       }
-      proList = {}
       // app.globalData.proType = ''
-      proList = {};
+      app.data.ProductList_ProList = {};
       let setData = {};
       setData['showList'] = {};
       setData['showTags'] = {};
@@ -901,12 +955,12 @@ Page({
         return false;
       }
 
-      if (this.data.watchNumer >= (Number.MAX_SAFE_INTEGER - 1000)) {
+      if (this.data.watchNumer >= (Number.MAX_SAFE_INTEGER - 10000)) {
         this.data.watchNumer = 0;
       }
 
       let info = this.data.watchContainer.shift();
-      console.log(value, oldValue, Number.MAX_SAFE_INTEGER, info)
+      // console.log(value, oldValue, Number.MAX_SAFE_INTEGER, info)
       this.syncTocart(info)
     }
   }

@@ -71,7 +71,7 @@
       <view class="listItemwp flex">
         <block wx:for="{{showList[currentTab]}}" wx:for-index="idx">
           <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
-            <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}"
+            <view class="item" bind:tap="toProInfo" data-idx="{{idx}}" data-itemidx="{{itemIdx}}" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-currenttab="{{currentTab}}"
               data-type="{{pro.type}}">
               <view class="pic {{showStock[currentTab][pro.meal_id]==0?'sold-out':''}}">
                 <view class="tag">已售罄</view>

@@ -284,5 +284,5 @@ page{background: #F9F9F9;height: 100%;}
 .recommend-list .item:nth-child(2n) {margin-right: 0;}
 
 .empty-tip{display: flex;flex-direction: column;margin-top: 20vh;text-align: center;}
-.empty-tip image{width:608rpx;height:312rpx;}
+.empty-tip image{width:608rpx;height:312rpx;margin: 0 auto;}
 .empty-tip>view{margin: 38rpx 0 60rpx 0;font-size: 13px;color: #AAAAAA;}

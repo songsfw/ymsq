@@ -22,7 +22,6 @@ Page({
     inputHidden: false,
     currentKeyword: '',
     keywordTag: {},
-    searchList: {},
     recommendList: [{
         'id': 1,
         name: "商品1"
@@ -53,9 +52,10 @@ Page({
   //取消
   cancle: function () {
     getWord = '';
+    app.data.SearchSearch_SearchList = {};
     this.setData({
       currentKeyword: '',
-      searchList: {},
+      searchList: app.data.SearchSearch_SearchList,
       inputHidden: false,
     })
     this.flashTap();
@@ -65,9 +65,10 @@ Page({
     let val = e.detail.value
     getWord = val;
     if (getWord == '') {
+      app.data.SearchSearch_SearchList = {};
       this.setData({
         currentKeyword: '',
-        searchList: {},
+        searchList: app.data.SearchSearch_SearchList,
       })
       this.flashTap();
     }
@@ -129,9 +130,10 @@ Page({
     lastWord = word;
     if (!word) {
       syncflag = false;
+      app.data.SearchSearch_SearchList = {};
       this.setData({
         currentKeyword: '',
-        searchList: {},
+        searchList: app.data.SearchSearch_SearchList,
       })
       this.flashTap();
       return false
@@ -169,15 +171,19 @@ Page({
       // }
 
       //重置小标样式
-      for (let tmpVal of searchList['list']) {
+      for (let tmpIndex in searchList['list']) {
+        let tmpVal = searchList['list'][tmpIndex];
         let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
         tmpVal['selectNumberLength'] = selectNumberLength;
         tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
+        let ctabTypeMealIdSpuId =  tmpVal['type'] + '_' + tmpVal['meal_id'] + "_" + tmpVal['spu_id'];
+        app.data.SearchSearch_SearchListIndex[ctabTypeMealIdSpuId] = tmpIndex;
       }
       // 设置搜索结果
+      app.data.SearchSearch_SearchList = searchList;
       this.setData({
         currentKeyword: word,
-        searchList: searchList,
+        searchList: app.data.SearchSearch_SearchList,
         order_max_bread: res['order_max_bread'] || 99,
         inputHidden: true,
         showLoading: false,
@@ -206,13 +212,14 @@ Page({
     let spuId = e.currentTarget.dataset.spuid
     let type = e.currentTarget.dataset.type
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
+    url += '&ctabTypeMealIdSpuId=' + type +"_"+proId+"_"+spuId;
     wx.navigateTo({
       url: url
     })
   },
   addChartPreView(itemIdx) {
-    let tempList = this.data.searchList['list'][itemIdx];
-    let proStock = tempList.type == 1 ? this.data.searchList['stock'][tempList['meal_id']] : this.data.order_max_bread;
+    let tempList = app.data.SearchSearch_SearchList['list'][itemIdx];
+    let proStock = tempList.type == 1 ? app.data.SearchSearch_SearchList['stock'][tempList['meal_id']] : this.data.order_max_bread;
 
     // console.log(tempList, 'tempList.selected', tempList.selected, 'proStock', proStock)
     tempList.selected = parseInt(tempList.selected);
@@ -234,7 +241,7 @@ Page({
     // util.setTabBarBadge(totalNum)
     //此处报错。
     this.setData({
-      searchList: this.data.searchList,
+      searchList: app.data.SearchSearch_SearchList,
       totalNum: this.data.totalNum,
       totalNumStyle: this.getTotalNumStyle(this.data.totalNum),
     })
@@ -259,11 +266,11 @@ Page({
 
     if (trueStock[typeMealIdSpuId] === false) {
       //确认第一次操作赋值已加入购物车数量
-      trueStock[typeMealIdSpuId] = parseInt(this.data.searchList['list'][itemIdx].selected) || 0; //30
+      trueStock[typeMealIdSpuId] = parseInt(app.data.SearchSearch_SearchList['list'][itemIdx].selected) || 0; //30
     }
 
     //当前库存
-    let curStock = this.data.searchList['stock'][proId] || this.data.order_max_bread;
+    let curStock = app.data.SearchSearch_SearchList['stock'][proId] || this.data.order_max_bread;
     this.data.totalNum++
     //前置样式处理 && 库存限制处理
     let flag = this.addChartPreView(itemIdx);
@@ -280,7 +287,7 @@ Page({
         proId: proId,
         typeMealIdSpuId: typeMealIdSpuId,
         cityId: this.data.city_id,
-        selected: this.data.searchList['list'][itemIdx].selected,
+        selected: app.data.SearchSearch_SearchList['list'][itemIdx].selected,
         itemIdx: itemIdx,
       };
     } else {
@@ -321,8 +328,8 @@ Page({
       curType = e.currentTarget.dataset.type,
       curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
 
-    let product = this.data.searchList['list'][itemIdx];
-    console.log('this.data.searchList[list]', this.data.searchList['list'], 'itemIdx', itemIdx, product)
+    let product = app.data.SearchSearch_SearchList['list'][itemIdx];
+    console.log('app.data.SearchSearch_SearchList[list]',app.data.SearchSearch_SearchList['list'], 'itemIdx', itemIdx, product)
     let cakeTempParams = {
       proId: proId,
       proInPage,
@@ -410,7 +417,7 @@ Page({
           title: '加入购物车成功'
         })
 
-        let tempList = this.data.searchList['list'][itemIdx];
+        let tempList = app.data.SearchSearch_SearchList['list'][itemIdx];
         tempList.selected = parseInt(skuNum) + parseInt(tempList.selected);
         let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
         tempList['selectNumberLength'] = selectNumberLength;
@@ -419,7 +426,7 @@ Page({
         // let pagelist = this.getCachePage(proInPage + 1, currentTab, this.data.currentCategory);
         this.setData({
           totalNum: this.data.totalNum,
-          searchList: this.data.searchList,
+          searchList: app.data.SearchSearch_SearchList,
           pop: 0,
           totalNumStyle: this.getTotalNumStyle(this.data.totalNum),
         })
@@ -494,14 +501,14 @@ Page({
     })
   },
 
-  //购物车返回处理
+  //购物车返回处理 将废弃
   cartPageSyncList(params) {
     console.log(params)
     if (typeof(params['type']) == "undefined" || typeof(params['proId']) == "undefined" || typeof(params['selected']) == "undefined") {
       return
     }
     console.log(params)
-    console.log(this.data.searchList);
+    console.log(app.data.SearchSearch_SearchList);
     if (this.data.searchList['list'] && this.data.searchList['list'].length > 0) {
       for (let value of this.data.searchList['list']) {
         if (value['type'] == params['type']) {
@@ -520,6 +527,15 @@ Page({
   },
   onShow: function (e) {
     this.data.watchNumer = 0;
+    if(this.data.currentKeyword){
+      let totalNumber = wx.getStorageSync('total_num') || 0;
+      this.setData({
+        searchList:app.data.SearchSearch_SearchList,
+        totalNum:totalNumber,
+        totalNumStyle: this.getTotalNumStyle(totalNumber) || '',
+      });
+    }
+    
   },
   onLoad: function (option) {
     console.log('onload')
@@ -535,6 +551,7 @@ Page({
       city_id: city_id || '10216',
       totalNum: totalNumber,
       totalNumStyle: this.getTotalNumStyle(totalNumber) || '',
+      keyword:'',
     })
 
     util.setWatcher(this);
