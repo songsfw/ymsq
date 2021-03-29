@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "原麦山丘",
   "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
+  "backgroundTextStyle": "dark",
+  "backgroundColorTop":"#fff",
+  "backgroundColorBottom":"#f6f6f6"
 }

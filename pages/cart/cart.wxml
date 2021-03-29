@@ -21,20 +21,20 @@
     <movable-area class="item bread-item" wx:for="{{breadLi}}" wx:for-index="index">
       <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
         <view class="item-wrap flex-center item_{{item.cart_id}}"
-          bind:tap="select" bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
-          <view class="checkbox {{item.is_selected=='1'?'on':''}}">
+           bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
             <view class="iconfont icon-check"></view>
           </view>
           <view class="pro-info flex flex-1">
-            <view class="pic">
+            <view class="pic" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
               <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
             </view>
             <view class="txt flex-1 flex">
-              <view class="tit flex-center"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
+              <view class="tit flex-center" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
               <view class="price flex">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>
                 <view class="set-chart flex">
-                  <text class="iconfont {{item.sku_number==1?'icon-trash':'icon-minus'}} {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1"
+                  <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1"
                     data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
                   <text class="count">{{item.sku_number}}</text>
                   <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="1"
@@ -66,16 +66,16 @@
     <movable-area class="item cake-item" wx:for="{{cakeLi}}" wx:for-index="index">
       <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
         <view class="item-wrap flex-center item_{{item.cart_id}}"
-          bind:tap="select" bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
-          <view class="checkbox {{item.is_selected=='1'?'on':''}}">
+          bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
             <view class="iconfont icon-check"></view>
           </view>
           <view class="pro-info flex flex-1">
-            <view class="pic">
+            <view class="pic" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
               <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
             </view>
             <view class="txt flex-1 flex">
-              <view class="tit"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text>{{item.sku_name}} {{item.sku_unit}}</view>
+              <view class="tit" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text>{{item.sku_name}} ({{item.sku_unit}})</view>
               <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
                 <text wx:if="{{item.size}}">{{item.size}}</text>
                 <text wx:if="{{item.edible}}">{{item.edible}}</text>
@@ -84,7 +84,7 @@
               <view class="price flex">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>
                 <view class="set-chart flex">
-                  <text class="iconfont {{item.sku_number==1?'icon-trash':'icon-minus'}} {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2"
+                  <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2"
                     data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
                   <text class="count">{{item.sku_number}}</text>
                   <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="2"
@@ -143,7 +143,7 @@
     <view class="flex-center"><text>合计：</text>
       <view class="num">￥<text>{{totalPrice}}</text></view>
     </view>
-    <view class="buy-btn" bind:tap="Settlement">结算<text wx:if="{{cakeSelectedNum+breadSelectedNum>0}}">({{cakeSelectedNum+breadSelectedNum}})</text></view>
+    <view class="buy-btn" bind:tap="Settlement">去结算 <text>({{cakeSelectedNum+breadSelectedNum}})</text></view>
   </view>
 </view>
 
@@ -206,7 +206,7 @@
       </scroll-view>
       <view class="charge" bind:tap="getOrder" data-type="1">去结算</view>
       </view>
-      <view class="info" wx:if="{{breadSelectedNum>0}}">共<text class="color-b"> {{breadSelectedNum}} </text>件，合计<text class="color-b">{{breadSelectedPrice}}</text></view>
+      <view class="info" wx:if="{{breadSelectedNum>0}}">共<text class="color-b"> {{breadSelectedNum}} </text>件，合计：<text class="color-b">{{breadSelectedPrice}}</text></view>
       
     </view>
     <view class="item">
@@ -223,7 +223,7 @@
         </scroll-view>
         <view class="charge" bind:tap="getOrder" data-type="2">去结算</view>
       </view>
-      <view class="info" wx:if="{{cakeSelectedNum>0}}">共<text class="color-b"> {{cakeSelectedNum}} </text>件，合计<text class="color-b">{{cakeSelectedPrice}}</text></view>
+      <view class="info" wx:if="{{cakeSelectedNum>0}}">共<text class="color-b"> {{cakeSelectedNum}} </text>件，合计：<text class="color-b">{{cakeSelectedPrice}}</text></view>
     </view>
     
   </view>

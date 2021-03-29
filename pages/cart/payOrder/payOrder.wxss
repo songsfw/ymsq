@@ -29,7 +29,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .address .tit .tag{font-size: 11px;color: #fff; padding:0 5px; line-height: 18px; background: #C1996B;border-radius: 4px;}
 .address-txt{color:#666 ;font-size: 13px;word-break: break-all;}
 .inputbox .time{font-size: 15px;justify-content: flex-end;}
-.send-time{padding:34rpx 20rpx;justify-content: space-between;}
+.send-time{padding: 0 20rpx;height: 50px;justify-content: space-between;}
 .send-time text{font-size: 15px;font-weight: 500;}
 .send-time .time text,.inputbox .time text{color: #C1996B;margin-right: 20rpx;}
 .pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 92rpx;margin:0 20rpx 30rpx 20rpx;box-sizing: border-box;}
@@ -102,7 +102,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .send-type text{background: #C1996B;height: 36px;line-height: 36px;width: 50%;text-align: center;font-size: 13px;color: #fff;}
 .send-type text.on{background: #fff;color: #C1996B;}
 .delivery text,
-.coupon text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px;font-size: 12px;}
+.coupon text{border: 1px solid red;border-radius: 3px;color: red;padding: 0 2px;font-size: 10px;}
 .delivery-tip{background: rgba(252, 215, 140,.1);color: #FF7D06;line-height: 36px;font-size: 13px;padding:0 20rpx;border-radius: 8rpx;}
 .delivery-tip text{vertical-align: sub;font-size: 30rpx;}
 

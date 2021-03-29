@@ -1,6 +1,6 @@
 page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
-.banner-bg{position: absolute;left: 0;width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
+.banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
 
 .order-type{width: 100%;height: 180rpx;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
 .return .arrow-left:after{border-color: #333 !important;}
@@ -18,17 +18,17 @@ page{background: #F6F6F6;height: auto;}
 .option .price view{font-size: 13px;}
 .option .price .num{color: #FA603D;}
 .option .price .num text{font-size:16px;}
-.btn{width: auto;margin-left: 10px;min-width:60px ; height: 30px;line-height: 30px;background:#fff;border-radius: 15px;padding: 0 10px;color: #222;border: 1px solid #ccc;}
+.btn{width: auto;margin-left: 10px;min-width:60px ; height: 30px;line-height: 30px;background:#fff;border-radius: 15px;padding: 0 15px;color: #222;border: 1px solid #ccc;font-size: 14px;}
 .main-btn{background: #C1996B;color: #fff;border-color: #C1996B;}
 .edit{color: #C1996B;font-size: 13px;}
 .copy-btn{margin-right: 20rpx; display: inline-block; color: #C1996B;background: #F6F6F6;width: 36px;height: 18px;line-height: 18px;border-radius: 9px;text-align: center;font-size: 12px;}
-.delivery-info{padding:42rpx 24rpx 0 24rpx;justify-content: space-between; color:#64BF00;font-size: 13px;}
-.delivery-info .iconfont{font-size: 12px;}
-.delivery-info image{width:36rpx;height: 32rpx;}
+.delivery-info{padding:42rpx 24rpx 0 24rpx; color:#64BF00;font-size: 13px;}
+.delivery-info .iconfont{font-size: 12px;width: 20px;flex-shrink: 0;}
+.delivery-info image{width:36rpx;height: 32rpx;margin-right:22rpx ;flex-shrink: 0;}
 .address{padding:40rpx 20rpx;background: #fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x ;background-size: 29px 4px;border-radius: 8rpx;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
-.icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;}
+.icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;text-align: right;}
 .address .txt{width: 498rpx;}
 .address .tit text{margin-right: 20rpx;}
 .address .tit .tag{font-size: 11px;color: #fff; padding:0 5px; line-height: 18px; background: #C1996B;border-radius: 4px;}
@@ -137,9 +137,12 @@ page{background: #F6F6F6;height: auto;}
 
 .post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;position: absolute;top:45%;}
 .post-panel image{border-radius: 20rpx;}
-.post-panel .close{position: absolute;left: 95%;transform: translateX(-50%);top: auto; bottom: 100%;border-radius: 50%; border:1px solid #fff;width: 20px;height: 20px;}
-.post-panel .close:after,
-.post-panel .close::before{background-color: #fff;}
+.post-panel .close{top: 20rpx;
+  right: 20rpx;
+  width: 20px;
+  line-height: 20px;
+  height: 20px;
+  color: #fff;}
 
 .pay-btn{background: #C1996B;color:white}
 .share-remark{display: flex;flex-direction: column;justify-content:space-between;color:white;text-align:center}

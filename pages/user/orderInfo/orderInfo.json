@@ -5,5 +5,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "navBar": "/components/navBar/navBar"
-  }
+  },
+  "backgroundColorTop":"#fff",
+  "backgroundColorBottom":"#f6f6f6"
 }

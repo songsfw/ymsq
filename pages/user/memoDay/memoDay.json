@@ -3,5 +3,7 @@
   "backgroundTextStyle": "dark",
   "usingComponents": {
     "pop-panel": "/components/pop-panel/pop-panel"
-  }
+  },
+  "backgroundColorTop":"#fff",
+  "backgroundColorBottom":"#f6f6f6"
 }

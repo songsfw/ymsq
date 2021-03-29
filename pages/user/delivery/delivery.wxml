@@ -29,13 +29,13 @@
 <view class="delivery-info">
   <block wx:if="{{info.steps.length>0}}">
     <view class="item" wx:for="{{info.steps}}">
-      <view class="txt flex"><text>◉</text><view>{{item.msg}}</view></view>
+      <view class="txt flex"><text></text><view>{{item.msg}}</view></view>
       <view class="time">{{item.time}}</view>
     </view>
   </block>
   <block wx:else>
     <view class="item">
-      <view class="txt flex"><text>◉</text><view>暂无配送信息</view></view>
+      <view class="txt flex"><text></text><view>暂无配送信息</view></view>
     </view>
   </block>
 </view>

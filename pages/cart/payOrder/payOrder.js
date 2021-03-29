@@ -53,7 +53,7 @@ Page({
     unuse: true,
     verifyed: false,
     zitiName: '',
-
+    zitiPhone: '',
     isSet: null,
     useShowStatus: {},
     unUsedShowStatus: {}
@@ -539,7 +539,7 @@ Page({
     }
 
     //填入待减值
-    newPayQueue[1] = mai
+    newPayQueue[1] = util.formatePrice(mai)
     newPayQueue[0] = delivery
     newPayQueue[2] = util.formatePrice(coupon)
 
@@ -620,7 +620,7 @@ Page({
       }
       this.setData({
         verifyed: verifyed,
-        balanceTxt:parseFloat(balanceTxt),
+        balanceTxt:util.formatePrice(balanceTxt),
         payPrice: util.formatePrice(payPrice)
       })
     } else {
@@ -701,6 +701,12 @@ Page({
       zitiName: val
     })
   }, 300),
+  inputZitiPhone: util.debounce(function (e) {
+    let val = e.detail.value
+    this.setData({
+      zitiPhone: val
+    })
+  }, 300),
   bindPhoneSucess(){
     this.submmitOrder()
   },
@@ -728,6 +734,7 @@ Page({
       useBalance,
       verifyed,
       zitiName,
+      zitiPhone,
       balanceInfo,
       pay_style
     } = this.data
@@ -744,6 +751,21 @@ Page({
       wx.showToast({
         icon: "none",
         title: "请填写提货人姓名"
+      })
+      return
+    }
+
+    if (ziti != "0" && zitiPhone == '') {
+      wx.showToast({
+        icon: "none",
+        title: "请填写提货人手机号"
+      })
+      return
+    }
+    if (ziti != "0" && !util.isMobile(zitiPhone)) {
+      wx.showToast({
+        icon: "none",
+        title: "请填写正确的手机号"
       })
       return
     }
@@ -804,6 +826,7 @@ Page({
     if (ziti != "0") {
       data.ziti = '1'
       data.name = zitiName
+      data.mobile = zitiPhone
     }
     //活动免邮
     if(curId==1){
@@ -1213,6 +1236,8 @@ Page({
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
         address_id: addressInfo.id,
+        zitiName:addressInfo.name,
+        zitiPhone:addressInfo.mobile,
         addressInfo: addressInfo,
         'address.is_address': true
       })

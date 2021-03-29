@@ -46,7 +46,11 @@
   <view class="ziti-info" wx:if="{{ziti=='1'}}">
     <view class="inputbox flex-center">
       <view>提货人</view>
-      <input class="flex-1" type="text" placeholder="请输入提货人姓名" bindinput="inputZitiName" />
+      <input class="flex-1" type="text" placeholder="请输入提货人姓名" value="{{addressInfo.name}}" bindinput="inputZitiName" />
+    </view>
+    <view class="inputbox flex-center">
+      <view>手机号</view>
+      <input class="flex-1" type="number" value="{{addressInfo.mobile}}" placeholder="请输入提货人手机号" bindinput="inputZitiPhone" />
     </view>
     <view class="inputbox flex-center" data-pop="showTime" bind:tap="showPop">
       <view>提货时间</view>
@@ -97,7 +101,7 @@
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
           <view class="h4">巧克力牌</view>
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
-            placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard"
+            placeholder="巧克力牌(限9个汉字或18个英文字母)" maxlength="18" bindinput="inputCard"
             disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
             data-cartid="{{item.cart_id}}" />
           <view class="iconfont icon-edit"></view>
@@ -130,7 +134,7 @@
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
           <view class="h4">巧克力牌</view>
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
-            placeholder="{{item.default_mcake_message}}" maxlength="18" bindinput="inputCard"
+            placeholder="巧克力牌(限9个汉字或18个英文字母)" maxlength="18" bindinput="inputCard"
             disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
             data-cartid="{{item.cart_id}}" />
           <view class="iconfont icon-edit"></view>
@@ -162,7 +166,7 @@
     <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
         配送费
-        <text  wx:if="{{cart_data.free_msg!=''}}">{{cart_data.free_msg}}</text>
+        <text wx:if="{{cart_data.free_msg!=''}}">{{cart_data.free_msg}}</text>
       </view>
       <view class="val strongTxt">
         <text style="color:#222">￥{{hasDelivery?cart_data.delivery_price:'0'}}.00</text><text class="arrow-r"></text>
@@ -178,8 +182,8 @@
         <!-- <image src="../../../image/icon-mai.png"></image> -->
       </view>
       <view class="val">
-        <block wx:if="{{hasMai}}"><text class="strongTxt">-￥{{jinmai.now_price}}</text></block>
-        <block wx:else>可用{{jinmai.now_point}},抵￥{{jinmai.now_price}}.00,去使用</block>
+        <block wx:if="{{hasMai}}"><text class="strongTxt">-￥{{payQueue[1]}}</text></block>
+        <block wx:else>可用{{jinmai.now_point}},抵￥{{payQueue[1]}},去使用</block>
         <!-- <text class="iconfont icon-arrow-r"></text> -->
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
@@ -434,10 +438,10 @@
   <view class="pop-con">
     <view class="mai-info flex">
       <view class="">账户麦点：{{jinmai.total_point}}</view>
-      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{jinmai.now_price}}</text></view>
+      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{payQueue[2]}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
-      <view>抵扣<text>￥{{jinmai.now_price}}</text>使用{{jinmai.now_point}}麦点</view>
+      <view>抵扣<text>￥{{payQueue[2]}}</text>使用{{jinmai.now_point}}麦点</view>
       <view class="checkbox {{hasMai?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>

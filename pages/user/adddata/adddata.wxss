@@ -2,7 +2,7 @@ page{background: #F6F6F6;}
 
 .address{border-top:20rpx solid #f6f6f6;padding:0 24rpx;background: #fff;padding: 0 24rpx;font-size: 14px;}
 .inputxt{display: flex; border-bottom: 1px solid #F6F6F6;height: 49px;line-height: 49px;align-items: center;}
-.inputxt>text{display: block;width:77px ; color: #333;font-size: 14px;}
+.inputxt>text{display: block;width:77px ; color: #333;font-size: 14px;font-weight: 500;}
 .inputxt input{height: 100%;color: #222;font-weight: 500;font-size: 15px;}
 .default .checkbox{position: relative; width:18px;height: 18px;border: 1px solid #E9E9E9;border-radius: 50%;margin-right:20rpx;box-sizing: border-box;}
 .check-icon{display: none;background: #C1996B;}

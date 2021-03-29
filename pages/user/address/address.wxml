@@ -4,7 +4,7 @@
   <movable-area class="item" wx:for="{{address}}" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}" bindtouchstart="touchstart" bindtouchend="touchE">
       <movable-view damping="50" x="{{index==curIdx?item.txtStyle:0}}" class="move-area" direction="horizontal" out-of-bounds="true" friction="50">
         <view class="item-wrap flex-center">
-          <view wx:if="{{source==1}}" class="checkbox {{addressTxt == item.address+item.address_detail?'on':''}}" >
+          <view wx:if="{{source==1}}" class="checkbox {{addressId == item.id?'on':''}}" >
             <view class="iconfont icon-check"></view>
           </view>
           <view class="info flex-1" data-index='{{index}}'>

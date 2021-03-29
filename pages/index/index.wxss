@@ -1,5 +1,7 @@
 /**index.wxss**/
 page{background: #F4F9F5;}
+.fixedNav{position:fixed;width:100%;left:0;top:0; height:64px;z-index:22}
+.fixedNav.fixed{background-color: #fff;}
 view{font-size:12px}
 .wrap-all{padding: 10px;}
 .navigator-hover{background-color: none;}
@@ -34,7 +36,7 @@ view{font-size:12px}
     background-color: #fff;}
 .menu>view{margin-right:56rpx ;flex-shrink: 0;}
 .menu>view:last-child{margin-right: 0;}
-.menu .pic{width:120rpx;height: 120rpx;overflow: hidden;border-radius: 50%;padding: 10rpx;box-sizing: border-box;border:1px solid #f0f0f0;border-left-color:#C1996B;border-right-color:#C1996B;transform: rotate(45deg);}
+.menu .pic{width:120rpx;height: 120rpx;overflow: hidden;border-radius: 50%;padding: 10rpx;box-sizing: border-box;border:1rpx solid #f0f0f0;border-left-color:#C1996B;border-right-color:#C1996B;transform: rotate(45deg);}
 .menu .text{margin-top: 22rpx; text-align: center;font-size: 14px;}
 .menu view image{ border-radius:50%;transform: rotate(-45deg);}
 
@@ -117,7 +119,7 @@ color: #666;
       border-radius: 15rpx;
   }
 
-.logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
+.logo{width: 130rpx;height: 54rpx;margin: 0 auto;padding: 102rpx 0;}
 .gotop{position: fixed;right:50rpx ;bottom: 150rpx;width: 80rpx;height: 80rpx;z-index: 3;}
 .notice{width: 100%;height: 46px;line-height: 46px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin: 25rpx 0;}
 .notice image{width: 58px;height: 40px;flex-shrink: 0;margin-right: 16rpx;}

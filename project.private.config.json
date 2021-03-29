@@ -140,8 +140,8 @@
           "scene": null
         },
         {
-          "name": "支付成功页面",
-          "pathName": "pages/chart/paySuccess/paySuccess",
+          "name": "pages/cart/paySuccess/paySuccess",
+          "pathName": "pages/cart/paySuccess/paySuccess",
           "query": "orderCode=1000210224002538",
           "scene": null
         },

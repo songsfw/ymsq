@@ -462,8 +462,8 @@ Page({
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
-          cakeSelectedNum:selectType.cakeSelectedNum,
-          breadSelectedNum:selectType.breadSelectedNum,
+          cakeSelectedNum:cake.select_number,
+          breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,
           breadSelectedPrice:bread.select_price,
           breadLi: bread.detail,
@@ -499,8 +499,8 @@ Page({
         //   return item.is_selected == "0"
         // })
         this.setData({
-          cakeSelectedNum:selectType.cakeSelectedNum,
-          breadSelectedNum:selectType.breadSelectedNum,
+          cakeSelectedNum:cake.select_number,
+          breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,
           breadSelectedPrice:bread.select_price,
           type:selectType.type,
@@ -570,8 +570,8 @@ Page({
         let selectType = this.getSelectType(bread,cake)
 
         this.setData({
-          cakeSelectedNum:selectType.cakeSelectedNum,
-          breadSelectedNum:selectType.breadSelectedNum,
+          cakeSelectedNum:cake.select_number,
+          breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,
           breadSelectedPrice:bread.select_price,
           type:selectType.type,

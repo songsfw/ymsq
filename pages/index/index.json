@@ -2,6 +2,8 @@
   "navigationBarTitleText": "原麦山丘",
   "backgroundTextStyle": "dark",
   "navigationStyle": "custom",
+  "backgroundColorTop":"#f6f6f6",
+  "backgroundColorBottom":"#f6f6f6",
   "usingComponents": {
     "navBar": "/components/navBar/navBar"
   }

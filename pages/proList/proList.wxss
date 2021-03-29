@@ -20,6 +20,7 @@ page{background: #F9F9F9;height: auto;}
 .item .price .num{font-size: 11px;color: #222222;}
 .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
 .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.item .price .add.unuse{color: #ccc}
 .menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;}
 .isFixed{position: fixed;left:0;width: 100%;box-sizing: border-box;}
 

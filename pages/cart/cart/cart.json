@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "购物车",
   "backgroundTextStyle": "dark",
-  "backgroundColorBottom":"#fff",
-  "navigationBarTextStyle":"black"
+  "navigationBarTextStyle":"black",
+  "backgroundColorTop":"#f6f6f6",
+  "backgroundColorBottom":"#f6f6f6"
 }

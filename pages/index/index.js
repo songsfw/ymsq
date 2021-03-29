@@ -74,8 +74,9 @@ Page({
       this.timing()
     }, 1000);
   },
-  freshData: function () {
-    
+  refresh: function () {
+      
+    this.getIndexInfo()
   },
 
   onPageScroll: util.throttle(function (e) {
@@ -114,7 +115,7 @@ Page({
     api.getIndexInfo(data).then(res => {
       console.log(res);
       if(res){
-        let {notice,operate} = res
+        let {notice,operate,message} = res
         let components = operate[0].components
         let globalStyle = operate[0].box_style
         let banner = components[0].componentDetail.imageReader,
@@ -142,19 +143,20 @@ Page({
         // }
         
         this.setData({
+          triggered:false,
           globalStyle,
           components,
           notice:notice,
           banner,
           menu,
+          message,
           // block1:block1 || null,
           // block2:block2 || null,
           // block3:block3 || null,
           curBg:banner[0].image_url
         })
       }
-
-      wx.stopPullDownRefresh() //停止下拉刷新
+      //wx.stopPullDownRefresh() //停止下拉刷新
     })
 
   },
@@ -252,7 +254,7 @@ Page({
 
   },
   onLoad: function (options) {
-    console.log('111',wx.canIUse('scroll-view.refresher-enabled'))
+    //console.log('111',wx.canIUse('scroll-view.refresher-enabled'))
 
   },
   onHide:function(){

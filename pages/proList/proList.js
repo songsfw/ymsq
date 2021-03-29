@@ -584,6 +584,7 @@ Page({
         });
         // console.log(this.data.showList[app.globalData.proType]);
         // console.log(this.data.pageInfo)
+        wx.stopPullDownRefresh()
         return true;
       }
       this.refreshTypeTagInfo(res.choose_type, proList[app.globalData.proType]);

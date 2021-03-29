@@ -3,6 +3,8 @@
   "enablePullDownRefresh": true,
   "navigationStyle": "custom",
   "backgroundTextStyle": "dark",
+  "backgroundColorTop":"#fff",
+  "backgroundColorBottom":"#f6f6f6",
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "toCart": "/components/toCart/toCart"

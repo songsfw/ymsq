@@ -83,7 +83,9 @@ Page({
         city_id:rawAddress.old_city_id,
         id:rawAddress.id,
         name:rawAddress.name,
-        city_name:rawAddress.city_name+','+rawAddress.area_name,
+        province:rawAddress.city_name,
+        district:rawAddress.area_name,
+        //city_name:rawAddress.city_name+','+rawAddress.area_name,
         mobile:rawAddress.mobile,
         address:rawAddress.address,
         location:rawAddress.location,
@@ -265,6 +267,7 @@ Page({
       let addressInfo = wx.getStorageSync('addressInfo')
       addressInfo = addressInfo&&JSON.parse(addressInfo)
       this.setData({
+        addressId:addressInfo.id,
         addressTxt:addressInfo.address+addressInfo.address_detail
       })
     }

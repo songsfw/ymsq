@@ -6,7 +6,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item .hd .date{color: #999;line-height: 18px;}
 .item .hd .status{color: #C1996B;}
 .option{justify-content:flex-end;align-items: center;padding: 0 20rpx;}
-.option .btn{width: 77px;height: 30px;line-height: 30px;text-align: center;border-radius:15px;font-size: 14px;margin-left: 12px;}
+.option .btn{width: auto;padding: 0 15px; height: 30px;line-height: 30px;border-radius:15px;font-size: 14px;margin-left: 12px;}
 .option .time{color: #999;font-size: 14px;}
 .btn1{background: #fff;color: #222;border: 1px solid #ccc;}
 .pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
@@ -90,7 +90,13 @@ page{background: #F6F6F6;padding-top: 48px;}
 .post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;position: absolute;top:45%;}
 .post-panel image{border-radius: 20rpx;}
 /* .post-panel .close{position: absolute;left: 50%;transform: translateX(-50%);top: auto; bottom: -40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;} */
-.post-panel .close{position: absolute;left: 95%;transform: translateX(-50%);top: auto; bottom: 100%;border-radius: 50%; border:1px solid #fff;width: 20px;height: 20px;}
+.post-panel .close{    position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 20px;
+  line-height: 20px;
+  height: 20px;
+  color: #fff;}
 
 .cancel-panel{left: 50%;top: 50%;height: auto;bottom: auto; transform: translate(-50%,-50%);padding:60rpx 40rpx 40rpx 40rpx;width: 630rpx;box-sizing: border-box;}
 .cancel-panel .tit{font-size: 16px;font-weight: bold;margin-bottom: 50rpx;}

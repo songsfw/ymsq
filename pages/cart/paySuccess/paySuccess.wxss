@@ -84,7 +84,14 @@ page{background: #F6F6F6;}
 
 .post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;}
 .post-panel image{border-radius: 20rpx;}
-.post-panel .close{position: absolute;left: 95%;transform: translateX(-50%);top: auto; bottom: 100%;border-radius: 50%; border:1px solid #fff;width: 20px;height: 20px;}
+.post-panel .close{position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: #fff;}
 
 .desc{margin-top: 40rpx;}
 .desc .h3{font-size: 13px;text-align: left;margin-bottom: 10rpx;}

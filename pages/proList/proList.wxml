@@ -85,8 +85,7 @@
                 </view>
                 <view class="price flex">
                   <view class="num">￥<text>{{pro.price}}</text></view>
-                  <view wx:if="{{showStock[currentTab][pro.meal_id]!=0 }}"
-                    class="add iconfont icon-add pro-{{pro.meal_id}}" catch:tap="addCart" data-img="{{pro.img}}"
+                  <view class="add iconfont icon-add pro-{{pro.meal_id}} {{showStock[currentTab][pro.meal_id]==0?'unuse':''}}" catch:tap="addCart" data-img="{{pro.img}}"
                     data-id="{{pro.meal_id}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}"
                     data-typeMealIdSpuId="{{pro.type}}_{{pro.meal_id}}_{{pro.spu_id}}" data-type="{{pro.type}}"
                     data-spuid="{{pro.spu_id}}">

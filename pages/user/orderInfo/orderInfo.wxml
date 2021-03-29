@@ -1,7 +1,7 @@
 <!-- cart -->
 <navBar navType="transparent" hasReturn isFold="{{isFold}}" title="订单详情"></navBar>
 <view class="banner-bg"></view>
-<view class="wrap" style="padding-top:{{fixedTop?fixedTop:'64'}}px;padding-bottom:{{btmHolder||0}}px">
+<view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
   <view class="order-type">
     <view class="txt">
       <!-- <image wx:if="{{stat==1}}" src="../../../image/icon-od4.png"></image> -->
@@ -14,7 +14,7 @@
     <view class="pro-info">
       <view class="delivery-info flex-center" bind:tap="showDelivery" wx:if="{{steps.length>0}}">
         <image src="../../../image/icon-od5.png"></image>
-        <view class="txt">
+        <view class="txt flex-1">
           <view>{{steps[0].msg}}</view>
           <view>{{steps[0].time}}</view>
         </view>

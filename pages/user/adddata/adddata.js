@@ -81,14 +81,14 @@ Page({
     }
     
     location = JSON.parse(location)
-    if(this.data.type=="1"){
-      let city_area = this.data.address.city_name.split(',')
-      newAdd['province']= city_area[0]
-      newAdd['district']= city_area[1]
-    }else{
+    // if(this.data.type=="1"){
+    //   let city_area = this.data.address.city_name.split(',')
+    //   newAdd['province']= city_area[0]
+    //   newAdd['district']= city_area[1]
+    // }else{
       newAdd['province']=this.data.address.province;
       newAdd['district']=this.data.address.district;
-    }
+    //}
    
     newAdd.location = location
     newAdd.title=title
