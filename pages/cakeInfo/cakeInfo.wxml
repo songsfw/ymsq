@@ -40,11 +40,11 @@
 </view>
 <view class="option flex" style="padding-bottom:{{btmHolder}}px">
   <view class="flex">
-    <navigator class="home" open-type="switchTab" url="/pages/index/index" bindtap="toIndexPage">
+    <navigator hover-class="none"  class="home" open-type="switchTab" url="/pages/index/index" bindtap="toIndexPage">
       <view class="icon"><image src="../../image/icon-home.png"></image></view>
       <text >首页</text>
     </navigator>
-    <navigator class="cart" bind:tap="toCart" url="/pages/cart/cart/cart{{toCartParams}}">
+    <navigator hover-class="none"  class="cart" bind:tap="toCart" url="/pages/cart/cart/cart{{toCartParams}}">
       <block wx:if="{{totalNum>0}}">
         <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
         <view class="num num99" wx:else>99+</view>
