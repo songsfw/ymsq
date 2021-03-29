@@ -424,7 +424,8 @@ Page({
             })
             var curNum = curItem && curItem.sku_number || 0
           }
-          prePage.cartPageSyncList && prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
+          app.inCartRefreshList({type:CurType,proId:skuid,selected:curNum});
+          // prePage.cartPageSyncList && prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
         }
 
         this.setData({

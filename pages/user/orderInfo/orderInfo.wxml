@@ -79,6 +79,7 @@
                 <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
               </view>
               <view class="tag flex-wrap">
+                <text>{{item.weight}}</text>
                 <text>{{item.size}}</text>
                 <text>{{item.edible}}</text>
               </view>

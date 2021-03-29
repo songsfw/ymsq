@@ -32,6 +32,11 @@ Page({
     let urlType = e.currentTarget.dataset.type;
     let url = e.currentTarget.dataset.url;
     switch (urlType) {
+      case "1":
+        wx.navigateTo({
+          url:"/pages/web/web?url="+url
+        })
+        break;
       case "2":
         wx.navigateTo({
           url:"/pages/cakeInfo/cakeInfo?proId="+url
@@ -115,7 +120,7 @@ Page({
     api.getIndexInfo(data).then(res => {
       console.log(res);
       if(res){
-        let {notice,operate,message} = res
+        let {notice,operate,message,show_subscribe} = res
         let components = operate[0].components
         let globalStyle = operate[0].box_style
         let banner = components[0].componentDetail.imageReader,

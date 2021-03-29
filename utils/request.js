@@ -64,8 +64,6 @@ const request = (method,url,data,needToken=true)=>{
       }, 
       data: defData,
       success: function (res) {
-        console.log(url)
-        console.log("---resolve---",res);
         resolve(res)
         //hideLoading()
       },

@@ -40,7 +40,6 @@ view{font-size:12px}
 .menu .text{margin-top: 22rpx; text-align: center;font-size: 14px;}
 .menu view image{ border-radius:50%;transform: rotate(-45deg);}
 
-.pro-block{padding:0 24rpx;}
 .pro-block .title{position: relative;justify-content: space-between;align-items: center;margin-bottom: 20rpx;}
 .pro-block .title .more{position: absolute;right: 0;top: 0;height: 100%; color: #C1996B;font-size: 14px;line-height: 37px;}
 .pro-block .title .more text{font-size: 14px;margin-left: 6px;}
@@ -52,14 +51,13 @@ view{font-size:12px}
 .pro-block .txt .price{font-size: 14px;color: #C1996B;}
 .pro-block .txt .price text{font-size: 22px;}
 .pro-block .desc{color: #999;}
-.pro-block .pic{width: 702rpx;height: 440rpx;}
+.pro-block .pic{height: 440rpx;margin:0 auto;border-radius: 8rpx;overflow: hidden;}
 .pro-list .pro-list>view:last-child{margin-bottom: 0;}
 .block1 .pro-list>view,
 .block2 .pro-list>view,
 .block3 .pro-list>view{position: relative;margin-bottom:20rpx;}
 .block2 .pro-list>view,
-.block3 .pro-list>view{border-radius: 8rpx;overflow: hidden;}
-.pro-block .pic{border-radius: 8rpx 8rpx 0 0;overflow: hidden;}
+.block3 .pro-list>view{overflow: hidden;}
 .block2 .title,
 .block3 .title{position: relative;align-items: center;}
 
@@ -121,7 +119,7 @@ color: #666;
 
 .logo{width: 130rpx;height: 54rpx;margin: 0 auto;padding: 102rpx 0;}
 .gotop{position: fixed;right:50rpx ;bottom: 150rpx;width: 80rpx;height: 80rpx;z-index: 3;}
-.notice{width: 100%;height: 46px;line-height: 46px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin: 25rpx 0;}
+.notice{width: 100%;height: 46px;line-height: 46px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin-bottom: 25rpx;border-top: 20rpx solid #F6F6F6;}
 .notice image{width: 58px;height: 40px;flex-shrink: 0;margin-right: 16rpx;}
 .notice .txt,.notice .tit{padding: 0 24rpx;height: 18px;line-height: 18px;background: #fff;}
 .notice .txt{width: auto; border-left: 1px solid #ccc;padding-left: 16rpx;}

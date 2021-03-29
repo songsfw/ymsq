@@ -50,9 +50,9 @@
         <view class="show-btn">查看</view>
       </view>
       <!-- 分类推荐 -->
-      <view class='main-content' style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius}}rpx {{item.componentDetail.box_style.border_top_radius}}rpx {{item.componentDetail.box_style.border_bottom_radius}}rpx {{item.componentDetail.box_style.border_bottom_radius}}rpx;margin:{{item.componentDetail.box_style.margin_top}}rpx {{item.componentDetail.box_style.margin_right}}rpx {{item.componentDetail.box_style.margin_bottom}}rpx {{item.componentDetail.box_style.margin_left}}rpx" wx:if="{{item.block_type == 2}}">
-        <view class='pro-block block3' >
-          <view class="title flex">
+      <view class='main-content' style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx" wx:if="{{item.block_type == 2}}">
+        <view class='pro-block block3'>
+          <view wx:if="{{item.id!=34}}" class="title flex">
             <block wx:if="{{item.componentDetail.box_style.background_image != ''}}">
               <view style="height:84rpx"><image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image></view>
             </block>
@@ -71,19 +71,19 @@
                 <view class="pic" style="height:{{pro.image_height!='' ? pro.image_height : '440'}}rpx; border-radius:{{pro.image_top_radius}}rpx {{pro.image_top_radius}}rpx {{pro.image_bottom_radius}}rpx {{pro.image_bottom_radius}}rpx">
                   <image src="{{pro.image_url}}" mode="aspectFill"></image>
                 </view>
-                <view class="txt" style="background-color:{{item.componentDetail.box_style.inner_background_color}}">
+                <!-- <view class="txt" style="background-color:{{item.componentDetail.box_style.inner_background_color}}">
                   <view class="name flex-center">
                     <view class="h4">{{pro.title}}</view>
                     <view class="price">￥<text>{{pro.price}}</text> </view>
                   </view>
                   <view class="desc">{{pro.desc}}</view>
-                </view>
+                </view> -->
               </view>
             </block>
           </view>
         </view>
       </view>
-      <navigator url="../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="iwx" wx:if="{{cidx==2}}"><image src="../../image/iwx.jpg"></image></navigator>
+      <!-- <navigator url="../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="iwx" wx:if="{{cidx==2}}"><image mode="aspectFill" src="{{item.componentDetail.imageReader[0].image_url}}"></image></navigator> -->
     </block>
 
     <view class="logo">
