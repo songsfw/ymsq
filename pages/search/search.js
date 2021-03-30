@@ -157,6 +157,15 @@ Page({
     // }
     console.log(data)
     api.keywordSearch(data).then(res => {
+      if(!res){
+        this.setData({
+          currentKeyword: word,
+          searchList: [],
+          inputHidden: true,
+          showLoading: false,
+        })
+        return false;
+      }
       if (!syncflag || lastWord != word) {
         console.log('syncflag:', syncflag, 'lastWord:', lastWord, 'word:', word)
         return false;
