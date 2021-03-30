@@ -403,7 +403,7 @@ Page({
   getChartData() {
     //let proType = app.globalData.proType
     let data = {
-      city_id: this.data.city_id
+      city_id: !this.data.city_id || this.data.city_id == 0?  10216 :this.data.city_id,
     }
     // if(proType){
     //   data.type=proType
