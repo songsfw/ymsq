@@ -79,6 +79,7 @@ Page({
     }
   },
   toCart(){
+    this.data.backNum = 0;
     app.globalData.proType = "2"
   },
   confirmCake:util.debounce(function(e){
@@ -120,6 +121,7 @@ Page({
         }
 
         if(action==1){
+          this.data.backNum = 0;
           app.globalData.proType = "2"
           wx.navigateTo({
             url:"/pages/cart/cart/cart"
