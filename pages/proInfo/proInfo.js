@@ -62,6 +62,7 @@ Page({
     })
   },
   toCart() {
+    this.data.backNum = 0;
     app.globalData.proType = "1";
   },
   confirmBread: util.debounce(function (e) {
@@ -98,8 +99,8 @@ Page({
         if(this.data.ctabTypeMealIdSpuId){
           app.refreshList(this.data.ctabTypeMealIdSpuId,skuNum);
         }
-
         if (action == 1) {
+          this.data.backNum = 0;
           app.globalData.proType = "1"
           wx.navigateTo({
             url: "/pages/cart/cart/cart"
