@@ -90,6 +90,7 @@ Page({
       cart_id: id
     }
     let proId = spuid||skuid
+
     wx.showModal({
       title: '',
       content: '是否将该商品从购物车移除',
@@ -102,6 +103,8 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
+              let cakeLi = res.cake.detail
+
               var pages = getCurrentPages();
               if(pages.length > 1){
                 //上一个页面实例对象
@@ -111,7 +114,7 @@ Page({
       
               this.setData({
                 breadLi: res.bread.detail,
-                cakeLi: res.cake.detail,
+                cakeLi: cakeLi,
                 totalPrice:res.select_price,
               })
             } else {
