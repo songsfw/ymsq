@@ -13,27 +13,12 @@ const returnData = res=>{
     }else if(data.status==-5){
       return false
     }else if(data.status==1001){
-      //if(isLogin==0){
-        // wx.showModal({
-        //   title: '',
-        //   showCancel:false,
-        //   content: '登录原麦山丘',
-        //   confirmText: "确定",
-        //   success(res) {
-        //     wx.navigateTo({
-        //       url: '/pages/login/login'
-        //     })
-        //   }
-        // })
-        wx.navigateTo({
-          url: '/pages/login/login'
-        })
-        //isLogin=1
-      //}
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
     }else if(data.status==1022){
       console.log('未绑定手机');
       return '1022'
-
     }else{
       //特殊状态统一处理
       if(data.message){
@@ -42,6 +27,7 @@ const returnData = res=>{
           title:data.message
         })
       }
+      return false
     }
   }else if(res.statusCode == 500){
     wx.showModal({

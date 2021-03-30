@@ -30,7 +30,7 @@ page{background: #F9F9F9;height: auto;}
 /* .main view.on:after{display: block;margin-bottom:22rpx} */
 .main view.menuline{position: absolute;top:0;left:0;width:100%;z-index: -1;justify-content:center}
 .main view.menuline .menuline-1{width:0;height:0;}
-.main view.menuline .menuline-1.show{width:80rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 56rpx}
+.main view.menuline .menuline-1.show{width:80rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 28px}
 .main view.linegroup{columns: #222222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
 .main view.linegroup.on{font-size:17px;width:100%;}
 
