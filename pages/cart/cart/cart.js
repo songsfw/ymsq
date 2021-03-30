@@ -83,10 +83,11 @@ Page({
     })
   },
   delPro(e) {
-    let id = e.currentTarget.dataset.id,skuid = e.currentTarget.dataset.skuid,type = e.currentTarget.dataset.type
+    let id = e.currentTarget.dataset.id,skuid = e.currentTarget.dataset.skuid,spuid = e.currentTarget.dataset.spuid,type = e.currentTarget.dataset.type
     let data = {
       cart_id: id
     }
+    let proId = spuid||skuid
     wx.showModal({
       title: '',
       content: '是否将该商品从购物车移除',
@@ -103,8 +104,7 @@ Page({
               if(pages.length > 1){
                 //上一个页面实例对象
                 //var prePage = pages[pages.length - 2];
-                app.inCartRefreshList({type:type,proId:skuid,selected:0});
-                //prePage.cartPageSyncList && prePage.cartPageSyncList({type:type,proId:skuid,selected:0})
+                app.inCartRefreshList({type:type,proId:proId,selected:0});
               }
       
               this.setData({
