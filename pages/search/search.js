@@ -235,11 +235,7 @@ Page({
       return false;
     }
     tempList.selected = parseInt(tempList.selected) + 1;
-    let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
-    tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected);;
-    tempList['selectNumberLength'] = selectNumberLength;
-    // util.setTabBarBadge(totalNum)
-    //此处报错。
+    app.inCartRefreshList({type:tempList.type,proId:tempList.meal_id,selected:tempList.selected});
     this.setData({
       searchList: app.data.SearchSearch_SearchList,
       totalNum: this.data.totalNum,
