@@ -84,7 +84,9 @@ Page({
   },
   delPro(e) {
     let id = e.currentTarget.dataset.id,skuid = e.currentTarget.dataset.skuid,spuid = e.currentTarget.dataset.spuid,type = e.currentTarget.dataset.type
+    let { city_id } = this.data
     let data = {
+      city_id:city_id,
       cart_id: id
     }
     let proId = spuid||skuid
@@ -448,7 +450,9 @@ Page({
   },
   //选中/撤销选中
   selectPro(cartId, action) {
+    let { city_id } = this.data
     let data = {
+      city_id:city_id,
       cart_id: cartId,
       action: action
     }
@@ -485,10 +489,12 @@ Page({
   selectAll(e) {
     let type = e.currentTarget.dataset.type
     let {
+      city_id,
       noallBread,
       noallCake
     } = this.data
     let data = {
+      city_id:city_id,
       type: type
     }
 

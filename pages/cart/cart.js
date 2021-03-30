@@ -84,7 +84,9 @@ Page({
   },
   delPro(e) {
     let id = e.currentTarget.dataset.id
+    let { city_id } = this.data
     let data = {
+      city_id: city_id,
       cart_id: id
     }
     wx.showModal({
@@ -478,7 +480,9 @@ Page({
   },
   //选中/撤销选中
   selectPro(cartId, action) {
+    let { city_id } = this.data
     let data = {
+      city_id:city_id,
       cart_id: cartId,
       action: action
     }
@@ -518,11 +522,14 @@ Page({
   //全选
   selectAll(e) {
     let type = e.currentTarget.dataset.type
+    
     let {
+      city_id,
       noallBread,
       noallCake
     } = this.data
     let data = {
+      city_id:city_id,
       type: type
     }
 

@@ -397,10 +397,9 @@ Page({
       wx.saveImageToPhotosAlbum({
         filePath: e.tempFilePath,
         success: function () {
-          wx.showModal({
-            title: '提示',
-            content: '商品海报保存成功',
-            showCancel: false,
+          wx.showToast({
+            icon:'none',
+            title: '保存成功，分享后在优惠券页查看优惠券',
           });
         },
         fail: function (e) {

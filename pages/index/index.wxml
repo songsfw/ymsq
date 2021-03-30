@@ -56,9 +56,9 @@
             <block wx:if="{{item.componentDetail.box_style.background_image != ''}}">
               <view style="height:84rpx"><image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image></view>
             </block>
-            <block wx:elif="{{item}}">
+            <!-- <block wx:elif="{{item}}">
               <view style="height:34rpx" mode="heightFix"><image src=""></image></view>
-            </block>
+            </block> -->
             
           
             <view wx:if="{{item.componentDetail.link_type >0 }}" class="more" bind:tap="toPro"
