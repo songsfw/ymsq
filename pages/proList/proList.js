@@ -85,7 +85,6 @@ Page({
       let pagelist = this.getCachePage(1, currentTab, currentTag)
       // let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
       // console.log('noMoreData:', noMoreData, "currentTab: ", currentTab, 'currentTag:', currentTag, 'pagelist::', pagelist)
-
       this.setData({
         currentTag: currentTag,
         currentTab: currentTab,
@@ -159,11 +158,9 @@ Page({
       return false;
     }
     tempList.selected = parseInt(tempList.selected) + 1;
-    let selectNumberLength = tempList.selected > 0 ? tempList.selected.toString().length : 0;
-    tempList['cornerTagStyle'] = this.getAddTapNumStyle(tempList.selected);
-    tempList['selectNumberLength'] = selectNumberLength;
+    app.inCartRefreshList({type:tempList.type,proId:tempList.meal_id,selected:tempList.selected});
     this.setData({
-      ['showList[' + currentTab + '][' + idx + '][' + itemIdx + ']']: tempList,
+      showList: this.data.showList,
     })
     try {
       util.setTabBarBadge(totalNum)

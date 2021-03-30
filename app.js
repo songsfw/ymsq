@@ -224,9 +224,9 @@ App({
     // console.log(this.data)
 
   },
+  //全部更新
   inCartRefreshList(params) {
     console.log('app- params', params);
-    // console.log(this.data)
     let diffStr = params['type'];
     diffStr = params['type'] == 1 ? diffStr + '_' + params['proId'] + "_0" : diffStr + '_' + params['proId'] + '_' + params['proId'];
     //分类
@@ -235,7 +235,6 @@ App({
       if (keyParams == diffStr) {
         //更新
         this.refreshList(key, params['selected'],true)
-        break;
       }
     }
 
@@ -244,7 +243,6 @@ App({
   },
   getAddTapNumStyle(num) {
     let selectNumberLength = num > 0 ? num.toString().length : 0;
-    // tempList['selectNumberLength'] = selectNumberLength;
     let style = "";
     switch (selectNumberLength) {
       case 1:
@@ -264,9 +262,5 @@ App({
     ProductList_ProListIndex: {}, //列表页索引信息
     SearchSearch_SearchList: {}, //搜索列表
     SearchSearch_SearchListIndex: {}, //搜索列表
-    //
-    // watchNum:0,//触发
-    // prePushWatchlist: [], //预处理栈 
-    // prePushWatchHash: {}, //预处理堆
   }
 })
