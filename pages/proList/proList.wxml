@@ -34,7 +34,7 @@
         <block hidden="{{showCategory[currentTab].length<=0}}">
           <view class="category-cake-item" bind:tap="selectCategory" data-id="null" data-tagnam="全部">
             <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
-              <image src="{{allCakeCateImg}}"></image>
+              <image src="/image/d1.png"></image>
             </view>
             <text data-id="null" data-tagnam="全部" wx:if="{{showCategory[currentTab]}}"
               class="txt {{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
