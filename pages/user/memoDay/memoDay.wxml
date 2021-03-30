@@ -34,9 +34,9 @@
 </view>
 <view style="height:{{56+btmHolder}}px"></view>
 <pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" class="tips-panel">
-  <view slot="txt" class="txt">
+  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
     <view wx:for="{{doc}}">{{item}}</view>
-  </view>
+  </scroll-view>
 </pop-panel>
 <view class="date-mask" bind:tap="closeDate" wx:if="{{showDate}}"></view>
 <view class="date-panel {{showDate?'on':''}}" style="padding-bottom:{{btmHolder}}px">

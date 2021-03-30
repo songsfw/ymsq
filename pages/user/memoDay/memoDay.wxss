@@ -7,8 +7,8 @@ page{background: #F6F6F6;}
 .input-box{padding: 14px 0;border-bottom: 1px solid #F6F6F6;font-size: 14px;}
 .item .input-box:last-child{border: none;}
 .item .tit{margin-right: 16px;}
-.tips-panel .popPanel{overflow: initial;top: 40%;}
-.popPanel .txt{max-height: 200px;overflow-y: scroll; line-height: 1.8;font-size: 13px;}
+.tips-panel .popPanel{overflow: initial;}
+.popPanel .pop-con{height: 200px;line-height: 1.8;font-size: 13px;}
 .popPanel .pop-close{
   width: 60rpx;
   height: 60rpx;

@@ -97,14 +97,16 @@
 <view class="gotop" bindtap="gotop" wx:if="{{showGoto}}">
       <image src="../../image/icon-top.png"></image>
     </view>
-<view wx:if="{{panel=='notice'}}" class="notice-panel">
-  <view class="iconfont icon-close close" bind:tap="closePanel"></view>
-  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con">
-    <view style="padding:0 24rpx 24rpx 24rpx;">
-      <block wx:for="{{notice}}" wx:for-index="index">
-        <view class="item"><text>◉</text> {{item}}</view>
-      </block>
-    </view>
-  </scroll-view>
-</view>
-<view class="mask" wx:if="{{mask}}" catchtap="closePanel"></view>
+
+<pop-panel title="专属消息" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" class="notice-panel">
+ 
+    <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
+      <view style="padding:0 24rpx 24rpx 24rpx;">
+        <block wx:for="{{notice}}" wx:for-index="index">
+          <view class="item"><text>◉</text> {{item}}</view>
+        </block>
+      </view>
+    </scroll-view>
+ 
+</pop-panel>
+<!-- <view class="mask" wx:if="{{mask}}" catchtap="closePanel"></view> -->

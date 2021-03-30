@@ -134,10 +134,17 @@ color: #666;
 
 .pro-list>view:last-child{margin-bottom:0 ;}
 .show-btn{color: #fff;width: 38px;flex-shrink: 0;text-align: center; background: #C1996B;height: 20px;line-height: 20px;border-radius: 4rpx; font-size: 11px;font-weight: normal;}
-
-.notice-panel{ position: fixed;left: 50%;top:50%; background:#fff;width: 592rpx;max-height: 712rpx;min-height: 300rpx; z-index: 22;transform: translate(-50%,-50%);background-size: 100% 100%; padding: 24rpx;box-sizing: border-box;border-radius: 16rpx;}
-.notice-panel .close{position: absolute;transform: translateX(-50%);left: 50%; bottom:-40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;line-height: 30px;color: #fff;}
-.notice-panel .pop-con{height: 100%;}
-.notice-panel .pop-con view{color: #333;font-size: 13px;line-height: 18px;}
+.notice-panel .popPanel{overflow: initial;}
+.popPanel .pop-con{height: 200px;line-height: 1.8;font-size: 13px;}
+.popPanel .pop-close{
+  width: 60rpx;
+  height: 60rpx;
+  left: 50%;
+  bottom: -50px;
+  top: auto;
+  transform: translateX(-50%);
+  border: 1px solid #fff;
+  border-radius: 50%;
+color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .iwx{width: 750rpx;height: 240rpx;}
 .main-content{padding: 25rpx 0;background-color: #F4F9F5;margin: 25rpx 0;}

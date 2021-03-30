@@ -82,17 +82,17 @@
               <view class="price flex">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>
                 <view class="set-chart flex">
-                  <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2"
+                  <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" data-spuid="{{item.spu_id}}" catch:tap="minusNum" data-type="2"
                     data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
                   <text class="count">{{item.sku_number}}</text>
-                  <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="2"
+                  <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" data-spuid="{{item.spu_id}}" catch:tap="plusNum" data-type="2"
                     data-idx="{{index}}"></text>
                 </view>
               </view>
             </view>
           </view>
           <view class="pro-option flex">
-            <view class="del chartdel" data-skuid="{{item.sku_id}}" data-id="{{item.cart_id}}" catch:tap="delPro">删除</view>
+            <view class="del chartdel" data-skuid="{{item.sku_id}}" data-id="{{item.cart_id}}" data-spuid="{{item.spu_id}}" catch:tap="delPro">删除</view>
           </view>
         </view>
       </movable-view>

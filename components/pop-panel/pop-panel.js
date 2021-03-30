@@ -16,6 +16,10 @@ Component({
       type: String,
       value: '630rpx'
     },
+    height: {
+      type: String,
+      value: 'auto'
+    },
     closeOnClickModal: {
       type: Boolean,
       value: false

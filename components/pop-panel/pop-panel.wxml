@@ -1,6 +1,6 @@
 <view class="mask" catchtouchstart="touchMask" wx:if="{{popShow}}">
 </view>
-<view class="popPanel {{'animation-' + position}}" style="width:{{width}}" wx:if="{{popShow}}">
+<view class="popPanel {{'animation-' + position}}" style="width:{{width}};height:{{height}}" wx:if="{{popShow}}">
   <view class="pop-title" wx:if="{{title}}">{{ title }}</view>
   <view class="pop-body" wx:if="{{showbody}}">
     <slot name="txt"></slot>

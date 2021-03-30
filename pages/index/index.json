@@ -5,6 +5,7 @@
   "backgroundColorTop":"#f6f6f6",
   "backgroundColorBottom":"#f6f6f6",
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "pop-panel": "/components/pop-panel/pop-panel"
   }
 }

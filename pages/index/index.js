@@ -186,16 +186,15 @@ Page({
   showNotice(){
 
     this.setData({
-      panel:'notice',
-      mask:true
+      popShow:true,
     })
   },
-  closePanel(){
-    this.setData({
-      panel:false,
-      mask:false
-    })
-  },
+  // closePanel(){
+  //   this.setData({
+  //     panel:false,
+  //     mask:false
+  //   })
+  // },
   // changeBg(e){
   //   let curidx = e.detail.current
   //   this.setData({

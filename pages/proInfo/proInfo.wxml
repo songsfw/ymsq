@@ -13,7 +13,7 @@
 <view class="proInfo">
   <view class="price flex">
     <view>￥<text>{{proInfo.price}}</text></view>
-    <view class="tag">最快次日达</view>
+    <view class="tag"><image src="../../image/icon-send.png"></image> 最快次日达</view>
   </view>
   <view class="tit"><text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text>{{proInfo.name}}</view>
   <view class="desc">{{proInfo.selling_point}}</view>

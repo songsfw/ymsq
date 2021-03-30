@@ -216,15 +216,18 @@ Page({
   //改变商品数量
   minusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
+      spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
       num = e.currentTarget.dataset.num
-    this.addChart("minus", skuid, type, num)
+    this.addChart("minus", skuid, type, num,spuid)
   },
   plusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
+      spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
       num = e.currentTarget.dataset.num
-    this.addChart("plus", skuid, type, num)
+      console.log(spuid);
+    this.addChart("plus", skuid, type, num,spuid)
   },
   //改变商品数量
   minusFitting: util.debounce(function () {
@@ -295,8 +298,8 @@ Page({
       'fitting.sku': sku
     })
   },
-  addChart: util.debounce(function (option, skuid, type, num) {
-
+  addChart: util.debounce(function (option, skuid, type, num,spuid) {
+    //spuid 返回列表页更新蛋糕库存用到
     let {
       city_id
     } = this.data
@@ -309,7 +312,7 @@ Page({
     if (option == "plus") {
       //proNum++
       data.number = 1
-      this.setCartNum(data)
+      this.setCartNum(data,spuid)
     }
     if (option == "minus") {
       if (num == 1) {
@@ -322,7 +325,7 @@ Page({
           success: res => {
             if (res.confirm) {
               data.number = -1
-              this.setCartNum(data)
+              this.setCartNum(data,spuid)
             } else if (res.cancel) {
               return
             }
@@ -331,18 +334,18 @@ Page({
         
       } else {
         data.number = -1
-        this.setCartNum(data)
+        this.setCartNum(data,spuid)
       }
       //proNum--
     }
 
   }),
 
-  setCartNum(data) {
+  setCartNum(data,spuid) {
     api.setChart(data).then(res => {
       console.log(res);
       if (res) {
-        this.getChartData(data.tab_id,data.type)
+        this.getChartData(data.tab_id,data.type,spuid)
       }
     })
   },
@@ -381,7 +384,7 @@ Page({
       noallCake
     }
   },
-  getChartData(skuid,CurType) {
+  getChartData(skuid,CurType,spuid) {
     //let proType = app.globalData.proType
     let data = {
       city_id: this.data.city_id
@@ -406,8 +409,8 @@ Page({
         //util.setTabBarBadge(res.total_num)
         wx.setStorageSync('total_num', res.total_number)
         let selectType = this.getSelectType(bread,cake)
-
         var pages = getCurrentPages();
+        let proId = spuid||skuid
         if(pages.length > 1 && skuid){
           //上一个页面实例对象
           var prePage = pages[pages.length - 2];
@@ -424,8 +427,7 @@ Page({
             })
             var curNum = curItem && curItem.sku_number || 0
           }
-          app.inCartRefreshList({type:CurType,proId:skuid,selected:curNum});
-          // prePage.cartPageSyncList && prePage.cartPageSyncList({type:CurType,proId:skuid,selected:curNum})
+          app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
         }
 
         this.setData({
