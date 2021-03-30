@@ -78,9 +78,6 @@ const request = (method,url,data,needToken=true)=>{
         //hideLoading()
       }
     })
-  }).catch(err=>{
-    reject(err)
-    console.log(err);
   })
 }
 
