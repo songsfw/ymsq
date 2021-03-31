@@ -28,7 +28,7 @@ Page({
     payQueue: [10, 0, 0, 0, 0],
     useCoupon: false,
     couponCheck: -1,
-    curId:-1,
+    curId: -1,
     curtabid: 1,
     pop: 0,
 
@@ -59,46 +59,54 @@ Page({
     unUsedShowStatus: {}
   },
   closeCoupon() {
-    let {couponCheck} = this.data
-    if(couponCheck!=-1){
+    let {
+      couponCheck
+    } = this.data
+    if (couponCheck != -1) {
       this.setData({
         useCoupon: true,
-        curId:couponCheck,
+        curId: couponCheck,
         pop: 0
       })
-    }else{
+    } else {
       this.setData({
         useCoupon: false,
-        curId:-1,
-        couponCheck:-1,
+        curId: -1,
+        couponCheck: -1,
         pop: 0
       })
     }
   },
   //优惠券抵扣
   confirmCoupon() {
-    let {curId,couponPrice,payQueue,defaultCoupon,cart_data} = this.data
+    let {
+      curId,
+      couponPrice,
+      payQueue,
+      defaultCoupon,
+      cart_data
+    } = this.data
     let newPayQueue = payQueue.slice(0)
-    let useCoupon,couponCheck,useDiscount
-    if (curId==-1) {
-      coupon=0
-      useCoupon= false,
-      couponCheck=-1
-      useDiscount=false   //是否使用推荐优惠
+    let useCoupon, couponCheck, useDiscount
+    if (curId == -1) {
+      coupon = 0
+      useCoupon = false,
+        couponCheck = -1
+      useDiscount = false //是否使用推荐优惠
     } else {
       console.log(curId);
-      if(defaultCoupon==curId){
-        useDiscount=true
-      }else{
-        useDiscount=false
+      if (defaultCoupon == curId) {
+        useDiscount = true
+      } else {
+        useDiscount = false
       }
-      coupon = curId==1?cart_data.default_delivery:couponPrice[curId].promotion_price
-      useCoupon= true,
-      couponCheck=curId
+      coupon = curId == 1 ? cart_data.default_delivery : couponPrice[curId].promotion_price
+      useCoupon = true,
+        couponCheck = curId
     }
     newPayQueue[2] = util.formatePrice(coupon)
     this.setData({
-      useDiscount:useDiscount,
+      useDiscount: useDiscount,
       useCoupon: useCoupon,
       couponCheck: couponCheck,
       payQueue: newPayQueue
@@ -108,20 +116,22 @@ Page({
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let {curId} = this.data
+    let {
+      curId
+    } = this.data
     console.log(id)
     let {
       couponList
     } = this.data
-    
+
     if (this.data.curtabid == 1) {
-      if(curId==id){
-        curId=-1
-      }else{
-        curId=id
+      if (curId == id) {
+        curId = -1
+      } else {
+        curId = id
       }
       this.setData({
-        curId:curId,
+        curId: curId,
         couponList
       })
     }
@@ -201,26 +211,30 @@ Page({
     this.setData({
       pop: pop
     })
-
-    if(pop=="showTime" && this.data.delivery.delivery_times.length==0){
+    console.log(this.data)
+    if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
         title: "请先选择可配送地址"
       })
     }
-    
+
   },
   //麦点抵扣
   selectMai() {
-    let {jinmai,payQueue,hasMai}=this.data
+    let {
+      jinmai,
+      payQueue,
+      hasMai
+    } = this.data
     let newPayQueue = payQueue.slice(0)
 
     if (hasMai) {
       mai = 0
-      hasMai=false
+      hasMai = false
     } else {
       mai = jinmai.now_price
-      hasMai=true
+      hasMai = true
     }
     this.setData({
       hasMai: hasMai
@@ -272,13 +286,13 @@ Page({
           title: "请选择时间段"
         })
         return
-      }else{
+      } else {
         selectTime = tempTime;
         selectDate = tempDate;
       }
     }
 
-    if(selectTime === null && selectDate === null){
+    if (selectTime === null && selectDate === null) {
       wx.showToast({
         icon: "none",
         title: "请选择可配送时间"
@@ -362,7 +376,7 @@ Page({
     let data = {
       city_id: city_id,
       is_ziti: is_ziti,
-      choose_ziti:ziti,
+      choose_ziti: ziti,
       address_id: address_id
     }
     if (type == "1") {
@@ -398,7 +412,7 @@ Page({
         }
 
         this.setData({
-          biggest_discount:res.biggest_discount,
+          biggest_discount: res.biggest_discount,
           hasMai: hasMai,
           address: res.address,
           balance: res.balance,
@@ -447,7 +461,7 @@ Page({
         console.log(txtCard);
 
         this.setData({
-          biggest_discount:res.biggest_discount,
+          biggest_discount: res.biggest_discount,
           hasMai: hasMai,
           fittings_desc: res.fittings_desc,
           address: res.address,
@@ -470,7 +484,7 @@ Page({
   //hasDelivery false 免邮 10
   //hasDelivery true 需邮费 0
   initOrderPrice() {
-    let useCoupon,hasDelivery
+    let useCoupon, hasDelivery
     let {
       cart_data,
       jinmai,
@@ -482,9 +496,9 @@ Page({
     let newPayQueue = payQueue.slice(0)
 
     //初始运费
-    if(ziti=="1"){
+    if (ziti == "1") {
       hasDelivery = false
-    }else{
+    } else {
       if (cart_data.free_type == 1) {
         hasDelivery = false
       } else {
@@ -501,33 +515,33 @@ Page({
     }
 
     //初始优惠券
-    if(!biggest_discount.type){
-      coupon=0
+    if (!biggest_discount.type) {
+      coupon = 0
       this.setData({
-        useDiscount:false,
-        couponCheck:-1,
-        curId:-1
+        useDiscount: false,
+        couponCheck: -1,
+        curId: -1
       })
     }
-    if(biggest_discount.type=='promotion'){
+    if (biggest_discount.type == 'promotion') {
       let promotion = biggest_discount.promotion_info
-      useCoupon=true
+      useCoupon = true
       coupon = promotion.promotion_price
       this.setData({
-        useDiscount:true,
-        defaultCoupon:promotion.promotion_id,
-        couponCheck:promotion.promotion_id,
-        curId:promotion.promotion_id
+        useDiscount: true,
+        defaultCoupon: promotion.promotion_id,
+        couponCheck: promotion.promotion_id,
+        curId: promotion.promotion_id
       })
     }
-    if(biggest_discount.type=='free_delivery'){
-      useCoupon=true
+    if (biggest_discount.type == 'free_delivery') {
+      useCoupon = true
       coupon = cart_data.default_delivery
       this.setData({
-        useDiscount:true,
-        defaultCoupon:1,
-        couponCheck:1,
-        curId:1
+        useDiscount: true,
+        defaultCoupon: 1,
+        couponCheck: 1,
+        curId: 1
       })
     }
 
@@ -561,7 +575,7 @@ Page({
     }, payPrice)
     console.log(payPrice)
     payPrice = parseFloat(payPrice)
-    
+
     this.setData({
       preUseBalancePrice: payPrice,
       payPrice: payPrice
@@ -609,9 +623,9 @@ Page({
         balanceTxt = balanceNum
       }
       //使用余额是否需要验证
-      if(pwd_set==0){
+      if (pwd_set == 0) {
         verifyed = false
-      }else{
+      } else {
         if (free_secret == 1 && free_amount > balanceTxt) {
           verifyed = true
         } else {
@@ -620,7 +634,7 @@ Page({
       }
       this.setData({
         verifyed: verifyed,
-        balanceTxt:util.formatePrice(balanceTxt),
+        balanceTxt: util.formatePrice(balanceTxt),
         payPrice: util.formatePrice(payPrice)
       })
     } else {
@@ -707,7 +721,7 @@ Page({
       zitiPhone: val
     })
   }, 300),
-  bindPhoneSucess(){
+  bindPhoneSucess() {
     this.submmitOrder()
   },
   submmitOrder: util.debounce(function () {
@@ -784,8 +798,8 @@ Page({
       })
       return
     }
-    
-    if(pay_style.balance==1){
+
+    if (pay_style.balance == 1) {
       if (!verifyed && balanceInfo.pwd_set == 0) {
         this.setData({
           popShow: true,
@@ -803,11 +817,11 @@ Page({
         return
       }
     }
-    
+
 
     console.log(payQueue)
     console.log(balance_price)
-    
+
 
     console.log(addressInfo)
     let deliveryPrice = Math.abs(payQueue[0])
@@ -829,10 +843,10 @@ Page({
       data.mobile = zitiPhone
     }
     //活动免邮
-    if(curId==1){
-      data.delivery_price=0
+    if (curId == 1) {
+      data.delivery_price = 0
     }
-    if (useCoupon && curId!=1) {
+    if (useCoupon && curId != 1) {
       data.promotion_price = payQueue[2]
       data.promotion_id = curId
     }
@@ -862,10 +876,10 @@ Page({
       if (!res) {
         return
       }
-      if(res==app.globalData.bindPhoneStat){
+      if (res == app.globalData.bindPhoneStat) {
         this.setData({
-          phoneStat:1,
-          showPhonePanel:true
+          phoneStat: 1,
+          showPhonePanel: true
         })
         return
       }
@@ -931,10 +945,29 @@ Page({
     })
   }),
   inputCard: util.debounce(function (e) {
-    console.log("1111");
     let temp = e.detail.value
     let defTxt = e.currentTarget.dataset.default
-    if (util.charLen(temp) > 18) {
+    if (temp.replace(/[^\x00-\xff]/g, "aa").length > 18) {
+      let tlength = 0;
+      let subLen = 0;
+      for (let i = 0; i < temp.length; i++) {
+        if(tlength>=18){
+          break;
+        }
+        tlength+=1;
+        if (temp.charCodeAt(i) > 128){
+          if(tlength>=18){
+            tlength-=1;
+            break;
+          }
+          tlength+=1;
+        }
+        subLen+=1;
+      }
+      temp = temp.substring(0, subLen);
+      this.setData({
+        ['txtCardObj[' + e.target.dataset.cartid + ']']: temp,
+      })
       wx.showToast({
         icon: "none",
         title: "请输入9个汉字或18个数字字母"
@@ -1106,10 +1139,10 @@ Page({
             useBalance: true,
             verifyed: true
           })
-          if(this.data.balanceInfo.pwd_set==0){
+          if (this.data.balanceInfo.pwd_set == 0) {
             //this.setBalancePrice()
             this.setData({
-              'balanceInfo.pwd_set':1
+              'balanceInfo.pwd_set': 1
             })
           }
           this.submmitOrder()
@@ -1146,10 +1179,10 @@ Page({
           verifyed: true
         })
         this.closePanel()
-        if(this.data.balanceInfo.pwd_set==0){
+        if (this.data.balanceInfo.pwd_set == 0) {
           //this.setBalancePrice()
           this.setData({
-            'balanceInfo.pwd_set':1
+            'balanceInfo.pwd_set': 1
           })
         }
         this.submmitOrder()
@@ -1236,13 +1269,13 @@ Page({
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
         address_id: addressInfo.id,
-        zitiName:addressInfo.name,
-        zitiPhone:addressInfo.mobile,
+        zitiName: addressInfo.name,
+        zitiPhone: addressInfo.mobile,
         addressInfo: addressInfo,
         'address.is_address': true
       })
     }
-    console.log("2",addressInfo.id);
+    console.log("2", addressInfo.id);
     this.initOrderData();
 
     util.setWatcher(this);
@@ -1280,7 +1313,7 @@ Page({
           'address.is_address': true
         })
       }
-      console.log("1",addressInfo.id);
+      console.log("1", addressInfo.id);
       this.initOrderData();
       //this.setPayPrice(value)
     }
