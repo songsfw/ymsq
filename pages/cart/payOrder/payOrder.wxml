@@ -100,8 +100,8 @@
           <view class="h4">巧克力牌</view>
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
             placeholder="巧克力牌(限9个汉字或18个英文字母)" maxlength="18" bindinput="inputCard"
-            disabled="{{item.is_mcake_message==0}}" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
-            data-cartid="{{item.cart_id}}" />
+            disabled="{{item.is_mcake_message==0}}" bindfocus="clearTxt" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
+            data-cartid="{{item.cart_id}}" data-defaultmakemsg="{{item.default_mcake_message}}"/>
           <view class="iconfont icon-edit"></view>
         </view>
         <view class="spec-txt" wx:if="{{item.special_message}}"><text class="iconfont icon-notice"></text>{{item.special_message}}</view>

@@ -474,7 +474,8 @@ Page({
           proList: cart_data.detail,
           couponList: cart_data.promotion_info,
           unableCouponList: cart_data.promotion_info_unable,
-          couponPrice: cart_data.promotion_price
+          couponPrice: cart_data.promotion_price,
+          txtCardObj: txtCard,
         })
         this.initOrderPrice()
       })
@@ -951,18 +952,18 @@ Page({
       let tlength = 0;
       let subLen = 0;
       for (let i = 0; i < temp.length; i++) {
-        if(tlength>=18){
+        if (tlength >= 18) {
           break;
         }
-        tlength+=1;
-        if (temp.charCodeAt(i) > 128){
-          if(tlength>=18){
-            tlength-=1;
+        tlength += 1;
+        if (temp.charCodeAt(i) > 128) {
+          if (tlength >= 18) {
+            tlength -= 1;
             break;
           }
-          tlength+=1;
+          tlength += 1;
         }
-        subLen+=1;
+        subLen += 1;
       }
       temp = temp.substring(0, subLen);
       this.setData({
@@ -977,14 +978,28 @@ Page({
     txt = temp == "" ? defTxt : temp,
       cartid = e.currentTarget.dataset.cartid
   }, 200),
-  setTxt() {
+  setTxt(e) {
     if (cartid) {
       txtCard[cartid] = txt
-
+      // console.log(txt, txtCard)
       this.setData({
         txtCardObj: txtCard
       })
-      console.log(txtCard)
+    } else {
+      let defMsg = e.currentTarget.dataset.defaultmakemsg;
+      if (e.detail.value == "") {
+        this.setData({
+          ['txtCardObj[' + e.target.dataset.cartid + ']']: defMsg,
+        })
+      }
+    }
+  },
+  clearTxt(e) {
+    let defMsg = e.currentTarget.dataset.defaultmakemsg;
+    if (e.detail.value == defMsg) {
+      this.setData({
+        ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
+      })
     }
   },
   pwdInput(e) {
