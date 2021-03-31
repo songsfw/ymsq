@@ -245,6 +245,7 @@ Page({
     }
     tempList.selected = parseInt(tempList.selected) + 1;
     app.inCartRefreshList({type:tempList.type,proId:tempList.meal_id,selected:tempList.selected});
+    wx.setStorageSync('total_num', this.data.totalNum)
     this.setData({
       searchList: app.data.SearchSearch_SearchList,
       totalNum: this.data.totalNum,
