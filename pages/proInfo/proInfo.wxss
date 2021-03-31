@@ -80,5 +80,15 @@ page{background:#F6F6F6;height: auto;}
 .sku-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);}
 .default-fitts{justify-content: space-between;color: #333;font-size: 13px;}
 .set-chart text,
-.set-chart .count{width:27px;height: 24px;border: 1px solid #e9e9e9;line-height: 24px;text-align: center;color: #C1996B;}
-.set-chart .count{color: #333;border-left: 0;border-right: 0;}
+.set-chart .count{    width: 27px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #C1996B;
+    background-color: #F6F6F6;}
+.set-chart .count{color: #333;
+    margin: 0 4rpx;}
+.icon-minus.one{
+    background: #FAFAFA !important;
+    color: #ccc !important;
+}

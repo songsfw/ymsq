@@ -55,7 +55,7 @@
             
           </view>
         </scroll-view>
-        <view class="total">合计：￥<text>{{order.order_price}}</text></view>
+        <view class="total">合计：￥<text>{{order.weixin_price}}</text></view>
       </navigator>
       <view class="option flex">
         

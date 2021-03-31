@@ -170,7 +170,7 @@
         <view class="name">原麦余额</view>
         <view class="val flex-center">{{orderData.balance_price}}</view>
       </view>
-      <view class="total-price flex">
+      <view class="total-price flex-center">
         <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
         <text wx:else>实付金额：</text>
         <view>

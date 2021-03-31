@@ -93,7 +93,7 @@
   <view class="confirm-btn btn" style="margin-bottom:{{btmHolder}}px" bind:tap="confirmCoupon">分享给朋友</view>
 </view>
 <view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
-  <image src="{{poster}}" data-src="{{poster}}" show-menu-by-longpress="true" bindtap="previewImage"></image>
+  <image src="{{poster}}" data-src="{{poster}}"  bindtap="previewImage"></image>
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="share-remark" bind:tap="saveImg">
     <view class="share-remark-tip">保存分享给好友</view>
