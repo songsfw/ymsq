@@ -152,7 +152,7 @@
   </view>
   <view class="inputbox flex-center" wx:if="{{type==2}}">
     <view>订单备注</view>
-    <input class="flex-1" type="text" placeholder="请输入内容" bindinput="inputRemark" placeholder-style="color:#aaa" />
+    <input class="flex-1" type="text" placeholder="请输入内容" maxlength="200" bindinput="inputRemark" placeholder-style="color:#aaa" />
   </view>
   <view class="pay-info">
     <view class="flex-center ">
