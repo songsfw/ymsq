@@ -5,7 +5,8 @@ let delivery = 10,
   coupon = 0
 let txtCard = null,
   cartid = null,
-  txt = ''
+  txt = '',
+  isLoad=null
 let app = getApp()
 // let payQueue = [10,0,0,0,0]
 Page({
@@ -417,6 +418,7 @@ Page({
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
+          useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -467,6 +469,7 @@ Page({
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
+          useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -576,10 +579,10 @@ Page({
     }, payPrice)
     console.log(payPrice)
     payPrice = parseFloat(payPrice)
-
+    
     this.setData({
-      preUseBalancePrice: payPrice,
-      payPrice: payPrice
+      preUseBalancePrice: payPrice, //存一个初始可使用余额
+      payPrice: util.formatePrice(payPrice)
     })
     this.setBalancePrice()
   },
@@ -614,6 +617,18 @@ Page({
     } = this.data
     free_amount = parseFloat(free_amount)
 
+    if(this.data.pay_style.balance==10){
+      if (balanceNum >= payPrice) {
+        balanceTxt = this.data.payPrice
+      } else {
+        balanceTxt = balanceNum
+      }
+      this.setData({
+        balanceTxt:util.formatePrice(balanceTxt),
+      })
+      return
+    }
+
     //扣除原麦余额
     if (useBalance) {
       if (balanceNum >= payPrice) {
@@ -635,8 +650,8 @@ Page({
       }
       this.setData({
         verifyed: verifyed,
-        balanceTxt: util.formatePrice(balanceTxt),
-        payPrice: util.formatePrice(payPrice)
+        balanceTxt:util.formatePrice(balanceTxt),  //可用原麦余额
+        payPrice: util.formatePrice(payPrice)      //合计需要支付
       })
     } else {
       this.setData({
@@ -1299,7 +1314,7 @@ Page({
       btmHolder: btmHolder || 0,
       userInfo: JSON.parse(userInfo),
     })
-
+    isLoad = true
   },
   watch: {
     'payQueue': function (value, oldValue) {
@@ -1362,7 +1377,50 @@ Page({
 
     // }
     // console.log("2",addressInfo.id);
-    // this.initOrderData();
+    if(isLoad){
+      wx.showLoading({
+        title: '加载中'
+      })
+      let {
+        type,
+        useBalance,
+        verifyed,
+        city_id,
+        is_ziti,
+        ziti,
+        address_id
+      } = this.data
+  
+      let data = {
+        city_id: city_id,
+        is_ziti: is_ziti,
+        choose_ziti:ziti,
+        address_id: address_id
+      }
+      if (type == "1") {
+        //面包
+        api.getOrderBread(data).then(res => {
+          console.log(res);
+          if (!res) {
+            return
+          }
+          this.setData({
+            useBalance:res.pay_style.balance==1?true:false,
+          })
+          this.initOrderPrice()
+        })
+  
+      } else {
+        //蛋糕
+        api.getOrderCake(data).then(res => {
+          console.log(res);
+          this.setData({
+            useBalance:res.pay_style.balance==1?true:false,
+          })
+          this.initOrderPrice()
+        })
+      }
+    }
   },
 
   /**

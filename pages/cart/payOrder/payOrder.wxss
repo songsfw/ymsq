@@ -193,3 +193,4 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .canUseBalanceColor{color:#aaa}
 .spec-txt{color:#FA603D ;margin-top: 20rpx;}
 .spec-txt text{vertical-align: text-top;margin-right: 18rpx;}
+.toFollow{text-align: right;margin: -10px 0 10px 0;}

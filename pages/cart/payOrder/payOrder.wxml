@@ -192,7 +192,7 @@
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
         <block wx:if="{{useCoupon}}"><text>-￥{{payQueue[2]}}</text></block>
-        <block wx:else><text style="color:red">{{cart_data.can_promotion_count}}张可用</text></block>
+        <block wx:else><text style="color:red">{{cart_data.can_promotion_count+(cart_data.free_type==2?1:0)}}张可用</text></block>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
@@ -215,19 +215,22 @@
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
-    <view class="flex-center balance" wx:if="{{pay_style.balance==1}}">
+    <view class="flex-center balance" wx:if="{{pay_style.balance!=0}}">
       <view class="name">原麦余额 <text class="tip">(共￥{{balance}})</text></view>
       <view class="val flex-center">
         <view>
-          <text><text style="color:{{balance != '0.00' && useBalance?'#F5222D':'#aaa'}}">{{balance != '0.00' && useBalance?'使用':'可用'}}</text>￥{{balance == '0.00'? balance:balanceTxt}}</text>
+          <!-- <text><text style="color:{{balance != '0.00' && useBalance?'#F5222D':'#aaa'}}">{{balance != '0.00' && useBalance?'使用':'可用'}}</text>￥{{balance == '0.00'? balance:balanceTxt}}</text> -->
+          <text wx:if="{{useBalance}}">使用￥{{balanceTxt}}</text>
+          <text wx:else>可用￥{{balanceTxt}}</text>
           <!-- <view wx:else>余额：￥{{balance}}</view> -->
         </view>
 
-        <image wx:if="{{balance == 0 || balance == '0.00'}}" class="arrow-r" style="width:15px;height:15px;margin-left:3px;" src="../../../image/disabled1.png"></image>
+        <image wx:if="{{pay_style.balance == 10}}" class="arrow-r" style="width:15px;height:15px;margin-left:3px;" src="../../../image/disabled1.png"></image>
         <switch wx:else checked="{{useBalance}}" bindchange="switch" color="#C1996B" />
         
       </view>
     </view>
+    <navigator hover-class="none" url="../../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="toFollow color-b" wx:if="{{pay_style.balance == 10}}">关注公众号使用原麦余额<image class="arrow-r" src="../../../image/icon-arrow-right.png"></image></navigator>
     <view class="total-price flex">
       <text>合计：</text>
       <view>
