@@ -45,6 +45,7 @@ Page({
     prePushWatchHash: {}, //预处理堆
 
     focus: true,
+    backNum:0,//1为详情页返回
   },
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
@@ -531,7 +532,11 @@ Page({
       }
     }
   },
+  setDetailBack(backNum = 0) {
+    this.data.backFrom = backNum;
+  },
   onShow: function (e) {
+    console.log('on show ',this.data.currentKeyword,this.data);
     this.data.watchNumer = 0;
     if(this.data.currentKeyword){
       let totalNumber = wx.getStorageSync('total_num') || 0;
@@ -540,6 +545,16 @@ Page({
         totalNum:totalNumber,
         totalNumStyle: this.getTotalNumStyle(totalNumber) || '',
       });
+
+      if(this.data.backNum != 1){
+        this.setData({
+          showLoading: true,
+        })
+        //追加刷新  等待图标
+        this.toSearch(this.data.currentKeyword);
+      }
+      
+      
     }
     
   },
