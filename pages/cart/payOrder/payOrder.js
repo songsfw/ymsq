@@ -578,7 +578,7 @@ Page({
       return util.floatObj().subtract(pre, cur)
     }, payPrice)
     console.log(payPrice)
-    payPrice = parseFloat(payPrice)
+    //payPrice = parseFloat(payPrice)
     
     this.setData({
       preUseBalancePrice: payPrice, //存一个初始可使用余额
