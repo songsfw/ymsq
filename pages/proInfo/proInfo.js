@@ -241,7 +241,12 @@ Page({
       var prePage = pages[pages.length - 2];
       if(prePage.route=="pages/proList/proList" && this.data.backNum){
         prePage.setDetailBack && prePage.setDetailBack(this.data.backNum);
-      }  
+      }
+
+      console.log(prePage)
+      if(prePage.route=="pages/search/search" && this.data.backNum){
+        prePage.setDetailBack && prePage.setDetailBack(this.data.backNum);
+      }
     }
     this.data.ctabTypeMealIdSpuId = null;
   }

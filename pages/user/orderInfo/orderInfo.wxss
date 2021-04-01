@@ -41,7 +41,7 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .hd view{font-size: 15px;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
-.pro-info .info .tag{color: #999;}
+.pro-info .info .tag{color: #999;display: flex;flex-wrap: wrap;}
 .pro-info .info .tag text{margin-right: 20rpx;}
 .pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
 .pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}

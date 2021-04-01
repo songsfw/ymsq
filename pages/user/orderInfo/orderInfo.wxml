@@ -50,6 +50,7 @@
                 <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
               </view>
               <view class="tag">
+                <text wx:if="{{item.weight}}">{{item.weight}}</text>
                 <text wx:if="{{item.size}}">{{item.size}}</text>
                 <text wx:if="{{item.spec}}">{{item.spec}}</text>
                 <text wx:if="{{item.edible}}">{{item.edible}}</text>
@@ -79,9 +80,11 @@
                 <block wx:if="{{item.sku_unit&&item.sku_unit!=''}}">({{item.sku_unit}})</block>
               </view>
               <view class="tag flex-wrap">
-                <text>{{item.weight}}</text>
-                <text>{{item.size}}</text>
-                <text>{{item.edible}}</text>
+                <text wx:if="{{item.weight}}">{{item.weight}}</text>
+                <text wx:if="{{item.size}}">{{item.size}}</text>
+                <text wx:if="{{item.spec}}">{{item.spec}}</text>
+                <text wx:if="{{item.edible}}">{{item.edible}}</text>
+                <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
               </view>
               <view class="price flex">
                 <view class="num">
