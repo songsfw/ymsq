@@ -166,9 +166,9 @@
         <view class="name">多美味卡</view>
         <view class="val">-￥{{orderData.third_cash_price}}</view>
       </view>
-      <view class="flex-center balance">
+      <view class="flex-center balance" wx:if="{{orderData.balance_price>0}}">
         <view class="name">原麦余额</view>
-        <view class="val flex-center">{{orderData.balance_price}}</view>
+        <view class="val flex-center">-￥{{orderData.balance_price}}</view>
       </view>
       <view class="total-price flex-center">
         <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
