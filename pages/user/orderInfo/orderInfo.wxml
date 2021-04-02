@@ -8,7 +8,7 @@
       <image wx:if="{{stat==2}}" src="../../../image/icon-od4.png"></image>
       <image wx:if="{{stat==3}}" src="../../../image/icon-od1.png"></image>
       {{status.title}}</view>
-    <view class="status">{{status.msg}}</view>
+    <view class="status">{{timingTxt}} {{status.msg}}</view>
   </view>
   <view class="order-wp">
     <view class="pro-info">
@@ -185,23 +185,20 @@
   </view>
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">
+  <block wx:if="{{orderData.old_status=='UNPAID' || orderData.old_status=='PAID' || orderData.old_status=='DISPATCHING'}}"><view class="btn" bind:tap="bindcancel">取消订单</view></block>
+  
   <block wx:if="{{stat==2}}">
     <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
-    <view class="btn pay-btn" bind:tap="showDelivery" wx:if="{{steps.length>0}}">查看物流</view>
-    <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
+    <view class="btn pay-btn" bind:tap="showDelivery">查看物流</view>
   </block>
   <block wx:if="{{stat==3}}">
     <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
     <view class="btn pay-btn" bind:tap="toComment">去评价</view>
-    <!-- <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator> -->
+
   </block>
   <block wx:if="{{stat==1}}">
-    <view class="btn" bind:tap="cancelOrder">取消订单</view>
     <view class="btn main-btn" bind:tap="payOrder">去支付</view>
   </block>
-  <!-- <block wx:if="{{stat==4}}">
-    <navigator url="/pages/index/index" open-type="switchTab" class="btn main-btn">去逛逛</navigator>
-  </block> -->
 </view>
 
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
@@ -256,6 +253,21 @@
     </view>
   </view>
   <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
+</view>
+
+<view class="pop-panel cancel-panel" wx:if="{{pop=='cancel'}}">
+  <view class="tit">请选择取消的理由</view>
+  <view class="flex item" wx:for="{{reason}}" bind:tap="bindSelect" data-idx="{{index}}">
+    <text>{{item}}</text>
+    <view class="checkbox {{index==curRes?'on':''}}">
+      <view class="iconfont icon-check"></view>
+    </view>
+  </view>
+  <view wx:if="{{curRes==2}}">
+    <textarea class="reason-txt" bindinput="inputReason" placeholder="请填写理由" placeholder-style="color:#ccc;"  />
+  </view>
+  <view class="cancel-btn btn" bind:tap="cancelOrder">确定取消</view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
 </view>
 
 <view class="pop-panel post-panel" style="position:fixed;top:50%;left:50%;" wx:if="{{pop=='showPoster'}}">

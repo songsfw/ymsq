@@ -169,9 +169,11 @@ Page({
     }
     api.delAddress(data).then(res => {
       console.log(res);
-      if (res) {
+      let addressInfo = wx.getStorageSync('addressInfo')
+      addressInfo = addressInfo&&JSON.parse(addressInfo)
+      if(res){
         let selectAddress = addressLi[idx]
-        if (selectAddress.is_default == '1') {
+        if(selectAddress.is_default=='1' || selectAddress.id==addressInfo.id){
           wx.setStorageSync("addressInfo", '{"city_id":"10216"}')
         }
         this.getAddress()

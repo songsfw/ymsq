@@ -84,7 +84,7 @@ Page({
     this.getIndexInfo()
   },
 
-  onPageScroll: util.throttle(function (e) {
+  //onPageScroll: util.throttle(function (e) {
     //debounce()
     // var scrollTop = e.scrollTop
     // var hdTop = this.data.hdTop
@@ -109,7 +109,7 @@ Page({
     //     isFold: false
     //   })
     // }
-  },100),
+  //},100),
   onShareAppMessage: function (res) {
 
   },

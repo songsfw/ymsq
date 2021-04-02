@@ -8,7 +8,7 @@ page{background: #F6F6F6;}
 .item .input-box:last-child{border: none;}
 .item .tit{margin-right: 16px;}
 .tips-panel .popPanel{overflow: initial;}
-.popPanel .pop-con{height: 200px;line-height: 1.8;font-size: 13px;}
+.popPanel .pop-con{height: 260px;line-height: 1.8;font-size: 13px;}
 .popPanel .pop-close{
   width: 60rpx;
   height: 60rpx;
@@ -39,3 +39,6 @@ picker-view view{color: #999;transition: font-size linear .1s;}
 .item>view{position: relative;z-index: 2;}
 .item .bg{position: absolute;left: 0;top: 0;display: none;width: 702rpx;height: 252rpx;}
 .item.showbg .bg{display: block;}
+
+.tips-panel .popPanel{background: url(https://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
+.tips-panel .pop-title{background: #fff;}

@@ -50,7 +50,7 @@
       "pagePath": "pages/proList/proList",
       "iconPath":"image/icon-type.png",
       "selectedIconPath": "image/icon-type2.png",  
-      "text": "分类"
+      "text": "订购"
     },{
       "pagePath": "pages/cart/cart",
       "iconPath":"image/icon-cart.png",

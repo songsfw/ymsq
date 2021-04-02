@@ -164,7 +164,7 @@
         <image src="../../image/icon-c3.png"></image> {{selectSku.use_fittings}}
       </view>
     </view>
-    <view class="h4 flex">
+    <view class="h4 flex" style="margin-top:40rpx">
       <text>购买数量</text>
       <view class="set-chart flex">
         <text class="iconfont icon-minus {{skuNum==1?'one':''}}" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>

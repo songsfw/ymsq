@@ -135,7 +135,7 @@ color: #666;
 .pro-list>view:last-child{margin-bottom:0 ;}
 .show-btn{color: #fff;width: 38px;flex-shrink: 0;text-align: center; background: #C1996B;height: 20px;line-height: 20px;border-radius: 4rpx; font-size: 11px;font-weight: normal;}
 .notice-panel .popPanel{overflow: initial;}
-.popPanel .pop-con{height: 200px;line-height: 1.8;font-size: 13px;}
+.popPanel .pop-con{height: 260px;line-height: 1.8;font-size: 13px;}
 .popPanel .pop-close{
   width: 60rpx;
   height: 60rpx;
@@ -148,3 +148,6 @@ color: #666;
 color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .iwx{width: 750rpx;height: 240rpx;}
 .main-content{padding: 25rpx 0;background-color: #F4F9F5;margin: 25rpx 0;}
+
+.notice-panel .popPanel{background: url(https://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
+.notice-panel .pop-title{background: #fff;}

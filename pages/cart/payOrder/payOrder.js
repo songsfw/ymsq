@@ -1397,6 +1397,21 @@ Page({
         choose_ziti:ziti,
         address_id: address_id
       }
+
+      //用户地址列表
+      let addressInfo = wx.getStorageSync("addressInfo")
+      addressInfo = addressInfo && JSON.parse(addressInfo)
+      if (addressInfo) {
+        this.setData({
+          is_ziti: addressInfo.is_ziti,
+          city_id: addressInfo.city_id,
+          address_id: addressInfo.id,
+          zitiName: addressInfo.name,
+          zitiPhone: addressInfo.mobile,
+          addressInfo: addressInfo
+        })
+      }
+
       if (type == "1") {
         //面包
         api.getOrderBread(data).then(res => {
@@ -1405,6 +1420,7 @@ Page({
             return
           }
           this.setData({
+            pay_style: res.pay_style,
             useBalance:res.pay_style.balance==1?true:false,
           })
           this.initOrderPrice()
@@ -1415,6 +1431,7 @@ Page({
         api.getOrderCake(data).then(res => {
           console.log(res);
           this.setData({
+            pay_style: res.pay_style,
             useBalance:res.pay_style.balance==1?true:false,
           })
           this.initOrderPrice()

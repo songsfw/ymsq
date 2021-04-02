@@ -89,6 +89,7 @@ Page({
       city_id: city_id,
       cart_id: id
     }
+    
     wx.showModal({
       title: '',
       content: '是否将该商品从购物车移除',
@@ -97,6 +98,9 @@ Page({
       confirmColor: "#C1996B",
       success: res => {
         if (res.confirm) {
+          this.setData({
+            showLoading: true
+          })
           //this.data.delStatus = 1;
           api.deletePro(data).then(res => {
             console.log(res);
@@ -410,6 +414,9 @@ Page({
     // }
     api.getChartData(data).then(res => {
       console.log(res);
+      this.setData({
+        showLoading: false
+      })
       if (!res) {
         wx.showToast({
           icon: "none",

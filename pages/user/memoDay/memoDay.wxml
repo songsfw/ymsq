@@ -33,7 +33,7 @@
   <view class="btn" bindtap="save">保存</view>
 </view>
 <view style="height:{{56+btmHolder}}px"></view>
-<pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" class="tips-panel">
+<pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px" class="tips-panel">
   <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
     <view wx:for="{{doc}}">{{item}}</view>
   </scroll-view>

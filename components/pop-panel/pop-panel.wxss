@@ -43,7 +43,7 @@
 
 .popPanel{ position: fixed;top: 40%;left: 50%;transform: translate(-50%, -50%); padding: 30rpx; width: 630rpx; z-index: 101;border-radius: 16rpx;overflow: hidden;background: #fff;box-sizing: border-box;}
 
-.pop-body{padding: 20rpx;}
+.pop-body{padding: 20rpx;box-sizing: border-box;}
 .mask {
   position: fixed;
   top: 0;

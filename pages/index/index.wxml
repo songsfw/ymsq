@@ -98,7 +98,7 @@
       <image src="../../image/icon-top.png"></image>
     </view>
 
-<pop-panel title="专属消息" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" class="notice-panel">
+<pop-panel title="专属消息" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px"  class="notice-panel">
  
     <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
       <view style="padding:0 24rpx 24rpx 24rpx;">

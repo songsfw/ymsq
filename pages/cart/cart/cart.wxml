@@ -168,7 +168,7 @@
     <view class="h4 flex">
       <text>购买数量</text>
       <view class="set-chart flex">
-        <text class="iconfont icon-minus" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>
+        <text class="iconfont icon-minus {{skuNum==1?'one':''}}" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>
         <text class="count">{{skuNum}}</text>
         <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
       </view>

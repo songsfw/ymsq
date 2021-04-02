@@ -3,6 +3,7 @@ const util = require('../../../utils/util.js')
 let delivery=10,mai=0,coupon=0,card=0,thirdCard=0
 // let payQueue = [10,0,0,0,0]
 let app = getApp()
+let timer =null
 Page({
 
   /**
@@ -19,7 +20,12 @@ Page({
       address_detail: null,
       is_default: 0
     },
-
+    reasonTxt: "",
+    reason: [
+      "我不想买了",
+      "信息填写错误",
+      "其他原因"
+    ],
     useCoupon: false,
     curtabid: 1,
     pop: 0,
@@ -187,20 +193,77 @@ Page({
       })
     })
   },
-  cancelOrder(){
-    let { orderCode } = this.data
-    let data = {
-      order_code:orderCode
+  bindcancel(e) {
+    if(this.data.orderData.order_type==2){
+      wx.showModal({
+        content: '请联系客服取消订单，400-992-6632',
+        confirmText:"拨打",
+        cancelText:"再想想",
+        confirmColor:"#C1996B",
+        success (res) {
+          if (res.confirm) {
+            wx.makePhoneCall({
+              phoneNumber: '400-992-6632'
+            })
+            console.log('用户点击确定')
+          }
+        }
+      })
+      return
     }
-    api.cancleOrder(data).then(res=>{
+    this.setData({
+      pop: "cancel"
+    })
+  },
+  bindSelect(e) {
+    let idx = e.currentTarget.dataset.idx
+    this.setData({
+      curRes: idx
+    })
+  },
+  inputReason: util.debounce(function (e) {
+    let val = e.detail.value
+    console.log(val);
+    if (val) {
+      this.setData({
+        reasonTxt: val,
+      })
+    }
+  }, 500),
+  cancelOrder(){
+    let code = this.data.orderCode
+    let {
+      reason,
+      curRes,
+      reasonTxt
+    } = this.data
+    let data = {
+      order_code: code,
+      reason: reasonTxt == '' ? reason[curRes] : reasonTxt
+    }
+    if (curRes == 2 && reasonTxt == '') {
+      wx.showToast({
+        icon: "none",
+        title: "请填写理由"
+      })
+      return
+    }
+    console.log(reason);
+    api.cancleOrder(data).then(res => {
       console.log(res);
-      if(res){
+      if (res) {
         wx.showToast({
-          icon:"none",
-          title:"订单取消成功"
+          icon: "none",
+          title: "订单取消成功"
         })
-        wx.navigateBack({
-          delta: 1
+        this.setData({
+          pop: 0,
+          stat:4
+        })
+        this.initOrderData()
+      } else {
+        this.setData({
+          pop: 0
         })
       }
     })
@@ -233,6 +296,21 @@ Page({
     //   pop:"delivery"
     // })
   },
+  timing: function (remainTime) {
+    remainTime--
+    // 获取分秒
+    let m = parseInt(remainTime / 60)
+    let s = remainTime - m * 60
+
+    let str = util.formatNumber(m) + '分' + util.formatNumber(s) + "秒"
+    this.setData({
+      timingTxt: str
+    })
+
+    timer = setTimeout(() => {
+      this.timing(remainTime)
+    }, 1000);
+  },
   initOrderData() {
     let { orderCode } = this.data
     
@@ -243,6 +321,7 @@ Page({
       console.log(res);
       let orderData = res.order
       let newOrderData = {
+        old_status:orderData.old_status,
         count:orderData.count,
         id:orderData.id,
         address:orderData.address,
@@ -268,6 +347,14 @@ Page({
         order_status:orderData.order_status,
         order_type:orderData.order_type
       }
+      let second=res.status.seconds
+      if(second){
+        this.timing(second)
+      }else{
+        clearTimeout(timer)
+
+      }
+
       this.setData({
         delivery:orderData.delivery,
         cart_data: orderData.detail,
