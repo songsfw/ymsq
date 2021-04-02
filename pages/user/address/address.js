@@ -311,21 +311,20 @@ Page({
                 },
               })
             }
+          } else {
+            //首页逻辑
+            wx.showModal({
+              title: '',
+              content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
+              cancelText: "取消",
+              confirmText: "确认更换",
+              success(res) {
+                let r = res.confirm ? 'index' : res.confirm;
+                resolve(r); //true  切换
+                return;
+              },
+            })
           }
-
-          //首页逻辑
-          wx.showModal({
-            title: '',
-            content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
-            cancelText: "取消",
-            confirmText: "确认更换",
-            success(res) {
-              let r = res.confirm ? 'index' : res.confirm;
-              resolve(r); //true  切换
-              return;
-            },
-          })
-
         });
 
         p.then(res => {
