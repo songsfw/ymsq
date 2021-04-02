@@ -16,7 +16,7 @@ page{background:#F6F6F6;height: auto;}
     margin-bottom: 0;
     vertical-align: middle;}
 .proInfo .desc{color: #999;font-size: 13px;}
-.proInfo .tags{margin-top: 30rpx;}
+.proInfo .tags{margin-top: 30rpx;flex-wrap: wrap;}
 .proInfo .tags text{margin:0 20rpx 20rpx 0;flex-shrink: 0;}
 .proInfo .tags text:after{content: "|";margin-left:20rpx ;color: #aaa;}
 .proInfo .tags text:last-child:after{display: none;}
@@ -46,7 +46,8 @@ page{background:#F6F6F6;height: auto;}
 .option .home,
 .option .cart{position: relative; width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
 .option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;font-weight: 500;}
-.option .add-btn{background: rgba(193, 153, 107, .25);color: #AC7D46;}
+.option .add-btn{background: rgba(193, 153, 107, .25);color: #AC7D46;border-radius: 40px 0 0 40px;}
+.option .saleout{background: rgba(193, 153, 107, .25);color: #AC7D46;border-radius:  40rpx;}
 .option .buy-btn{margin-right: 20rpx;background: #C1996B;border-radius:  0 40rpx 40rpx 0;color: #fff;}
 .option .cart .num{position: absolute;
     right: 12px;

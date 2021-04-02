@@ -312,7 +312,6 @@ Page({
                 },
               })
             }else if(prePage.route == "pages/index/index"){
-              console.log(1)
               //首页逻辑
               wx.showModal({
                 title: '',
