@@ -55,7 +55,7 @@
             
           </view>
         </scroll-view>
-        <view class="total">合计：￥<text>{{order.order_price}}</text></view>
+        <view class="total">{{order.status==2|| order.status==3?'实付金额':'应付金额'}}：￥<text>{{order.order_price}}</text></view>
       </navigator>
       <view class="option flex">
         
