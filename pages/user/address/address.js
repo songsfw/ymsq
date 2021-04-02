@@ -299,6 +299,7 @@ Page({
           let pages = getCurrentPages();
           let flag = false;
           if (pages.length > 1) {
+            console.log(2222)
             //上一个页面实例对象
             var prePage = pages[pages.length - 2];
             if (prePage.route == "pages/cart/payOrder/payOrder") {
@@ -312,21 +313,22 @@ Page({
                   return;
                 },
               })
+            }else if(prePage.route == "pages/index/index"){
+              console.log(1)
+              //首页逻辑
+              wx.showModal({
+                title: '',
+                content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
+                cancelText: "取消",
+                confirmText: "确认更换",
+                success(res) {
+                  let r = res.confirm ? 'index' : res.confirm;
+                  resolve(r); //true  切换
+                  return;
+                },
+              })
             }
-          } else {
-            //首页逻辑
-            wx.showModal({
-              title: '',
-              content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
-              cancelText: "取消",
-              confirmText: "确认更换",
-              success(res) {
-                let r = res.confirm ? 'index' : res.confirm;
-                resolve(r); //true  切换
-                return;
-              },
-            })
-          }
+          } 
         });
 
         p.then(res => {

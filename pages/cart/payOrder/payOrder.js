@@ -387,6 +387,15 @@ Page({
         if (!res) {
           return
         }
+
+        if(res.address && res.address.is_address && !res.address.address_allow_delivery){
+          wx.showToast({
+            icon: "none",
+            title: "我是个信息 ，在等待，在等待",
+            duration: 3000
+          })
+        }
+
         let cart_data = res.cart_data
         let newcart_data = {
           can_promotion_count: cart_data.can_promotion_count,
@@ -994,6 +1003,7 @@ Page({
       cartid = e.currentTarget.dataset.cartid
   }, 200),
   setTxt(e) {
+    console.log('setTxt')
     if (cartid) {
       txtCard[cartid] = txt
       // console.log(txt, txtCard)
@@ -1010,10 +1020,14 @@ Page({
     }
   },
   clearTxt(e) {
+    console.log(1)
     let defMsg = e.currentTarget.dataset.defaultmakemsg;
-    if (e.detail.value == defMsg) {
+    let val = e.currentTarget.dataset.value;
+    if (val == defMsg) {
+      this.data.txtCardObj[e.target.dataset.cartid] = '';
       this.setData({
-        ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
+        txtCardObj: this.data.txtCardObj,
+        // ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
       })
     }
   },

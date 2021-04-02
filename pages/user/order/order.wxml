@@ -55,7 +55,7 @@
             
           </view>
         </scroll-view>
-        <view class="total">合计：￥<text>{{order.weixin_price}}</text></view>
+        <view class="total">{{order.status==2|| order.status==3?'实付金额':'应付金额'}}：￥<text>{{order.order_price}}</text></view>
       </navigator>
       <view class="option flex">
         <block wx:if="{{order.old_status=='UNPAID' || order.old_status=='PAID' || order.old_status=='DISPATCHING'}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view></block>

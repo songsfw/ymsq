@@ -407,6 +407,7 @@ Page({
     let currenttab = e.currentTarget.dataset.currenttab
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
     url += '&ctabTypeMealIdSpuId=' + currenttab+"_"+ type +"_"+proId+"_"+spuId;
+    // url+="&_um_campaign=60657afd18b72d2d2441584b&_um_channel=60657afd18b72d2d2441584c"
     console.log(url)
     wx.navigateTo({
       url: url
