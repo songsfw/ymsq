@@ -89,6 +89,9 @@
               <text wx:if="{{item.edible}}">{{item.edible}}</text>
               <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
             </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+                <text>{{item.weight}}</text>
+            </view>
             <view class="price flex">
               <view class="num">￥<text>{{item.sku_price}}</text>
               </view>
@@ -119,6 +122,9 @@
               <text wx:if="{{item.spec}}">{{item.spec}}</text>
               <text wx:if="{{item.edible}}">{{item.edible}}</text>
               <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+                <text>{{item.weight}}</text>
             </view>
             <view class="price flex">
               <view class="num">￥<text>{{item.sku_price}}</text>
