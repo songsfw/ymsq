@@ -117,6 +117,7 @@ Page({
                 cakeLi: cakeLi,
                 totalPrice:res.select_price,
               })
+              wx.setStorageSync('total_num', res.total_number)
             } else {
               wx.showToast({
                 title: '删除失败',
