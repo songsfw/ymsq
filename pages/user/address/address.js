@@ -1,6 +1,7 @@
 const api = require('../../../utils/api.js')
-const app =getApp()
-var timer=null,startX=0
+const app = getApp()
+var timer = null,
+  startX = 0
 Page({
 
   /**
@@ -11,8 +12,8 @@ Page({
     startY: 0,
     page: 1,
     address: null,
-    source:0,
-    curIdx:null
+    source: 0,
+    curIdx: null
   },
   touchE: function (e) {
     //按钮宽度(px)
@@ -28,18 +29,19 @@ Page({
       var idx = e.currentTarget.dataset.idx;
       //更新列表的状态
       this.setData({
-        curIdx:idx,
-        ['address['+idx+'].txtStyle']: txtStyle
+        curIdx: idx,
+        ['address[' + idx + '].txtStyle']: txtStyle
       });
     }
   },
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
-    startX= e.changedTouches[0].clientX
+    startX = e.changedTouches[0].clientX
   },
   //滑动事件处理
   touchmove: function (e) {
-    let address = this.data.address,txtStyle = 0
+    let address = this.data.address,
+      txtStyle = 0
     var that = this,
       index = e.currentTarget.dataset.index, //当前索引
       startX = that.data.startX, //开始X坐标
@@ -55,16 +57,16 @@ Page({
         Y: touchMoveY
       });
 
-      if (Math.abs(angle) > 30) return;
-      
-      if (touchMoveX < startX){
-        txtStyle = startX - touchMoveX
-        that.setData({
-          ['address['+index+'].txtStyle']: txtStyle
-        })
-      }
+    if (Math.abs(angle) > 30) return;
+
+    if (touchMoveX < startX) {
+      txtStyle = startX - touchMoveX
+      that.setData({
+        ['address[' + index + '].txtStyle']: txtStyle
+      })
+    }
     //更新数据
-    
+
   },
   //计算滑动角度
   angle: function (start, end) {
@@ -73,48 +75,60 @@ Page({
     //返回角度 /Math.atan()返回数字的反正切值
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
   },
-  toAdddata(e){
+  toAdddata(e) {
     let source = this.data.source
     let type = e.currentTarget.dataset.type
-    if(type==1){
+    if (type == 1) {
       let idx = e.currentTarget.dataset.idx
       let rawAddress = this.data.address[idx]
       let address = {
-        city_id:rawAddress.old_city_id,
-        id:rawAddress.id,
-        name:rawAddress.name,
-        province:rawAddress.city_name,
-        district:rawAddress.area_name,
+        city_id: rawAddress.old_city_id,
+        id: rawAddress.id,
+        name: rawAddress.name,
+        province: rawAddress.city_name,
+        district: rawAddress.area_name,
         //city_name:rawAddress.city_name+','+rawAddress.area_name,
-        mobile:rawAddress.mobile,
-        address:rawAddress.address,
-        location:rawAddress.location,
-        address_detail:rawAddress.address_detail,
-        is_default:rawAddress.is_default,
-        user_id:rawAddress.rawAddress,
-        title:rawAddress.building,
-        is_ziti:rawAddress.is_ziti
+        mobile: rawAddress.mobile,
+        address: rawAddress.address,
+        location: rawAddress.location,
+        address_detail: rawAddress.address_detail,
+        is_default: rawAddress.is_default,
+        user_id: rawAddress.rawAddress,
+        title: rawAddress.building,
+        is_ziti: rawAddress.is_ziti
       }
       wx.setStorageSync('address', JSON.stringify(address))
-    }else{
+    } else {
       wx.setStorageSync('address', '{}')
     }
     wx.navigateTo({
-      url:"/pages/user/adddata/adddata?type="+type+"&source="+source
+      url: "/pages/user/adddata/adddata?type=" + type + "&source=" + source
     })
   },
-  setDefAddress(e){
+  setDefAddress(e) {
     let id = e.currentTarget.dataset.id,
-    idx = e.currentTarget.dataset.idx
+      idx = e.currentTarget.dataset.idx
     let addressLi = this.data.address
     let data = {
-      address_id:id
+      address_id: id
     }
     api.setDefAddress(data).then(res => {
       console.log(res);
-      if(res){
+      if (res) {
         let selectAddress = addressLi[idx]
-        let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name,is_ziti} = selectAddress
+        let {
+          address: addresstxt,
+          id,
+          area_id,
+          area_name,
+          old_city_id,
+          city_name,
+          address_detail,
+          is_default,
+          mobile,
+          name,
+          is_ziti
+        } = selectAddress
         console.log(addresstxt)
         console.log(selectAddress)
         let addressInfo = {
@@ -124,11 +138,11 @@ Page({
           area_name: area_name,
           city_id: old_city_id,
           city_name: city_name,
-          address_detail:address_detail,
-          is_default:is_default,
-          mobile:mobile,
-          name:name,
-          is_ziti:is_ziti
+          address_detail: address_detail,
+          is_default: is_default,
+          mobile: mobile,
+          name: name,
+          is_ziti: is_ziti
         }
         wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         this.getAddress()
@@ -137,7 +151,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-      }else{
+      } else {
         wx.showToast({
           title: '设置失败',
           icon: 'none',
@@ -146,22 +160,22 @@ Page({
       }
     })
   },
-  delAddress(e){
+  delAddress(e) {
     let id = e.currentTarget.dataset.id,
-    idx = e.currentTarget.dataset.idx
+      idx = e.currentTarget.dataset.idx
     let addressLi = this.data.address
     let data = {
-      address_id:id
+      address_id: id
     }
     api.delAddress(data).then(res => {
       console.log(res);
-      if(res){
+      if (res) {
         let selectAddress = addressLi[idx]
-        if(selectAddress.is_default=='1'){
+        if (selectAddress.is_default == '1') {
           wx.setStorageSync("addressInfo", '{"city_id":"10216"}')
         }
         this.getAddress()
-      }else{
+      } else {
         wx.showToast({
           title: '删除失败',
           icon: 'none',
@@ -170,37 +184,41 @@ Page({
       }
     })
   },
-  getAddress(){
+  getAddress() {
     api.getAddress().then(res => {
       console.log(res);
-      if(res){
+      if (res) {
         this.setData({
-          address:res
+          address: res
         })
       }
 
       //wx.stopPullDownRefresh() //停止下拉刷新
     })
   },
-  selectAdd(e){
+  selectAdd(e) {
     let idx = e.currentTarget.dataset.idx,
-    id = e.currentTarget.dataset.id
-    let {source,address:addressLi,cartType} = this.data
-    
-    if(source!=0){
+      id = e.currentTarget.dataset.id
+    let {
+      source,
+      address: addressLi,
+      cartType
+    } = this.data
+    console.log("11111")
+    if (source != 0) {
       let data = {
-        address_id:id,
-        cart_type:cartType
+        address_id: id,
+        cart_type: cartType
       }
-      api.checkAddress(data).then(res=>{
+      api.checkAddress(data).then(res => {
         console.log(res);
-        if(!res){
+        if (!res) {
           wx.hideToast()
 
           wx.showModal({
             title: '',
             content: '暂无法配送到地址',
-            cancelText:"重选地址",
+            cancelText: "重选地址",
             confirmText: "配送范围",
             success(res) {
               if (res.confirm) {
@@ -210,45 +228,144 @@ Page({
               } else if (res.cancel) {
                 console.log('用户点击取消')
               }
-              
+
             }
           })
 
           return
         }
-        let selectAddress = addressLi[idx]
-        let {address:addresstxt,id,area_id,area_name,old_city_id,city_name,address_detail,is_default,mobile,name} = selectAddress
-        console.log(addresstxt)
-        console.log(selectAddress)
-        let addressInfo = {
-          address: addresstxt,
-          id: id,
-          area_id: area_id,
-          area_name: area_name,
-          city_id: old_city_id,
-          city_name: city_name,
-          address_detail:address_detail,
-          is_default:is_default,
-          mobile:mobile,
-          name:name,
-          is_ziti:res.is_ziti
-        }
 
-        wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
-        //切换城市后 重置所选商品类型 1 面包 2 蛋糕
-        app.globalData.proType=''
-        var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 2];//上一个页面
-        //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-        prevPage.setData({
-          changedId: id
-        })
-        wx.navigateBack({
-          delta: 1
+        let selectAddress = addressLi[idx]
+        let {
+          address: addresstxt,
+          id,
+          area_id,
+          area_name,
+          old_city_id,
+          city_name,
+          address_detail,
+          is_default,
+          mobile,
+          name
+        } = selectAddress
+        // console.log(addresstxt)
+        console.log(selectAddress)
+        // console.log(address);
+
+        // return 
+        console.log(this.data)
+        // selectAddress.old_city_id != 
+        let selectA;
+        for (let tmlVal of this.data.address) {
+          if (tmlVal['id'] == this.data.addressId) {
+            selectA = tmlVal;
+          }
+        }
+        if (selectA.old_city_id == selectAddress.old_city_id) {
+          let addressInfo = {
+            address: addresstxt,
+            id: id,
+            area_id: area_id,
+            area_name: area_name,
+            city_id: old_city_id,
+            city_name: city_name,
+            address_detail: address_detail,
+            is_default: is_default,
+            mobile: mobile,
+            name: name,
+            is_ziti: res.is_ziti
+          }
+
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+          app.globalData.proType = ''
+          var pages = getCurrentPages();
+          var prevPage = pages[pages.length - 2]; //上一个页面
+          //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+          prevPage.setData({
+            changedId: id
+          })
+
+          wx.navigateBack({
+            delta: 1
+          })
+          return
+        }
+        let p = new Promise(resolve => {
+          let pages = getCurrentPages();
+          let flag = false;
+          if (pages.length > 1) {
+            //上一个页面实例对象
+            var prePage = pages[pages.length - 2];
+            if (prePage.route == "pages/cart/payOrder/payOrder") {
+              wx.showModal({
+                title: '',
+                content: '切换该地址后部分商品不能配送，请到购物车核对商品',
+                cancelText: "取消",
+                confirmText: "确认更换",
+                success(res) {
+                  resolve(res.confirm); //true  切换
+                  return;
+                },
+              })
+            }
+          }
+
+        });
+
+        p.then(res => {
+          if (!res) {
+            return
+          }
+
+          // let selectAddress = addressLi[idx]
+          // let {
+          //   address: addresstxt,
+          //   id,
+          //   area_id,
+          //   area_name,
+          //   old_city_id,
+          //   city_name,
+          //   address_detail,
+          //   is_default,
+          //   mobile,
+          //   name
+          // } = selectAddress
+          // console.log(addresstxt)
+          // console.log(selectAddress)
+          let addressInfo = {
+            address: addresstxt,
+            id: id,
+            area_id: area_id,
+            area_name: area_name,
+            city_id: old_city_id,
+            city_name: city_name,
+            address_detail: address_detail,
+            is_default: is_default,
+            mobile: mobile,
+            name: name,
+            is_ziti: res.is_ziti
+          }
+
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+          app.globalData.proType = ''
+          var pages = getCurrentPages();
+          var prevPage = pages[pages.length - 2]; //上一个页面
+          //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+          prevPage.setData({
+            changedId: id
+          })
+          wx.switchTab({
+            url: '/pages/cart/cart',
+          })
+          // wx.navigateBack({
+          //   delta: 1
+          // })
         })
       })
 
-      
+
     }
   },
   /**
@@ -256,25 +373,25 @@ Page({
    */
   onLoad: function (options) {
     let source = options.source || 0,
-    cartType = options.cartType || 0
+      cartType = options.cartType || 0
     console.log(source);
     let btmHolder = wx.getStorageSync('btmHolder')
-    
-    btmHolder = btmHolder>0?btmHolder:12
+
+    btmHolder = btmHolder > 0 ? btmHolder : 12
     //选择地址
     //source 1 首页下单页   0 个人中心
-    if(source==1){
+    if (source == 1) {
       let addressInfo = wx.getStorageSync('addressInfo')
-      addressInfo = addressInfo&&JSON.parse(addressInfo)
+      addressInfo = addressInfo && JSON.parse(addressInfo)
       this.setData({
-        addressId:addressInfo.id,
-        addressTxt:addressInfo.address+addressInfo.address_detail
+        addressId: addressInfo.id,
+        addressTxt: addressInfo.address + addressInfo.address_detail
       })
     }
     this.setData({
-      btmHolder:btmHolder,
-      cartType:cartType,
-      source:source
+      btmHolder: btmHolder,
+      cartType: cartType,
+      source: source
     })
   },
 
