@@ -261,6 +261,7 @@ Page({
             selectA = tmlVal;
           }
         }
+
         if (selectA.old_city_id == selectAddress.old_city_id) {
           let addressInfo = {
             address: addresstxt,
@@ -291,6 +292,7 @@ Page({
           })
           return
         }
+
         let p = new Promise(resolve => {
           let pages = getCurrentPages();
           let flag = false;
@@ -311,28 +313,59 @@ Page({
             }
           }
 
+          //首页逻辑
+          wx.showModal({
+            title: '',
+            content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
+            cancelText: "取消",
+            confirmText: "确认更换",
+            success(res) {
+              let r = res.confirm ? 'index' : res.confirm;
+              resolve(r); //true  切换
+              return;
+            },
+          })
+
         });
 
         p.then(res => {
+          console.log(res);
           if (!res) {
             return
           }
 
-          // let selectAddress = addressLi[idx]
-          // let {
-          //   address: addresstxt,
-          //   id,
-          //   area_id,
-          //   area_name,
-          //   old_city_id,
-          //   city_name,
-          //   address_detail,
-          //   is_default,
-          //   mobile,
-          //   name
-          // } = selectAddress
-          // console.log(addresstxt)
-          // console.log(selectAddress)
+          if (res == "index") {
+            //首页逻辑
+            let addressInfo = {
+              address: addresstxt,
+              id: id,
+              area_id: area_id,
+              area_name: area_name,
+              city_id: old_city_id,
+              city_name: city_name,
+              address_detail: address_detail,
+              is_default: is_default,
+              mobile: mobile,
+              name: name,
+              is_ziti: res.is_ziti
+            }
+
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            //切换城市后 重置所选商品类型 1 面包 2 蛋糕
+            app.globalData.proType = ''
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 2]; //上一个页面
+            //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+            prevPage.setData({
+              changedId: id
+            })
+
+            wx.navigateBack({
+              delta: 1
+            })
+            return
+          }
+
           let addressInfo = {
             address: addresstxt,
             id: id,
