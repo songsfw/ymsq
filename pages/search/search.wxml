@@ -77,7 +77,7 @@
             <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
           </view>
           <view class="info">
-            <view class="tit text-overflow">{{pro.name}}</view>
+            <view class="tit text-overflow"><text wx:if="{{pro.special_tag}}">{{pro.special_tag}}</text>{{pro.name}}</view>
             <view class="tags text-overflow">
               <!-- <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text> -->
               <text>{{pro.selling_point}}</text>

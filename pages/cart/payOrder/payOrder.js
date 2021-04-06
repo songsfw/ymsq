@@ -1003,10 +1003,8 @@ Page({
       cartid = e.currentTarget.dataset.cartid
   }, 200),
   setTxt(e) {
-    console.log('setTxt')
     if (cartid) {
       txtCard[cartid] = txt
-      // console.log(txt, txtCard)
       this.setData({
         txtCardObj: txtCard
       })
@@ -1020,14 +1018,12 @@ Page({
     }
   },
   clearTxt(e) {
-    console.log(1)
     let defMsg = e.currentTarget.dataset.defaultmakemsg;
     let val = e.currentTarget.dataset.value;
     if (val == defMsg) {
       this.data.txtCardObj[e.target.dataset.cartid] = '';
       this.setData({
-        txtCardObj: this.data.txtCardObj,
-        // ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
+        ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
       })
     }
   },
