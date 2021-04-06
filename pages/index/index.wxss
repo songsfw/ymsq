@@ -6,7 +6,6 @@ view{font-size:12px}
 .wrap-all{padding: 10px;}
 .navigator-hover{background-color: none;}
 .item{box-sizing: border-box}
-
 .col-2 .item{width: 50%;}
 .col-3 .item{width: 33.33%;}
 

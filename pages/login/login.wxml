@@ -12,8 +12,10 @@
     </view>
     
     <view class='getWXAuth'>
-      
-      <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" wx:if="{{show}}">
+      <!-- <button class='authorizeBtn' wx:if="{{canIUseGetUserProfile&&show}}" bindtap="onGotUserProFile" wx:if="{{show}}">
+        获取授权
+      </button> -->
+      <button class='authorizeBtn' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
         获取授权
       </button>
       <view class="txt">

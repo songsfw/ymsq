@@ -611,20 +611,22 @@ Page({
     }
 
     let btmHolder = wx.getStorageSync('btmHolder')
+    let instructions = wx.getStorageSync('instructions')
 
-    api.getIntroduction().then(res=>{
-      console.log(res);
-      if(res){
-        let txt =res.instructions['cart-top'],
-            tipsBread = res.instructions['cart-bread-tips'],
-            tipsCake = res.instructions['cart-cake-tips']
+    // api.getIntroduction().then(res=>{
+    //   console.log(res);
+      if(instructions){
+        instructions = JSON.parse(instructions)
+        let txt =instructions['cart-top'],
+            tipsBread = instructions['cart-bread-tips'],
+            tipsCake = instructions['cart-cake-tips']
         this.setData({
           tipsBread,
           tipsCake,
           instructions:txt
         })
       }
-    })
+    //})
 
     this.setData({
       btmHolder: btmHolder || 0

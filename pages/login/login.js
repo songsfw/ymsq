@@ -26,8 +26,20 @@ Page({
     console.log(e.detail);
     
   },
+  onGotUserProFile(){
+    wx.getUserProfile({
+      desc: '为了您更便捷购物，请先微信授权',
+      success:res=>{
+        console.log(res);
+      },
+      fail:err=>{
+        console.log(err);
+      }
+    })
+  },
   //授权用户信息
   onGotUserInfo: function (e) {
+    
     var detailInfo = e.detail
     var userDetail = detailInfo.userInfo
     console.log(e.detail);
@@ -79,6 +91,12 @@ Page({
     })
   },
   onLoad () {
+    
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
     let userInfo = wx.getStorageSync("userInfo")
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;

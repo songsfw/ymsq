@@ -6,6 +6,7 @@ function wxLogin() {
   return new Promise((resolve, reject) => {
     wx.login({
       success: res => {
+        console.log(res);
         let code = res.code
         resolve(code)
       },

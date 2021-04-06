@@ -19,6 +19,13 @@ App({
     //     console.log('显示loading')
     //   }
     // })
+    api.getIntroduction().then(res=>{
+      console.log(res);
+      if(res){
+        wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+      }
+    })
+
     this.init()
   },
   async init() {

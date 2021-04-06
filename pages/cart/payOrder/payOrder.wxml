@@ -186,7 +186,7 @@
       </view>
       <view class="val">
         <block wx:if="{{hasMai}}"><text class="strongTxt">-￥{{payQueue[1]}}</text></block>
-        <block wx:else>可用{{jinmai.now_point}},抵￥{{payQueue[1]}},去使用</block>
+        <block wx:else>可用{{jinmai.now_point}},抵￥{{jinmai.now_price}},去使用</block>
         <!-- <text class="iconfont icon-arrow-r"></text> -->
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
@@ -237,7 +237,7 @@
         
       </view>
     </view>
-    <navigator hover-class="none" url="../../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="toFollow color-b" wx:if="{{pay_style.balance == 10}}">关注公众号使用原麦余额<image class="arrow-r" src="../../../image/icon-arrow-right.png"></image></navigator>
+    <navigator hover-class="none" url="../../web/web?toFollow=1&url={{wxUrl}}" class="toFollow color-b" wx:if="{{pay_style.balance == 10}}">关注公众号使用原麦余额<image class="arrow-r" src="../../../image/icon-arrow-right.png"></image></navigator>
     <view class="total-price flex">
       <text>合计：</text>
       <view>
@@ -444,10 +444,10 @@
   <view class="pop-con">
     <view class="mai-info flex">
       <view class="">账户麦点：{{jinmai.total_point}}</view>
-      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{payQueue[2]}}</text></view>
+      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{payQueue[1]}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
-      <view>抵扣<text>￥{{payQueue[2]}}</text>使用{{jinmai.now_point}}麦点</view>
+      <view>抵扣<text>￥{{payQueue[1]}}</text>使用{{jinmai.now_point}}麦点</view>
       <view class="checkbox {{hasMai?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>

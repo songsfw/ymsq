@@ -5,8 +5,7 @@ let delivery = 10,
   coupon = 0
 let txtCard = null,
   cartid = null,
-  txt = '',
-  isLoad=null
+  txt = ''
 let app = getApp()
 // let payQueue = [10,0,0,0,0]
 Page({
@@ -32,7 +31,7 @@ Page({
     curId: -1,
     curtabid: 1,
     pop: 0,
-
+    isLoad:false,
     hasDelivery: true,
     hasMai: true,
     hasCard: false,
@@ -573,6 +572,7 @@ Page({
     console.log(newPayQueue)
 
     this.setData({
+      isLoad:true,
       useCoupon,
       hasDelivery,
       payQueue: newPayQueue
@@ -1271,6 +1271,62 @@ Page({
       confirmText: "确定",
     })
   },
+  getWxUrl(){
+    let instructions = wx.getStorageSync('instructions')
+
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      let url =instructions['subscribe-article']
+         
+      this.setData({
+        wxUrl:url
+      })
+    }
+  },
+  hasChangeFollow(){
+    let {
+      type,
+      useBalance,
+      verifyed,
+      city_id,
+      is_ziti,
+      ziti,
+      address_id
+    } = this.data
+
+    let data = {
+      city_id: city_id,
+      is_ziti: is_ziti,
+      choose_ziti:ziti,
+      address_id: address_id
+    }
+
+    if (type == "1") {
+      //面包
+      api.getOrderBread(data).then(res => {
+        console.log(res);
+        if (!res) {
+          return
+        }
+        this.setData({
+          pay_style: res.pay_style,
+          useBalance:res.pay_style.balance==1?true:false,
+        })
+        this.initOrderPrice()
+      })
+
+    } else {
+      //蛋糕
+      api.getOrderCake(data).then(res => {
+        console.log(res);
+        this.setData({
+          pay_style: res.pay_style,
+          useBalance:res.pay_style.balance==1?true:false,
+        })
+        this.initOrderPrice()
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -1306,6 +1362,7 @@ Page({
     if (addressInfo) {
       this.setData({
         type: type,
+        changedId: addressInfo.id,
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
         address_id: addressInfo.id,
@@ -1317,14 +1374,13 @@ Page({
     }
     console.log("2", addressInfo.id);
     this.initOrderData();
-
+    this.getWxUrl()
     util.setWatcher(this);
 
     this.setData({
       btmHolder: btmHolder || 0,
       userInfo: JSON.parse(userInfo),
     })
-    isLoad = true
   },
   watch: {
     'payQueue': function (value, oldValue) {
@@ -1387,66 +1443,8 @@ Page({
 
     // }
     // console.log("2",addressInfo.id);
-    if(isLoad){
-      wx.showLoading({
-        title: '加载中'
-      })
-      let {
-        type,
-        useBalance,
-        verifyed,
-        city_id,
-        is_ziti,
-        ziti,
-        address_id
-      } = this.data
-  
-      let data = {
-        city_id: city_id,
-        is_ziti: is_ziti,
-        choose_ziti:ziti,
-        address_id: address_id
-      }
-
-      //用户地址列表
-      let addressInfo = wx.getStorageSync("addressInfo")
-      addressInfo = addressInfo && JSON.parse(addressInfo)
-      if (addressInfo) {
-        this.setData({
-          is_ziti: addressInfo.is_ziti,
-          city_id: addressInfo.city_id,
-          address_id: addressInfo.id,
-          zitiName: addressInfo.name,
-          zitiPhone: addressInfo.mobile,
-          addressInfo: addressInfo
-        })
-      }
-
-      if (type == "1") {
-        //面包
-        api.getOrderBread(data).then(res => {
-          console.log(res);
-          if (!res) {
-            return
-          }
-          this.setData({
-            pay_style: res.pay_style,
-            useBalance:res.pay_style.balance==1?true:false,
-          })
-          this.initOrderPrice()
-        })
-  
-      } else {
-        //蛋糕
-        api.getOrderCake(data).then(res => {
-          console.log(res);
-          this.setData({
-            pay_style: res.pay_style,
-            useBalance:res.pay_style.balance==1?true:false,
-          })
-          this.initOrderPrice()
-        })
-      }
+    if(this.data.changeFollow){
+      this.hasChangeFollow()
     }
   },
 

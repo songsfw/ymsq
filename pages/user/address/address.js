@@ -105,10 +105,21 @@ Page({
       url: "/pages/user/adddata/adddata?type=" + type + "&source=" + source
     })
   },
+  //source来源为!0(结算)时，地址操作(删除/选中) 要初始化结算页数据
+  setPrePageStat(id){
+    app.globalData.proType = ''
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2]; //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      changedId: id
+    })
+  },
   setDefAddress(e) {
     let id = e.currentTarget.dataset.id,
-      idx = e.currentTarget.dataset.idx
-    let addressLi = this.data.address
+      idx = e.currentTarget.dataset.idx,
+      isDefault = e.currentTarget.dataset.default
+    let {address:addressLi,source} = this.data
     let data = {
       address_id: id
     }
@@ -124,7 +135,6 @@ Page({
           old_city_id,
           city_name,
           address_detail,
-          is_default,
           mobile,
           name,
           is_ziti
@@ -139,12 +149,22 @@ Page({
           city_id: old_city_id,
           city_name: city_name,
           address_detail: address_detail,
-          is_default: is_default,
+          is_default: isDefault==1?0:1,
           mobile: mobile,
           name: name,
           is_ziti: is_ziti
         }
-        wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+        if(isDefault!=1){
+          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+          //如果来源结算页 初始化结算页数据
+          if(source!=0){
+            this.setPrePageStat(id)
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        }
+
         this.getAddress()
         wx.showToast({
           title: '设置成功',
@@ -163,7 +183,7 @@ Page({
   delAddress(e) {
     let id = e.currentTarget.dataset.id,
       idx = e.currentTarget.dataset.idx
-    let addressLi = this.data.address
+    let {address:addressLi,source} = this.data
     let data = {
       address_id: id
     }
@@ -173,9 +193,13 @@ Page({
       addressInfo = addressInfo&&JSON.parse(addressInfo)
       if(res){
         let selectAddress = addressLi[idx]
-        if(selectAddress.is_default=='1' || selectAddress.id==addressInfo.id){
+        if(selectAddress.id==addressInfo.id){
           wx.setStorageSync("addressInfo", '{"city_id":"10216"}')
+          if(source!=0){
+            this.setPrePageStat(id)
+          }
         }
+ 
         this.getAddress()
       } else {
         wx.showToast({
@@ -204,7 +228,8 @@ Page({
     let {
       source,
       address: addressLi,
-      cartType
+      cartType,
+      addressInfo:cacheAddressInfo
     } = this.data
     console.log("11111")
     if (source != 0) {
@@ -214,7 +239,7 @@ Page({
       }
       api.checkAddress(data).then(res => {
         console.log(res);
-        if (!res) {
+        if (!res) { 
           wx.hideToast()
 
           wx.showModal({
@@ -257,14 +282,14 @@ Page({
         // return 
         console.log(this.data)
         // selectAddress.old_city_id != 
-        let selectA;
-        for (let tmlVal of this.data.address) {
-          if (tmlVal['id'] == this.data.addressId) {
-            selectA = tmlVal;
-          }
-        }
+        // let selectA;
+        // for (let tmlVal of this.data.address) {
+        //   if (tmlVal['id'] == this.data.addressInfo.id) {
+        //     selectA = tmlVal;
+        //   }
+        // }
 
-        if (selectA.old_city_id == selectAddress.old_city_id) {
+        if (cacheAddressInfo.city_id == selectAddress.old_city_id) {
           let addressInfo = {
             address: addresstxt,
             id: id,
@@ -299,7 +324,6 @@ Page({
           let pages = getCurrentPages();
           let flag = false;
           if (pages.length > 1) {
-            console.log(2222)
             //上一个页面实例对象
             var prePage = pages[pages.length - 2];
             if (prePage.route == "pages/cart/payOrder/payOrder") {
@@ -313,21 +337,21 @@ Page({
                   return;
                 },
               })
-            }else if(prePage.route == "pages/index/index"){
-              //首页逻辑
-              wx.showModal({
-                title: '',
-                content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
-                cancelText: "取消",
-                confirmText: "确认更换",
-                success(res) {
-                  let r = res.confirm ? 'index' : res.confirm;
-                  resolve(r); //true  切换
-                  return;
-                },
-              })
             }
-          } 
+          } else {
+            //首页逻辑
+            wx.showModal({
+              title: '',
+              content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
+              cancelText: "取消",
+              confirmText: "确认更换",
+              success(res) {
+                let r = res.confirm ? 'index' : res.confirm;
+                resolve(r); //true  切换
+                return;
+              },
+            })
+          }
         });
 
         p.then(res => {
@@ -419,8 +443,9 @@ Page({
       let addressInfo = wx.getStorageSync('addressInfo')
       addressInfo = addressInfo && JSON.parse(addressInfo)
       this.setData({
-        addressId: addressInfo.id,
-        addressTxt: addressInfo.address + addressInfo.address_detail
+        addressInfo:addressInfo
+        //addressId: addressInfo.id,
+        //addressTxt: addressInfo.address + addressInfo.address_detail
       })
     }
     this.setData({
