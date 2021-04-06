@@ -34,16 +34,17 @@ Page({
         img:"../../../image/d3.png"
       },
     ],
-    dateList : null
+    dateList : null,
+    showbg:'',
   },
-  onfocus(){
+  onfocus(e){
     this.setData({
-      showbg:true
+      showbg:e.currentTarget.dataset.id
     })
   },
   onblur(){
     this.setData({
-      showbg:false
+      showbg:'',
     })
   },
   /**
