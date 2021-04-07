@@ -9,7 +9,7 @@
   </view>
 </view>
 <view class="card">
-  <view class="item {{showbg?'showbg':''}}" wx:for="{{dateList}}">
+  <view class="item {{showbg == item.id?'showbg':''}}" wx:for="{{dateList}}">
     <image src="../../../image/0325.jpg" class="bg"></image>
     <view class="hd flex">
       <view>
@@ -19,10 +19,10 @@
     </view>
     <view class="flex input-box">
       <view class="tit">名称</view>
-      <input type="text" class="flex-1" bindblur="onblur" bindfocus="onfocus" value="{{item.title}}" placeholder="请为纪念日设置名称" placeholder-style="color:#aaa" bindinput="inputName" data-idx = "{{index}}" />
+      <input type="text" class="flex-1" bindblur="onblur" bindfocus="onfocus" value="{{item.title}}" placeholder="请为纪念日设置名称" placeholder-style="color:#aaa" bindinput="inputName" data-idx = "{{index}}" data-id="{{item.id}}"/>
       
     </view>
-    <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate">
+    <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate" data-value="{{item.type}}-{{item.date}}">
       <view class="tit">日期</view>
       <view class="date">{{item.date || '请选择纪念日期'}}</view>
       <view class="tip">{{item.type==0?'(阳历)':'(农历)'}}</view>
@@ -49,13 +49,13 @@
   </view>
   <picker-view indicator-class="picker-view" value="{{value}}" bindchange="bindDateChange" mask-style="background:#F6F6F6;z-index:0">
     <picker-view-column>
-      <view class="{{val[0]==index?'pickerSelected':''}}"  wx:for="{{years}}" wx:key="{{years}}"  style="line-height: 50px; text-align: center;">{{item}}年</view>
+      <view class="{{(clickPop && yearidx==value[0]) || val[0]==yearidx?'pickerSelected':''}}"  wx:for="{{years}}" wx:key="{{years}}" wx:for-index="yearidx" style="line-height: 50px; text-align: center;" >{{item}}年</view>
     </picker-view-column>
     <picker-view-column>
-      <view class="{{val[1]==index?'pickerSelected':''}}" wx:for="{{months}}" wx:key="{{months}}" style="line-height: 50px; text-align: center;">{{item}}月</view>
+      <view class="{{(clickPop && monthidx==value[1]) || val[1]==monthidx?'pickerSelected':''}}" wx:for="{{months}}" wx:key="{{months}}" wx:for-index="monthidx" style="line-height: 50px; text-align: center;">{{item}}月</view>
     </picker-view-column>
     <picker-view-column>
-      <view class="{{val[2]==index?'pickerSelected':''}}" wx:for="{{days}}" wx:key="{{days}}" style="line-height: 50px; text-align: center;">{{item}}{{type==0?'日':''}}</view>
+      <view class="{{(clickPop && dayidx==value[2]) || val[2]==dayidx?'pickerSelected':''}}" wx:for="{{days}}" wx:key="{{days}}" wx:for-index="dayidx" style="line-height: 50px; text-align: center;">{{item}}{{type==0?'日':''}}</view>
     </picker-view-column>
   </picker-view>
   <view class="opt-btn flex">

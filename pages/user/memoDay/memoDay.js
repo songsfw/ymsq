@@ -34,16 +34,19 @@ Page({
         img:"../../../image/d3.png"
       },
     ],
-    dateList : null
+    dateList : null,
+    showbg:'',
+    defIndex:[],
+    clickPop:false,
   },
-  onfocus(){
+  onfocus(e){
     this.setData({
-      showbg:true
+      showbg:e.currentTarget.dataset.id
     })
   },
   onblur(){
     this.setData({
-      showbg:false
+      showbg:'',
     })
   },
   /**
@@ -66,47 +69,87 @@ Page({
     })
   },
   selectDate(e){
+    console.log(e.currentTarget.dataset.value)
     let idx = e.currentTarget.dataset.idx
     let dateList = this.data.dateList
     let type = dateList[idx].type
     this.setData({
       showDate:true,
       currIdx:idx,
-      type
+      type,
+      clickIdx:idx,//补充
+      clickPop:true,
+      // value:[1,1,4]
     })
-    this.getDateList()
+    this.getDateList(e.currentTarget.dataset.value)
   },
   confirmDate(){
     let {currIdx,year} = this.data
     let val = this.data.val || this.data.value
+    console.log(val[2])
+    if(!val[2]){
+      val[2] = 0;
+    }
+
     let month = parseInt([val[1]])+1,day=parseInt([val[2]])+1
+    // year = year.toString().length >1 ? '':'0'+year;
+    month = month.toString().length >1 ? month:'0'+month;
+    day = day.toString().length >1 ? day:'0'+day;
+
+    console.log(val,year,month,day)
     let yearStr = `${year}-${month}-${day}`
+    console.log(yearStr,this.data.dateList)
     this.setData({
-      ['dateList['+currIdx+'].date']:yearStr
+      clickPop:false,
+      ['dateList['+currIdx+'].date']:yearStr,
+      value:[],
     })
     this.closeDate()
   },
   closeDate(){
     this.setData({
-      showDate:false
+      showDate:false,
+      val:[],
     })
   },
-  getDateList(){
+  setClickDate(){
+
+  },
+  getDateList(def){
+    this.data.defIndex = [];
     let type = this.data.type,years=[],months=[],days=[],day=""
+    let curDefDate = null;
+    if(def){
+       curDefDate = def.split('-');
+    }
+    let zi = 0;
     for (let i = start; i <= date.getFullYear(); i++) {
-      years.push(i)
+      years.push(i);
+      if(curDefDate && curDefDate[1] == i){
+        this.data.defIndex.push(zi);
+      }
+      zi++;
     }
     if(type==0){
       for (let i = 1; i <= 12; i++) {
         months.push(i)
+        if(curDefDate && curDefDate[0] == type &&  curDefDate[2] == i){
+          this.data.defIndex.push(i-1);
+        }
       }
       
       for (let i = 1; i <= 31; i++) {
         days.push(i)
+        if(curDefDate && curDefDate[0] == type &&  curDefDate[3] == i){
+          this.data.defIndex.push(i-1);
+        }
       }
     }else{
       for (let i = 1; i <= 12; i++) {
         months.push(monString[i-1])
+        if(curDefDate &&  curDefDate[2] == i){
+          this.data.defIndex.push(i-1);
+        }
       }
       
       for (let i = 1; i <= 30; i++) {
@@ -126,13 +169,23 @@ Page({
           day="三十"
         }
         days.push(day)
+        if(curDefDate &&  curDefDate[3] == i){
+          this.data.defIndex.push(i-1);
+        }
       }
     }
+    console.log(this.data.defIndex)
     this.setData({
       years:years,
       months:months,
-      days:days
+      days:days,
     })
+    if(this.data.defIndex.length != 0){
+      this.setData({
+        value:this.data.defIndex,
+      })
+    }
+    
   },
   inputName:util.debounce(function(e){
     let idx = e.target.dataset.idx
@@ -169,10 +222,12 @@ Page({
       })
     }
     this.setData({
+      clickPop:false,
       year: this.data.years[val[0]],
       month: this.data.months[val[1]],
       day: this.data.days[val[2]],
-      val
+      val,
+      // openPop:true,
     })
   },
   changeType(){

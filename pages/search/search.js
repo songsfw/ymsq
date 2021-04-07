@@ -46,6 +46,7 @@ Page({
 
     focus: true,
     backNum:0,//1为详情页返回
+    trueCityId:0,
   },
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
@@ -228,6 +229,13 @@ Page({
     })
   },
   addChartPreView(itemIdx) {
+    if(this.data.trueCityId == 0){
+      wx.showToast({
+        icon: "none",
+        title: '当前配送地址暂不支持购买此商品！'
+      })
+      return false;
+    }
     let tempList = app.data.SearchSearch_SearchList['list'][itemIdx];
     let proStock = tempList.type == 1 ? app.data.SearchSearch_SearchList['stock'][tempList['meal_id']] : this.data.order_max_bread;
 
@@ -408,7 +416,7 @@ Page({
     } = this.data
 
     let data = {
-      city_id: city_id,
+      city_id: this.data.trueCityId,
       type: '2',
       tab_id: proId,
       number: skuNum
@@ -537,6 +545,12 @@ Page({
   },
   onShow: function (e) {
     console.log('on show ',this.data.currentKeyword,this.data);
+
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let city_id = addressInfo && JSON.parse(addressInfo).city_id
+    //默认不存在的城市 显示全国
+    this.data.trueCityId = city_id;
+
     this.data.watchNumer = 0;
     if(this.data.currentKeyword){
       let totalNumber = wx.getStorageSync('total_num') || 0;
@@ -566,6 +580,7 @@ Page({
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     //默认不存在的城市 显示全国
+    this.data.trueCityId = city_id;
     city_id = city_id == 0 ? '10216' : city_id;
     let totalNumber = wx.getStorageSync('total_num') || 0;
     this.setData({
