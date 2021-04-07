@@ -54,6 +54,7 @@ Page({
     prePushWatchHash: {}, //预处理堆
 
     backFrom: 0, //1为详情页
+    trueCityId:0,
   },
   switchTab: util.debounce(function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -141,6 +142,14 @@ Page({
     this.getProList()
   },
   addChartPreView(currentTab, idx, itemIdx, totalNum) {
+    if(this.data.trueCityId == 0){
+      wx.showToast({
+        icon: "none",
+        title: '当前配送地址暂不支持购买此商品！'
+      })
+      return false;
+    }
+
     let tempList = this.data.showList[currentTab][idx][itemIdx];
     let proStock = tempList.type == 1 ? this.data.showStock[currentTab][tempList['meal_id']] : this.data.order_max_bread;
 
@@ -187,6 +196,7 @@ Page({
       currentTab,
       city_id,
     } = this.data
+    console.log(city_id);
 
     if(this.data.showStock[currentTab][proId] == 0){
       return 
@@ -236,6 +246,7 @@ Page({
         cityId: city_id,
         selected: curPro.selected,
         itemIdx: itemIdx,
+        trueCityId:this.data.trueCityId,
       };
     } else {
       this.data.prePushWatchHash[typeMealIdSpuId]['addNum'] += 1;
@@ -258,6 +269,7 @@ Page({
           cityId: this.data.prePushWatchHash[info]['cityId'],
           selected: this.data.prePushWatchHash[info]['selected'],
           maxStock: this.data.prePushWatchHash[info]['curStock'],
+          trueCityId: this.data.prePushWatchHash[info]['trueCityId'],
         })
         this.data.watchNumer = this.data.watchNumer + this.data.prePushWatchHash[info]['addNum']
         delete this.data.prePushWatchHash[info];
@@ -274,9 +286,9 @@ Page({
   //   }, 5000)
   // },
   syncTocart(params) {
-    // console.log('syncTocart:', params);
+    console.log('syncTocart:', params);
     let data = {
-      city_id: params['cityId'],
+      city_id: params['trueCityId'],
       type: params['curType'],
       tab_id: params['proId'],
       number: params['addNum'],
@@ -731,7 +743,7 @@ Page({
     } = this.data
 
     let data = {
-      city_id: city_id,
+      city_id: this.data.trueCityId,
       type: '2',
       tab_id: proId,
       number: skuNum
@@ -855,8 +867,10 @@ Page({
     canCheck = false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
+    console.log(addressInfo);
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let proType = app.globalData.proType
+    this.data.trueCityId=city_id;
     //默认不存在的城市 显示全国
     city_id = city_id == 0 ? '10216' : city_id;
     this.setData({
@@ -867,7 +881,7 @@ Page({
       showLoading: true,
       skuNum: 1,
     })
-    // console.log(this.data.city_id)
+    console.log(this.data.city_id)
     trueStock = {};
     this.getCartInfo()
     this.getProList(this.data.city_id, true);
@@ -889,17 +903,18 @@ Page({
     this.busPos = {};
     this.busPos['x'] = sysInfo.screenWidth * .6;
     this.busPos['y'] = sysInfo.screenHeight * .85;
-    // let addressInfo = wx.getStorageSync("addressInfo")
-    // let city_id = addressInfo&&JSON.parse(addressInfo).city_id
+    let addressInfo = wx.getStorageSync("addressInfo")
+    console.log(addressInfo)
+    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     let btmHolder = wx.getStorageSync('btmHolder')
 
     //设置临时页面分类等
     // this.setTempTypeTag(1,0);
 
     this.setData({
-      //city_id:city_id,
+      city_id:city_id,
       fixedTop: fixedTop,
-      btmHolder: btmHolder || 0
+      btmHolder: btmHolder || 0,
     })
     //this.getProList();
 
