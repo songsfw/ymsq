@@ -118,7 +118,7 @@ color: #666;
 
 .logo{width: 130rpx;height: 54rpx;margin: 0 auto;padding: 102rpx 0;}
 .gotop{position: fixed;right:50rpx ;bottom: 150rpx;width: 80rpx;height: 80rpx;z-index: 3;}
-.notice{width: 100%;height: 46px;line-height: 46px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin-bottom: 25rpx;border-top: 20rpx solid #F6F6F6;}
+.notice{width: 100%;height: 56px;line-height: 56px;font-size: 13px;color: #333;justify-content: space-between;align-items: center;box-sizing: border-box;z-index:11;overflow:hidden;background-color: #fff;padding:0 24rpx;margin-bottom: 25rpx;border-top: 10px solid #F6F6F6;}
 .notice image{width: 58px;height: 40px;flex-shrink: 0;margin-right: 16rpx;}
 .notice .txt,.notice .tit{padding: 0 24rpx;height: 18px;line-height: 18px;background: #fff;}
 .notice .txt{width: auto; border-left: 1px solid #ccc;padding-left: 16rpx;}
@@ -148,5 +148,5 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .iwx{width: 750rpx;height: 240rpx;}
 .main-content{padding: 25rpx 0;background-color: #F4F9F5;margin: 25rpx 0;}
 
-.notice-panel .popPanel{background: url(https://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
+.notice-panel .popPanel{background: url(http://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
 .notice-panel .pop-title{background: #fff;}

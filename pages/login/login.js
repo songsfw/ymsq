@@ -30,7 +30,40 @@ Page({
     wx.getUserProfile({
       desc: '为了您更便捷购物，请先微信授权',
       success:res=>{
+        let timestamp = (new Date()).valueOf()
+        var {openid,is_mobile} = this.data.userInfo
         console.log(res);
+        let data = {
+          encryptedData: res.encryptedData,
+          iv: res.iv,
+          openid: openid,
+          uname:"wxxcx",
+          timestamp:timestamp
+        }
+        api.appLogin(data)
+        .then(res=>{
+          console.log(is_mobile);
+          console.log(res);
+          if(!res){
+            return
+          }
+          let result = res.data.result
+          let user_info = result.user_info
+          if(user_info){
+            this.setData({
+              'userInfo.nickname':user_info.nickname,
+              'userInfo.photo':user_info.head_url,
+              'userInfo.is_authed':user_info.is_authed
+            })
+            wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
+          }
+          
+            wx.navigateBack({
+              delta: 1
+            })
+
+          
+        })
       },
       fail:err=>{
         console.log(err);
@@ -49,7 +82,6 @@ Page({
       let data = {
         encryptedData: detailInfo.encryptedData,
         iv: detailInfo.iv,
-        //rawData:detailInfo.rawData,
         openid: openid,
         uname:"wxxcx",
         timestamp:timestamp

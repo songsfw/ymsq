@@ -199,12 +199,14 @@ Page({
     }
   },
   onShow:function(){
+    if (app.globalData.isLogin!=1){
+      return
+    }
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];
+    let options = currPage.options
+
     let totalNum = wx.getStorageSync("total_num")
-    this.setData({
-      totalNum: totalNum,
-    })
-  },
-  onLoad: function (options) {
     let proId = options.proId
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = JSON.parse(addressInfo).city_id
@@ -221,8 +223,13 @@ Page({
       city_id: city_id,
       proId: proId,
       toCartParams:'?'+"ctabTypeMealIdSpuId="+this.data.ctabTypeMealIdSpuId,
+      totalNum: totalNum,
     })
     this.getProInfo()
+
+  },
+  onLoad: function () {
+    
     let btmHolder = wx.getStorageSync('btmHolder')
 
     this.setData({

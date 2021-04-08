@@ -8,18 +8,26 @@ const returnData = res=>{
     let data = res.data
     console.log(data)
     if(data.status==0){
+      isLogin = 0
       var result = data.result
       return result
     }else if(data.status==-5){
+      isLogin = 0
       return false
     }else if(data.status==1001){
+      if(isLogin==1){  //防止同时多个接口1001重复跳授权页
+        return
+      }
+      isLogin=1
       wx.navigateTo({
         url: '/pages/login/login'
       })
     }else if(data.status==1022){
+      isLogin = 0
       console.log('未绑定手机');
       return '1022'
     }else{
+      isLogin = 0
       //特殊状态统一处理
       if(data.message){
         wx.showToast({

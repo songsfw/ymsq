@@ -114,8 +114,9 @@ Page({
 
   },
   getIndexInfo:function(){
+    let city_id = this.data.addressInfo.city_id
     let data = { 
-      city_id:this.data.addressInfo.city_id
+      city_id:city_id==0?"10216":city_id
     }
     api.getIndexInfo(data).then(res => {
       console.log(res);
@@ -223,6 +224,9 @@ Page({
     //     selected: 0
     //   })
     // }
+    if (app.globalData.isLogin!=1){
+      return
+    }
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;

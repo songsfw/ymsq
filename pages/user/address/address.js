@@ -1,4 +1,5 @@
 const api = require('../../../utils/api.js')
+const util = require('../../../utils/util.js')
 const app = getApp()
 var timer = null,
   startX = 0
@@ -193,8 +194,42 @@ Page({
       addressInfo = addressInfo&&JSON.parse(addressInfo)
       if(res){
         let selectAddress = addressLi[idx]
+        let default_address = res.default_address
         if(selectAddress.id==addressInfo.id){
-          wx.setStorageSync("addressInfo", '{"city_id":"10216"}')
+          if(default_address.address){
+            addressInfo = {
+              address: default_address.address,
+              id: default_address.id,
+              area_id: default_address.area_id,
+              area_name: default_address.area_name,
+              city_id: default_address.old_city_id,
+              city_name: default_address.city_name,
+              address_detail: default_address.address_detail,
+              is_default: default_address.is_default,
+              mobile: default_address.mobile,
+              name: default_address.name,
+              is_ziti: default_address.is_ziti
+            }
+            wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+            
+          }else{
+
+            util.getLocation().then(res=>{
+              console.log(res);
+              let data = {
+                lng: res.longitude,
+                lat: res.latitude
+              }
+              return data
+            }).then(data=>{
+              console.log(data)
+              api.getUserLocation(data).then(local=>{
+                wx.setStorageSync("addressInfo", JSON.stringify(local.address_info))
+              })
+            })
+            
+            
+          }
           if(source!=0){
             this.setPrePageStat(id)
           }
@@ -323,7 +358,7 @@ Page({
         let p = new Promise(resolve => {
           let pages = getCurrentPages();
           let flag = false;
-          if (pages.length > 1) {
+          if (pages.length == 3) {
             //上一个页面实例对象
             var prePage = pages[pages.length - 2];
             if (prePage.route == "pages/cart/payOrder/payOrder") {
@@ -334,24 +369,22 @@ Page({
                 confirmText: "确认更换",
                 success(res) {
                   resolve(res.confirm); //true  切换
-                  return;
-                },
-              })
-            }else {
-              //首页逻辑
-              wx.showModal({
-                title: '',
-                content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
-                cancelText: "取消",
-                confirmText: "确认更换",
-                success(res) {
-                  let r = res.confirm ? 'index' : res.confirm;
-                  resolve(r); //true  切换
-                  return;
                 },
               })
             }
-          } 
+          } else {
+            //首页逻辑
+            wx.showModal({
+              title: '',
+              content: '首页切换该地址后部分商品不能配送，请到购物车核对商品',
+              cancelText: "取消",
+              confirmText: "确认更换",
+              success(res) {
+                let r = res.confirm ? 'index' : res.confirm;
+                resolve(r); //true  切换
+              },
+            })
+          }
         });
 
         p.then(res => {
@@ -500,7 +533,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

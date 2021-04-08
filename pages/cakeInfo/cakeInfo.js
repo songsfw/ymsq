@@ -182,7 +182,14 @@ Page({
       }  
     }
   },
-  onLoad: function (options) {
+  onShow(){
+    if (app.globalData.isLogin!=1){
+      return
+    }
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];
+    let options = currPage.options
+
     let addressInfo = wx.getStorageSync("addressInfo")
     let totalNum = wx.getStorageSync("total_num")
     let city_id = JSON.parse(addressInfo).city_id
@@ -198,15 +205,31 @@ Page({
 
     if (options.ctabTypeMealIdSpuId) {
       this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId;
-      // this.data.backListType = options.type
-      // this.data.backListIdx = options.idx
-      // this.data.backListItemidx = options.itemidx
-      // this.data.backListCurrentTab = options.currenttab
-      // sData['toCartParams'] = '?'+"type="+options.type+"&idx="+options.idx+"&itemidx="+options.itemidx+"&currenttab="+options.currenttab
     }
 
     this.setData(sData)
     this.getProInfo()
+  },
+  onLoad: function (options) {
+    // let addressInfo = wx.getStorageSync("addressInfo")
+    // let totalNum = wx.getStorageSync("total_num")
+    // let city_id = JSON.parse(addressInfo).city_id
+    // let proId = options.proId
+    // console.log('---------',proId)
+    // let btmHolder = wx.getStorageSync('btmHolder')
+    // let sData = {
+    //   totalNum:totalNum,
+    //   btmHolder:btmHolder||0,
+    //   city_id:city_id,
+    //   proId: proId,
+    // }
+
+    // if (options.ctabTypeMealIdSpuId) {
+    //   this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId;
+    // }
+
+    // this.setData(sData)
+    // this.getProInfo()
     
     //this.initData()
   },

@@ -1327,6 +1327,21 @@ Page({
       })
     }
   },
+  hasChangeAddress(){
+    let addressInfo = wx.getStorageSync("addressInfo")
+    addressInfo = addressInfo && JSON.parse(addressInfo)
+    if (addressInfo) {
+      this.setData({
+        is_ziti: addressInfo.is_ziti,
+        city_id: addressInfo.city_id,
+        address_id: addressInfo.id,
+        addressInfo: addressInfo,
+        'address.is_address': true
+      })
+    }
+    console.log("1", addressInfo.id);
+    this.initOrderData();
+  },
   /**
    * 生命周期函数--监听页面加载
    */

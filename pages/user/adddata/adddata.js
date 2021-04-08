@@ -33,13 +33,22 @@ Page({
       url:"/pages/user/selectAdd/selectAdd?type="+type
     })
   },
+  checkAddress(id,cart_type){
+    let data = {
+      address_id: id,
+    }
+    if(cart_type&&cart_type!=0){
+      data.cart_type = cart_type
+    }
+    return api.checkAddress(data)
+  },
   addAddress(){
     console.log(this.data.address)
     let {id,address, address_detail, mobile, name,is_default,location,district,province,title,is_ziti,city_id} = this.data.address
     console.log(this.data)
     let source = this.data.source
     let newAdd = {address:address}
-    
+
     if(!name){
       wx.showToast({
         title: '请输入姓名',
@@ -111,6 +120,7 @@ Page({
       api.editAddress(data).then(res => {
         console.log(res);
         if(res){
+          
           let addressInfo = {
             address: address,
             id: id,
@@ -130,9 +140,10 @@ Page({
             var pages = getCurrentPages();
             var prevPage = pages[pages.length - 3];//上一个页面
             //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-            prevPage.setData({
-              changedId: id
-            })
+            // prevPage.setData({
+            //   changedId: id
+            // })
+            prevPage.hasChangeAddress&&prevPage.hasChangeAddress()
             wx.navigateBack({
               delta: 2
             })
@@ -144,15 +155,15 @@ Page({
               delta: 1
             })
           }
-         
+
         }
       })
     }else{
       console.log(data)
       api.addAddress(data).then(res => {
         console.log(res);
-        console.log(id);
         if(res){
+          
           let addressInfo = {
             address: address,
             id: res.address_id,
@@ -170,10 +181,11 @@ Page({
             wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
             var pages = getCurrentPages();
             var prevPage = pages[pages.length - 3];//上一个页面
-            //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-            prevPage.setData({
-              changedId: ''
-            })
+            //直接调用上一个页面的更改订单结算地址显示
+            // prevPage.setData({
+            //   changedId: ''
+            // })
+            prevPage.hasChangeAddress&&prevPage.hasChangeAddress()
             wx.navigateBack({
               delta: 2
             })
@@ -185,6 +197,7 @@ Page({
               delta: 1
             })
           }
+
         }
       })
     }
@@ -307,7 +320,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })
