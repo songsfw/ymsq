@@ -249,6 +249,17 @@ Page({
     api.getAddress().then(res => {
       console.log(res);
       if (res) {
+        //选择地址
+        //source 1 首页下单页   0 个人中心
+        if (this.data.source == 1) {
+          let addressInfo = wx.getStorageSync('addressInfo')
+          addressInfo = addressInfo && JSON.parse(addressInfo)
+          this.setData({
+            addressInfo:addressInfo
+            //addressId: addressInfo.id,
+            //addressTxt: addressInfo.address + addressInfo.address_detail
+          })
+        }
         this.setData({
           address: res
         })
@@ -470,17 +481,7 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
 
     btmHolder = btmHolder > 0 ? btmHolder : 12
-    //选择地址
-    //source 1 首页下单页   0 个人中心
-    if (source == 1) {
-      let addressInfo = wx.getStorageSync('addressInfo')
-      addressInfo = addressInfo && JSON.parse(addressInfo)
-      this.setData({
-        addressInfo:addressInfo
-        //addressId: addressInfo.id,
-        //addressTxt: addressInfo.address + addressInfo.address_detail
-      })
-    }
+    
     this.setData({
       btmHolder: btmHolder,
       cartType: cartType,
