@@ -17,8 +17,9 @@ Page({
     curIdx: null
   },
   touchE: function (e) {
+    let isdef = e.currentTarget.dataset.isdef
     //按钮宽度(px)
-    let btnW = 168
+    let btnW = isdef==1?84:168
     if (e.changedTouches.length == 1) {
       //获取手指结束滑动的坐标
       var endX = e.changedTouches[0].clientX;

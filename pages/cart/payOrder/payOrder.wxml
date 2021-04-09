@@ -151,10 +151,12 @@
       <text class="iconfont icon-arrow-btm"></text>
     </view>
   </view>
-  <view class="fittings-info flex" wx:if="{{fittings_desc}}">
-    <view class="tit">配件说明</view>
+  <view class="pro-info fittings-info" wx:if="{{fittings_desc}}">
+    <view class="hd">
+      <view>配件说明</view>
+    </view>
     <view class="txt flex-1">
-      <view wx:for="{{fittings_desc}}" class="{{item.marked==1?'on':''}}"><text>◉</text> {{item.desc}}</view>
+      <view wx:for="{{fittings_desc}}" class="flex {{item.marked==1?'on':''}}"><text>◉</text> <view>{{item.desc}}</view></view>
     </view>
   </view>
   <view class="inputbox flex-center" wx:if="{{type==2}}">

@@ -297,6 +297,15 @@ Page({
     // })
   },
   timing: function (remainTime) {
+    if(remainTime==0){
+      clearTimeout(timer)
+      this.setData({
+        stat:4,
+        timingTxt: null
+      })
+      this.initOrderData();
+      return
+    }
     remainTime--
     // 获取分秒
     let m = parseInt(remainTime / 60)
@@ -348,11 +357,10 @@ Page({
         order_type:orderData.order_type
       }
       let second=res.status.seconds
-      if(second){
+      if(second&&second>0){
         this.timing(second)
       }else{
         clearTimeout(timer)
-
       }
 
       this.setData({

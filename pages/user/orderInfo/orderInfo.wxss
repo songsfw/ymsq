@@ -25,8 +25,8 @@ page{background: #F6F6F6;height: auto;}
 .delivery-info{padding:42rpx 24rpx 0 24rpx; color:#64BF00;font-size: 13px;}
 .delivery-info .iconfont{font-size: 12px;width: 20px;flex-shrink: 0;}
 .delivery-info image{width:36rpx;height: 32rpx;margin-right:22rpx ;flex-shrink: 0;}
-.address{padding:40rpx 20rpx;background: #fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x ;background-size: 29px 4px;border-radius: 8rpx;}
-.address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
+.address{padding:40rpx 20rpx;background: #fff;border-radius: 8rpx;}
+.address .local{color: #C1996B;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;font-weight: 500;}
 .icon-arrow-r{width: 30rpx;flex-shrink: 0; color: #ccc;font-size: 40rpx;text-align: right;}
 .address .txt{width: 498rpx;}
@@ -38,14 +38,14 @@ page{background: #F6F6F6;height: auto;}
 .send-time text{font-size: 15px;}
 .send-time .time text{color: #C1996B;margin-right: 20rpx;}
 .pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height:92rpx;margin:0 20rpx 30rpx 20rpx;}
-.pro-info .hd view{font-size: 15px;}
+.pro-info .hd view{font-size: 15px;font-weight: 500;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
 .pro-info .info .tag{color: #999;display: flex;flex-wrap: wrap;}
 .pro-info .info .tag text{margin-right: 20rpx;}
 .pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
-.pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;}
-.pro-info .item .tit{font-size: 14px;}
+.pro-info .item .pic{width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;border-radius: 8rpx;}
+.pro-info .item .tit{font-size: 14px;font-weight: 500;}
 .pro-info .price{justify-content: space-between;}
 .pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px}
@@ -56,22 +56,22 @@ page{background: #F6F6F6;height: auto;}
 .order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
 .order-tips input{text-align: right;}
 .order-tips.on{color: #F5222D;}
-.pay-info{padding: 20px 20rpx 20rpx 20rpx;}
-.pay-info .hd{margin:0 0 30rpx 0}
-.pay-info>view{justify-content: space-between;margin-bottom:20px;}
+.pay-info{padding: 0 20rpx 20rpx 20rpx;}
+.pay-info .hd{margin:0}
+.pay-info .txtitem{justify-content: space-between;height: 36px;line-height: 36px;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
 .pay-info .icon-arrow-r{vertical-align: middle;margin-left: 20rpx;font-size: 30rpx;}
-.pay-info .val{font-size: 13px;color: #aaa;}
+.pay-info .val{font-size: 13px;color: #222;font-weight: 500;}
 .policy{padding:30rpx 20rpx ;color: #999;}
 .policy .checkbox{border:1px solid #ccc;border-radius: 50%;margin-right: 16rpx;}
-.balance .val text{color: #F5222D;}
+.balance .val text{color: #C1996B;}
 .balance switch{margin-left:20rpx ;transform: scale(.8);}
 .pay-info .total-price{text-align: right;justify-content: flex-end;}
 .pay-info .total-price{font-size: 13px;}
-.pay-info .total-price view{font-size: 18px;color: #F5222D;}
-.pay-info .total-price view text{font-size: 14px;}
+.pay-info .total-price view{font-size: 18px;color: #C1996B;font-weight: 500;}
+.pay-info .total-price view text{font-size: 14px;font-weight: normal;}
 
 .txt-card{margin-top: 20rpx; background: #F6F6F6;height: 36px;line-height: 36px;padding-left: 10px;}
 .txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}

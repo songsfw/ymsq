@@ -1,7 +1,7 @@
 <!-- pages/user/user.wxml -->
 <view class="address-list">
   <navigator class="notice" url="/pages/user/deliveryArea/deliveryArea"><text class="iconfont icon-notice2"></text> 配送范围说明</navigator>
-  <movable-area class="item" wx:for="{{address}}" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}" bindtouchstart="touchstart" bindtouchend="touchE">
+  <movable-area class="item" wx:for="{{address}}" wx:for-index="index" bind:tap="selectAdd" data-idx="{{index}}" data-id="{{item.id}}" data-isdef="{{item.is_default}}" bindtouchstart="touchstart" bindtouchend="touchE">
       <movable-view damping="50" x="{{index==curIdx?item.txtStyle:0}}" class="move-area" direction="horizontal" out-of-bounds="true" friction="50">
         <view class="item-wrap flex-center">
           <view wx:if="{{source==1}}" class="checkbox {{addressInfo.id == item.id?'on':''}}" >
@@ -17,7 +17,7 @@
           </view>
           <view class="edit iconfont icon-edit" catch:tap="toAdddata" data-type="1" data-idx ="{{index}}"></view>
           <view class="option flex">
-            <view class="set-def" catch:tap="setDefAddress" data-idx="{{index}}" data-default="{{item.is_default}}" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
+            <view class="set-def" wx:if="{{item.is_default=='0'}}" catch:tap="setDefAddress" data-idx="{{index}}" data-default="{{item.is_default}}" data-id="{{item.id}}">{{item.is_default=='1'?'取消默认':'设为默认'}}</view>
             <view class="del" data-idx="{{index}}" data-id="{{item.id}}" catch:tap="delAddress">删除</view>
           </view>
         </view>

@@ -8,7 +8,7 @@
       <image wx:if="{{stat==2}}" src="../../../image/icon-od4.png"></image>
       <image wx:if="{{stat==3}}" src="../../../image/icon-od1.png"></image>
       {{status.title}}</view>
-    <view class="status">{{timingTxt}} {{status.msg}}</view>
+    <view class="status"><block wx:if="{{timingTxt}}">{{timingTxt}}</block> {{status.msg}}</view>
   </view>
   <view class="order-wp">
     <view class="pro-info">
@@ -110,14 +110,14 @@
       <view class="hd flex-center">
         <view>订单信息</view>
       </view>
-      <view class="flex-center ">
+      <view class="flex-center txtitem">
         <view class="name">订单编号</view>
         <view class="val">
           <text class="copy-btn" bind:tap="copy" data-id="{{orderData.id}}">复制</text>
           {{orderData.id}}
         </view>
       </view>
-      <view class="flex-center ">
+      <view class="flex-center txtitem">
         <view class="name">下单时间</view>
         <view class="val">{{orderData.create_time}}</view>
       </view>
@@ -125,51 +125,51 @@
         <view class="name">支付方式</view>
         <view class="val">{{orderData.pay_mode_string}}</view>
       </view> -->
-      <view class="flex-center ">
+      <view class="flex-center txtitem">
         <view class="name">配送方式</view>
         <view class="val">{{orderData.dispatch_company}}</view>
       </view>
-      <view class="flex-center ">
+      <view class="flex-center txtitem">
         <view class="name">期望配送时间</view>
         <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
-      <view class="flex-center " wx:if="{{orderData.order_type == '2'}}">
+      <view class="flex-center txtitem">
         <view class="name">备注</view>
         <view class="val">{{orderData.remark == ''?'无':orderData.remark}}</view>
       </view>
     </view>
-    <view class="pay-info">
-      <view class="flex-center">
+    <view class="pay-info" style="padding-top:10px">
+      <view class="flex-center txtitem">
         <view class="name">商品金额</view>
         <view class="val">￥{{orderData.product_price}}</view>
       </view>
-      <view class="flex-center">
+      <view class="flex-center txtitem">
         <view class="name delivery">配送费</view>
         <view class="val">+￥{{orderData.delivery_price}}</view>
       </view>
-      <view class="flex-center" wx:if="{{orderData.point_price!=0}}">
+      <view class="flex-center txtitem" wx:if="{{orderData.point_price!=0}}">
         <view class="name">
           麦点
           <!-- <image src="../../../image/icon-mai.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.point_price}}</view>
       </view>
-      <view class="flex-center" wx:if="{{orderData.promotion_price!=0}}">
+      <view class="flex-center txtitem" wx:if="{{orderData.promotion_price!=0}}">
         <view class="name">
           优惠券
           <!-- <image src="../../../image/icon-coupon.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.promotion_price}}</view>
       </view>
-      <view class="flex-center" wx:if="{{orderData.cash_price!=0}}">
+      <view class="flex-center txtitem" wx:if="{{orderData.cash_price!=0}}">
         <view class="name">现金卡</view>
         <view class="val">-￥{{orderData.cash_price}}</view>
       </view>
-      <view class="flex-center" wx:if="{{orderData.third_cash_price!=0}}">
+      <view class="flex-center txtitem" wx:if="{{orderData.third_cash_price!=0}}">
         <view class="name">多美味卡</view>
         <view class="val">-￥{{orderData.third_cash_price}}</view>
       </view>
-      <view class="flex-center balance" wx:if="{{orderData.balance_price>0}}">
+      <view class="flex-center balance txtitem" wx:if="{{orderData.balance_price>0}}">
         <view class="name">原麦余额</view>
         <view class="val flex-center">-￥{{orderData.balance_price}}</view>
       </view>
@@ -177,8 +177,7 @@
         <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
         <text wx:else>实付金额：</text>
         <view>
-          <text>￥</text>
-          {{orderData.weixin_price}}
+          <text>￥</text>{{orderData.weixin_price}}
         </view>
       </view>
     </view>

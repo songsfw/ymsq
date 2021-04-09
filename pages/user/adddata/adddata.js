@@ -13,15 +13,16 @@ Page({
       address:null,
       address_detail:null,
       is_default:0
-    }
+    },
+    is_default:0
     
   },
   setDefault(){
-    let checked = this.data.address.is_default
+    let checked = this.data.is_default
     console.log(checked);
     checked==1?checked=0:checked=1
     this.setData({
-      'address.is_default':checked
+      is_default:checked
     })
   },
   selectAdd(){
@@ -44,7 +45,8 @@ Page({
   },
   addAddress(){
     console.log(this.data.address)
-    let {id,address, address_detail, mobile, name,is_default,location,district,province,title,is_ziti,city_id} = this.data.address
+    let {id,address, address_detail, mobile, name,location,district,province,title,is_ziti,city_id} = this.data.address
+    let is_default = this.data.is_default
     console.log(this.data)
     let source = this.data.source
     let newAdd = {address:address}
@@ -265,7 +267,6 @@ Page({
     console.log(address);
 
     address = JSON.parse(address)
-
     //地图选址页返回后
     if(newAddress){
       address.address = newAddress
@@ -280,6 +281,7 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     this.setData({
+      is_default:address.is_default,
       source:source,
       btmHolder:btmHolder,
       type:type,
