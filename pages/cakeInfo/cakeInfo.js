@@ -65,6 +65,9 @@ Page({
       pop: pop
     })
   },
+  handleTouchMove(e){
+    e.stopPropagation()
+  },
   close() {
     this.setData({
       pop: 0

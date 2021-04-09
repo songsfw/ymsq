@@ -151,7 +151,7 @@
 
 
 
-<view class="pop-panel btm-panel score-panel {{pop=='fittings-panel'?'upPanel':''}}">
+<view class="pop-panel btm-panel score-panel {{pop=='fittings-panel'?'upPanel':''}}" catch:touchmove="{{true}}">
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
@@ -180,9 +180,9 @@
       <view class="h4">
         <text>配件说明</text>
       </view>
-      <view class="basic">
+      <scroll-view scroll-y="{{true}}" class="basic">
         <view wx:for="{{fitting.basic}}"><text>{{index}}</text>：{{fitting.basic[index]}}</view>
-      </view>
+      </scroll-view> 
     </block>
     
     <view class="confirm-btn btn" bind:tap="confirmFitting" style="margin-bottom:{{btmHolder}}px" data-sku="{{fitting.sku}}">确定</view>
@@ -234,5 +234,5 @@
 
 </view>
 
-<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+<view class="mask" catch:touchmove="{{true}}" wx:if="{{pop!=0}}" bind:tap="close"></view>
 <view style="height:{{50+btmHolder}}px"></view>

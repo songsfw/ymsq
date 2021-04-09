@@ -59,7 +59,7 @@
   </view>
 </view>
 
-<view class="pop-panel btm-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+<view catch:touchmove="{{true}}" class="pop-panel btm-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
@@ -92,5 +92,5 @@
   </view>
   
 </view>
-<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close" catch:touchmove="{{true}}"></view>
 <view style="height:{{60+btmHolder}}px"></view>

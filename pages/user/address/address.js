@@ -256,8 +256,6 @@ Page({
           addressInfo = addressInfo && JSON.parse(addressInfo)
           this.setData({
             addressInfo:addressInfo
-            //addressId: addressInfo.id,
-            //addressTxt: addressInfo.address + addressInfo.address_detail
           })
         }
         this.setData({
