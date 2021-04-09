@@ -449,7 +449,7 @@
       <view wx:if="{{hasMai}}">本单<text>抵扣￥{{payQueue[1]}}</text></view>
     </view>
     <view class="mai-price flex" bind:tap="selectMai">
-      <view>抵扣<text>￥{{payQueue[1]}}</text>使用{{jinmai.now_point}}麦点</view>
+      <view>抵扣<text>￥{{oldMaiPrice}}</text>使用{{jinmai.now_point}}麦点</view>
       <view class="checkbox {{hasMai?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>

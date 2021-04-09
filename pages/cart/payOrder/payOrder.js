@@ -239,9 +239,11 @@ Page({
     this.setData({
       hasMai: hasMai
     })
+    let oldMaiPrice = jinmai.now_price;
     newPayQueue[1] = mai
     this.setData({
-      payQueue: newPayQueue
+      payQueue: newPayQueue,
+      oldMaiPrice:oldMaiPrice,
     })
     //this.initOrderPrice()
   },
@@ -575,7 +577,8 @@ Page({
       isLoad:true,
       useCoupon,
       hasDelivery,
-      payQueue: newPayQueue
+      payQueue: newPayQueue,
+      oldMaiPrice:jinmai.now_price || 0,
     })
 
     wx.hideLoading();
