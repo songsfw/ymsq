@@ -83,10 +83,10 @@ Page({
     })
     this.getDateList(e.currentTarget.dataset.value)
   },
-  confirmDate(){
+  confirmDate(e){
     let {currIdx,year} = this.data
     let val = this.data.val || this.data.value
-    console.log(val[2])
+    val = val.length>0 ? val:e.currentTarget.dataset.value;
     if(!val[2]){
       val[2] = 0;
     }
@@ -96,9 +96,8 @@ Page({
     month = month.toString().length >1 ? month:'0'+month;
     day = day.toString().length >1 ? day:'0'+day;
 
-    console.log(val,year,month,day)
     let yearStr = `${year}-${month}-${day}`
-    console.log(yearStr,this.data.dateList)
+
     this.setData({
       clickPop:false,
       ['dateList['+currIdx+'].date']:yearStr,
@@ -116,6 +115,7 @@ Page({
 
   },
   getDateList(def){
+    console.log(def)
     this.data.defIndex = [];
     let type = this.data.type,years=[],months=[],days=[],day=""
     let curDefDate = null;
@@ -133,21 +133,21 @@ Page({
     if(type==0){
       for (let i = 1; i <= 12; i++) {
         months.push(i)
-        if(curDefDate && curDefDate[0] == type &&  curDefDate[2] == i){
+        if(curDefDate &&  parseInt(curDefDate[2]) == i){
           this.data.defIndex.push(i-1);
         }
       }
       
       for (let i = 1; i <= 31; i++) {
         days.push(i)
-        if(curDefDate && curDefDate[0] == type &&  curDefDate[3] == i){
+        if(curDefDate &&  parseInt(curDefDate[3]) == i){
           this.data.defIndex.push(i-1);
         }
       }
     }else{
       for (let i = 1; i <= 12; i++) {
         months.push(monString[i-1])
-        if(curDefDate &&  curDefDate[2] == i){
+        if(curDefDate &&   parseInt(curDefDate[2]) == i){
           this.data.defIndex.push(i-1);
         }
       }
@@ -169,7 +169,7 @@ Page({
           day="三十"
         }
         days.push(day)
-        if(curDefDate &&  curDefDate[3] == i){
+        if(curDefDate &&   parseInt(curDefDate[3]) == i){
           this.data.defIndex.push(i-1);
         }
       }
@@ -233,6 +233,7 @@ Page({
   changeType(){
     let type = this.data.type,val = this.data.val || this.data.value
     let currIdx = this.data.currIdx
+    let def = type+'-'+this.data.dateList[currIdx].date;
     if(type==0){
       this.setData({
         type:1
@@ -242,12 +243,19 @@ Page({
         type:0
       })
     }
-    this.getDateList()
+    this.getDateList(def)
+    let curDefDate = def.split('-');
+    if(typeof(val[0])=="undefined" || typeof(val[1])=='undefined' || typeof(val[2])=='undefined'){
+      val = this.data.value;
+    }
+    
     this.setData({
       ['dateList['+ currIdx +'].type']:this.data.type,
       year: this.data.years[val[0]],
       month: this.data.months[val[1]],
-      day: this.data.days[val[2]]
+      day: this.data.days[val[2]],
+      val:[],
+      clickPop:true,
     })
   },
   getMemoDay(){

@@ -42,9 +42,9 @@
 <view class="date-panel {{showDate?'on':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="hd flex">
     <text>选择日期</text>
-    <view class="switch flex" bind:tap="changeType">
-      <view class="{{type==0?'on':''}}">公历</view>
-      <view class="{{type==1?'on':''}}">农历</view>
+    <view class="switch flex">
+      <view class="{{type==0?'on':''}}"  bind:tap="changeType" data-value="{{value}}">公历</view>
+      <view class="{{type==1?'on':''}}" bind:tap="changeType" data-value="{{value}}">农历</view>
     </view>
   </view>
   <picker-view indicator-class="picker-view" value="{{value}}" bindchange="bindDateChange" mask-style="background:#F6F6F6;z-index:0">
@@ -60,6 +60,6 @@
   </picker-view>
   <view class="opt-btn flex">
     <view class="cancel-btn" bind:tap="closeDate">取消</view>
-    <view class="confirm-btn color-b" bind:tap="confirmDate">确定</view>
+    <view class="confirm-btn color-b" bind:tap="confirmDate" data-value="{{value}}">确定</view>
   </view>
 </view>
