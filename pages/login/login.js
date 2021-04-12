@@ -9,8 +9,8 @@ Page({
   data: {
     show:false,
     pics:[
-      '/image/cake1.jpg',
-      '/image/cake2.jpg'
+      'https://api-beta.withwheat.com/img/cake1.jpg',
+      'https://api-beta.withwheat.com/img/cake2.jpg'
     ],
     setTime:'',
     num:0,
@@ -123,16 +123,22 @@ Page({
     })
   },
   onLoad () {
-    
+    let userInfo = wx.getStorageSync("userInfo")
+    let sysInfo = app.globalSystemInfo;
+    let fixedTop = sysInfo.navBarHeight;
+
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
       })
     }
-    let userInfo = wx.getStorageSync("userInfo")
-    let sysInfo = app.globalSystemInfo;
-    let fixedTop = sysInfo.navBarHeight;
+    
     userInfo = userInfo && JSON.parse(userInfo)
+    if(userInfo.is_authed==1){
+      wx.switchTab({
+        url:'/pages/index/index'
+      })
+    }
     this.setData({
       userInfo:userInfo,
       show:true,

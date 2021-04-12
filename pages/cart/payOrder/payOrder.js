@@ -920,10 +920,6 @@ Page({
           signType,
           paySign
         } = jsApiParameters
-        // wx.showToast({
-        //   icon:"loading",
-        //   title:"提交订单成功，发起支付"
-        // })
 
         wx.requestPayment({
           timeStamp: timeStamp,
@@ -968,7 +964,7 @@ Page({
           wx.redirectTo({
             url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
           })
-        }, 2000)
+        }, 1000)
       }
     })
   }),

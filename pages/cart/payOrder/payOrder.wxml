@@ -156,7 +156,7 @@
       <view>配件说明</view>
     </view>
     <view class="txt flex-1">
-      <view wx:for="{{fittings_desc}}" class="flex {{item.marked==1?'on':''}}"><text>◉</text> <view>{{item.desc}}</view></view>
+      <view wx:for="{{fittings_desc}}" class="flex"><image src="../../../image/icon-dot.png" wx:if="{{item.marked==0}}"></image><image src="../../../image/icon-dot2.png" wx:else></image> <view>{{item.desc}}</view></view>
     </view>
   </view>
   <view class="inputbox flex-center" wx:if="{{type==2}}">
@@ -248,7 +248,7 @@
     </view>
   </view>
 </view>
-<view class="policy flex" bind:tap="selectPolicy">
+<view class="policy flex-center" bind:tap="selectPolicy">
   <view class="checkbox {{hasPolicy?'on':''}}">
     <view class="iconfont icon-check"></view>
   </view>

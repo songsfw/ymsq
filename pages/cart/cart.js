@@ -483,6 +483,7 @@ Page({
         //this.data.delStatus = 0;
         //this.getSelectedPro()
       }
+      wx.stopPullDownRefresh()
     })
   },
   //选中/撤销选中

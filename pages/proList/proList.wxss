@@ -129,7 +129,7 @@ page{background: #F9F9F9;height: auto;}
     color: #999;
     font-size: 13px;
     background: #f6f6f6;
-    padding: 30rpx 20rpx 14rpx 20rpx;}
+    padding: 20rpx 20rpx 0 20rpx;}
 .set-chart text,
 .set-chart .count{width: 27px;
     height: 24px;

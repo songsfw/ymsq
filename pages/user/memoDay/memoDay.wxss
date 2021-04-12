@@ -31,7 +31,7 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 picker-view{width: 100%; height: 150px;}
 .picker-view{height: 50px;background: #fff;z-index: 0;}
 .pickerSelected{font-size:18px;font-weight: 500;color: #C1996B;}
-picker-view view{color: #999;transition: font-size linear .1s;}
+picker-view view{color: #999;transition: font-size linear .05s;}
 .date-mask{position: fixed;left: 0;top: 0;width: 100%;height: 100%;background:rgba(0,0,0,.8);z-index: 2;opacity: 0.8;}
 .rule-btn .iconfont{margin-right: 5px;}
 .rule-btn{width: 50px;flex-shrink: 0;justify-content: flex-end;}

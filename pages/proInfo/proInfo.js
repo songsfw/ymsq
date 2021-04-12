@@ -199,9 +199,6 @@ Page({
     }
   },
   onShow:function(){
-    if (app.globalData.isLogin!=1){
-      return
-    }
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     let options = currPage.options

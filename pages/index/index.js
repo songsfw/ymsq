@@ -224,9 +224,6 @@ Page({
     //     selected: 0
     //   })
     // }
-    if (app.globalData.isLogin!=1){
-      return
-    }
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
@@ -239,7 +236,7 @@ Page({
     if(addressInfo){
       addressInfo = JSON.parse(addressInfo)
     }
-    
+    console.log(wx.getStorageSync("userInfo"));
     // if(!userInfo){
     //   // wx.showToast({
     //   //   icon:"none",

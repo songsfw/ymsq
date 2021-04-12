@@ -184,8 +184,8 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .fittings-info{margin-top: 20rpx;}
 .fittings-info .tit{font-size: 13px;margin-right: 40rpx;}
 .fittings-info .txt{color: #666;padding: 0 20rpx 30rpx 20rpx;}
-.fittings-info .txt text{color: #666;margin-right: 20rpx;}
-.fittings-info .txt>view{margin-bottom:25rpx ;font-size: 13px;}
+.fittings-info .txt image{margin: 0 10px 0 18px;width: 10px;height: 10px;}
+.fittings-info .txt>view{margin-bottom:25rpx ;font-size: 12px;align-items: baseline;}
 .fittings-info .txt>view:last-child{margin: 0;}
 .fittings-info .txt .on,
 .fittings-info .txt .on text{color: #FA603D;}

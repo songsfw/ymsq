@@ -12,20 +12,15 @@ App({
     uploadUserInfo: true // 上传用户信息，上传后可以查看有头像的用户分享信息，同时在查看用户画像时，公域画像的准确性会提升。
   },
   onLaunch: function (options) {
-    // wx.showLoading({
-    //   title: '加载中...',
-    //   mask: true,
-    //   success (res) {
-    //     console.log('显示loading')
-    //   }
-    // })
+    
     api.getIntroduction().then(res=>{
       console.log(res);
       if(res){
         wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+        
       }
     })
-
+    
     this.init()
   },
   async init() {
@@ -110,13 +105,14 @@ App({
           console.log(addressInfo);
           wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         }
+        //if(is_authed!=1){
+          wx.navigateTo({
+            url: '/pages/login/login'
+          })
+        //}
         
-        wx.navigateTo({
-          url: '/pages/login/login'
-        })
       }
     }
-    this.globalData.isLogin = 1;
     
     await this.getBtmHolder()
     wx.hideLoading()
@@ -169,7 +165,6 @@ App({
   },
 
   globalData: {
-    isLogin:0,
     bindPhoneStat: "1022",
     proType: '',
     isShare: false,
