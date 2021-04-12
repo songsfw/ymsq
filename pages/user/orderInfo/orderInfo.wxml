@@ -133,9 +133,9 @@
         <view class="name">期望配送时间</view>
         <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
-      <view class="flex-center txtitem">
+      <view class="flex-center txtitem" wx:if="{{orderData.order_type==2}}">
         <view class="name">备注</view>
-        <view class="val">{{orderData.remark == ''?'无':orderData.remark}}</view>
+        <view class="val">{{orderData.remark == ''?'-':orderData.remark}}</view>
       </view>
     </view>
     <view class="pay-info" style="padding-top:10px">

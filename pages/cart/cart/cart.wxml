@@ -31,7 +31,7 @@
             <view class="txt flex-1 flex">
               <view class="tit flex-center" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
               <view class="tag flex-wrap" wx:if="{{item.weight}}">
-                <text>{{item.weight}}</text>
+                <text>约{{item.weight}}</text>
               </view>
               <view class="price flex">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>

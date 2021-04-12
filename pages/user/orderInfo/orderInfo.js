@@ -1,7 +1,5 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
-let delivery=10,mai=0,coupon=0,card=0,thirdCard=0
-// let payQueue = [10,0,0,0,0]
 let app = getApp()
 let timer =null
 Page({
@@ -357,10 +355,11 @@ Page({
         order_type:orderData.order_type
       }
       let second=res.status.seconds
+      if(timer){
+        clearTimeout(timer)
+      }
       if(second&&second>0){
         this.timing(second)
-      }else{
-        clearTimeout(timer)
       }
 
       this.setData({
@@ -440,21 +439,21 @@ Page({
       orderCode: orderCode
     })
 
-    let data = {
-      order_code:orderCode
-    }
+    // let data = {
+    //   order_code:orderCode
+    // }
 
-    api.preShareOrder(data).then(res=>{
-      console.log(res);
-      if(!res){
-        return
-      }
-      this.setData({
-        shareInfo:res
-      })
-    })
+    // api.preShareOrder(data).then(res=>{
+    //   console.log(res);
+    //   if(!res){
+    //     return
+    //   }
+    //   this.setData({
+    //     shareInfo:res
+    //   })
+    // })
 
-    this.initOrderData();
+    // this.initOrderData();
   },
   share(){
     wx.showShareImageMenu({
@@ -563,9 +562,21 @@ Page({
         return
       }
       this.setData({
-        'shareInfo.action':res.action
+        shareInfo:res
       })
     })
+
+    this.initOrderData();
+
+    // api.preShareOrder(data).then(res=>{
+    //   console.log(res);
+    //   if(!res){
+    //     return
+    //   }
+    //   this.setData({
+    //     'shareInfo.action':res.action
+    //   })
+    // })
 
   },
 
