@@ -973,6 +973,7 @@ Page({
     })
   }),
   inputCard: util.debounce(function (e) {
+    console.log('inputCard')
     let temp = e.detail.value
     let defTxt = e.currentTarget.dataset.default
     if (temp.replace(/[^\x00-\xff]/g, "aa").length > 18) {
@@ -1006,6 +1007,7 @@ Page({
       cartid = e.currentTarget.dataset.cartid
   }, 200),
   setTxt(e) {
+    console.log('setTxt')
     if (cartid) {
       txtCard[cartid] = txt
       this.setData({
@@ -1014,8 +1016,9 @@ Page({
     } else {
       let defMsg = e.currentTarget.dataset.defaultmakemsg;
       if (e.detail.value == "") {
+        this.data.txtCardObj[e.target.dataset.cartid ] = defMsg
         this.setData({
-          ['txtCardObj[' + e.target.dataset.cartid + ']']: defMsg,
+          txtCardObj: this.data.txtCardObj,
         })
       }
     }
@@ -1026,7 +1029,7 @@ Page({
     if (val == defMsg) {
       this.data.txtCardObj[e.target.dataset.cartid] = '';
       this.setData({
-        ['txtCardObj[' + e.target.dataset.cartid + ']']: '',
+        txtCardObj:this.data.txtCardObj,
       })
     }
   },
