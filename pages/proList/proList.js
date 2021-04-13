@@ -54,7 +54,7 @@ Page({
     prePushWatchHash: {}, //预处理堆
 
     backFrom: 0, //1为详情页
-    trueCityId:0,
+    trueCityId: 0,
   },
   switchTab: util.debounce(function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -81,8 +81,7 @@ Page({
       // this.getProList();
       //缓存操作
       let currentTab = currentId
-      let currentTag = null;
-      // console.log('this.data.showList', this.data.showList, 'this.data.showTags', this.data.showTags);
+      let currentTag = this.data.cateChosed[currentTab];
       let pagelist = this.getCachePage(1, currentTab, currentTag)
       // let noMoreData = pagelist.count - pagelist.page * pagelist.pagesize <= 0
       // console.log('noMoreData:', noMoreData, "currentTab: ", currentTab, 'currentTag:', currentTag, 'pagelist::', pagelist)
@@ -128,7 +127,19 @@ Page({
     //     console.log('s - 4');
     //     break;
     // }
-
+    let re = this.choseTagData(currentTab, cateId);
+    return re;
+    let pagelist = this.getCachePage(1, currentTab, cateId)
+    // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
+    this.setData({
+      currentCategory: cateId,
+      showLoading: false,
+      ['showList[' + currentTab + '][0]']: pagelist['pagelist'],
+    });
+    return true;
+  },
+  choseTagData: function (currentTab, cateId) {
+    // console.log(currentTab, cateId);
     let pagelist = this.getCachePage(1, currentTab, cateId)
     // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
     this.setData({
@@ -142,7 +153,7 @@ Page({
     this.getProList()
   },
   addChartPreView(currentTab, idx, itemIdx, totalNum) {
-    if(this.data.trueCityId == 0){
+    if (this.data.trueCityId == 0) {
       wx.showToast({
         icon: "none",
         title: '当前配送地址暂不支持购买此商品！'
@@ -167,7 +178,11 @@ Page({
       return false;
     }
     tempList.selected = parseInt(tempList.selected) + 1;
-    app.inCartRefreshList({type:tempList.type,proId:tempList.meal_id,selected:tempList.selected});
+    app.inCartRefreshList({
+      type: tempList.type,
+      proId: tempList.meal_id,
+      selected: tempList.selected
+    });
     this.setData({
       showList: this.data.showList,
     })
@@ -198,10 +213,10 @@ Page({
     } = this.data
     console.log(city_id);
 
-    if(this.data.showStock[currentTab][proId] == 0){
-      return 
+    if (this.data.showStock[currentTab][proId] == 0) {
+      return
     }
-  
+
 
     // console.log(proId, proInPage, itemIdx,currentTab,'typeMealIdSpuId',typeMealIdSpuId);
     //存储真实库存
@@ -246,7 +261,7 @@ Page({
         cityId: city_id,
         selected: curPro.selected,
         itemIdx: itemIdx,
-        trueCityId:this.data.trueCityId,
+        trueCityId: this.data.trueCityId,
       };
     } else {
       this.data.prePushWatchHash[typeMealIdSpuId]['addNum'] += 1;
@@ -328,6 +343,7 @@ Page({
     return
   },
   getCachePage(pageNum, type, tag) {
+    tag = typeof(tag) == 'undefined' ? null : tag;
     // console.log("开始分页：", 'pageNum:', pageNum, 'type:', type, 'tag:', tag)
     type = parseInt(type);
     if (!app.data.ProductList_ProList[type]) {
@@ -343,6 +359,7 @@ Page({
     if (type == 4) {
       pagesize = this.data.pageInfo[type]['all']['pagesize'];
     }
+    // console.log(app.data.ProductList_ProList);
     let tempList = [];
     if (tag === null) {
       //全部
@@ -418,7 +435,7 @@ Page({
     let type = e.currentTarget.dataset.type
     let currenttab = e.currentTarget.dataset.currenttab
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
-    url += '&ctabTypeMealIdSpuId=' + currenttab+"_"+ type +"_"+proId+"_"+spuId;
+    url += '&ctabTypeMealIdSpuId=' + currenttab + "_" + type + "_" + proId + "_" + spuId;
     // url+="&_um_campaign=60657afd18b72d2d2441584b&_um_channel=60657afd18b72d2d2441584c"
     console.log(url)
     wx.navigateTo({
@@ -426,6 +443,7 @@ Page({
     })
   },
   onPullDownRefresh() { //下拉刷新
+    this.data.isPullDownRefresh = true;
     this.freshData()
   },
   /**
@@ -487,6 +505,8 @@ Page({
       city_id: city_id
     }
     let setData = {};
+    console.log(this.data)
+    console.log(currentTab);
     if (!currentTab) {
       data.tag = 0
       data.type = ""
@@ -528,8 +548,11 @@ Page({
         menu: menu,
         currentTab: app.globalData.proType,
         order_max_bread: res.order_max_bread,
-        ['cateChosed[' + res.choose_type + ']']: null,
       };
+      console.log(this.data,this.data.cateChosed)
+      if(!this.data.isPullDownRefresh){
+        setData[['cateChosed[' + res.choose_type + ']']] = null;
+      }
       // console.log(app.data.ProductList_ProList)
       //重置数据
       if (refresh) {
@@ -639,13 +662,25 @@ Page({
       count = pagel.count;
       // noMoreData = pagel.count - pagel.page * pagel.pagesize <= 0;
 
-      //渲染页面
-      this.setData({
-        ['showList[' + res.choose_type + '][0]']: pagel['pagelist'],
-        ['showStock[' + res.choose_type + ']']: res.stock,
-        ['showCategory[' + res.choose_type + ']']: res.category,
-        showLoading: false,
-      });
+      if (this.data.isPullDownRefresh) {
+        this.choseTagData(res.choose_type,this.data.cateChosed[res.choose_type]);
+        // this.setData({
+        //   ['cateChosed[' + res.choose_type + ']']: this.data.currentCategory,
+        // });
+        this.data.isPullDownRefresh = false;
+      } else {
+        //渲染页面 暂定 看情况
+        this.setData({
+          ['showList[' + res.choose_type + '][0]']: pagel['pagelist'],
+          ['showStock[' + res.choose_type + ']']: res.stock,
+          ['showCategory[' + res.choose_type + ']']: res.category,
+          showLoading: false,
+        });
+      }
+
+
+
+
       wx.stopPullDownRefresh() //停止下拉刷新
     })
 
@@ -858,7 +893,7 @@ Page({
       console.log("详情")
       util.setTabBarBadge(wx.getStorageSync("total_num"));
       this.setData({
-        showList:this.data.showList,
+        showList: this.data.showList,
       })
       this.data.backFrom = 0;
       return true;
@@ -870,13 +905,14 @@ Page({
     console.log(addressInfo);
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let proType = app.globalData.proType
-    this.data.trueCityId=city_id;
+    this.data.trueCityId = city_id;
     //默认不存在的城市 显示全国
     city_id = city_id == 0 ? '10216' : city_id;
     this.setData({
       // cakeList: null,
       // breadList: null,
       currentTab: proType,
+      cateChosed:{},
       city_id: city_id || '10216',
       showLoading: true,
       skuNum: 1,
@@ -884,6 +920,7 @@ Page({
     console.log(this.data.city_id)
     trueStock = {};
     this.getCartInfo()
+    console.log(this.data);
     this.getProList(this.data.city_id, true);
   },
   //确认返回途径
@@ -905,14 +942,14 @@ Page({
     this.busPos['y'] = sysInfo.screenHeight * .85;
     let addressInfo = wx.getStorageSync("addressInfo")
     console.log(addressInfo)
-    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
+    let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let btmHolder = wx.getStorageSync('btmHolder')
 
     //设置临时页面分类等
     // this.setTempTypeTag(1,0);
 
     this.setData({
-      city_id:city_id,
+      city_id: city_id,
       fixedTop: fixedTop,
       btmHolder: btmHolder || 0,
     })
