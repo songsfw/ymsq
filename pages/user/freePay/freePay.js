@@ -117,7 +117,7 @@ Page({
     })
   },
   verifyInput(e){
-    var val = e.detail.value
+    var val = e.detail.value || ''
     if(val.length==6){
       this.setData({
         verify:val,
@@ -248,12 +248,16 @@ Page({
           api.setPwd(data).then(res=>{
             console.log(res)
             //if(res.pwd_set==1){
+              if(this.data.type==0){
+                this.changeFreePay(initPwd)
+              }
               wx.showToast({
                 title: '密码设置成功',
                 icon: 'none',
                 duration: 2000
               })
               this.setData({
+                pwd_set:1,
                 popShow:false
               })
             //}
@@ -264,7 +268,7 @@ Page({
       case 3:
         let verify =this.data.verify,phone=this.data.userInfo.phone
 
-        if(verify.length<6){
+        if(!verify || verify.length<6){
           wx.showToast({
             title: '请输入6位验证码',
             icon: 'none',
@@ -279,7 +283,12 @@ Page({
           }
           api.verifyCode(data).then(res=>{
             console.log(res)
+            if(!res){
+
+              return
+            }
             this.setData({
+              pwd_set:0,
               poptitle:"输入密码",
               step:2
             })
@@ -302,12 +311,12 @@ Page({
     
   },
   close(e){
-    let step = this.data.step,
-    free_secret = this.data.free_secret
+    let {step,free_secret,isSetPwd} = this.data
     console.log(free_secret);
     this.setData({ 
       unuse:true
     })
+
     switch (step) {
       case 1:
         if(free_secret==0){
@@ -315,10 +324,27 @@ Page({
             free_secret:0
           })
         }
-        
-        
         break;
-    
+      case 2:
+        if(free_secret==0){
+          this.setData({
+            free_secret:0
+          })
+        }
+        this.setData({
+          pwd_set:isSetPwd
+        })
+        break;
+      case 3:
+        if(free_secret==0){
+          this.setData({
+            free_secret:0
+          })
+        }
+        this.setData({
+          pwd_set:1
+        })
+        break;
       default:
         break;
     }
@@ -376,7 +402,8 @@ Page({
           free_amount:free_amount,
           free_secret:res.free_secret,
           list:list,
-          pwd_set:res.pwd_set
+          pwd_set:res.pwd_set,
+          isSetPwd:res.pwd_set
         })
       }
     })
@@ -384,15 +411,26 @@ Page({
   switch(e){
     console.log(e.detail.value)
     if(this.data.free_secret==0){
-      this.setData({
-        pwdVal:'',
-        unuse:true,
-        type:0,//开启免密支付中
-        //free_secret:1,
-        popShow:true,
-        poptitle:"请输入设置的余额密码",
-        step:1
-      })
+      if(this.data.pwd_set==1){
+        this.setData({
+          pwdVal:'',
+          unuse:true,
+          type:0,//开启免密支付中
+          popShow:true,
+          poptitle:"请输入设置的余额密码",
+          step:1
+        })
+      }else{
+        this.setData({
+          pwdVal:'',
+          unuse:true,
+          type:0,//开启免密支付中
+          popShow:true,
+          poptitle:"请设置余额密码",
+          step:2
+        })
+      }
+      
       
     }else{
       wx.showToast({
@@ -463,11 +501,20 @@ Page({
       url:"/pages/user/adddata/adddata"
     })
   },
+  bindPhoneSucess() {
+    console.log('success');
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let userInfo = wx.getStorageSync('userInfo')
+    let is_mobile = userInfo && JSON.parse(userInfo).is_mobile
+    if(is_mobile==0){
+      this.setData({
+        showPhonePanel: true
+      })
+    }
   },
 
   /**

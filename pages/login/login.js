@@ -9,8 +9,8 @@ Page({
   data: {
     show:false,
     pics:[
-      'https://api-beta.withwheat.com/img/cake1.jpg',
-      'https://api-beta.withwheat.com/img/cake2.jpg'
+      'https://api.withwheat.com/img/cake1.jpg',
+      'https://api.withwheat.com/img/cake2.jpg'
     ],
     setTime:'',
     num:0,

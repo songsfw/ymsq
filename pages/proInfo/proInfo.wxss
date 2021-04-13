@@ -38,9 +38,8 @@ page{background:#F6F6F6;height: auto;}
 .tips .txt view:last-child{margin-bottom: 0}
 
 .detail{background: #fff;}
-.detail .tit{position: relative; text-align: center;padding: 40rpx 0;font-size: 15px;}
-.detail .tit text{background: #fff;padding: 0 26rpx;position:relative;z-index: 1;}
-.detail .tit::after{content: "";position: absolute;width:172px;height: 1px;background: #222; left: 50%;top: 50%;transform: translate(-50%,50%);}
+.detail .tit{position: relative; text-align: center;padding: 40rpx 0;}
+.detail .tit image{width: 384rpx;height: 82rpx;}
 
 .option .home .icon,
 .option .cart .icon{width: 50rpx;height: 50rpx;margin: 0 auto;}

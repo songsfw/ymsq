@@ -392,7 +392,7 @@ Page({
         if(res.address && res.address.is_address && !res.address.address_allow_delivery){
           wx.showToast({
             icon: "none",
-            title: "我是个信息 ，在等待，在等待",
+            title: "当前选中地址无法配送，请选择可用地址",
             duration: 3000
           })
         }

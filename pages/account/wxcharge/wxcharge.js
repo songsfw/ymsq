@@ -141,7 +141,7 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     this.setData({
-      btmHolder:btmHolder||0,
+      btmHolder:btmHolder||0
     })
     
     api.chargeList().then(res=>{
@@ -201,7 +201,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

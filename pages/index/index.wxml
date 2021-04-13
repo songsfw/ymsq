@@ -7,7 +7,7 @@
 <!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
 </view> -->
-<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title}}" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
+<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title || '搜索蛋糕面包'}}" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
 <!-- 开始 -->
 <view class="wrap" style="background:{{globalStyle.background_color || '#F4F9F5'}}">
   <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">

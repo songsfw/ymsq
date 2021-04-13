@@ -1,8 +1,9 @@
 import {md5} from './md5';
 
+let ENV = 'dev'
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
-
+var platform = ENV == 'dev' ? 'wxxcx' : 'xcx'
 // loading配置，请求次数统计
 // function startLoading() {
 //   wx.showLoading({ title: '加载中' })
@@ -33,7 +34,7 @@ const request = (method,url,data,needToken=true)=>{
   let queryString = "";
   let defData = {
     app_id:WITHWHEAT_APPID,
-    platform:'wxxcx',
+    platform:platform,
     timestamp:timestamp
   }
   if(needToken && userInfo){

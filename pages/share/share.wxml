@@ -2,7 +2,7 @@
 <template is="loading" data="{{showLoading}}"></template>
 <view class="hongbao-stat">
   <block wx:if="{{step==1}}">
-    <image class="bg" src="https://api-beta.withwheat.com/img/stat3.jpg"></image>
+    <image class="bg" src="https://api.withwheat.com/img/stat3.jpg"></image>
     <view class="bd step1">
       <view class="photo">
         <image src="{{avatarUrl || userInfo.head_url}}"></image>
@@ -15,7 +15,7 @@
     </view>
   </block>
   <block wx:if="{{step==2}}">
-    <image class="bg" src="https://api-beta.withwheat.com/img/stat2.jpg"></image>
+    <image class="bg" src="https://api.withwheat.com/img/stat2.jpg"></image>
     <view class="bd step2">
       <view class="tit">恭喜您</view>
       <view class="tit2">获得一个现金红包</view>
@@ -25,7 +25,7 @@
     </view>
   </block>
   <block wx:if="{{step==3}}">
-    <image class="bg" src="https://api-beta.withwheat.com/img/stat1.jpg"></image>
+    <image class="bg" src="https://api.withwheat.com/img/stat1.jpg"></image>
     <view class="bd step3"></view>
   </block>
 </view>

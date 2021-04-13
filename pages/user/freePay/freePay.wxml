@@ -70,3 +70,4 @@
     <view class="get-code color-b" wx:else><text>{{second}}</text></view>
   </view>
 </pop-panel>
+<phonePanel class="phonePanel" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

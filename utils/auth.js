@@ -1,5 +1,4 @@
 const api = require('api.js')
-//var baseUrl = 'http://api-beta.withwheat.com/v1'
 
 //微信登录
 function wxLogin() {

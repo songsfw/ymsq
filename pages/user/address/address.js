@@ -108,14 +108,15 @@ Page({
     })
   },
   //source来源为!0(结算)时，地址操作(删除/选中) 要初始化结算页数据
-  setPrePageStat(id){
+  setPrePageStat(){
     app.globalData.proType = ''
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2]; //上一个页面
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-    prevPage.setData({
-      changedId: id
-    })
+    // prevPage.setData({
+    //   changedId: id
+    // })
+    prevPage.hasChangeAddress&&prevPage.hasChangeAddress()
   },
   setDefAddress(e) {
     let id = e.currentTarget.dataset.id,
@@ -160,7 +161,7 @@ Page({
           wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
           //如果来源结算页 初始化结算页数据
           if(source!=0){
-            this.setPrePageStat(id)
+            this.setPrePageStat()
             wx.navigateBack({
               delta: 1
             })

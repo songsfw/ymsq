@@ -482,6 +482,9 @@ Page({
         })
         //this.data.delStatus = 0;
         //this.getSelectedPro()
+        if(this.data.pop=='order-panel' && cake.select_number==0 && bread.select_number==0){
+          this.close()
+        }
       }
       wx.stopPullDownRefresh()
     })
@@ -708,7 +711,6 @@ Page({
       city_id: city_id || '10216',
       userInfo: userInfo
     })
-
 
     this.getChartData()
     this.getCartInfo()

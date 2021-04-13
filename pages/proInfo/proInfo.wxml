@@ -29,8 +29,10 @@
   馅里，一口咬下去的满足只有尝过才知道。</view> -->
     </view>
   </view>
-  <view class="detail" wx:if="{{proInfo.detail}}">
-    <view class="tit"><text>商品详情</text></view>
+  <view class="detail" wx:if="{{proInfo.detail.length>0}}">
+    <view class="tit">
+      <image src="../../image/pro-tit.jpg"></image>
+    </view>
     <view class="flex">
       <view class="flex-1">
         <image lazy-load src="{{proInfo.detail}}" mode="widthFix" ></image>

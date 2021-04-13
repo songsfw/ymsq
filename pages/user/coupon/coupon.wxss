@@ -1,8 +1,8 @@
 page{background: #F6F6F6;padding-top: 48px;}
 .item .tips{align-items: top; color: #999;}
 .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}
-.item.used{background-image: url(https://api-beta.withwheat.com/img/coupon4.png);background-position:90% bottom; background-repeat: no-repeat; background-size:212rpx 162rpx;}
-.item.unuse{background-image: url(https://api-beta.withwheat.com/img/coupon3.png);}
+.item.used{background-image: url(https://api.withwheat.com/img/coupon4.png);background-position:90% bottom; background-repeat: no-repeat; background-size:212rpx 162rpx;}
+.item.unuse{background-image: url(https://api.withwheat.com/img/coupon3.png);}
 .item .tips .txt{height:16px;overflow: hidden;}
 .item .tips.on .txt{height: auto;}
 .item .tips .arrow-bottom{padding-left: 32rpx;padding:7rpx;width: 28px;}

@@ -122,10 +122,13 @@ Page({
       console.log(res);
       if(res){
         let {notice,operate,message,show_subscribe} = res
+        if(!operate){
+          return
+        }
         let components = operate[0].components
         let globalStyle = operate[0].box_style
-        let banner = components[0].componentDetail.imageReader,
-            menu = components[1].componentDetail.imageReader
+        let banner = components[0] && components[0].componentDetail.imageReader,
+            menu = components[1] && components[1].componentDetail.imageReader
             // block1 = components[2] && components[2].componentDetail,
             // block2 = components[3] && components[3].componentDetail,
             // block3 = components[4] && components[4].componentDetail

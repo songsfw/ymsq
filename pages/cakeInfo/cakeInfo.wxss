@@ -56,10 +56,8 @@ page{padding-bottom: 30rpx;background:#F6F6F6;padding-bottom: 120rpx;height: aut
     background-color: #f5222d;}
 .option .cart .num99{width: 30px;}
 .detail{background: #fff;}
-.detail .tit{position: relative; text-align: center;padding: 40rpx 0;font-size: 15px;}
-.detail .tit text{background: #fff;padding: 0 26rpx;position:relative;z-index: 1;}
-.detail .tit::after{content: "";position: absolute;width:172px;height: 1px;background: #222; left: 50%;top: 50%;transform: translate(-50%,50%);}
-
+.detail .tit{position: relative; text-align: center;padding: 40rpx 0;}
+.detail .tit image{width: 384rpx;height: 82rpx;}
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
 .pop-panel{ position: fixed;left: 0;bottom: 0; width: 100%;background: #fff;z-index: 22;border-radius:16rpx 16rpx 0 0 ;}
 .pop-panel .close{position: absolute;right: 5rpx;top:10rpx;width: 38px;height: 38px;}
