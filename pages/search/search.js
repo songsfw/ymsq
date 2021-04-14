@@ -405,6 +405,16 @@ Page({
       skuNum: skuNum
     })
   }),
+  selectSku(e){
+    let skuid = e.currentTarget.dataset.skuid
+    let sku_list = this.data.proInfo.sku_list
+    let selectSku = Object.assign({},sku_list[skuid])
+
+    this.setData({
+      //'selectSku.sku_id':skuid,
+      selectSku:selectSku
+    })
+  },
   confirmCake: util.debounce(function (e) {
     let proId = e.currentTarget.dataset.sku;
     let itemIdx = e.currentTarget.dataset.idx;
