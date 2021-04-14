@@ -30,7 +30,6 @@
           </view>
           <view class="address-txt">{{orderData.address}}{{orderData.address_detail}}</view>
         </view>
-        <!-- <view class="edit" wx:if="{{stat=='1'}}">修改</view> -->
       </view>
     </view>
     <view class="pro-info">

@@ -196,9 +196,9 @@
   <view class="tips">{{instructions}}</view>
   <view class="pop-con" style="padding-bottom:{{btmHolder}}px">
     
-    <view class="item">
+    <view class="item" wx:if="{{breadSelectedNum>0}}">
       <view class="h3">面包结算</view>
-      <view class="flex-center" wx:if="{{breadSelectedNum>0}}">
+      <view class="flex-center" >
       <scroll-view scroll-x="{{true}}" class="pic-box flex-1">
         <view class="flex">
           <view class="pic" wx:for="{{breadLi}}" wx:if="{{item.is_selected==1}}">
@@ -213,9 +213,9 @@
       <view class="info" wx:if="{{breadSelectedNum>0}}">共<text class="color-b"> {{breadSelectedNum}} </text>件，合计：<text class="color-b">{{breadSelectedPrice}}</text></view>
       
     </view>
-    <view class="item">
+    <view class="item" wx:if="{{cakeSelectedNum>0}}">
       <view class="h3">蛋糕结算</view>
-      <view class="flex-center" wx:if="{{cakeSelectedNum>0}}">
+      <view class="flex-center" >
         <scroll-view scroll-x="{{true}}" class="pic-box flex-1">
           <view class="flex">
             <view class="pic" wx:for="{{cakeLi}}" wx:if="{{item.is_selected==1}}">

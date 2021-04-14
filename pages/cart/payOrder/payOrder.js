@@ -530,6 +530,7 @@ Page({
 
     //初始优惠券
     if (!biggest_discount.type) {
+      useCoupon = false
       coupon = 0
       this.setData({
         useDiscount: false,
@@ -1282,6 +1283,23 @@ Page({
          
       this.setData({
         wxUrl:url
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let txt =instructions['cart-top'],
+          tipsBread = instructions['cart-bread-tips'],
+          tipsCake = instructions['cart-cake-tips']
+          this.setData({
+            tipsBread,
+            tipsCake,
+            instructions:txt
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
       })
     }
   },

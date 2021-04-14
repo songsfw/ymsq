@@ -1,5 +1,5 @@
 const {GET,POST} = require('request.js')
-let ENV = 'dev'
+let ENV = 'pro'
 //var baseUrl = 'https://api-beta.withwheat.com/v1'
 var baseUrl = ENV == 'dev' ? 'https://api-beta.withwheat.com/v1' : 'https://api.withwheat.com/v1'
 var isLogin = 0

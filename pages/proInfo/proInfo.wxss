@@ -38,7 +38,7 @@ page{background:#F6F6F6;height: auto;}
 .tips .txt view:last-child{margin-bottom: 0}
 
 .detail{background: #fff;}
-.detail .tit{position: relative; text-align: center;padding: 40rpx 0;}
+.detail .tit{position: relative; text-align: center;padding: 22rpx 0 18rpx 0}
 .detail .tit image{width: 384rpx;height: 82rpx;}
 
 .option .home .icon,
