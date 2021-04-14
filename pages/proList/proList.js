@@ -43,7 +43,7 @@ Page({
     //弹框
     skuNum: 1,
     canshow: true,
-    allCakeCateImg: "/image/d1.png",
+    allCakeCateImg: "/image/dgqb.png",
     //文章默认页
     articleDefaultPage: 1,
 
@@ -60,7 +60,7 @@ Page({
     var currentId = e.currentTarget.dataset.tabid
     if (currentId == 2) {
       this.setData({
-        allCakeCateImg: '/image/d1.png',
+        allCakeCateImg: '/image/dgqb.png',
       })
     } else {
       this.setData({
