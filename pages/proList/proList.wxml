@@ -19,7 +19,7 @@
     </view>
   <!-- <view wx:else style="padding-top:24rpx;"></view> -->
 </view>
-<view class="sub-wrap" style="height:{{currentTab!=2?'42':'73'}}px;" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
+<view class="sub-wrap" style="height:{{currentTab!=2?'42':'80'}}px;" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
   <scroll-view show-scrollbar="false" class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}" style="top:{{fixedTop}}px">
     <view class="flex">
       <block wx:if="{{currentTab == 1}}">
@@ -58,7 +58,7 @@
 </view>
 <!-- 组合 -->
 <block wx:if="{{currentTab != 4}}">
-  <view class="pro-box" wx:if="{{showList[currentTab].length > 0}}">
+  <view class="pro-box" style="padding-top:{{currentTab!=2? 24:0}}rpx;" wx:if="{{showList[currentTab].length > 0}}">
     <block wx:if="{{!showList[currentTab]}}">
       不存在
       <view class="nodata">
