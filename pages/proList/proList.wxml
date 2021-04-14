@@ -19,8 +19,8 @@
     </view>
   <!-- <view wx:else style="padding-top:24rpx;"></view> -->
 </view>
-<view class="sub-wrap" style="height:{{currentTab!=2?'42':'73'}}px" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
-  <scroll-view class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}" style="top:{{fixedTop}}px">
+<view class="sub-wrap" style="height:{{currentTab!=2?'42':'73'}}px;" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}">
+  <scroll-view show-scrollbar="false" class="sub {{isFixed?'fixed':''}} {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}" style="top:{{fixedTop}}px">
     <view class="flex">
       <block wx:if="{{currentTab == 1}}">
         <text data-id="null" data-tagname="全部" wx:if="{{showCategory[currentTab]}}"
@@ -34,7 +34,7 @@
         <block hidden="{{showCategory[currentTab].length<=0}}">
           <view class="category-cake-item" bind:tap="selectCategory" data-id="null" data-tagnam="全部">
             <view class="img {{cateChosed[currentTab]==item.tid?'on':''}}">
-              <image src="/image/d1.png"></image>
+              <image src="/image/dgqb.png"></image>
             </view>
             <text data-id="null" data-tagnam="全部" wx:if="{{showCategory[currentTab]}}"
               class="txt {{!cateChosed[currentTab]?'on':''}}" bind:tap="selectCategory">全部</text>
