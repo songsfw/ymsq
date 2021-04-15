@@ -147,9 +147,9 @@
 <view class="pop-panel cancel-panel" wx:if="{{pop=='cancel'}}">
   <view class="tit">请选择取消的理由</view>
   <view class="flex item" wx:for="{{reason}}" bind:tap="bindSelect" data-idx="{{index}}">
-    <text>{{item}}</text>
+    <text class="{{index==curRes?'on-text':''}}">{{item}}</text>
     <view class="checkbox {{index==curRes?'on':''}}">
-      <view class="iconfont icon-check"></view>
+      <view class="iconfont icon-check" style="line-height:{{index!=2?1.04:1.05}}"></view>
     </view>
   </view>
   <view wx:if="{{curRes==2}}">

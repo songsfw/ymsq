@@ -2,20 +2,26 @@
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 
 <view class="fixedNav {{fixedNav?'fixed':''}}">
-  <navBar hasAddress navType="transparent" cityName="{{addressInfo}}" wx:if="{{showNav}}" isFold="{{fixedNav}}"></navBar>
+  <navBar hasAddress navType="transparent" cityName="{{addressInfo}}" wx:if="{{showNav}}" isFold="{{fixedNav}}">
+  </navBar>
 </view>
 <!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
 </view> -->
-<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title}}" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
+<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center"
+  style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title}}"
+    placeholder-style="color:#aaa" type="text" disabled="{{true}}" /></navigator>
 <!-- 开始 -->
 <view class="wrap" style="background:{{globalStyle.background_color || '#F4F9F5'}}">
-  <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}" refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
+  <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}"
+    refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
     <!-- 组件部分 -->
     <block wx:for="{{components}}" wx:for-index="cidx">
       <!-- 轮播图 -->
-      <view class="banner" wx:if="{{item.block_type == 4}}" style="width:{{item.componentDetail.width!='' ? item.componentDetail.width : '750'}}rpx;height:{{item.componentDetail.height!='' ? item.componentDetail.height : '704'}}rpx">
-        <swiper class="swiper" interval="{{interval}}" autoplay="{{true}}" duration="{{duration}}" circular="{{circular}}" indicator-dots>
+      <view class="banner" wx:if="{{item.block_type == 4}}"
+        style="width:{{item.componentDetail.width!='' ? item.componentDetail.width : '750'}}rpx;height:{{item.componentDetail.height!='' ? item.componentDetail.height : '704'}}rpx">
+        <swiper class="swiper" interval="{{interval}}" autoplay="{{true}}" duration="{{duration}}"
+          circular="{{circular}}" indicator-dots>
           <block wx:for="{{banner}}" wx:for-index="index">
             <swiper-item>
               <view data-url="{{item.url}}" data-type="{{item.url_type}}" bind:tap="toPro">
@@ -34,13 +40,15 @@
       <view class="menu flex-center" wx:if="{{item.block_type == 3}}">
         <view hover-class="none" wx:for="{{menu}}" bind:tap="toPro" data-url="{{item.url}}"
           data-type="{{item.url_type}}">
-          <view class="pic"><image src="{{item.image_url}}"></image></view>
+          <view class="pic">
+            <image src="{{item.image_url}}"></image>
+          </view>
           <view class="text">{{item.title}}</view>
         </view>
       </view>
       <view class="notice flex-center" wx:if="{{notice.length>0 && cidx==1}}" bind:tap="showNotice">
         <image class="" src="../../image/icon-notice.png"></image>
-        <swiper class="txt flex-1" autoplay="{{true}}" circular vertical >
+        <swiper class="txt flex-1" autoplay="{{true}}" circular vertical>
           <block wx:for="{{notice}}" wx:for-index="index">
             <swiper-item catchtouchmove='catchTouchMove'>
               <view class="text-overflow">{{item}}</view>
@@ -50,25 +58,32 @@
         <view class="show-btn">查看</view>
       </view>
       <!-- 分类推荐 -->
-      <view class='main-content' style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx" wx:if="{{item.block_type == 2}}">
+      <view class='main-content'
+        style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx"
+        wx:if="{{item.block_type == 2}}">
         <view class='pro-block block3'>
           <view wx:if="{{item.id!=34}}" class="title flex">
             <block wx:if="{{item.componentDetail.box_style.background_image != ''}}">
-              <view style="height:84rpx"><image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image></view>
+              <view style="height:84rpx">
+                <image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image>
+              </view>
             </block>
             <!-- <block wx:elif="{{item}}">
               <view style="height:34rpx" mode="heightFix"><image src=""></image></view>
             </block> -->
-            
-          
+
+
             <view wx:if="{{item.componentDetail.link_type >0 }}" class="more" bind:tap="toPro"
-              data-url="{{item.componentDetail.link_type}}" data-type="4">MORE<image src="../../image/arrow-r.png"></image></view>
+              data-url="{{item.componentDetail.link_type}}" data-type="4">MORE<image src="../../image/arrow-r.png">
+              </image>
+            </view>
           </view>
 
           <view class="pro-list">
             <block wx:for="{{item.componentDetail.imageReader}}" wx:for-item="pro">
               <view hover-class="none" bind:tap="toPro" data-url="{{pro.url}}" data-type="{{pro.url_type}}">
-                <view class="pic" style="height:{{pro.image_height!='' ? pro.image_height : '440'}}rpx; border-radius:{{pro.image_top_radius}}rpx {{pro.image_top_radius}}rpx {{pro.image_bottom_radius}}rpx {{pro.image_bottom_radius}}rpx">
+                <view class="pic"
+                  style="height:{{pro.image_height!='' ? pro.image_height : '440'}}rpx; border-radius:{{pro.image_top_radius}}rpx {{pro.image_top_radius}}rpx {{pro.image_bottom_radius}}rpx {{pro.image_bottom_radius}}rpx">
                   <image src="{{pro.image_url}}" mode="aspectFill"></image>
                 </view>
                 <!-- <view class="txt" style="background-color:{{item.componentDetail.box_style.inner_background_color}}">
@@ -89,24 +104,28 @@
     <view class="logo">
       <image src="../../image/logo.png"></image>
     </view>
-    
+
     <!-- <view style="height:{{50+btmHolder}}px"></view> -->
   </scroll-view>
 
 </view>
 <view class="gotop" bindtap="gotop" wx:if="{{showGoto}}">
-      <image src="../../image/icon-top.png"></image>
-    </view>
+  <image src="../../image/icon-top.png"></image>
+</view>
 
-<pop-panel title="专属消息" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px"  class="notice-panel">
- 
-    <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
-      <view style="padding:0 24rpx 24rpx 24rpx;">
-        <block wx:for="{{notice}}" wx:for-index="index">
-          <view class="item"><text>◉</text> {{item}}</view>
-        </block>
-      </view>
-    </scroll-view>
- 
+<pop-panel title="专属消息" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px"
+  class="notice-panel">
+
+  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
+    <view style="padding:0 24rpx 24rpx 24rpx;">
+      <block wx:for="{{notice}}" wx:for-index="index">
+        <view class="item my-tip">
+          <view class="my-tip-dian">◉</view>
+          <view class="my-tip-content">{{item}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
 </pop-panel>
 <!-- <view class="mask" wx:if="{{mask}}" catchtap="closePanel"></view> -->

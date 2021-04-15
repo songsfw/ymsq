@@ -39,6 +39,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .pop-panel .tit{text-align: center;}
 .pop-con{max-height: 500rpx;position: relative;z-index: 2;}
 .pop-con scroll-view{max-height: 500rpx;}
+.on-text{color:#222222}
 
 .coupon-panel{transform: translateY(100%);transition: all .3s linear;}
 .coupon-panel .tit{height: 48px;line-height: 48px; font-size: 15px;text-align: center;margin:0 30rpx;border-bottom: 1px solid #F6F6F6;font-weight: 500;}
@@ -101,8 +102,8 @@ page{background: #F6F6F6;padding-top: 48px;}
 .cancel-panel{left: 50%;top: 50%;height: auto;bottom: auto; transform: translate(-50%,-50%);padding:60rpx 40rpx 40rpx 40rpx;width: 630rpx;box-sizing: border-box;}
 .cancel-panel .tit{font-size: 16px;font-weight: bold;margin-bottom: 50rpx;}
 .cancel-panel .item{color: #999;font-size: 14px;margin:0 0 50rpx 0;justify-content: space-between;padding:0}
-.checkbox{position: relative; width: 20px;height: 20px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
-.checkbox view{position: absolute;left: 0;top: 0; display: none; width: 100%;height: 100%;font-size: 20px;color:#C1996B;line-height:1.02;}
+.checkbox{position: relative; width: 22px;height: 22px;border: 1px solid #ccc;border-radius: 50%;line-height: 1;margin-right: 16rpx;box-sizing: border-box;}
+.checkbox view{position: absolute;left: 0;top: 0; display: none; width: 100%;height: 100%;font-size: 21px;color:#C1996B;line-height:1.04;}
 .checkbox.on{border: none;}
 .checkbox.on view{display: block;}
 .reason-txt{height: 150rpx;width: 100%;background: #F6F6F6;font-size: 14px;padding:20rpx;box-sizing: border-box;margin:32rpx 0 60rpx 0;border-radius: 8rpx;}

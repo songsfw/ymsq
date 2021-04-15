@@ -17,14 +17,24 @@ Page({
     is_ziti: "0",
     proNum: 2,
     showAll: false,
+
+    //样式选中变量
     selectDate: 0,
     selectTime: -1,
-    checkDate: null,
-    checkTime: null,
-    checkChange: true,
-    checkDateChange: true,
-    tempTime: -1,
-    tempDate: -1,
+
+    //确定选中变量
+    checkDate: 0,
+    checkTime: -1,
+
+    //开始选择
+    startCheck : false,
+
+    // checkChange: true,
+    // checkDateChange: true,
+    // tempTime: -1,
+    // tempDate: -1,
+
+    //配送end
     payQueue: [10, 0, 0, 0, 0],
     useCoupon: false,
     couponCheck: -1,
@@ -251,60 +261,36 @@ Page({
     this.close()
   },
   close() {
+    console.log('close   dddd ')
     this.setData({
+      startCheck:false,
+      selectDate:this.data.checkDate,
+      // selectTime:-1,
+
       pop: 0,
       tempTime: -1,
-      checkChange: true,
-      checkDateChange: true,
-      selectDate: this.data.checkDate || 0,
+      // checkChange: true,
+      // checkDateChange: true,
+      // selectDate: this.data.checkDate || 0,
     })
   },
   selectDate(e) {
     let selectDate = e.currentTarget.dataset.idx
     this.setData({
+      startCheck:true,
       selectDate: selectDate,
-      selectTime: -1,
-      checkDateChange: false,
     })
   },
   confirmDate() {
     let {
       delivery,
-      selectDate,
-      selectTime,
-      tempDate,
-      tempTime,
-      checkChange,
       checkDate,
       checkTime,
     } = this.data
-    if (selectTime == -1) {
-      if (checkChange && tempTime == -1 && selectTime == -1) {
-        selectTime = checkTime;
-        selectDate = checkDate;
-      } else if (tempTime == -1 || tempDate == -1) {
-        wx.showToast({
-          icon: "none",
-          title: "请选择时间段"
-        })
-        return
-      } else {
-        selectTime = tempTime;
-        selectDate = tempDate;
-      }
-    }
 
-    if (selectTime === null && selectDate === null) {
-      wx.showToast({
-        icon: "none",
-        title: "请选择可配送时间"
-      })
-      return
-    }
-
-    let selectDateTxt = util.formatDate(delivery.delivery_times[selectDate].date)
-    let selectTimeTxt = delivery.delivery_times[selectDate].time_range[selectTime].range
-    let stock_type = delivery.delivery_times[selectDate].time_range[selectTime].stock_type
+    let selectDateTxt = util.formatDate(delivery.delivery_times[checkDate].date)
+    let selectTimeTxt = delivery.delivery_times[checkDate].time_range[checkTime].range
+    let stock_type = delivery.delivery_times[checkDate].time_range[checkTime].stock_type
 
     let dateStr = ''
     let d1 = new Date(util.formatTime(new Date())).getTime()
@@ -322,17 +308,34 @@ Page({
 
     this.setData({
       dateStr: dateStr,
-      checkDate: selectDate,
-      checkTime: selectTime,
-      checkChange: true,
-      checkDateChange: true,
-      selectDateTxt: delivery.delivery_times[selectDate].date,
+      // checkDate: selectDate,
+      // checkTime: selectTime,
+      // checkChange: true,
+      // checkDateChange: true,
+      selectDateTxt: delivery.delivery_times[checkDate].date,
       selectTimeTxt: selectTimeTxt,
       stock_type: stock_type
     })
     this.close()
   },
   selectTime(e) {
+    console.log(e);
+    
+    let selectTime = e.currentTarget.dataset.idx
+    this.setData({
+      startCheck:true,
+      selectTime: selectTime,
+      // selectDate:this.data.selectDate,
+      checkDate:this.data.selectDate,
+      checkTime:selectTime,
+      // checkChange: false,
+      // tempTime: selectTime,
+      // tempDate: this.data.selectDate,
+    })
+    this.confirmDate();
+    // this.close();
+  },
+  selectTimeOld(e) {
     let selectTime = e.currentTarget.dataset.idx
     this.setData({
       selectTime: selectTime,
@@ -422,6 +425,16 @@ Page({
           unUsedShowStatus[index] = false;
         }
 
+        let deliveryData = {};
+        for(let deliveryDateIndex in res.delivery.delivery_times){
+          for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
+            deliveryData[deliveryDateIndex+"_"+deliveryTimeIndex] = res.delivery.delivery_times[deliveryDateIndex]['date']+'_'+res.delivery.delivery_times[deliveryDateIndex]['time_range'][deliveryTimeIndex]['range'];
+          }
+        }
+        this.data.deliveryData = deliveryData;
+        console.log(deliveryData)
+        console.log('---------------')
+        console.log(res.delivery);
         this.setData({
           biggest_discount: res.biggest_discount,
           hasMai: hasMai,
@@ -470,7 +483,7 @@ Page({
             txtCard[item.cart_id] = item.default_mcake_message
           }
         })
-        console.log(txtCard);
+
 
         this.setData({
           biggest_discount: res.biggest_discount,
