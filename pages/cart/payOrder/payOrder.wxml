@@ -63,9 +63,9 @@
     </view>
   </view>
   <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop" wx:if="{{ziti=='0'}}">
-    <text class="tit">配送时间</text>
+    <text class="tit">配送时间{{selectTime}}</text>
     <view class="time flex-center">
-      <text wx:if="{{checkDate!==null}}">{{dateStr}} {{selectTimeTxt}}</text>
+      <text wx:if="{{selectTime!==-1}}">{{dateStr}} {{selectTimeTxt}}</text>
       <text wx:else>请选择配送时间</text>
       <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
     </view>
