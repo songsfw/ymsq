@@ -148,7 +148,7 @@
           <view class="tit">{{item.name}}</view>
           <view class="date">{{item.valid_time}}</view>
           <view class="txt flex">
-            <text>{{item.desc1}}</text>
+            <text style="color:#999999">{{item.desc1}}</text>
             <view class="btn" style="background:#ccc">已使用</view>
           </view>
         </view>
@@ -199,7 +199,7 @@
           <view class="tit">{{item.name}}</view>
           <view class="date">{{item.valid_time}}</view>
           <view class="txt flex">
-            <text>{{item.desc1}}</text>
+            <text style="color:#999999">{{item.desc1}}</text>
             <view class="btn" style="background:#ccc">已失效</view>
           </view>
         </view>
