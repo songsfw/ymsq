@@ -91,9 +91,57 @@ Page({
         // showLoading: false,
         ['showList[' + currentTab + '][0]']: pagelist['pagelist'],
       });
+
+      if (currentId == 1 || currentId == 2) {
+        if (!this.data.cAnimatPosition) {
+          this.data.cAnimatPosition = {};
+        }
+
+        console.log(this.data.cAnimatPosition)
+        if (this.data.cAnimatPosition.hasOwnProperty(currentId)) {
+          console.log(currentId, '======');
+          let aniOffsetLeft = this.data.cAnimatPosition[currentId][0];
+          let aniIdx = this.data.cAnimatPosition[currentId][1];
+          this.categoryAnimat(aniOffsetLeft, aniIdx);
+        } else {
+          this.categoryAnimat(0, 0);
+        }
+      }
       return;
     }
   }, 200, true),
+  categoryAnimat(offsetLeft, idx) {
+    console.log(offsetLeft, idx)
+    idx = idx == 'null' ? 0 : idx;
+
+    let preItem = '.categorytext_' + (idx);
+    console.log(idx, preItem);
+    if (idx) {
+      this.setData({
+        categoryleft:(offsetLeft),
+      })
+
+      //
+      // let query = wx.createSelectorQuery();
+      // query.select(preItem).boundingClientRect()
+      // query.selectViewport().scrollOffset()
+      // query.exec((res) => {
+      //   let pos = offsetLeft - res[0].width - 10;
+      //   console.log(res, pos,res[0].width)
+      //   this.setData({
+      //     categoryleft: pos,
+      //     // categorytop:300,
+      //   })
+      // })
+    } else {
+      this.setData({
+        categoryleft:(0),
+      })
+    }
+
+
+
+  },
   selectCategory(e) {
     var cateId = e.currentTarget.dataset.id
     cateId = cateId == 'null' ? null : cateId;
@@ -110,33 +158,23 @@ Page({
       showLoading: true,
     })
 
-    //特殊化处理 保留 后期须要特殊化 开启
-    // switch (currentTab) {
-    //   case 1:
-    //     // currentTag = tagId;
-    //     console.log('s - 1');
-    //     break;
-    //   case 2:
-    //     console.log('s - 2');
-    //     // currentTag = tagName;
-    //     break;
-    //   case 3:
-    //     console.log('s - 3');
-    //     break;
-    //   case 4:
-    //     console.log('s - 4');
-    //     break;
-    // }
+    let aniId = e.currentTarget.dataset.id;
+    console.log(e,e.currentTarget.dataset)
+    let aniOffsetLeft = e.currentTarget.offsetLeft;
+    let tmpAniPos = [
+      aniOffsetLeft,
+      aniId
+    ]
+    if (!this.data.cAnimatPosition) {
+      this.data.cAnimatPosition = {};
+      this.data.cAnimatPosition[currentTab] = tmpAniPos;
+    } else {
+      this.data.cAnimatPosition[currentTab] = tmpAniPos;
+    }
+    this.categoryAnimat(aniOffsetLeft, aniId);
+
     let re = this.choseTagData(currentTab, cateId);
     return re;
-    let pagelist = this.getCachePage(1, currentTab, cateId)
-    // console.log("currentTab： ", currentTab, 'cateId:', cateId, 'pagelist::', pagelist, 'pagelist 分类：', pagelist['pagelist'])
-    this.setData({
-      currentCategory: cateId,
-      showLoading: false,
-      ['showList[' + currentTab + '][0]']: pagelist['pagelist'],
-    });
-    return true;
   },
   choseTagData: function (currentTab, cateId) {
     // console.log(currentTab, cateId);
@@ -343,7 +381,7 @@ Page({
     return
   },
   getCachePage(pageNum, type, tag) {
-    tag = typeof(tag) == 'undefined' ? null : tag;
+    tag = typeof (tag) == 'undefined' ? null : tag;
     // console.log("开始分页：", 'pageNum:', pageNum, 'type:', type, 'tag:', tag)
     type = parseInt(type);
     if (!app.data.ProductList_ProList[type]) {
@@ -549,8 +587,8 @@ Page({
         currentTab: app.globalData.proType,
         order_max_bread: res.order_max_bread,
       };
-      console.log(this.data,this.data.cateChosed)
-      if(!this.data.isPullDownRefresh){
+      console.log(this.data, this.data.cateChosed)
+      if (!this.data.isPullDownRefresh) {
         setData[['cateChosed[' + res.choose_type + ']']] = null;
       }
       // console.log(app.data.ProductList_ProList)
@@ -662,7 +700,7 @@ Page({
       // noMoreData = pagel.count - pagel.page * pagel.pagesize <= 0;
 
       if (this.data.isPullDownRefresh) {
-        this.choseTagData(res.choose_type,this.data.cateChosed[res.choose_type]);
+        this.choseTagData(res.choose_type, this.data.cateChosed[res.choose_type]);
         // this.setData({
         //   ['cateChosed[' + res.choose_type + ']']: this.data.currentCategory,
         // });
@@ -910,17 +948,18 @@ Page({
       // cakeList: null,
       // breadList: null,
       currentTab: proType,
-      cateChosed:{},
+      cateChosed: {},
       city_id: city_id || '10216',
       showLoading: true,
       skuNum: 1,
     })
     trueStock = {};
     this.getCartInfo()
-    //if(this.data.currentTab!=4){
-      this.getProList(this.data.city_id, true);
-    //}
-    
+    console.log(this.data);
+    this.getProList(this.data.city_id, true);
+    //重置category动画样式
+    this.data.cAnimatPosition = {};
+    this.categoryAnimat(0);
   },
   //确认返回途径
   setDetailBack(backNum = 0) {
