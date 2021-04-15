@@ -25,7 +25,7 @@
           </block>
         </swiper>
         <view class="tips flex-center">
-          <view wx:for="{{message}}"><text class="iconfont icon-icon1"></text>{{item}}</view>
+          <view wx:for="{{message}}" class="flex-center"><text class="iconfont icon-icon1"></text><view>{{item}}</view></view>
         </view>
         <!-- <view class="banner-mask"></view> -->
       </view>

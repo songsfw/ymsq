@@ -147,26 +147,6 @@ Page({
       pop: 0
     })
   },
-  // getSelectedPro() {
-  //   let {
-  //     cakeLi,
-  //     breadLi
-  //   } = this.data
-  //   let selectedBread = null,
-  //     selectedCake = null
-
-  //   function getSelected(type) {
-  //     return pro => pro.is_selected == type;
-  //   }
-  //   selectedBread = breadLi.filter(getSelected("1"))
-  //   selectedCake = cakeLi.filter(getSelected("1"))
-
-
-  //   this.setData({
-  //     selectedBread: selectedBread,
-  //     selectedCake:selectedCake
-  //   })
-  // },
   Settlement(){
     let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {
@@ -224,15 +204,31 @@ Page({
     let skuid = e.currentTarget.dataset.skuid,
       spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
-      num = e.currentTarget.dataset.num
+      num = e.currentTarget.dataset.num,
+      stock = e.currentTarget.dataset.stock
+      if(stock==0){
+        wx.showToast({
+          icon:"none",
+          title:"暂无库存"
+        })
+        return
+      }
     this.addChart("minus", skuid, type, num,spuid)
   },
   plusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
       spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
-      num = e.currentTarget.dataset.num
+      num = e.currentTarget.dataset.num,
+      stock = e.currentTarget.dataset.stock
       console.log(spuid);
+      if(stock==0){
+        wx.showToast({
+          icon:"none",
+          title:"暂无库存"
+        })
+        return
+      }
     this.addChart("plus", skuid, type, num,spuid)
   },
   //改变商品数量
@@ -566,14 +562,19 @@ Page({
   select(e) {
     let id = e.currentTarget.dataset.id,
       type = e.currentTarget.dataset.type,
-      index = e.currentTarget.dataset.idx
+      index = e.currentTarget.dataset.idx,
+      stock = e.currentTarget.dataset.stock
     let {
       cakeLi,
       breadLi
     } = this.data
-    // this.setData({
-    //   type: type
-    // })
+    if(stock==0){
+      wx.showToast({
+        icon:"none",
+        title:"暂无库存"
+      })
+      return
+    }
 
     if (type == "1") {
       if (breadLi[index].is_selected == "0") {

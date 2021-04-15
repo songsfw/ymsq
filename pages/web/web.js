@@ -26,5 +26,16 @@ Page({
       webUrl:url
     })
     
+  },
+  onUnload: function (e) {
+    console.log('unload');
+    let pages = getCurrentPages(); // 子页面
+    if (pages.length > 1) {
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      if(prePage.route=="pages/proList/proList"){
+        prePage.setDetailBack && prePage.setDetailBack(1);
+      }
+    }
   }
 })

@@ -162,6 +162,12 @@
           "pathName": "pages/user/order/order",
           "query": "orderCode=1000210224002538",
           "scene": null
+        },
+        {
+          "name": "授权",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
         }
       ]
     }

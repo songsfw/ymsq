@@ -19,24 +19,24 @@
   </view>
   <view class="pro-tip"><text class="tag">免邮</text>{{tipsBread}}</view>
   <view class="pro-list" data-itemIds="{{breadItemIds}}">
-    <!-- <view class="item flex" wx:for="{{breadLi}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchE" style="transform:translateX(-{{item.txtStyle}}rpx)" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"> -->
     <movable-area class="item bread-item" wx:for="{{breadLi}}" wx:for-index="index">
       <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
         <view class="item-wrap flex-center item_{{item.cart_id}}"
            bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
-          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-stock="{{item.has_stock}}" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
             <view class="iconfont icon-check"></view>
           </view>
-          <view class="pro-info flex flex-1">
-            <view class="pic" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+          <view class="pro-info flex flex-1 {{item.has_stock==0?'sold-out':''}}">
+            <view class="pic" bind:tap="select" data-stock="{{item.has_stock}}" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
+              <view class="tag">已售罄</view>
               <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
             </view>
             <view class="txt flex-1 flex">
-              <view class="tit flex-center" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
+              <view class="tit flex-center" bind:tap="select" data-idx="{{index}}" data-stock="{{item.has_stock}}" data-type="1" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text><text>{{item.sku_name}}</text></view>
               <view class="tag flex-wrap" wx:if="{{item.weight}}">
                 <text>约{{item.weight}}</text>
               </view>
-              <view class="price flex">
+              <view class="price flex" wx:if="{{item.has_stock!=0}}">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>
                 <view class="set-chart flex">
                   <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1"
@@ -46,6 +46,7 @@
                     data-idx="{{index}}"></text>
                 </view>
               </view>
+              <view class="price" wx:else>该商品已售罄</view>
             </view>
           </view>
           <view class="pro-option flex">
@@ -72,21 +73,22 @@
       <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
         <view class="item-wrap flex-center item_{{item.cart_id}}"
           bindtouchstart="touchstart" bindtouchend="touchE" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
-          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+          <view class="checkbox {{item.is_selected=='1'?'on':''}}" bind:tap="select" data-stock="{{item.has_stock}}" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
             <view class="iconfont icon-check"></view>
           </view>
-          <view class="pro-info flex flex-1">
-            <view class="pic" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+          <view class="pro-info flex flex-1 {{item.has_stock==0?'sold-out':''}}">
+            <view class="pic" bind:tap="select" data-stock="{{item.has_stock}}" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}">
+              <view class="tag">已售罄</view>
               <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
             </view>
             <view class="txt flex-1 flex">
-              <view class="tit" bind:tap="select" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text>{{item.sku_name}} ({{item.sku_unit}})</view>
+              <view class="tit" bind:tap="select" data-stock="{{item.has_stock}}" data-idx="{{index}}" data-type="2" data-id="{{item.cart_id}}"><text class="tag" wx:if="{{item.special_tag}}">{{item.special_tag}}</text>{{item.sku_name}} ({{item.sku_unit}})</view>
               <view class="tag flex-wrap" wx:if="{{item.is_fittings==0}}">
                 <text wx:if="{{item.size}}">{{item.size}}</text>
                 <text wx:if="{{item.edible}}">{{item.edible}}</text>
                 <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
               </view>
-              <view class="price flex">
+              <view class="price flex" wx:if="{{item.has_stock!=0}}">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>
                 <view class="set-chart flex">
                   <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="2"
@@ -96,6 +98,7 @@
                     data-idx="{{index}}"></text>
                 </view>
               </view>
+              <view class="price" wx:else>该商品已售罄</view>
             </view>
           </view>
           <view class="pro-option flex">

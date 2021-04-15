@@ -26,7 +26,7 @@
       <block wx:if="{{address.is_address && address.address_allow_delivery}}">
         <view class="local iconfont icon-local"></view>
         <view class="txt flex-1">
-          <view class="tit flex">
+          <view class="tit flex-center">
             <text>{{addressInfo.name}}</text>
             <text>{{addressInfo.mobile}}</text>
             <view class="tag" wx:if="{{addressInfo.is_default==1}}">默认</view>
@@ -103,7 +103,7 @@
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
           <view class="h4">巧克力牌</view>   
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
-            placeholder="巧克力牌内容限9个汉字18个字符" maxlength="18" bindinput="inputCard"
+            placeholder="巧克力牌内容限9个汉字18个字符" maxlength="18" placeholder-style="color:#aaa" bindinput="inputCard"
             disabled="{{item.is_mcake_message==0}}"  bindtap="clearTxt"   bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}" data-value="{{txtCardObj[item.cart_id]}}"
             data-cartid="{{item.cart_id}}" data-defaultmakemsg="{{item.default_mcake_message}}"/>
           <view class="iconfont icon-edit"></view>
@@ -137,7 +137,7 @@
         <view class="flex-center txt-card" wx:if="{{item.is_fittings==0 && item.is_mcake_message==1}}">
           <view class="h4">巧克力牌</view>
           <input class="inputxt flex-1" data-default="{{item.default_mcake_message}}" type="text"
-            placeholder="巧克力牌内容限9个汉字18个字符" maxlength="18" bindinput="inputCard"
+            placeholder="巧克力牌内容限9个汉字18个字符" maxlength="18" placeholder-style="color:#aaa" bindinput="inputCard"
             disabled="{{item.is_mcake_message==0}}" bindfocus="clearTxt" bindblur="setTxt" value="{{txtCardObj[item.cart_id]}}"
             data-cartid="{{item.cart_id}}" />
           <view class="iconfont icon-edit"></view>
@@ -261,7 +261,7 @@
     <view class="num">￥<text>{{payPrice}}</text>
     </view>
   </view>
-  <view class="buy-btn" bind:tap="submmitOrder">支付</view>
+  <view class="buy-btn {{!hasPolicy?'on':''}}" bind:tap="submmitOrder">支付</view>
 </view>
 <view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="iconfont icon-close close" bind:tap="close"></view>

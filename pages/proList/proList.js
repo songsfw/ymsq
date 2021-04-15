@@ -618,7 +618,6 @@ Page({
           console.log(4)
           break;
       }
-
       if (app.globalData.proType == 4) {
         if (!this.data.pageInfo.hasOwnProperty(app.globalData.proType)) {
           this.data.pageInfo[app.globalData.proType] = {}
@@ -902,7 +901,6 @@ Page({
     canCheck = false;
     //自定义tabbar选中
     let addressInfo = wx.getStorageSync("addressInfo")
-    console.log(addressInfo);
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let proType = app.globalData.proType
     this.data.trueCityId = city_id;
@@ -917,11 +915,12 @@ Page({
       showLoading: true,
       skuNum: 1,
     })
-    console.log(this.data.city_id)
     trueStock = {};
     this.getCartInfo()
-    console.log(this.data);
-    this.getProList(this.data.city_id, true);
+    //if(this.data.currentTab!=4){
+      this.getProList(this.data.city_id, true);
+    //}
+    
   },
   //确认返回途径
   setDetailBack(backNum = 0) {

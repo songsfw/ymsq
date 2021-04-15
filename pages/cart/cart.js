@@ -148,10 +148,6 @@ Page({
     
     selectedCake = cakeLi.filter(getSelected("1"))
     if (selectedCake.length > 0) {
-      // totalPrice = selectedCake.reduce((pre, cur) => {
-      //   let curPrice = util.floatObj().multiply(cur.sku_number, cur.sku_price, 2)
-      //   return util.floatObj().add(pre, curPrice, 2)
-      // }, 0)
       this.setData({
         fittings: true
       })
@@ -191,17 +187,6 @@ Page({
       city_id
     } = this.data
 
-    // let isBread = breadLi.some(item => {
-    //   return item.is_selected == "1"
-    // })
-    // let isCake = cakeLi.some(item => {
-    //   return item.is_selected == "1"
-    // })
-    // if (isBread && isCake) {
-      
-    //   return false
-    // }
-
     let data = {
       city_id: city_id,
       type: type
@@ -223,6 +208,7 @@ Page({
     })
 
   }),
+
   //改变商品数量
   minusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
@@ -259,19 +245,6 @@ Page({
       city_id,
       skuNum
     } = this.data
-
-    // let cartItem = this.data.cakeLi.find(i=>{
-    //   return i.sku_id == proId && i.is_fittings==1
-    // })
-    // if(cartItem){
-    //   let oldNum = cartItem.sku_number
-
-    //   if(parseInt(oldNum)>skuNum){
-    //     skuNum = -(oldNum - skuNum)
-    //   }else{
-    //     skuNum = skuNum - oldNum
-    //   }
-    // }
 
     let data = {
       city_id: city_id,
@@ -433,40 +406,6 @@ Page({
         wx.setStorageSync('total_num', total_num)
         let selectType = this.getSelectType(bread,cake)
 
-        // let breadItemIds = [];
-        // if (breadLi.length > 0) {
-        //   breadLi.forEach(item => {
-        //     if (item.is_selected == "1") {
-        //       breadSelectedNum++
-        //     }
-        //     breadItemIds.push(item.cart_id)
-        //     item['txtStyle'] = 0;
-        //     if(this.data.delStatus == 1){
-        //       item['txtStyle'] = 1;
-        //     }           
-        //     // console.log(item)
-        //   })
-        // }
-        // this.data.breadItemIds = breadItemIds.join(',');
-
-        // let cakeItemIds = [];
-        // if (cakeLi.length > 0) {
-        //   cakeLi.forEach(item => {
-        //     if (item.is_selected == "1") {
-        //       cakeSelectedNum++
-        //     }
-        //     cakeItemIds.push(item.cart_id)
-        //     item['txtStyle'] = 0;
-        //     if(this.data.delStatus == 1){
-        //       item['txtStyle'] = 1;
-        //     }   
-        //   })
-        // }
-        //this.data.cakeItemIds = cakeItemIds.join(',');
-        // type = breadSelectedNum > 0 ? "1" : "2"
-        // noallBread = breadSelectedNum == res.bread.detail.length ? false : true
-        // noallCake = cakeSelectedNum == res.cake.detail.length ? false : true
-
         this.setData({
           type:selectType.type,
           noallBread: selectType.noallBread,
@@ -606,7 +545,8 @@ Page({
   select(e) {
     let id = e.currentTarget.dataset.id,
       type = e.currentTarget.dataset.type,
-      index = e.currentTarget.dataset.idx
+      index = e.currentTarget.dataset.idx,
+      stock = e.currentTarget.dataset.stock
     let {
       cakeLi,
       breadLi
@@ -614,7 +554,13 @@ Page({
     // this.setData({
     //   type: type
     // })
-
+    if(stock==0){
+      wx.showToast({
+        icon:"none",
+        title:"暂无库存"
+      })
+      return
+    }
     if (type == "1") {
       if (breadLi[index].is_selected == "0") {
         this.selectPro(id, "1")

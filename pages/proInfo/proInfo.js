@@ -239,6 +239,7 @@ Page({
     // this.getProInfo()
   },
   onUnload: function (e) {
+    console.log('unload');
     let pages = getCurrentPages(); // 子页面
     if (pages.length > 1) {
       //上一个页面实例对象

@@ -4,7 +4,7 @@
   "navigationStyle": "custom",
   "backgroundTextStyle": "dark",
   "backgroundColorTop":"#fff",
-  "backgroundColorBottom":"#f6f6f6",
+  "backgroundColorBottom":"#F9F9F9",
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "toCart": "/components/toCart/toCart"

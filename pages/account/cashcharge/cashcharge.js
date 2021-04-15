@@ -1,6 +1,7 @@
 const api = require("../../../utils/api")
 const util = require('../../../utils/util.js')
 const app = getApp()
+let isCharging=0
 Page({
 
   /**
@@ -65,6 +66,7 @@ Page({
   },
   chashCharge(){
     let {result,pwd,use,type}=this.data
+    
     if(result==""){
       wx.showToast({
         title: '请输入卡号',
@@ -132,7 +134,10 @@ Page({
         card:result,
         pwd:pwd
       }
-  
+      if(isCharging==1){
+        return
+      }
+      isCharging=1
       api.chashCharge(data).then(res=>{
         console.log(res)
         if(!res){
@@ -144,13 +149,18 @@ Page({
           })
           return
         }
-        app.globalData.cardNo = result
-        app.globalData.cardPwd = pwd
+        // app.globalData.cardNo = result
+        // app.globalData.cardPwd = pwd
         wx.showToast({
           title: '充值成功',
           icon: 'none',
           duration: 2000
         })
+        this.setData({
+          result:'',
+          pwd:""
+        })
+        isCharging=0
       })
     }
 

@@ -13,7 +13,11 @@ image{width: 100%;height: 100%}
 .pro-box .hd text{font-size: 16px;font-weight: bold;}
 .pro-list{padding: 22rpx 0 56rpx 0;overflow: hidden;}
 .pro-list .item:last-child{margin-bottom: 0;}
-.pro-info .pic{width: 90px;height: 90px;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4px;}
+.pro-info .pic{position: relative; width: 90px;height: 90px;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4px;}
+.pro-info .pic .tag{display: none;}
+.pro-info.sold-out .tit{color: #aaa;}
+.pro-info.sold-out .pic image{opacity: .9;}
+.pro-info.sold-out .pic .tag{display: block; position: absolute;left: 50%;top: 50%; font-size: 12px;color: #fff;width: 45px; line-height: 45px;height: 45px;text-align: center;border-radius: 50%;transform: translate(-50%,-50%);z-index: 2;background-color: rgba(0, 0, 0, 0.4);}
 .pro-info .checkbox{margin-right: 20rpx;}
 .pro-info .txt{justify-content: space-between;flex-direction: column;}
 .item{position: relative;width: 100%; align-items: center;margin-bottom: 40rpx;}
@@ -27,7 +31,7 @@ image{width: 100%;height: 100%}
 .item .tit .tag{color: #fff;font-size: 10px;padding:4rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;vertical-align: middle;}
 .item .tag text:after{content: "|"; font-size: 10px; display: inline-block; margin-left: 10rpx;}
 .item .tag text:last-child:after{display: none;}
-.item .price{justify-content: space-between;align-items: center;font-weight: 500;}
+.item .price{justify-content: space-between;align-items: center;font-weight: 500;text-align: right;color: #C1996B;}
 .item .price .num{font-size: 13px;color: #222;}
 .item .price .num text{font-size: 14px;font-weight:500 ;}
 .item .price .add{width:44rpx;height: 44rpx;color: #C1996B;
@@ -63,7 +67,7 @@ image{width: 100%;height: 100%}
 .option .select text{font-size: 14px;color: #999;}
 .option .price{align-items: center;}
 .option .price view{font-size: 13px;font-weight: 500;align-items: flex-end;}
-.option .price .num{color: #FA603D;line-height: 1;}
+.option .price .num{color: #C1996B;line-height: 1;}
 .option .price .num text{font-size:20px;font-weight: 500;}
 .buy-btn{padding: 0 18px; height: 36px;background: #C1996B;color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin-left: 20rpx;font-weight: 500;}
 
@@ -100,14 +104,13 @@ image{width: 100%;height: 100%}
 .score-panel .pic{width: 200rpx;height: 200rpx;border-radius: 8rpx;margin-right: 20rpx;}
 .score-panel .h3{justify-content:space-between; flex-direction: column;}
 .score-panel .tit{font-size: 16px;font-weight: bold;}
-.score-panel .price{font-size: 14px;color: #FA603D;}
+.score-panel .price{font-size: 14px;color: #C1996B;}
 
 .score-panel .h4{margin-top: 60rpx;justify-content: space-between;align-items: center;margin-bottom: 40rpx;}
 .fitting-list{flex-wrap: wrap;margin-bottom: -30rpx;}
 .fitting-list view{margin: 0 20px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;border: 1rpx solid #F6F6F6;font-size: 13px;}
 .fitting-list view.on{border-color: #C1996B;color: #C1996B;background: rgba(193, 153, 107, 0.1);}
 .score-panel .h4>text{font-size: 14px;color: #333;font-weight: bold;}
-.fittings{padding-bottom:36rpx;}
 .fittings .hd{border-bottom: none;}
 .fittings scroll-view{flex-wrap: nowrap;}
 .fittings .item{width: 260rpx;flex-shrink: 0; border-radius:8rpx;background: #fff;overflow: hidden;margin-right: 20rpx;
@@ -117,7 +120,7 @@ image{width: 100%;height: 100%}
 .fittings .item .tit{font-size: 13px;height: 34px;overflow: hidden;}
 .fittings .item .tit,.fittings .item .price{padding:0 20rpx;margin: 16rpx 0;}
 .fittings .item .price{justify-content: space-between;}
-.fittings .item .price .num{font-size: 11px;color: #FA603D;}
+.fittings .item .price .num{font-size: 11px;color: #C1996B;}
 .fittings .item .price .num text{font-size: 15px;}
 .fittings .item .price .add{width:20px;height: 20px;color: #C1996B;font-size: 20px;}
 .fittings .info{margin-top: 30rpx;}
