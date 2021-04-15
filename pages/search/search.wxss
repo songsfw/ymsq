@@ -185,7 +185,7 @@ page{background: #F9F9F9;height: 100%;}
 }
 .groupTag .groupTagItem{
   color:#333333;
-  padding:14rpx 20rpx 10rpx;
+  padding:14rpx 20rpx 10rpx 8rpx;
   background:#F6F6F6;
   border-radius: 3px;
   margin-right:20rpx;

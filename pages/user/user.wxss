@@ -7,7 +7,7 @@ image{width: 100%;height: 100%}
 .wrap{height: auto;}
 .user-top{position: relative;align-items: center;}
 .photo{width: 120rpx;height: 120rpx;border-radius: 50%;border: 1px solid #E4E4E4;margin-right: 20rpx;}
-.qrCode image{width: 56rpx;height: 56rpx;}
+.qrCode image{width: 44rpx;height: 44rpx;}
 .qrCode{text-align: center;}
 .name .tit{font-size: 36rpx;font-weight: bold;}
 .level{width:51px;height: 21px;margin-top: 10rpx;}
@@ -17,10 +17,10 @@ image{width: 100%;height: 100%}
 .ym-pay{margin-top: 48rpx;justify-content: space-between;text-align: center;}
 .ym-pay .data{font-size:40rpx;color: #000;line-height: 56rpx;color:#C1996B}
 .ym-pay text{font-size: 28rpx;color:#333;line-height: 40rpx;}
-.vipcard{width: 624rpx;height:106rpx;margin:34rpx 0 40rpx 0;
+.vipcard{width: 622rpx;height:90.4rpx;margin:20rpx 8rpx 36rpx 8rpx;
   overflow: hidden;}
 
-.menu{padding: 40rpx 0;
+.menu{padding: 40.8rpx 0;
   text-align: center;
   color: #333;
   margin-bottom: 20rpx;
@@ -37,10 +37,10 @@ image{width: 100%;height: 100%}
 .user-order{background-position:0 0;}
 .num99{width: 30px !important;}
 
-.option{padding: 32rpx 0 0 0;background-color: #fff;border-radius: 16rpx;margin: 24rpx;}
-.option .tit{font-size: 15px;border-bottom: 1px solid #e9e9e9;padding-bottom: 18rpx;margin: 0 20rpx;}
+.option{padding: 32rpx 0 0 0;background-color: #fff;border-radius: 16rpx;margin: 20rpx;}
+.option .tit{ font-weight: bold;font-size: 15px;border-bottom: 1px solid #F6F6F6;padding-bottom: 18rpx;margin: 0 20rpx;}
 .menu .order{border-left: 1px solid #e9e9e9;box-sizing: border-box;}
-.topinfo{background: #fff;border-radius:16rpx ;margin: 40rpx 24rpx 20rpx 24rpx;padding: 40rpx;}
+.topinfo{background: #fff;border-radius:16rpx ;margin: 40rpx 24rpx 20rpx 24rpx;padding: 36rpx;}
 
 .service{flex-wrap: wrap;text-align: center;padding-top: 52rpx;justify-content: flex-start;}
 .service navigator,.service>view{width:25%;margin-bottom: 52rpx;}
@@ -52,3 +52,4 @@ image{width: 100%;height: 100%}
 .user-service{background-position:0 -123px;}
 .user-area{background-position:0 -248px;}
 .user-store{background-position:0 -275px;}
+.logo{margin:0rpx auto;padding:110rpx;}

@@ -152,5 +152,5 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .notice-panel .pop-body{padding-top:30rpx;}
 .pop-con view {font-weight:lighter;}
 .my-tip{display: flex;flex-direction: row;}
-.my-tip-content{padding-left:5rpx;}
-.my-tip-dian{line-height: 36rpx;}
+.my-tip-content{padding-left:5rpx;font-size:13px;}
+.my-tip-dian{line-height: 40rpx;font-size:11px;}
