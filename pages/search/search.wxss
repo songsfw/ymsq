@@ -13,6 +13,10 @@ page{background: #F9F9F9;height: 100%;}
   align-items: center;
   justify-content: space-between;
   padding:0rpx 24rpx 0 24rpx;
+
+  background:white;
+  position: fixed;
+  
 }
 
 .topBar .search {
@@ -123,9 +127,11 @@ page{background: #F9F9F9;height: 100%;}
 
 .list-show{
   padding:50rpx 24rpx 0 24rpx;
-  /* position: absolute; */
+  position: absolute;
   background:#fff;
+  top:96rpx;
   /* min-height: 100%; */
+  
 }
 
 .list-show-search{
@@ -134,6 +140,7 @@ page{background: #F9F9F9;height: 100%;}
   left:0;
   right:0;
   min-height:100%;
+  top:96rpx;
 }
 
 .mainSchTagGroup {
@@ -144,6 +151,7 @@ page{background: #F9F9F9;height: 100%;}
 
 .mainSchTag{
   display:flex;flex-direction: column;
+  width:706rpx;margin:0 auto;
 }
 
 .mainSchTag .history{
@@ -159,6 +167,7 @@ page{background: #F9F9F9;height: 100%;}
 .history-del{
   display: flex;
   margin-top:4rpx;
+  line-height: 1;
 }
 
 .history-del image{
@@ -179,7 +188,7 @@ page{background: #F9F9F9;height: 100%;}
 }
 .groupTag .groupTagItem{
   color:#333333;
-  padding:14rpx 20rpx 10rpx 8rpx;
+  padding:14rpx 20rpx 10rpx 14rpx;
   background:#F6F6F6;
   border-radius: 3px;
   margin-right:20rpx;
