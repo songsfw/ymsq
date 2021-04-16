@@ -51,8 +51,25 @@ Page({
   onPageScroll: function (e) {
     this.customData.scrollTop = e.scrollTop;
   },
+  //失去焦点
+  onblur(){
+    return true;
+    if(this.data.disabledBlurFlag){
+      return false;
+    }
+    console.log('onblur');
+    this.setData({
+      inputHidden: true,
+    })
+  },
   //取消
   cancle: function () {
+    console.log('cancle')
+    this.data.disabledBlurFlag = true;
+
+    if(this.data.showLoading){
+      return false;
+    }
     getWord = '';
     app.data.SearchSearch_SearchList = {};
     this.setData({
@@ -60,12 +77,15 @@ Page({
       searchList: app.data.SearchSearch_SearchList,
       inputHidden: false,
     })
+    this.data.disabledBlurFlag = false;
     this.flashTap();
   },
   //onblur
   getWords: function (e) {
+    console.log('getwords------')
     let val = e.detail.value
     getWord = val;
+    console.log(getWord)
     if (getWord == '') {
       app.data.SearchSearch_SearchList = {};
       this.setData({
@@ -79,15 +99,21 @@ Page({
     if(this.data.showLoading){
       return false;
     }
-    console.log(1111)
-
+    console.log('toInput')
+    console.log(this.data.inputHidden);
+    if(this.data.inputHidden){
+      this.setData({
+        inputHidden: false,
+      })
+    }
     this.setData({
-      inputHidden: false,
       focus: true,
+      currentKeyword:this.data.currentKeyword,
     })
   },
   //搜索按钮事件
   search: function (e) {
+    console.log('search')
     this.setData({showLoading:true});
     if (timer) {
       clearTimeout(timer)
