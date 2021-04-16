@@ -6,9 +6,12 @@
     <view class="tip">我们衷感谢所有提出宝贵意见的用户</view>
   </view>
   <textarea class="txt-area" placeholder="请留下您的宝贵意见或建议，我们将努力改进" placeholder-style="color:#ccc;" bindinput="inputTxt"></textarea>
-  <view class="logo">
-    <image src="../../../image/logo.png"></image>
-  </view>
+  <!-- <view class="logo">
+    <view>
+      <image src="../../../image/logo.png"></image>
+    </view>
+    
+  </view> -->
 </view>
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px"><view class="btn" bind:tap="submit">提交</view></view>
 <view style="height:{{56+btmHolder}}px"></view>

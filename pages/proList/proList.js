@@ -110,39 +110,31 @@ Page({
       return;
     }
   }, 200, true),
-  categoryAnimat(offsetLeft, idx) {
-    console.log(offsetLeft, idx)
+
+  //选中偏移值，   选中的id
+  categoryAnimat(offsetLeft, idx, id) {
     idx = idx == 'null' ? 0 : idx;
-
-    let preItem = '.categorytext_' + (idx);
-    console.log(idx, preItem);
     if (idx) {
+      let preId = 0;
+      for (let i in this.data.showCategory[this.data.currentTab]) {
+        if (this.data.showCategory[this.data.currentTab][i].tid == idx) {
+          console.log(this.data.showCategory[this.data.currentTab][i])
+          let preIndex = i > 0 ? i - 1 : 0;
+          preId = this.data.showCategory[this.data.currentTab][preIndex].tid;
+        }
+      }
+      preId = preId == idx ? 0 : preId;
       this.setData({
-        categoryleft:(offsetLeft),
+        categoryId: 'cate_' + preId
       })
-
-      //
-      // let query = wx.createSelectorQuery();
-      // query.select(preItem).boundingClientRect()
-      // query.selectViewport().scrollOffset()
-      // query.exec((res) => {
-      //   let pos = offsetLeft - res[0].width - 10;
-      //   console.log(res, pos,res[0].width)
-      //   this.setData({
-      //     categoryleft: pos,
-      //     // categorytop:300,
-      //   })
-      // })
     } else {
       this.setData({
-        categoryleft:(0),
+        categoryleft: (0),
       })
     }
-
-
-
   },
   selectCategory(e) {
+    console.log(e)
     var cateId = e.currentTarget.dataset.id
     cateId = cateId == 'null' ? null : cateId;
     let currentTab = this.data.currentTab
@@ -159,7 +151,7 @@ Page({
     })
 
     let aniId = e.currentTarget.dataset.id;
-    console.log(e,e.currentTarget.dataset)
+    console.log(e, e.currentTarget.dataset)
     let aniOffsetLeft = e.currentTarget.offsetLeft;
     let tmpAniPos = [
       aniOffsetLeft,
@@ -171,7 +163,7 @@ Page({
     } else {
       this.data.cAnimatPosition[currentTab] = tmpAniPos;
     }
-    this.categoryAnimat(aniOffsetLeft, aniId);
+    this.categoryAnimat(aniOffsetLeft, aniId, e.currentTarget.id);
 
     let re = this.choseTagData(currentTab, cateId);
     return re;
