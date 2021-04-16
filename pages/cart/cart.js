@@ -105,7 +105,27 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
-              this.getChartData()
+              //this.getChartData()
+              let bread = res.bread,
+                  cake = res.cake,
+                  total_num = res.total_number
+              util.setTabBarBadge(total_num)
+              wx.setStorageSync('total_num', total_num)
+              let selectType = this.getSelectType(bread,cake)
+
+              this.setData({
+                type:selectType.type,
+                noallBread: selectType.noallBread,
+                noallCake: selectType.noallCake,
+                cakeSelectedNum:cake.select_number,
+                breadSelectedNum:bread.select_number,
+                cakeSelectedPrice:cake.select_price,
+                breadSelectedPrice:bread.select_price,
+                breadLi: bread.detail,
+                totalPrice:res.select_price,
+                cakeLi: cake.detail,
+                fittingsList: res.fittings,
+              })
             } else {
               wx.showToast({
                 title: '删除失败',

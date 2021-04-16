@@ -103,7 +103,9 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
-              let cakeLi = res.cake.detail
+              let bread = res.bread,
+                  cake = res.cake,
+                  total_num = res.total_number
 
               var pages = getCurrentPages();
               if(pages.length > 1){
@@ -111,13 +113,23 @@ Page({
                 //var prePage = pages[pages.length - 2];
                 app.inCartRefreshList({type:type,proId:proId,selected:0});
               }
-      
+              wx.setStorageSync('total_num', total_num)
+              let selectType = this.getSelectType(bread,cake)
               this.setData({
-                breadLi: res.bread.detail,
-                cakeLi: cakeLi,
+                type:selectType.type,
+                noallBread: selectType.noallBread,
+                noallCake: selectType.noallCake,
+                cakeSelectedNum:cake.select_number,
+                breadSelectedNum:bread.select_number,
+                cakeSelectedPrice:cake.select_price,
+                breadSelectedPrice:bread.select_price,
+                breadLi: bread.detail,
                 totalPrice:res.select_price,
+                cakeLi: cake.detail,
+                fittingsList: res.fittings,
               })
-              wx.setStorageSync('total_num', res.total_number)
+              
+              
             } else {
               wx.showToast({
                 title: '删除失败',
@@ -408,7 +420,6 @@ Page({
       if (res) {
         let bread = res.bread,
           cake = res.cake
-        //util.setTabBarBadge(res.total_num)
         wx.setStorageSync('total_num', res.total_number)
         let selectType = this.getSelectType(bread,cake)
         var pages = getCurrentPages();
@@ -446,6 +457,7 @@ Page({
           fittingsList: res.fittings,
         })
       }
+      wx.stopPullDownRefresh()
     })
   },
   //选中/撤销选中

@@ -1,5 +1,5 @@
 const {GET,POST} = require('request.js')
-let ENV = 'dev'
+let ENV = 'pro'
 //var baseUrl = 'https://api-beta.withwheat.com/v1'
 var baseUrl = ENV == 'dev' ? 'https://api-beta.withwheat.com/v1' : 'https://api.withwheat.com/v1'
 var isLogin = 0
@@ -26,6 +26,9 @@ const returnData = res=>{
       isLogin = 0
       console.log('未绑定手机');
       return '1022'
+    }else if(data.status==5016){
+      isLogin = 0
+      return false
     }else{
       isLogin = 0
       //特殊状态统一处理
