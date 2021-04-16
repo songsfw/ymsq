@@ -33,7 +33,7 @@ page{background: #F6F6F6;height: auto;}
 .item .tag text:after{content: "|"; font-size: 10px; display: inline-block; margin-left: 10rpx;}
 .item .tag text:last-child:after{display: none;}
 .item .price{justify-content: space-between;align-items: center;font-weight: 500;text-align: right;color: #C1996B;}
-.item .price .num{font-size: 13px;color: #222;}
+.item .price .num{font-size: 11px;color: #222;}
 .item .price .num text{font-size: 14px;font-weight:500 ;}
 .item .price .add{width:44rpx;height: 44rpx;color: #C1996B;
     font-size: 22px;}

@@ -14,7 +14,10 @@ page{background: #F6F6F6;}
 .item:after{display: none; position: absolute;content: "";left: 0;top: 0;width:10rpx;height: 100%;background-color: #C1996B;}
 .item .num{font-size: 13px;color: #222;line-height: 18px;}
 .item .num text{font-size: 20px;font-weight: bold;}
-.item .tag{font-size: 13px;color: #C1996B;padding:4px 6px;line-height: 1;margin-top: 3px;}
+.item.checked .num,
+.item.checked .num text{color: #C1996B;}
+.item .tag{font-size: 13px;color: #666;padding:4px 6px;line-height: 1;margin-top: 3px;}
+.item.checked .tag{color: #FA603D;}
 .item .tag text{color: #FA603D;}
 .item .option{position: absolute;right:-336rpx;top: 0;height: 100%;width: 336rpx;}
 .check{position: relative; width:20px;height:20px;border: 1px solid #E9E9E9;border-radius: 50%;box-sizing: border-box;}

@@ -1,7 +1,7 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let tempOrderNo = '';
-let tempAfter = 0;
+let tempAfter = 0,isPaying=false;
 Page({
 
   /**
@@ -184,15 +184,21 @@ Page({
       }
     })
   },
-  payOrder(e) {
+  payOrder:util.debounce(function (e) {
     let code = e.currentTarget.dataset.code
     let data = {
       order_code: code
     }
+    if(isPaying){
+      return
+    }
+    isPaying=true  //正在支付
+
     api.payOrder(data).then(res => {
 
       console.log(res);
       if (res) {
+        isPaying=false
         let jsApiParameters = res.jsApiParameters
         let {
           timeStamp,
@@ -233,7 +239,7 @@ Page({
         })
       }
     })
-  },
+  },500),
   getOrder() {
     this.setData({
       showLoading: true

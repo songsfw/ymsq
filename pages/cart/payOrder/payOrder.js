@@ -2,7 +2,8 @@ const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let delivery = 10,
   mai = 0,
-  coupon = 0
+  coupon = 0,
+  isPaying=false
 let txtCard = null,
   cartid = null,
   txt = ''
@@ -860,10 +861,13 @@ Page({
       }
     }
 
-
+    if(isPaying){
+      return
+    }
+    isPaying=true  //正在支付
+    
     console.log(payQueue)
     console.log(balance_price)
-
 
     console.log(addressInfo)
     let deliveryPrice = Math.abs(payQueue[0])
@@ -918,6 +922,7 @@ Page({
       if (!res) {
         return
       }
+
       if (res == app.globalData.bindPhoneStat) {
         this.setData({
           phoneStat: 1,
@@ -925,6 +930,7 @@ Page({
         })
         return
       }
+      isPaying=false
       let order_code = res.orderCode
       if (res.callPay) {
         let jsApiParameters = res.jsApiParameters
@@ -981,7 +987,7 @@ Page({
         }, 1000)
       }
     })
-  }),
+  },500),
   inputCard: util.debounce(function (e) {
     console.log('inputCard')
     let temp = e.detail.value

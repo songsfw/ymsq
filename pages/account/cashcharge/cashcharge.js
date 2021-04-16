@@ -1,7 +1,6 @@
 const api = require("../../../utils/api")
 const util = require('../../../utils/util.js')
 const app = getApp()
-let isCharging=0
 Page({
 
   /**
@@ -12,7 +11,8 @@ Page({
     result:'',
     pwd:'',
     type:1,
-    pop:0
+    pop:0,
+    isCharging:0
   },
   changeShow(){
     let show = this.data.show
@@ -97,12 +97,12 @@ Page({
         if(!res){
           return
         }
-        if(res==app.globalData.bindPhoneStat){
-          this.setData({
-            popShow:true
-          })
-          return
-        }
+        // if(res==app.globalData.bindPhoneStat){
+        //   this.setData({
+        //     popShow:true
+        //   })
+        //   return
+        // }
 
         let usePrice = res.use_card
         if(type==1){
@@ -134,21 +134,27 @@ Page({
         card:result,
         pwd:pwd
       }
-      if(isCharging==1){
+      if(this.data.isCharging==1){
         return
       }
-      isCharging=1
+      this.setData({
+        isCharging:1
+      })
+      wx.showLoading({
+        title: '加载中',
+      })
       api.chashCharge(data).then(res=>{
+        wx.hideLoading()
         console.log(res)
         if(!res){
           return
         }
-        if(res==app.globalData.bindPhoneStat){
-          this.setData({
-            popShow:true
-          })
-          return
-        }
+        // if(res==app.globalData.bindPhoneStat){
+        //   this.setData({
+        //     popShow:true
+        //   })
+        //   return
+        // }
         // app.globalData.cardNo = result
         // app.globalData.cardPwd = pwd
         wx.showToast({
@@ -158,9 +164,9 @@ Page({
         })
         this.setData({
           result:'',
-          pwd:""
+          pwd:"",
+          isCharging:0
         })
-        isCharging=0
       })
     }
 

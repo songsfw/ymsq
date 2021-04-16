@@ -24,3 +24,5 @@ page{border-top: 1px solid #F6F6F6;}
 .rule-panel .close{position: absolute;transform: translateX(-50%);left: 50%; bottom:-40px;border-radius: 50%; border:1px solid #fff;width: 30px;height: 30px;line-height: 30px;}
 .rule-panel .pop-con{height: 100%;}
 .rule-panel .pop-con view{color: #333;font-size: 13px;line-height: 18px;}
+
+.btn.unuse{opacity:.5 ;}

@@ -96,7 +96,7 @@
           </view>
         </view>
       </view>
-      <!-- <navigator url="../web/web?url=https://mp.weixin.qq.com/s/CdcIrjumFXY2sQW00HdljA" class="iwx" wx:if="{{cidx==2}}"><image mode="aspectFill" src="{{item.componentDetail.imageReader[0].image_url}}"></image></navigator> -->
+
     </block>
 
     <view class="logo">

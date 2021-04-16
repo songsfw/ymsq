@@ -28,7 +28,7 @@ App({
     var is_authed, local = null,
       is_mobile = null
     let userInfo = wx.getStorageSync('userInfo')
-    if (userInfo && JSON.parse(userInfo).is_authed == 1) {
+    if (userInfo && JSON.parse(userInfo).openid) {
       is_authed = JSON.parse(userInfo).is_authed
     } else {
       

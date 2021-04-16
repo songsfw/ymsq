@@ -10,7 +10,7 @@
       <view class="score">{{point}}</view>
     </view>
     <view class="money-box">
-      <view class="h3">麦点明细</view>
+      <view class="h3 flex-center"><text ></text>麦点明细<text ></text></view>
       <view class="item flex"  wx:for="{{pointList}}">
         <view class="">
           <view class="tit">{{item.title}}</view>

@@ -1,7 +1,7 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let app = getApp()
-let timer =null
+let timer =null,isPaying=false
 Page({
 
   /**
@@ -149,12 +149,17 @@ Page({
     })
   }, 500),
 
-  payOrder(e){
+  payOrder:util.debounce(function (e) {
     let { orderCode } = this.data
     let data = {
       order_code:orderCode
     }
+    if(isPaying){
+      return
+    }
+    isPaying=true  //正在支付
     api.payOrder(data).then(res=>{
+      isPaying=false
       console.log(res);
       let jsApiParameters = res.jsApiParameters
       let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
@@ -190,7 +195,7 @@ Page({
         }
       })
     })
-  },
+  },500),
   bindcancel(e) {
     if(this.data.orderData.order_type==2){
       wx.showModal({
