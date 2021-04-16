@@ -129,12 +129,11 @@ Page({
       })
     } else {
       this.setData({
-        categoryleft: (0),
+        categoryId: 'cate_0'
       })
     }
   },
   selectCategory(e) {
-    console.log(e)
     var cateId = e.currentTarget.dataset.id
     cateId = cateId == 'null' ? null : cateId;
     let currentTab = this.data.currentTab
