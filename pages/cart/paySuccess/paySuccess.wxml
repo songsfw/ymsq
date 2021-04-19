@@ -12,30 +12,68 @@
         </view>
       </view>
       <view class="option flex">
-        <navigator url="/pages/index/index" open-type="switchTab" class="btn">去逛逛</navigator>
-        <navigator open-type="redirect" url="/pages/user/orderInfo/orderInfo?code={{order_code}}" class="btn btn-light">查看详情</navigator>
+        <navigator url="/pages/index/index" open-type="switchTab" class="btn">返回首页</navigator>
+        <navigator open-type="redirect" url="/pages/user/orderInfo/orderInfo?code={{order_code}}" class="btn btn-light">
+          查看详情</navigator>
       </view>
     </view>
     <view class="share flex">
       <image src="../../../image/icon-coupon1.png"></image>
-      <view class="flex-1">
+      <view class="flex-1 share-txt">
         <view class="tit">分享给朋友</view>
         <view class="tip">分享好友,可以获得一张优惠劵</view>
       </view>
-      <text class="btn share-btn" bind:tap="showPop" data-pop="showCoupon"><block wx:if="{{shareInfo.action=='share'}}">已</block>分享</text>
+      <view class="share-action">
+        <text class="btn share-btn" bind:tap="showPop" data-pop="showCoupon">
+          <block wx:if="{{shareInfo.action=='share'}}">已分享</block>
+          <block wx:else>去分享</block>
+        </text>
+      </view>
     </view>
-    <view class="main-tit"><image src="../../../image/tit.png"></image></view>
-    <view class="pro-list">
-      <block wx:for="{{shareInfo.meal}}">
-        <view data-url="{{item.id}}" bind:tap="toPro" hover-class="none">
-          <view class="pic">
+    <view class="main-tit" wx:if="{{shareInfo.meal.length>0}}">
+      <!-- <image src="../../../image/tit.png"></image> -->
+      <view class="tit-ch">热销推荐</view>
+      <!-- <view class="tit-en">best selling recommendation</view> -->
+      <view class="tit-en">BEST SELLING RECOMMENDATION</view>
+    </view>
+    <view class="pro-list" wx:if="{{shareInfo.meal.length>0}}">
+      <block wx:for="{{shareInfo.meal}}" wx:for-index="idx" wx:for-item="pro">
+
+        <view class="item" data-url="{{pro.id}}" bind:tap="toPro" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-type="{{pro.type}}" hover-class="none">
+          <!-- <view class="pic">
             <image src="{{item.image}}"></image>
-          </view>
+          </view> -->
           <!-- <view class="info">
             <view class="h3">{{item.name}}</view>
             <view class="txt text-overflow">{{item.selling_point}}</view>
           </view> -->
+
+          <view class="pic {{showStock[currentTab][pro.meal_id]==0?'sold-out':''}}">
+            <!-- <view class="tag">已售罄</view> -->
+            <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
+          </view>
+          <view class="info">
+            <view class="tit text-overflow"><text wx:if="{{pro.special_tag}}">{{pro.special_tag}}</text>{{pro.name}}
+            </view>
+            <view class="tags text-overflow">
+              <!-- <text wx:for="{{pro.tags}}" wx:for-index="key" wx:for-item="tag">{{pro.tags[key]}}</text> -->
+              <text>{{pro.selling_point}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{pro.price}}</text></view>
+              <!-- <view
+                  class="add iconfont icon-add pro-{{pro.meal_id}} {{showStock[currentTab][pro.meal_id]==0?'unuse':''}}"
+                  catch:tap="addCart" data-img="{{pro.img}}" data-id="{{pro.meal_id}}" data-idx="{{idx}}"
+                  data-itemidx="{{itemIdx}}" data-typeMealIdSpuId="{{pro.type}}_{{pro.meal_id}}_{{pro.spu_id}}"
+                  data-type="{{pro.type}}" data-spuid="{{pro.spu_id}}">
+                  <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
+                    style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
+                </view> -->
+            </view>
+          </view>
         </view>
+
+
       </block>
     </view>
   </scroll-view>
@@ -48,52 +86,53 @@
 
   <view class="pop-con">
     <view class="coupon-box">
-        <scroll-view class="list" scroll-y="{{true}}">
-          <view class="item" data-id="{{shareInfo.promotion_info.id}}">
-            <!-- <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view> -->
-            <view class="flex">
-              <view class="coupon-num flex">
-                <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
-                <image wx:if="{{shareInfo.promotion_info.place_type==2}}" src="../../../image/coupon2.png"></image>
-                <view class="txt">
-                  <view class="num" wx:if="{{shareInfo.promotion_info.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
-                  <view class="num" wx:else>￥<text>{{shareInfo.promotion_info.money}}</text></view>
-                  
-                  <text>{{shareInfo.promotion_info.remark}}</text>
+      <scroll-view class="list" scroll-y="{{true}}">
+        <view class="item" data-id="{{shareInfo.promotion_info.id}}">
+          <!-- <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}">{{item.tag}}</view> -->
+          <view class="flex">
+            <view class="coupon-num flex">
+              <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
+              <image wx:if="{{shareInfo.promotion_info.place_type==2}}" src="../../../image/coupon2.png"></image>
+              <view class="txt">
+                <view class="num" wx:if="{{shareInfo.promotion_info.cost_type==1}}"><text>{{item.cost_value}}张</text>
                 </view>
-              </view>
-              <view class="coupon-info flex-1">
-                <view class="name">{{shareInfo.promotion_info.name}}</view>
-                <view class="date">{{shareInfo.promotion_info.valid_time}}</view>
-                <view class="txt flex">
-                  <text>{{shareInfo.promotion_info.desc1}}</text>
-                </view>
+                <view class="num" wx:else>￥<text>{{shareInfo.promotion_info.money}}</text></view>
+
+                <text>{{shareInfo.promotion_info.remark}}</text>
               </view>
             </view>
-            <view class="border">
-              <view></view>
-            </view>
-            <view class="flex tips {{showTip?'show':''}}" catch:tap="showTips">
-              <view class="txt flex-1">
-                {{shareInfo.promotion_info.desc2}}
+            <view class="coupon-info flex-1">
+              <view class="name">{{shareInfo.promotion_info.name}}</view>
+              <view class="date">{{shareInfo.promotion_info.valid_time}}</view>
+              <view class="txt flex">
+                <text>{{shareInfo.promotion_info.desc1}}</text>
               </view>
-              <view class="arrow-bottom"></view>
             </view>
           </view>
-          <view class="desc">
-            <view class="h3">奖励说明</view>
-            <view class="txt">
-              <view >● 分享成功后分享者可获得{{shareInfo.promotion_info.name}}，将自动发放至账户.</view>
-              <view >● 期间最多可获得1次奖励.</view>
-            </view>
+          <view class="border">
+            <view></view>
           </view>
-        </scroll-view>
+          <view class="flex tips {{showTip?'show':''}}" catch:tap="showTips">
+            <view class="txt flex-1">
+              {{shareInfo.promotion_info.desc2}}
+            </view>
+            <view class="arrow-bottom"></view>
+          </view>
+        </view>
+        <view class="desc">
+          <view class="h3">奖励说明</view>
+          <view class="txt">
+            <view>● 分享成功后分享者可获得{{shareInfo.promotion_info.name}}，将自动发放至账户.</view>
+            <view>● 期间最多可获得1次奖励.</view>
+          </view>
+        </view>
+      </scroll-view>
     </view>
   </view>
   <view class="confirm-btn btn" style="margin-bottom:{{btmHolder}}px" bind:tap="confirmCoupon">分享给朋友</view>
 </view>
 <view class="pop-panel post-panel" wx:if="{{pop=='showPoster'}}">
-  <image src="{{poster}}" data-src="{{poster}}"  bindtap="previewImage"></image>
+  <image src="{{poster}}" data-src="{{poster}}" bindtap="previewImage"></image>
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="share-remark" bind:tap="saveImg">
     <view class="share-remark-tip">保存分享给好友</view>
