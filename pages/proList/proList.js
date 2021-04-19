@@ -73,9 +73,9 @@ Page({
     if (this.data.currentTab == currentId) {
       return false;
     } else {
-      this.setData({
-        showLoading: true
-      })
+      // this.setData({
+      //   showLoading: true
+      // })
       console.log('switchTab-3')
       //更新列表
       // this.getProList();
@@ -964,11 +964,6 @@ Page({
       sysInfo = wx.getSystemInfoSync()
     }
     let fixedTop = sysInfo.navBarHeight;
-
-    //可视窗口x,y坐标
-    this.busPos = {};
-    this.busPos['x'] = sysInfo.screenWidth * .6;
-    this.busPos['y'] = sysInfo.screenHeight * .85;
     let addressInfo = wx.getStorageSync("addressInfo")
     console.log(addressInfo)
     let city_id = addressInfo && JSON.parse(addressInfo).city_id

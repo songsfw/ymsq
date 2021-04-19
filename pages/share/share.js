@@ -22,7 +22,7 @@ Page({
     wx.getUserInfo({
       success:res=> {
         var userInfo = res.userInfo
-        var avatarUrl = userInfo.avatarUrl
+        var avatarUrl = userInfo.photo
         this.setData({
           avatarUrl:avatarUrl
         })
@@ -71,6 +71,18 @@ Page({
       })
     })
   },
+  toPro(e) {
+    let url = e.currentTarget.dataset.url,type = e.currentTarget.dataset.type;
+    if(type==1){
+      wx.navigateTo({
+        url: "/pages/proInfo/proInfo?proId=" + url
+      })
+    }else{
+      wx.navigateTo({
+        url: "/pages/cakeInfo/cakeInfo?proId=" + url
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -94,37 +106,38 @@ Page({
     }
     api.hongbao(data).then(res=>{
       console.log(res);
-      if(!res){
-        return
-      }
-      let best_reward = res.best_reward,
-          users = res.userRewardDataReader
-      if(res.is_received){
-        step=1
-      }else{
-        step=3
-      }
-      if(res.is_reward){
-        step=2
+      if(res){
+        
+        let best_reward = res.best_reward,
+            users = res.userRewardDataReader
+        if(res.is_received){
+          step=1
+        }else{
+          step=3
+        }
+        if(res.is_reward){
+          step=2
+        }
+        
+        if(best_reward!=0){
+          users.find(item=>{
+            if(item.id==best_reward){
+              item.best=true
+            }
+          })
+        }
+        console.log(users);
+        this.setData({
+          users:users,
+          step:step,
+          self_reward:res.self_reward,
+          rule:res.rule,
+          userInfo:res.user_info,
+          setmeal_data:res.setmeal_data
+        })
       }
       this.setData({
         showLoading:false
-      })
-      if(best_reward!=0){
-        users.find(item=>{
-          if(item.id==best_reward){
-            item.best=true
-          }
-        })
-      }
-      console.log(users);
-      this.setData({
-        users:users,
-        step:step,
-        self_reward:res.self_reward,
-        rule:res.rule,
-        userInfo:res.user_info,
-        setmeal_data:res.setmeal_data
       })
     })
   },

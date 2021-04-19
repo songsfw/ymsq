@@ -1,6 +1,6 @@
 import {md5} from './md5';
 
-let ENV = 'pro'
+let ENV = 'dev'
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 var platform = ENV == 'dev' ? 'wxxcx' : 'xcx'

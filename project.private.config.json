@@ -88,7 +88,7 @@
         {
           "name": "支付成功",
           "pathName": "pages/cart/paySuccess/paySuccess",
-          "query": "orderCode=1000210205002451",
+          "query": "orderCode=1000210419000028",
           "scene": null
         },
         {
@@ -154,7 +154,7 @@
         {
           "name": "分享",
           "pathName": "pages/share/share",
-          "query": "",
+          "query": "orderCode=1000210419000058",
           "scene": null
         },
         {

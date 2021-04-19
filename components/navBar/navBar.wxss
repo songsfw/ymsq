@@ -16,7 +16,7 @@
 .searchBox .city .icon-arrow-btm{font-size: 20rpx;}
 .search .navigator{align-items: center;}
 .search .navigator.iconfont,
-.searchBox .city .iconfont{font-size: 15px;margin-right: 14rpx;}
+.searchBox .city .iconfont{font-size: 18px;margin-right: 14rpx;}
 .icon-search{color: #aaa;margin-right: 18rpx;}
 .search{width: 486rpx; color: #fff;height: 60rpx;line-height:60rpx;overflow: hidden;background:#F6F6F6;padding-left:16rpx;border-radius: 30rpx;font-size: 13px;}
 

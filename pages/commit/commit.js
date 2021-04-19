@@ -269,6 +269,7 @@ Page({
       return {
         title:'恭喜您获得红包',
         path:"/pages/share/share?orderCode="+this.data.orderCode,
+        imageUrl:"https://api.withwheat.com/img/hongbao.jpg",
         complate:function(){
           console.log("111");
         }
@@ -277,7 +278,8 @@ Page({
     if(res.from==='menu'){
       return {
         title:'原麦山丘',
-        path:"/pages/index/index"
+        path:"/pages/index/index",
+        imageUrl:"https://api.withwheat.com/img/hongbao2.jpg",
       }
     }
     

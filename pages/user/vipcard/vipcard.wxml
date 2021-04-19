@@ -1,4 +1,5 @@
 <!-- pages/user/user.wxml -->
+<view class="bg"></view>
 <view class="card">
   <view class="hd flex">
     <view class="icon-logo">

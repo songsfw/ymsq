@@ -1,5 +1,5 @@
 page{background: #F6F6F6;}
-.bg{position: absolute;left: 0;top: 0;width: 100%;height: 300rpx;}
+.bg{position: absolute;left: 0;top: 0;width: 100%;}
 .info{position: relative; width: 702rpx;height: 230rpx;background:url(https://api.withwheat.com/img/mai-bg2.png) no-repeat;background-size: contain; z-index:2;margin: 40rpx auto 20rpx auto;color:#4C3B2A; padding: 30rpx 36rpx;box-sizing: border-box;}
 .info view{color: #4C3B2A;}
 .info .tit{font-size: 28rpx;font-weight: 500;}

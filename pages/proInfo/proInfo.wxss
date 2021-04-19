@@ -6,7 +6,7 @@ page{background:#F6F6F6;height: auto;}
 
 .item{box-sizing: border-box}
 .proInfo{padding: 0 20rpx;background: #fff;margin-bottom: 20rpx;}
-.proInfo .tit{font-size: 18px;margin: 18rpx 0 16rpx 0;font-weight: bold;}
+.proInfo .tit{font-size: 18px;margin: 9px 0 8px 0;font-weight: bold;}
 .proInfo .tit text{    color: #fff;
     font-size: 10px;
     padding: 4rpx 4rpx;
@@ -15,8 +15,8 @@ page{background:#F6F6F6;height: auto;}
     border-radius: 8rpx;
     margin-bottom: 0;
     vertical-align: middle;}
-.proInfo .desc{color: #999;font-size: 13px;}
-.proInfo .tags{margin-top: 30rpx;flex-wrap: wrap;}
+.proInfo .desc{color: #999;font-size: 13px;border-bottom: 1px dashed #F6F6F6;padding-bottom: 15rpx;}
+.proInfo .tags{margin-top: 15rpx;flex-wrap: wrap;}
 .proInfo .tags text{margin:0 20rpx 20rpx 0;flex-shrink: 0;}
 .proInfo .tags text:after{content: "|";margin-left:20rpx ;color: #aaa;}
 .proInfo .tags text:last-child:after{display: none;}

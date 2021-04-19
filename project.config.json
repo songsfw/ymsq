@@ -51,8 +51,6 @@
     "hidedInDevtools": []
   },
   "scripts": {},
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
     "plugin": {
       "list": []
@@ -128,8 +126,8 @@
         },
         {
           "name": "购物车",
-          "pathName": "pages/chart/chart",
-          "query": "orderCode=1000210115002230",
+          "pathName": "pages/cart/cart",
+          "query": "",
           "scene": null
         },
         {
@@ -140,7 +138,7 @@
         },
         {
           "name": "支付成功",
-          "pathName": "pages/chart/paySuccess/paySuccess",
+          "pathName": "pages/cart/paySuccess/paySuccess",
           "query": "orderCode=1000210205002451",
           "scene": null
         },
@@ -171,7 +169,7 @@
         {
           "name": "评论",
           "pathName": "pages/commit/commit",
-          "query": "orderCode=1000201130001930",
+          "query": "orderCode=1000210310002658",
           "scene": null
         },
         {
@@ -193,8 +191,8 @@
           "scene": null
         },
         {
-          "name": "支付成功页面",
-          "pathName": "pages/chart/paySuccess/paySuccess",
+          "name": "pages/cart/paySuccess/paySuccess",
+          "pathName": "pages/cart/paySuccess/paySuccess",
           "query": "orderCode=1000210224002538",
           "scene": null
         },
@@ -207,13 +205,19 @@
         {
           "name": "分享",
           "pathName": "pages/share/share",
-          "query": "orderCode=1000201130001906",
+          "query": "",
           "scene": null
         },
         {
           "name": "订单列表",
           "pathName": "pages/user/order/order",
           "query": "orderCode=1000210224002538",
+          "scene": null
+        },
+        {
+          "name": "授权",
+          "pathName": "pages/login/login",
+          "query": "",
           "scene": null
         }
       ]

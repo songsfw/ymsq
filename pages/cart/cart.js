@@ -133,6 +133,9 @@ Page({
                 duration: 3000
               })
             }
+            this.setData({
+              showLoading: false
+            })
           })
         } else if (res.cancel) {
           return

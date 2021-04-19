@@ -162,11 +162,11 @@
       <view wx:for="{{fittings_desc}}" class="flex"><image src="../../../image/icon-dot.png" wx:if="{{item.marked==0}}"></image><image src="../../../image/icon-dot2.png" wx:else></image> <view>{{item.desc}}</view></view>
     </view>
   </view>
-  <view class="inputbox flex-center" wx:if="{{type==2}}">
+  <!-- <view class="inputbox flex-center" wx:if="{{type==2}}">
     <view>订单备注</view>
     <input class="flex-1" type="text" placeholder="请输入内容" maxlength="200" bindinput="inputRemark"
       placeholder-style="color:#aaa" />
-  </view>
+  </view> -->
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>
@@ -273,7 +273,7 @@
   </view>
   <view class="buy-btn {{!hasPolicy?'on':''}}" bind:tap="submmitOrder">支付</view>
 </view>
-<view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+<view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px" catch:touchmove="{{true}}">
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block>
     <block wx:else>自提</block>时间
@@ -510,7 +510,7 @@
   </view>
   <view class="confirm-btn btn" bind:tap="confirmSore">确定</view>
 </view>
-<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+<view class="mask" catch:touchmove="{{true}}" wx:if="{{pop!=0}}" bind:tap="close"></view>
 
 
 <pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}"

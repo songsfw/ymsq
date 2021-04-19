@@ -346,12 +346,12 @@ Page({
     })
   },
 
-  inputRemark: util.debounce(function (e) {
-    this.setData({
-      error: false,
-      remark: e.detail.value
-    })
-  }, 500),
+  // inputRemark: util.debounce(function (e) {
+  //   this.setData({
+  //     error: false,
+  //     remark: e.detail.value
+  //   })
+  // }, 500),
   selectAdd(e) {
     if (this.data.ziti == '1') {
       wx.showToast({
@@ -777,7 +777,6 @@ Page({
       selectDateTxt,
       selectTimeTxt,
       type,
-      remark,
       stock_type,
       delivery,
       ziti,
@@ -876,7 +875,6 @@ Page({
       delivery_date: selectDateTxt,
       delivery_time: selectTimeTxt,
       cart_type: type,
-      remark: remark || '',
       stock_type: stock_type,
       delivery_type: delivery.delivery_type,
       delivery_price: deliveryPrice,

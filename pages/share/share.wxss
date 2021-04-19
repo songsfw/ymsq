@@ -1,7 +1,7 @@
 /* pages/customer/paySuccess/paySuccess.wxss */
 @import "../../template/loading/loading.wxss";
 page{
-  background: #C41025;height: auto;}
+  background: #CF1727;height: auto;}
 .hongbao-stat{position: relative; width: 750rpx;height: 1050rpx;}
 .hongbao-stat .bd{position: relative;}
 .block{
@@ -29,21 +29,19 @@ border-radius: 16rpx;margin:0 24rpx 40rpx 24rpx;padding:0 30rpx 42rpx 30rpx}
 .user-list .item .notice{font-size: 12px;color:#FA603D}
 .user-list .item .price{min-width: 65px; text-align: right; position: relative; font-size: 15px;color: #000;flex-shrink: 0;flex-shrink: 0;}
 .user-list .item .price text{position: absolute;left: 0;top: -14px;font-size: 11px;color:#FFB53C;width: 100%;text-align: right;}
-
+.home-btn{position: absolute;
+  left: 263rpx;
+  top: 702rpx;
+  width: 222rpx;
+  height: 101rpx;}
 .rule{font-size: 13px;color :#FFD1A5;}
 .rule>view{margin-bottom: 20rpx;}
 .rule view view{overflow: hidden;}
 .rule text{margin-right: 10rpx;float: left;}
 
-.pic-box{align-items: center;}
-.pic-box .item{border-radius:8rpx;margin-right:20rpx ;}
-.pic-box .pic{width: 240rpx;height: 166rpx;}
-.pic-box .pic1>view{justify-content: space-between;flex-direction: column;}
-.pic-box .h3{font-size: 12px;text-align: center;color: #FDEDA3;line-height: 30px;background:rgba(186, 14, 39, 0.56)}
-
-.step2{padding-top:286rpx;text-align: center;box-sizing: border-box;}
-.step2 .tit{font-weight: bold; font-size: 40rpx;color: #AB0D03;line-height: 56rpx;}
-.step2 .tit2{font-size: 34rpx;color: #AB0D03;line-height: 48rpx;}
+.step2{padding-top:290rpx;text-align: center;box-sizing: border-box;}
+.step2 .tit{font-weight: bold; font-size: 40rpx;color: #F5222D;line-height: 56rpx;}
+.step2 .tit2{font-size: 34rpx;color: #F5222D;line-height: 48rpx;}
 .price{font-size: 110rpx;color: #F5222D;margin-top: 0;}
 .price text{font-size:44rpx ;}
 .step2 .tip{color: #AC7D46;font-size: 24rpx;}
@@ -62,4 +60,27 @@ border-radius: 16rpx;margin:0 24rpx 40rpx 24rpx;padding:0 30rpx 42rpx 30rpx}
     transform: scale(1.1);
   }
 }
+.pic-box{flex-wrap: wrap;}
+.pic-box .item{box-sizing: border-box;background: #fff;width: 312rpx;margin: 0 18rpx 18rpx 0;border-radius: 0 ;overflow: hidden;}
+.pic-box .item:nth-child(2n){margin-right: 0;}
+.pic-box .item .info{padding-top: 20rpx;}
+.pic-box .item .pic{position: relative; width: 312rpx;height: 312rpx;overflow: hidden;background: #fff;}
+.pic-box .item .pic .tag{display: none;}
 
+.pic-box .item .tit{font-size: 14px;color: #222;margin-bottom: 8px;padding: 0 20rpx;font-weight: 500;}
+.pic-box .item .tit text{    color: #fff;
+    font-size: 9px;
+    line-height: 1;
+    padding: 4rpx 4rpx;
+    margin-right: 10rpx;
+    background: linear-gradient(to right,#ffa052,#f52422);
+    border-radius: 8rpx;
+    margin-bottom: 0;
+    vertical-align: baseline;}
+.pic-box .item .tags{padding: 0 20rpx 0 ;box-sizing: border-box;}
+.pic-box .item .tags text{display:block;text-overflow: ellipsis;word-break:keep-all;overflow:hidden; font-size:12px;color: #999999;height: 18px;line-height: 18px; padding: 0 0px;border-radius:9px;margin-right: 5px;}
+.pic-box .item .price{position: relative; justify-content: space-between;padding:20rpx;align-items: center;}
+.pic-box .item .price .num{font-size: 11px;color: #222222;}
+.pic-box .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
+.pic-box .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.pic-box .item .price .add.unuse{color: #ccc}
