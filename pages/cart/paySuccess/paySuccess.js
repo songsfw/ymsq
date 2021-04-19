@@ -234,9 +234,15 @@ Page({
     })
   },
   toPro(e) {
-    let url = e.currentTarget.dataset.url;
+    // let url = e.currentTarget.dataset.url;
+    console.log(e);
+    let proId = e.currentTarget.dataset.proid
+    let spuId = e.currentTarget.dataset.spuid
+    let type = e.currentTarget.dataset.type
+    let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
+
     wx.navigateTo({
-      url: "/pages/proInfo/proInfo?proId=" + url
+      url: url
     })
   },
   /**
