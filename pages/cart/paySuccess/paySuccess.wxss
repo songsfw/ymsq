@@ -28,15 +28,27 @@ page{background: #F6F6F6;position: relative;}
 
 .share{background: #fff;margin: 0 24rpx;padding: 0rpx 20rpx;align-items: center;border-radius: 8rpx;height:160rpx;}
 .share image{width: 126rpx;height: 96rpx;flex-shrink: 0;margin-right: 20rpx;}
-.share-btn{    
+.share view.toshare-btn{
+    padding:6rpx 16rpx;
+    background: #C1996B;
+    color: white;
+    width: 94rpx;
+    color: #FFFFFF;
+    height: 52rpx;
+    line-height: 52rpx;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 24rpx;
+}
+.share-btn{   
   width: 94rpx;
   color: #C1996B;
   background: none;
   height: 52rpx;
-  line-height: 116rpx;
   text-align: center;
-  font-size: 15px;
-  padding: 0 26rpx;}
+  font-size: 14px;
+  padding: 0 24rpx;
+margin-top: 16rpx;}
 .share .tit{font-size: 15px;line-height: 1;font-weight:bold;margin: 14rpx 0;}
 .share .tip{font-size: 12px;color: #999;}
 .share-txt{height:96rpx;}
@@ -54,7 +66,7 @@ page{background: #F6F6F6;position: relative;}
   /* font-weight: bold; */
   color:#AAAAAA;
 }
-.share-action{height:118rpx;border-left:1px dashed  #CCCCCC;padding-left: 14rpx}
+.share-action{height:118rpx;border-left:1px dashed  #CCCCCC;padding-left: 24rpx}
 /* .main-tit image{width: 180rpx;height: 30rpx;} */
 
 .mask{position: fixed;left: 0;top: 0%; width: 100%;height: 100%;background: rgba(0,0,0,.8);z-index: 21;}
