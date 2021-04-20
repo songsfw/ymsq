@@ -23,11 +23,11 @@
         <view class="tit">分享给朋友</view>
         <view class="tip">分享好友,可以获得一张优惠劵</view>
       </view>
-      <view class="share-action">
-        <text class="btn share-btn" bind:tap="showPop" data-pop="showCoupon">
+      <view class="share-action" style="margin-left:{{shareInfo.action!='share'?'12rpx':'14rpx'}}">
+        <view class="btn share-btn {{shareInfo.action!='share'?'toshare-btn':''}}" bind:tap="showPop" data-pop="showCoupon">
           <block wx:if="{{shareInfo.action=='share'}}">已分享</block>
           <block wx:else>去分享</block>
-        </text>
+        </view>
       </view>
     </view>
     <view class="main-tit" wx:if="{{shareInfo.meal.length>0}}">
