@@ -333,6 +333,7 @@ Page({
       console.log(res);
       let orderData = res.order
       let newOrderData = {
+        comment_status:orderData.comment_status,
         old_status:orderData.old_status,
         count:orderData.count,
         id:orderData.id,

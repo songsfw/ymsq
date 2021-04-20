@@ -1,8 +1,5 @@
-const util = require('../../utils/util.js')
 const api = require('../../utils/api.js')
 
-
-const app = getApp()
 // pages/share/share
 Page({
 
