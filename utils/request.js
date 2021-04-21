@@ -1,9 +1,9 @@
 import {md5} from './md5';
 
-let ENV = 'dev'
+let ENV = 'pro'  //环境 pro:正式  dev:测试
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
-var platform = ENV == 'dev' ? 'wxxcx' : 'xcx'
+var platform = ENV == 'pro' ? 'xcx' : 'wxxcx'
 // loading配置，请求次数统计
 // function startLoading() {
 //   wx.showLoading({ title: '加载中' })
@@ -94,5 +94,6 @@ function postReq(url, data = {}, needToken) {
 
 module.exports = {
   GET: getReq,
-  POST: postReq
+  POST: postReq,
+  ENV:ENV
 };	

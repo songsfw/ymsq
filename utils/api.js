@@ -1,7 +1,7 @@
-const {GET,POST} = require('request.js')
-let ENV = 'dev'
+const {GET,POST,ENV} = require('request.js')
+console.log(ENV);
 //var baseUrl = 'https://api-beta.withwheat.com/v1'
-var baseUrl = ENV == 'dev' ? 'https://api-beta.withwheat.com/v1' : 'https://api.withwheat.com/v1'
+var baseUrl = ENV == 'pro' ? 'https://api.withwheat.com/v1' : 'https://api-beta.withwheat.com/v1'
 var isLogin = 0
 const returnData = res=>{
   if(res.statusCode == 200){

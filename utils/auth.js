@@ -1,5 +1,4 @@
 const api = require('api.js')
-
 //微信登录
 function wxLogin() {
   return new Promise((resolve, reject) => {
@@ -29,24 +28,6 @@ async function getLoginInfo(){
   };
   return api.getLoginInfo(data)
 }
-
-//小程序登录  
-// function appLogin(loginData) {
-//   return new Promise((resolve, reject) => {
-//     api.appLogin(loginData)
-//       .then((res) => {
-//         console.log("loginInfo", res);
-//         resolve(res)
-//       })
-//       .catch(res => {
-//         wx.showModal({
-//           title: '网络错误',
-//           content: '登录接口错误',
-//           showCancel: false
-//         })
-//       })
-//   })
-// }
 
 module.exports = {
   getLoginInfo:getLoginInfo,
