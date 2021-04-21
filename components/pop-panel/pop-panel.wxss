@@ -58,7 +58,7 @@
 .pop-title {
   text-align: center;
   font-size: 17px;
-  padding-top: 30rpx;
+  padding-top: 20rpx;
   font-weight: bold;
   text-overflow: ellipsis;
   overflow: hidden;

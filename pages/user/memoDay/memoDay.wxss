@@ -1,5 +1,5 @@
 page{background: #F6F6F6;}
-.tips{background: rgba(252, 215, 140, .1);height: 36px;font-size: 13px;color: #FF7D06;padding: 0 24rpx;margin-bottom: 24rpx;justify-content: space-between;align-items: center;}
+.tips{background: #fff;height: 36px;font-size: 13px;color: #FF7D06;padding: 0 24rpx;margin-bottom: 24rpx;justify-content: space-between;align-items: center;}
 
 .card .hd{align-items: center;padding: 14px 0;font-size: 15px;font-weight: bold;}
 .card .hd image{width: 44rpx;height: 40rpx;margin-right: 20rpx;}
@@ -26,7 +26,7 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .date-panel .opt-btn view{width: 50%;height:50px;text-align: center;font-size: 14px;color: #666;line-height: 50px;}
 .date-panel .hd{height: 50px;line-height: 50px;padding: 0 24rpx;font-size: 15px;justify-content: space-between;align-items: center;font-weight: 500;}
 .switch{align-items: center;border-radius: 15px;overflow: hidden;height: 30px;line-height: 30px;}
-.switch view{background: #999;color: #fff;padding:0 10px;}
+.switch view{background: #666;color: #fff;padding:0 10px;}
 .switch view.on{background: #C1996B;}
 picker-view{width: 100%; height: 150px;}
 .picker-view{height: 50px;background: #fff;z-index: 0;}
@@ -39,6 +39,6 @@ picker-view view{color: #999;transition: font-size linear .05s;}
 .item>view{position: relative;z-index: 2;}
 .item .bg{position: absolute;left: 0;top: 0;display: none;width: 702rpx;height: 252rpx;}
 .item.showbg .bg{display: block;}
-
+.item.hidebg .bg{display: none;}
 .tips-panel .popPanel{background: url(https://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
 .tips-panel .pop-title{background: #fff;}

@@ -42,4 +42,4 @@ transform: translateX(0);
 }
 .info view{font-weight: bold}
 .icon-logo{width:96rpx ;height: 96rpx;margin-right: 20rpx;}
-.show{width: 80rpx;height: 80rpx;color: #C1996B;text-align: center;line-height: 80rpx;}
+.show{width: 80rpx;height: 80rpx;transform: translateY(33rpx);color: #C1996B;text-align: center;line-height: 80rpx;}

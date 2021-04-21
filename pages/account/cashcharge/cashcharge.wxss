@@ -1,6 +1,6 @@
 page{border-top: 1px solid #F6F6F6;}
 .card{text-align: center;padding:32rpx 0 50rpx 0;background-color: #F6F6F6;}
-.card .card-wp{position: relative; width: 638rpx;height: 366rpx;margin: 0 auto;box-shadow: 0px 4px 24px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}
+.card .card-wp{position: relative; width: 638rpx;height: 366rpx;margin: 0 auto;box-shadow: 0px 4px 12px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}
 .price-info{    position: absolute;
     left: 0;
     bottom: 0;
@@ -15,7 +15,7 @@ page{border-top: 1px solid #F6F6F6;}
 .inputxt input{height: 100%;font-weight: 500;font-size: 14px;}
 .inputxt .icon{width: 49px;height: 49px;text-align: center;line-height: 49px;color: #C1996B;}
 .form{padding:0 24rpx;border-radius:32rpx 32rpx 0 0 ;margin-top: -20rpx;background-color: #fff;}
-.tips{padding: 26rpx 50rpx;color: #999;font-size: 12px;}
+.tips{padding: 26rpx 54rpx;color: #999;font-size: 12px;}
 .confirm-btn{border: 1px solid #C1996B;box-sizing: border-box;opacity: .6;}
 .rule-btn{position:absolute;right: 0;top:28rpx;font-size: 12px;color: #fff;padding: 0 8px;height: 24px;line-height: 24px;text-align: center;border-radius: 12px 0 0 12px; background-color:rgba(0, 0, 0, 0.5);}
 

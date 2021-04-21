@@ -3,7 +3,7 @@
 <view class="innerwrap">
   <view class="item flex">
     <text>小额免密支付</text>
-    <switch checked="{{free_secret==1?true:false}}" bindchange="switch" color="#C1996B" />
+    <switch checked="{{free_secret==1?true:false}}" bindchange="switch" />
   </view>
   <view class="item flex">
     <text>免密金额</text>

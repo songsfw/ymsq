@@ -39,7 +39,7 @@ page{background:#F6F6F6;height: auto;}
 
 .detail{background: #fff;}
 .detail .tit{position: relative; text-align: center;padding:18rpx 0}
-.detail .tit image{width: 384rpx;height: 82rpx;}
+.detail .tit image{width: 384rpx;height: 82rpx;vertical-align: middle;}
 
 .option .home .icon,
 .option .cart .icon{width: 50rpx;height: 50rpx;margin: 0 auto;}

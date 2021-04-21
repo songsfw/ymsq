@@ -9,7 +9,7 @@
   </view>
 </view>
 <view class="card">
-  <view class="item {{showbg == item.id?'showbg':''}}" wx:for="{{dateList}}">
+  <view class="item showbg {{curitem == item.id?'hidebg':''}}" wx:for="{{dateList}}">
     <image src="../../../image/0325.jpg" class="bg"></image>
     <view class="hd flex">
       <view>

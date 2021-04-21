@@ -36,17 +36,19 @@ Page({
     ],
     dateList : null,
     showbg:'',
+    curitem:-1,
     defIndex:[],
     clickPop:false,
   },
   onfocus(e){
     this.setData({
-      showbg:e.currentTarget.dataset.id
+      curitem:e.currentTarget.dataset.id,
     })
   },
   onblur(){
+    console.log("111");
     this.setData({
-      showbg:'',
+      curitem:-1
     })
   },
   /**

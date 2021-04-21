@@ -12,5 +12,5 @@ page{height: auto;background: #F6F6F6;}
 }
 .tip{text-align: center;color: #666;margin:48rpx 134rpx 0 134rpx ;}
 .logo-txt{border-bottom: 20rpx solid #F6F6F6;padding: 70rpx 0;background: #fff;}
-.txt-area{padding:40rpx;background: #fff;width: 100%;font-size: 14px;box-sizing: border-box;}
+.txt-area{padding:30rpx;background: #fff;width: 100%;font-size: 14px;box-sizing: border-box;}
 .fixedBtn{background: #fff;}
