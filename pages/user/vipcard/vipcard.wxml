@@ -14,6 +14,9 @@
       <text class="iconfont icon-eye2" wx:else></text>
     </view>
   </view>
+  <view class="myline">
+    <image src="../../../image/myline.png" style="height:40rpx"></image>
+  </view>
   <view class="card-info">
     <view class="card-code">NO.{{card_no}}</view>
     <view class="card-code-img">
@@ -23,6 +26,7 @@
     <view class="txt">扫码付款</view>
   </view>
 </view>
+
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="toAccount">余额充值</view>
 </view>
