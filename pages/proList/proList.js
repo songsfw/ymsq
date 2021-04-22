@@ -791,6 +791,7 @@ Page({
     let skuid = e.currentTarget.dataset.skuid
     let sku_list = this.data.proInfo.sku_list
     let selectSku = Object.assign({}, sku_list[skuid])
+    console.log(selectSku)
     this.setData({
       'selectSku.sku_id': skuid,
       selectSku: selectSku
