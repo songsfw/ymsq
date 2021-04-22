@@ -129,7 +129,7 @@
         <view class="val">{{orderData.dispatch_company}}</view>
       </view>
       <view class="flex-center txtitem">
-        <view class="name">期望配送时间</view>
+        <view class="name">配送时间</view>
         <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
       <!-- <view class="flex-center txtitem" wx:if="{{orderData.order_type==2}}">

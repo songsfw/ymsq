@@ -30,17 +30,17 @@
   <view class="btn" bindtap="save">保存</view>
 </view> -->
 <pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}"
-  class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="close" unuse="{{unuse}}">
+  class="formPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="close" unuse="{{unuse}}">
   <view slot="setPwd" wx:if="{{step==1}}">
     <view class="inputxt flex" style="margin-top:98rpx">
       <text style="width:50px">密码</text>
-      <input class="flex-1" value="{{pwdVal}}" type="number" maxlength='6' bindinput="pwdInput" password
+      <input class="flex-1" value="{{pwdVal}}" type="number" maxlength='6' bindinput="pwdInput" focus="{{true}}" password
         placeholder="请输入6位数字密码" />
     </view>
     <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
   </view>
   <view slot="setNewPwd" wx:if="{{step==2}}">
-    <block wx:if="{{pwd_set==1}}">
+    <!-- <block wx:if="{{pwd_set==1}}">
       <view class="inputxt flex">
         <text>旧密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="oldPwdInput" placeholder-style="color:#aaa" value="{{oldPwd}}" password placeholder="请输入6位数字密码" />
@@ -50,7 +50,7 @@
         <input class="flex-1" type="number" maxlength='6' bindinput="newPwdInput" placeholder-style="color:#aaa" value="{{newPwd}}" password placeholder="请输入6位数字密码" />
       </view>
     </block>
-    <block wx:else>
+    <block wx:else> -->
       <view class="inputxt flex">
         <text>密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" placeholder-style="color:#aaa" value="{{initPwd}}" password placeholder="请输入6位数字密码" />
@@ -59,7 +59,7 @@
         <text>确认密码</text>
         <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" placeholder-style="color:#aaa" value="{{confirmPwd}}" password placeholder="请再次输入密码" />
       </view>
-    </block>
+    <!-- </block> -->
   </view>
   <view slot="verify" class="verify" wx:if="{{step==3}}">
     <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>

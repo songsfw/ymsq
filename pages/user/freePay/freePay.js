@@ -206,33 +206,33 @@ Page({
         break;
       case 2:
         let {newPwd,oldPwd,confirmPwd,initPwd,pwd_set}=this.data
-        if(pwd_set==1){
-          if(newPwd.length<6 || oldPwd.length<6){
-            wx.showToast({
-              title: '请输入6位数字密码',
-              icon: 'none',
-              duration: 2000
-            })
-            return 
-          }
-          let data = {
-            old_password:oldPwd,
-            new_password:newPwd
-          }
-          api.setNewPwd(data).then(res=>{
-            console.log(res)
-            if(res.pwd_set==1){
-              wx.showToast({
-                title: '新密码设置成功',
-                icon: 'none',
-                duration: 2000
-              })
-              this.setData({
-                popShow:false
-              })
-            }
-          })
-        }else{
+        // if(pwd_set==1){
+        //   if(newPwd.length<6 || oldPwd.length<6){
+        //     wx.showToast({
+        //       title: '请输入6位数字密码',
+        //       icon: 'none',
+        //       duration: 2000
+        //     })
+        //     return 
+        //   }
+        //   let data = {
+        //     old_password:oldPwd,
+        //     new_password:newPwd
+        //   }
+        //   api.setNewPwd(data).then(res=>{
+        //     console.log(res)
+        //     if(res.pwd_set==1){
+        //       wx.showToast({
+        //         title: '新密码设置成功',
+        //         icon: 'none',
+        //         duration: 2000
+        //       })
+        //       this.setData({
+        //         popShow:false
+        //       })
+        //     }
+        //   })
+        // }else{
           if(confirmPwd.length<6 || initPwd.length<6){
             wx.showToast({
               title: '请输入6位数字密码',
@@ -262,7 +262,7 @@ Page({
               })
             //}
           })
-        }
+        //}
         
         break
       case 3:
@@ -414,6 +414,8 @@ Page({
       if(this.data.pwd_set==1){
         this.setData({
           pwdVal:'',
+          initPwd:'',
+          confirmPwd:'',
           unuse:true,
           type:0,//开启免密支付中
           popShow:true,
@@ -423,6 +425,8 @@ Page({
       }else{
         this.setData({
           pwdVal:'',
+          initPwd:'',
+          confirmPwd:'',
           unuse:true,
           type:0,//开启免密支付中
           popShow:true,
@@ -455,13 +459,14 @@ Page({
   },
   editPwd(){
     this.setData({
-      oldPwd:'',
-      newPwd:'',
+      initPwd:'',
+      confirmPwd:'',
+      pwdVal:'',
       unuse:true,
       type:1,//修改或设置密码中
       popShow:true,
-      poptitle:"修改余额密码",
-      step:2,
+      poptitle:"请输入设置的余额密码",
+      step:1,
       confirmText:"修改",
     })
   },
