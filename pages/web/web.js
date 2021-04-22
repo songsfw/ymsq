@@ -37,5 +37,11 @@ Page({
         prePage.setDetailBack && prePage.setDetailBack(1);
       }
     }
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })

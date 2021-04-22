@@ -69,7 +69,7 @@
 
       <!-- yuan -->
       <view class="item" wx:for="{{searchList.list}}" wx:for-item="pro" wx:for-index="proIndex">
-        <view class="item" bind:tap="toProInfo" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}"
+        <view bind:tap="toProInfo" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}"
               data-type="{{pro.type}}">
           <view class="pic {{breadInfo['stock'][pro.meal_id]==0?'sold-out':''}}">
             <view class="tag">已售罄</view>

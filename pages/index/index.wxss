@@ -147,8 +147,10 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .main-content{padding: 25rpx 0;background-color: #F4F9F5;margin: 25rpx 0;}
 
 .notice-panel .popPanel{background: url(http://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
-.notice-panel .pop-body{padding-top:30rpx;}
+.notice-panel .pop-body{padding-top:15px;}
 .pop-con view {font-weight:lighter;}
 .my-tip{display: flex;flex-direction: row;}
 .my-tip-content{padding-left:5rpx;font-size:13px;}
-.my-tip-dian{line-height: 40rpx;font-size:11px;}
+.my-tip-dian{line-height: 20px;font-size:11px;margin-top: 3px;}
+
+.notice-panel .pop-title{padding-top: 17px;}
