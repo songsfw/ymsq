@@ -1,6 +1,5 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
-
 <view class="fixedNav {{fixedNav?'fixed':''}}">
   <navBar hasAddress navType="transparent" cityName="{{addressInfo}}" wx:if="{{showNav}}" isFold="{{fixedNav}}">
   </navBar>

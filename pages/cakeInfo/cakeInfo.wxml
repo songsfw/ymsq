@@ -15,7 +15,7 @@
     <!-- <view class="tag">最快次日达</view> -->
   </view>
   <view class="tit"><text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text>{{proInfo.name}}</view>
-  <view class="desc" style="margin-bottom:20rpx">{{proInfo.chinese_brief}}</view>
+  <view class="desc" style="border:none">{{proInfo.chinese_brief}}</view>
   <view class="desc">{{proInfo.french_brief}}</view>
   <view class="tags flex"><text wx:for="{{proInfo.fname}}">{{item}}</text></view>
 </view>

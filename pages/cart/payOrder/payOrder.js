@@ -920,7 +920,7 @@ Page({
       if (!res) {
         return
       }
-
+      
       if (res == app.globalData.bindPhoneStat) {
         this.setData({
           phoneStat: 1,
@@ -930,6 +930,10 @@ Page({
       }
       isPaying=false
       let order_code = res.orderCode
+      //清除已记住的卡号密码
+      app.globalData.cardNo = ''
+      app.globalData.cardPwd = ''
+
       if (res.callPay) {
         let jsApiParameters = res.jsApiParameters
         let {
@@ -985,7 +989,7 @@ Page({
         }, 1000)
       }
     })
-  },500),
+  },500,true),
   inputCard: util.debounce(function (e) {
     console.log('inputCard')
     let temp = e.detail.value

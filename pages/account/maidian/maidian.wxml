@@ -9,7 +9,7 @@
       <view class="tit">我的麦点</view>
       <view class="score">{{point}}</view>
     </view>
-    <view class="money-box">
+    <view class="money-box" wx:if="{{pointList.length>0}}">
       <view class="h3 flex-center"><text ></text>麦点明细<text ></text></view>
       <view class="item flex"  wx:for="{{pointList}}">
         <view class="">

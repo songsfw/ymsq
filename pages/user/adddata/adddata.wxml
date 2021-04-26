@@ -18,8 +18,8 @@
     <text>门牌号</text>
     <input class="flex-1" placeholder-style="color:#aaa;font-weight:normal" placeholder="请填写详细地，例A座7楼101室" value="{{address.address_detail}}" bindinput="inputAdd" />
   </view>
-  <view class="inputxt default {{is_default==1?'checked':''}}" wx:if="{{address.is_default==0}}" bindtap="setDefault" style="border:none">
-    <view class="checkbox"><text class="check-icon"></text></view>
+  <view class="inputxt default" wx:if="{{address.is_default==0}}" bindtap="setDefault" style="border:none">
+    <view class="checkbox {{is_default==1?'on':''}}"><view class="iconfont icon-check"></view></view>
     <view class="txt">设为默认地址</view>
   </view>
 </view>

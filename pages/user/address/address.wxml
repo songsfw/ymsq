@@ -30,5 +30,5 @@
   </view>
   <view class="more-btn" wx:if="{{!address}}">加载中...</view>
 </view>
-<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata">+ 新建收货地址</view></view>
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px"><view class="btn" data-type="2" bind:tap="toAdddata"><text class="iconfont icon-plus"></text> 新建收货地址</view></view>
 <view style="height:{{56+btmHolder}}px"></view>

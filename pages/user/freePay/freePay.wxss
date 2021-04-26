@@ -2,7 +2,7 @@ page{background: #F6F6F6;}
 .innerwrap{border-top:20rpx solid #f6f6f6;background:#fff}
 .item{position: relative; padding:0 24rpx;border-bottom: 1px solid #F6F6F6;justify-content: space-between;align-items: center;line-height: 98rpx;font-size: 15px;}
 .item .tag{margin-left: 16rpx; font-size: 10px;color: #FA603D;
-  background: rgba(250, 96, 61, 0.1);padding:0 10rpx;line-height: 1;border-radius: 8rpx;border: 1px solid #FA603D;box-sizing: border-box;}
+  background: rgba(250, 96, 61, 0.1);padding:5rpx 10rpx;line-height: 1;border-radius: 8rpx;border: 1px solid #FA603D;box-sizing: border-box;}
 .picker,.edit{color: #C1996B;text-align: right;}
 
 .inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 49px;line-height: 49px;}

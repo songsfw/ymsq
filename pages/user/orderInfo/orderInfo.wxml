@@ -100,8 +100,9 @@
           </view>
         </view>
       </view>
-      <view class="more-pro flex-center" wx:if="{{cart_data.length>3 && !showAll}}" bind:tap="showAllPro">
-        <view>还有更多商品</view>
+      <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{cart_data.length>3}}" bind:tap="showAllPro">
+        <view wx:if="{{!showAll}}">还有更多商品</view>
+        <view wx:else>收起</view>
         <text class="iconfont icon-arrow-btm"></text>
       </view>
     </view>

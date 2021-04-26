@@ -297,6 +297,10 @@ function getLocation() {
         resolve(location)
       },
       fail(err) {
+        wx.showToast({
+          icon:"none",
+          title:"定位失败，默认到北京"
+        })
         let location = {
           latitude: '39.8999',
           longitude: '116.3980'

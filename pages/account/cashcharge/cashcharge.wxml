@@ -25,7 +25,10 @@
     </view>
   </view>
 </view>
-<view class="tips" wx:if="{{use!=1}}">注:请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
+<view class="tips" wx:if="{{use!=1}}">
+  <view >1、请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
+  <view >2、当你充值成功后请核对账户余额是否到账</view>
+</view>
 <view class="fixedBtn" wx:if="{{use==1}}" style="padding-bottom:{{btmHolder}}px">
   <block wx:if="{{isUse==1}}">
     <view class="btn" bindtap="cancelChashCharge">取消使用</view>
@@ -45,6 +48,7 @@
 
 <view class="rule-panel" wx:if="{{pop=='rules'}}">
   <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-title">使用规则</view>
   <scroll-view class="pop-con">
     <view wx:for="{{instructions}}">{{item}}</view>
   </scroll-view>

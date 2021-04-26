@@ -237,7 +237,7 @@ Page({
         posints.forEach(item=>{
           let newItem = {
             points:item,
-            fillColor: "#00000033",
+            fillColor: "#5375FD33",
             strokeColor: "#FFF",
             strokeWidth: 2,
             zIndex: 1

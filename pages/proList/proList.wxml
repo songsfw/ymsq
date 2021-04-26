@@ -172,7 +172,7 @@
         <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
       </view>
     </view>
-    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" >确定</view>
+    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" >加入购物车</view>
   </view>
 
 </view>

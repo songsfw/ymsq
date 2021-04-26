@@ -15,7 +15,7 @@
       <view>
         <image src="{{dayLi[index].img}}"></image>
       </view>
-      <text>{{dayLi[index].tit}}</text>
+      <text>{{dateList.length==1?'纪念日':dayLi[index].tit}}</text>
     </view>
     <view class="flex input-box">
       <view class="tit">名称</view>

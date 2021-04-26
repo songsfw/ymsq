@@ -1,9 +1,9 @@
 page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
-
+.navBarWrap.fold .arrow-left:after{border-color: #000 !important;}
 .order-type{width: 100%;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
-.return .arrow-left:after{border-color: #333 !important;}
+.return .arrow-left:after{border-color: #fff !important;border-width: 2px !important;}
 .order-type .txt{font-size:18px;}
 .order-type .txt image{width: 48rpx;height: 40rpx;vertical-align: bottom;}
 .order-type .status{font-size:14px;margin-top: 8px;}
@@ -43,7 +43,8 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
 .pro-info .info .tag{color: #999;display: flex;flex-wrap: wrap;}
 .pro-info .info .tag text{margin-right: 20rpx;}
-.pro-info .item{margin-bottom: 30rpx;padding: 0 18rpx;}
+.pro-info .item{margin-bottom:15rpx;padding: 0 18rpx;padding-bottom: 15rpx;border-bottom: 1px solid #F6F6F6;}
+.pro-info .item:last-child{border: none;}
 .pro-info .item .pic{width: 70px;height: 70px;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;border-radius: 4px;}
 .pro-info .item .tit{font-size: 14px;font-weight: 500;}
 .pro-info .price{justify-content: space-between;}
@@ -53,6 +54,8 @@ page{background: #F6F6F6;height: auto;}
 .pro-wp{padding-bottom: 36rpx;}
 .pro-wp .item:last-child{margin-bottom: 0;}
 .more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
+.more-pro .icon-arrow-btm{transition: all linear .3s;}
+.more-pro.on .icon-arrow-btm{transform: rotateX(180deg);}
 .order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
 .order-tips input{text-align: right;}
 .order-tips.on{color: #F5222D;}

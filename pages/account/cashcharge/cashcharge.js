@@ -160,7 +160,7 @@ Page({
         wx.showToast({
           title: '充值成功',
           icon: 'none',
-          duration: 2000
+          duration: 4000
         })
         this.setData({
           result:'',
