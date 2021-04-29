@@ -346,6 +346,12 @@ Page({
           icon: 'none',
           duration: 2000
         })
+        wx.reportAnalytics('addcart', {
+          type: params['curType'],
+          tab_id: params['proId'],
+          city_id: params['trueCityId'],
+          source:'list'
+        });
       } else {
         console.log(res)
         wx.showToast({
@@ -827,6 +833,12 @@ Page({
           totalNum: totalNum,
           pop: 0
         })
+        wx.reportAnalytics('addcart', {
+          type: '2',
+          tab_id: proId,
+          city_id: this.data.trueCityId,
+          source:'list'
+        });
         // if (action == 1) {
         //   app.globalData.proType = "2"
         //   wx.navigateTo({

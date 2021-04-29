@@ -131,7 +131,8 @@ page{background: #F9F9F9;height: 100%;}
   background:#fff;
   top:96rpx;
   /* min-height: 100%; */
-  
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .list-show-search{
@@ -300,18 +301,10 @@ page{background: #F9F9F9;height: 100%;}
 .default-fitts image{margin-right:10rpx ; width:32rpx;height: 32rpx;vertical-align: bottom;}
 .default-fitts>view{margin-bottom: 20rpx;margin-right: 40rpx;}
 
-/* 无内容 */
-.empty-tip{
-  width:100%;
-  display:flex;
-  flex-direction: row;
-  justify-content: center;
-  
-}
 /* 底下注释等待 */
 .recommend-list{display: flex;flex-direction: row;}
 .recommend-list .item:nth-child(2n) {margin-right: 0;}
 
-.empty-tip{display: flex;flex-direction: column;margin-top: 20vh;text-align: center;}
-.empty-tip image{width:608rpx;height:312rpx;margin: 0 auto;}
+.empty-tip{margin-top: 20vh;text-align: center;}
+.empty-tip image{width:608rpx;height:312rpx;}
 .empty-tip>view{margin: 38rpx 0 60rpx 0;font-size: 13px;color: #AAAAAA;}

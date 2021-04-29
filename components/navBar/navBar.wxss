@@ -58,6 +58,9 @@
 
 .navBarWrap.transparent .navBar{background: none;}
 .navBarWrap.transparent .title{display: none;}
+
+.navBarWrap .navBar,
+.navBarWrap .navBar .navwrap{transition: background-color .3s linear;}
 .navBarWrap.fold .navBar,
 .navBarWrap.fold .navBar .navwrap{background: #fff;}
 .navBarWrap.fold{border-bottom: 1px solid #F6F6F6;}

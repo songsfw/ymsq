@@ -25,7 +25,14 @@ Page({
     // backListCurrentTab:null,
     backNum:1,//1是详情页返回
   },
-
+  preview(e) {
+    console.log(e.currentTarget.dataset.src)
+    let currentUrl = e.currentTarget.dataset.src
+    wx.previewImage({
+      current: currentUrl, // 当前显示图片的http链接
+      urls: this.data.proInfo.banner // 需要预览的图片http链接列表
+    })
+  },
   //改变商品数量
   minusFitting: util.debounce(function () {
     let skuNum = this.data.skuNum
@@ -93,7 +100,12 @@ Page({
           totalNum: totalNum,
           pop: 0
         })
-
+        wx.reportAnalytics('addcart', {
+          type: '1',
+          tab_id: proId,
+          city_id: city_id,
+          source:'detail'
+        });
         //压入数据
         //改变的 页面实例 对应的参数
         if(this.data.ctabTypeMealIdSpuId){
@@ -151,6 +163,12 @@ Page({
             icon: "success",
             title: '加入购物车成功'
           })
+          wx.reportAnalytics('addcart', {
+            type: '1',
+            tab_id: proId,
+            city_id: city_id,
+            source:'detail'
+          });
           if (toCart == 1) {
             wx.navigateTo({
               url: "/pages/cart/cart/cart"

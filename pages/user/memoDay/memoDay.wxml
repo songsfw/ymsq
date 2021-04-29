@@ -25,7 +25,7 @@
     <view class="flex input-box" data-idx="{{index}}" bind:tap="selectDate" data-value="{{item.type}}-{{item.date}}">
       <view class="tit">日期</view>
       <view class="date">{{item.date || '请选择纪念日期'}}</view>
-      <view class="tip">{{item.type==0?'(阳历)':'(农历)'}}</view>
+      <view class="tip">{{item.type==0?'(公历)':'(农历)'}}</view>
     </view>
   </view>
 </view>
@@ -35,7 +35,9 @@
 <view style="height:{{56+btmHolder}}px"></view>
 <pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px" class="tips-panel">
   <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
-    <view wx:for="{{doc}}">{{item}}</view>
+    <view style="padding:0 24rpx 24rpx 24rpx;">
+      <view wx:for="{{doc}}">{{item}}</view>
+    </view>
   </scroll-view>
 </pop-panel>
 <view class="date-mask" bind:tap="closeDate" wx:if="{{showDate}}"></view>

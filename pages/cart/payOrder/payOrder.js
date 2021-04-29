@@ -2,8 +2,8 @@ const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let delivery = 10,
   mai = 0,
-  coupon = 0,
-  isPaying=false
+  coupon = 0
+  
 let txtCard = null,
   cartid = null,
   txt = ''
@@ -15,6 +15,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isPaying:false,
     is_ziti: "0",
     proNum: 2,
     showAll: false,
@@ -860,11 +861,6 @@ Page({
       }
     }
 
-    if(isPaying){
-      return
-    }
-    isPaying=true  //正在支付
-    
     console.log(payQueue)
     console.log(balance_price)
 
@@ -914,21 +910,35 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
+
+    if(this.data.isPaying){
+      return
+    }
+    this.setData({
+      isPaying:true
+    })  //正在支付
+
     api.submmitOrder(data).then(res => {
       wx.hideLoading();
       console.log(res)
       if (!res) {
+        this.setData({
+          isPaying:false
+        })
         return
       }
       
       if (res == app.globalData.bindPhoneStat) {
         this.setData({
           phoneStat: 1,
-          showPhonePanel: true
+          showPhonePanel: true,
+          isPaying:false
         })
         return
       }
-      isPaying=false
+      this.setData({
+        isPaying:false
+      })
       let order_code = res.orderCode
       //清除已记住的卡号密码
       app.globalData.cardNo = ''
@@ -942,7 +952,7 @@ Page({
           signType,
           paySign
         } = jsApiParameters
-
+        wx.showLoading()
         wx.requestPayment({
           timeStamp: timeStamp,
           nonceStr: nonceStr,
@@ -956,11 +966,11 @@ Page({
               icon: 'none',
               duration: 1000,
               success: function () {
-                setTimeout(function () {
-                  wx.redirectTo({
-                    url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
-                  })
-                }, 1000)
+                wx.hideLoading()
+                wx.redirectTo({
+                  url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
+                })
+   
               }
             })
 
@@ -972,6 +982,7 @@ Page({
               icon: 'none',
               duration: 2000
             })
+            wx.hideLoading()
             wx.redirectTo({
               url: '/pages/user/order/order?type=1'
             })
@@ -982,11 +993,11 @@ Page({
           icon: "success",
           title: "支付成功"
         })
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
-          })
-        }, 1000)
+        wx.hideLoading()
+        wx.redirectTo({
+          url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
+        })
+        
       }
     })
   },500,true),

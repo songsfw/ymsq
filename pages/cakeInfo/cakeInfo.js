@@ -35,6 +35,14 @@ Page({
     //从购物车返回相关
     toCartParams:"",//去往购物车的数据
   },
+  preview(e) {
+    console.log(e.currentTarget.dataset.src)
+    let currentUrl = e.currentTarget.dataset.src
+    wx.previewImage({
+      current: currentUrl, // 当前显示图片的http链接
+      urls: this.data.proInfo.banner // 需要预览的图片http链接列表
+    })
+  },
   //改变商品数量
   minusFitting:util.debounce(function(){
     let skuNum = this.data.skuNum
@@ -122,7 +130,12 @@ Page({
         if(this.data.ctabTypeMealIdSpuId){
           app.refreshList(this.data.ctabTypeMealIdSpuId,skuNum);
         }
-
+        wx.reportAnalytics('addcart', {
+          type: '2',
+          tab_id: proId,
+          city_id: city_id,
+          source:'detail'
+        });
         if(action==1){
           this.data.backNum = 0;
           app.globalData.proType = "2"

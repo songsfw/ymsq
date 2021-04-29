@@ -43,7 +43,7 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .info{justify-content: space-between;flex-direction: column;}
 .pro-info .info .tag{color: #999;display: flex;flex-wrap: wrap;}
 .pro-info .info .tag text{margin-right: 20rpx;}
-.pro-info .item{margin-bottom:15rpx;padding: 0 18rpx;padding-bottom: 15rpx;border-bottom: 1px solid #F6F6F6;}
+.pro-info .item{margin-bottom:15rpx;padding-bottom: 15rpx;border-bottom: 1px solid #F6F6F6;}
 .pro-info .item:last-child{border: none;}
 .pro-info .item .pic{width: 70px;height: 70px;overflow: hidden;background-color: #F6F6F6;margin-right: 20rpx;flex-shrink: 0;border-radius: 4px;}
 .pro-info .item .tit{font-size: 14px;font-weight: 500;}
@@ -51,7 +51,7 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px;font-weight: 500;}
 .pro-info .price .count{color: #999;}
-.pro-wp{padding-bottom: 36rpx;}
+.pro-wp{padding:0 20rpx 36rpx 20rpx;}
 .pro-wp .item:last-child{margin-bottom: 0;}
 .more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
 .more-pro .icon-arrow-btm{transition: all linear .3s;}

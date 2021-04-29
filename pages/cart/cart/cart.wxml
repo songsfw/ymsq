@@ -192,7 +192,7 @@
 
 <view class="pop-panel btm-panel order-panel {{pop=='order-panel'?'upPanel':''}}">
   <view class="iconfont icon-close close" bind:tap="close"></view>
-  <view class="title">请选择算商品</view>
+  <view class="title">请选择结算商品</view>
   <view class="tips">{{instructions}}</view>
   <view class="pop-con" style="padding-bottom:{{btmHolder}}px">
     

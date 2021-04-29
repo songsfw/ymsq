@@ -7,9 +7,9 @@
 
     <view class="topinfo">
       <view class="user-top flex">
-        <image class="photo" src="{{userInfo.photo}}"></image>
+        <open-data type="userAvatarUrl" class="photo"></open-data>
         <view class="name flex-1">
-          <view class="tit">{{userInfo.nickname}}</view>
+          <open-data type="userNickName" class="tit"></open-data>
           <view class="iconAll level level-{{user.level || 0}}"></view>
         </view>
         <navigator url="/pages/user/vipcard/vipcard" class="qrCode"><image src="../../image/pay-code.png"></image><view>付款码</view></navigator>

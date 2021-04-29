@@ -213,20 +213,22 @@ Page({
     console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder==0?12:btmHolder
+
+    api.getIntroduction().then(res=>{
+      console.log(res);
+      if(res){
+        let txt = type==1?res.instructions['cash-card']:res.instructions.duomeiwei
+        this.setData({
+          instructions:txt
+        })
+      }
+    })
+    
     this.setData({
       btmHolder:btmHolder||0,
     })
     
     if(use==1){
-      api.getIntroduction().then(res=>{
-        console.log(res);
-        if(res){
-          let txt = type==1?res.instructions['cash-card']:res.instructions.duomeiwei
-          this.setData({
-            instructions:txt
-          })
-        }
-      })
       this.setData({
         isUse:isUse,
         use:use,
