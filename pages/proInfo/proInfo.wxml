@@ -74,7 +74,7 @@
   <view class="pop-con">
     <view class="info flex">
       <view class="pic">
-        <image src="{{proInfo.image}}" mode="scaleToFill"></image>
+        <image src="{{proInfo.image2}}" mode="scaleToFill"></image>
       </view>
       <view class="h3 flex">
         <view class="tit">{{proInfo.name}}</view>
