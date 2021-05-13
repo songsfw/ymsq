@@ -54,6 +54,12 @@ Page({
       skuNum: skuNum
     })
   }),
+  showTip(e) {
+
+    this.setData({
+      pop: 'tip-panel'
+    })
+  },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop,
       action = e.currentTarget.dataset.action
@@ -101,10 +107,10 @@ Page({
           pop: 0
         })
         wx.reportAnalytics('addcart', {
-          type: '1',
+          type: '面包',
           tab_id: proId,
           city_id: city_id,
-          source:'detail'
+          source:'详情页'
         });
         //压入数据
         //改变的 页面实例 对应的参数
@@ -246,7 +252,29 @@ Page({
   onLoad: function () {
     
     let btmHolder = wx.getStorageSync('btmHolder')
+    let instructions = wx.getStorageSync('instructions')
 
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      console.log(instructions);
+      let special_tips =instructions['special_tips']
+      this.setData({
+        special_tips
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let special_tips =instructions['special_tips']
+          this.setData({
+            special_tips
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
     this.setData({
       btmHolder: btmHolder || 0,
     })

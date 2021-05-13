@@ -13,6 +13,7 @@
   <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}"
     refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
     <!-- 组件部分 -->
+    <view class="loading" wx:if="{{showLoading}}">奋力加载中...</view>
     <block wx:for="{{components}}" wx:for-index="cidx">
       <!-- 轮播图 -->
       <view class="banner" wx:if="{{item.block_type == 4}}"
@@ -54,6 +55,11 @@
         </swiper>
         <view class="show-btn">查看</view>
       </view>
+
+      <view class="active" wx:if="{{subscribe_com.img && cidx==3}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
+        <image class="" src="{{subscribe_com.img}}" mode="widthFix"></image>
+      </view>
+
       <!-- 分类推荐 -->
       <view class='main-content'
         style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx"
@@ -95,11 +101,9 @@
       </view>
 
     </block>
-
-    <view class="logo">
+    <view class="logo" wx:if="{{!showLoading}}">
       <image src="../../image/logo.png"></image>
     </view>
-
     <!-- <view style="height:{{50+btmHolder}}px"></view> -->
   </scroll-view>
 

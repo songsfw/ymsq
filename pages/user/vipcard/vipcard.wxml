@@ -22,7 +22,6 @@
     <view class="card-code-img">
       <canvas canvas-id="barcode"></canvas>
     </view>
-    <!-- <view class="num">{{pay_code}}</view> -->
     <view class="txt">扫码付款</view>
   </view>
 </view>

@@ -347,10 +347,10 @@ Page({
           duration: 2000
         })
         wx.reportAnalytics('addcart', {
-          type: params['curType'],
+          type: params['curType']==1?"面包":"蛋糕",
           tab_id: params['proId'],
           city_id: params['trueCityId'],
-          source:'list'
+          source:'列表页'
         });
       } else {
         console.log(res)
@@ -834,10 +834,10 @@ Page({
           pop: 0
         })
         wx.reportAnalytics('addcart', {
-          type: '2',
+          type: '蛋糕',
           tab_id: proId,
           city_id: this.data.trueCityId,
-          source:'list'
+          source:'列表页'
         });
         // if (action == 1) {
         //   app.globalData.proType = "2"
@@ -915,19 +915,19 @@ Page({
     }
     return style;
   },
-  onPageScroll(e) {
-    // console.log(e.scrollTop);
-    let stop = e.scrollTop
-    if (stop > 46) {
-      this.setData({
-        isFixed: true
-      })
-    } else {
-      this.setData({
-        isFixed: false
-      })
-    }
-  },
+  // onPageScroll(e) {
+  //   // console.log(e.scrollTop);
+  //   let stop = e.scrollTop
+  //   if (stop > 46) {
+  //     this.setData({
+  //       isFixed: true
+  //     })
+  //   } else {
+  //     this.setData({
+  //       isFixed: false
+  //     })
+  //   }
+  // },
   onShow() {
     console.log('onshow ---------------')
     if (this.data.backFrom == 1) {

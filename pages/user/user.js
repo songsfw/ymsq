@@ -16,7 +16,9 @@ Page({
     orderlist:[],
     userLevel :{0:'普通会员',3:'试用会员',4:'金麦会员'},
     count:0,
-    user:null
+    user:null,
+    order_unpaid:0,
+    order_dispatching:0
   },
   getTab:function(e){
     let index = e.currentTarget.dataset.tabid;
@@ -74,6 +76,37 @@ Page({
    */
   onReady: function () {
 
+  },
+  toPro(e) {
+    let urlType = e.currentTarget.dataset.type.toString();
+    let url = e.currentTarget.dataset.url;
+    console.log(urlType, url);
+    switch (urlType) {
+      case "1":
+        wx.navigateTo({
+          url: "/pages/web/web?url=" + url
+        })
+        break;
+      case "5":
+        wx.navigateTo({
+          url: url
+        })
+        break;
+      default:
+        break;
+    }
+  },
+  toMemo(){
+    if(!this.data.user.subscribe){
+      wx.showToast({
+        icon:"none",
+        title:"请先关注公众号"
+      })
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/user/memoDay/memoDay'
+    })
   },
   getUserCenter(){
     api.getUserCenter().then(res=>{

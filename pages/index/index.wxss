@@ -3,7 +3,6 @@ page{background: #F4F9F5;}
 .fixedNav{position:fixed;width:100%;left:0;top:0; height:64px;z-index:22;}
 /* .fixedNav.fixed{background-color: #fff;} */
 view{font-size:12px}
-.wrap-all{padding: 10px;}
 .navigator-hover{background-color: none;}
 .item{box-sizing: border-box}
 .col-2 .item{width: 50%;}
@@ -156,3 +155,5 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .my-tip-dian{line-height: 20px;font-size:11px;margin-top: 3px;}
 
 .notice-panel .pop-title{padding-top: 17px;}
+
+.loading{text-align: center;color: #999;position: absolute;width: 100%;left: 0;top: 50%;transform: translate(0,-50%);}

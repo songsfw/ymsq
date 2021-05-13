@@ -131,10 +131,10 @@ Page({
           app.refreshList(this.data.ctabTypeMealIdSpuId,skuNum);
         }
         wx.reportAnalytics('addcart', {
-          type: '2',
+          type: '蛋糕',
           tab_id: proId,
           city_id: city_id,
-          source:'detail'
+          source:'详情页'
         });
         if(action==1){
           this.data.backNum = 0;
@@ -224,27 +224,29 @@ Page({
     this.getProInfo()
   },
   onLoad: function (options) {
-    // let addressInfo = wx.getStorageSync("addressInfo")
-    // let totalNum = wx.getStorageSync("total_num")
-    // let city_id = JSON.parse(addressInfo).city_id
-    // let proId = options.proId
-    // console.log('---------',proId)
-    // let btmHolder = wx.getStorageSync('btmHolder')
-    // let sData = {
-    //   totalNum:totalNum,
-    //   btmHolder:btmHolder||0,
-    //   city_id:city_id,
-    //   proId: proId,
-    // }
+    let instructions = wx.getStorageSync('instructions')
 
-    // if (options.ctabTypeMealIdSpuId) {
-    //   this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId;
-    // }
-
-    // this.setData(sData)
-    // this.getProInfo()
-    
-    //this.initData()
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      console.log(instructions);
+      let special_tips =instructions['special_tips']
+      this.setData({
+        special_tips
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let special_tips =instructions['special_tips']
+          this.setData({
+            special_tips
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
   },
   onUnload: function (e) {
     let pages = getCurrentPages(); // 子页面

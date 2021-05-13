@@ -201,7 +201,7 @@
       data-pop="showCoupon">
       <view class="name coupon">
         优惠券
-        <text wx:if="{{useDiscount}}">已选推荐优惠</text>
+        <text wx:if="{{useDiscount}}">已选择最佳优惠</text>
         <!-- <image src="../../../image/icon-coupon.png"></image> -->
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">

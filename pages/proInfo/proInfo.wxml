@@ -21,12 +21,19 @@
 </view>
 
 <view class="content">
-  <view class="tips flex">
-    <view class="tit">温馨提示</view>
-    <view class="txt flex-1">
-      <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
-      <!-- <view><text>◉</text>若作为TOP1的升级版，所有的用心都藏在内
-  馅里，一口咬下去的满足只有尝过才知道。</view> -->
+  <view class="tips">
+    <view class="flex"> 
+      <view class="tit">温馨提示</view>
+      <view class="txt flex-1">
+        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
+      </view>
+    </view>
+    <view class="flex-center" wx:if="{{proInfo.special_tag && proInfo.activity_title}}" bind:tap="showTip"> 
+      <view class="tit">优惠活动</view>
+      <view class="txt flex-1 text-overflow" style="color:#666">
+        <text class="blue-tag">免邮</text>
+        {{proInfo.activity_title}}</view>
+      <view class="iconfont icon-arrow-r"></view>
     </view>
   </view>
   <view class="detail" wx:if="{{proInfo.detail.length>0}}">
@@ -66,6 +73,19 @@
       data-pop="bread-panel">立即购买</view>
   </view>
 
+
+</view>
+
+<view class="pop-panel btm-panel tip-panel {{pop=='tip-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="tit">优惠</view>
+    <block wx:for="{{special_tips}}">
+      <view class="tip-item"><view class="h4 flex">{{item.title}}</view><view class="txt">{{item.desc}}</view></view>
+    </block>
+
+    <view class="confirm-btn btn" bind:tap="close">知道了</view>
+  </view>
 
 </view>
 

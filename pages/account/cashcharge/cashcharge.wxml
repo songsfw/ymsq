@@ -5,7 +5,7 @@
     <image wx:else src="../../../image/third-card.png" />
     <view class="rule-btn" bind:tap="showRule">使用规则</view>
     <view class="price-info flex" wx:if="{{showPriceInfo}}">
-      <text>现金卡余额:{{card_balance}}</text>
+      <text>余额:{{card_balance}}</text>
       <text>本单已减:￥{{usePrice}}</text>
     </view>
   </view>

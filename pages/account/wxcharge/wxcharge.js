@@ -7,7 +7,7 @@ Page({
    */
   data: {
     chargeList:[],
-    money:"123",
+    money:"---",
     read:true
   },
   /**

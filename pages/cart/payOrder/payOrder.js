@@ -220,16 +220,19 @@ Page({
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
-    this.setData({
-      pop: pop
-    })
+    
     console.log(this.data)
     if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
         title: "请先选择可配送地址"
       })
+      return
     }
+
+    this.setData({
+      pop: pop
+    })
 
   },
   //麦点抵扣

@@ -147,6 +147,25 @@ Page({
     // return false;
     
   },
+  showTip(){
+    wx.showToast({
+      icon:"none",
+      title:"蛋糕配件不允许单独购买，请与蛋糕一同购买",
+      duration:3000
+    })
+  },
+  toProInfo: function (e) {
+    let proId = e.currentTarget.dataset.proid
+    let type = e.currentTarget.dataset.type,isfit=e.currentTarget.dataset.isfit
+    if(isfit==1){
+      return
+    }
+    let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + proId + "";
+    console.log(url)
+    wx.navigateTo({
+      url: url
+    })
+  },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
     this.setData({
