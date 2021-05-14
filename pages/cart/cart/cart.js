@@ -115,7 +115,11 @@ Page({
               }
               wx.setStorageSync('total_num', total_num)
               let selectType = this.getSelectType(bread,cake)
+              let hasActive = bread.detail.some(item=>{
+                return item.special_tag=="活动商品"
+              })
               this.setData({
+                hasActive,
                 type:selectType.type,
                 noallBread: selectType.noallBread,
                 noallCake: selectType.noallCake,
@@ -462,7 +466,12 @@ Page({
           app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
         }
 
+        let hasActive = bread.detail.some(item=>{
+          return item.special_tag=="活动商品"
+        })
+
         this.setData({
+          hasActive,
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
@@ -623,6 +632,12 @@ Page({
     }
 
   },
+  showNotice(e) {
+
+    this.setData({
+      pop: 'tip-panel'
+    })
+  },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
     if (total_num) {
@@ -650,10 +665,11 @@ Page({
       if(instructions){
         instructions = JSON.parse(instructions)
         let txt =instructions['cart-top'],
-            tipsBread = instructions['cart-bread-tips'],
-            tipsCake = instructions['cart-cake-tips']
+            // tipsBread = instructions['cart-bread-tips'],
+            tipsCake = instructions['cart-cake-tips'],
+            special_tips =instructions['special_tips']
         this.setData({
-          tipsBread,
+          special_tips,
           tipsCake,
           instructions:txt
         })
@@ -663,10 +679,11 @@ Page({
           if(res){
             instructions = res.instructions
             let txt =instructions['cart-top'],
-            tipsBread = instructions['cart-bread-tips'],
-            tipsCake = instructions['cart-cake-tips']
+            // tipsBread = instructions['cart-bread-tips'],
+            tipsCake = instructions['cart-cake-tips'],
+            special_tips =instructions['special_tips']
             this.setData({
-              tipsBread,
+              special_tips,
               tipsCake,
               instructions:txt
             })

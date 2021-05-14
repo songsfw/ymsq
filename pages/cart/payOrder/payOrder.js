@@ -1254,9 +1254,11 @@ Page({
           duration: 2000
         })
         this.setData({
-          verifyed: true
+          popShow: false,
+          useBalance: true,
+          verifyed: true,
+          unuse: true
         })
-        this.closePanel()
         if (this.data.balanceInfo.pwd_set == 0) {
           //this.setBalancePrice()
           this.setData({

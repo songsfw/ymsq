@@ -60,11 +60,11 @@
     <view class="tit">我的服务</view>
     <view class="service flex">
       <navigator hover-class="none" url="/pages/user/freePay/freePay">
-        <view class="iconAll user-pay"></view>
+        <view class="iconAll user-pay {{user.free_secret==0?'on':''}}"></view>
         <text>免密支付</text>
       </navigator>
       <view bind:tap="toMemo">
-        <view class="iconAll user-heart"></view>
+        <view class="iconAll user-heart {{user.bigday?'':'on'}}"></view>
         <text>纪念日管理</text>
       </view>
       <navigator hover-class="none" url="/pages/user/address/address" >
@@ -87,7 +87,7 @@
         <view class="iconAll user-service"></view>
         <text>联系客服</text>
       </view>
-      <view>
+      <view data-url="{{group_chat}}" data-type="1" bind:tap="toPro">
         <view class="iconAll wechat"></view>
         <text>加入群聊</text>
       </view>
@@ -99,3 +99,13 @@
   <!-- <view style="height:{{50+btmHolder}}px"></view> -->
 
 </view>
+
+<pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px" class="tips-panel">
+  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
+    <view style="padding:0 24rpx 24rpx 24rpx;">
+      <view wx:for="{{doc}}">{{item}}</view>
+      <view class="btn" bind:tap="toPro" data-url="{{subscribeUrl}}" data-type="1">去关注公众号</view>
+      <view class="tips">参加活动请先关注原麦山丘公众号</view>
+    </view>
+  </scroll-view>
+</pop-panel>

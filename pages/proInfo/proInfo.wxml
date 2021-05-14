@@ -28,11 +28,18 @@
         <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
       </view>
     </view>
-    <view class="flex-center" wx:if="{{proInfo.special_tag && proInfo.activity_title}}" bind:tap="showTip"> 
+    <view class="flex" bind:tap="showTip"> 
       <view class="tit">优惠活动</view>
-      <view class="txt flex-1 text-overflow" style="color:#666">
-        <text class="blue-tag">免邮</text>
-        {{proInfo.activity_title}}</view>
+      <view class="flex-1">
+        <view class="desc txt" style="color:#666">
+          <text class="blue-tag">免邮</text>
+          {{special_tips[0].title}}
+        </view>
+        <view class="desc txt" style="color:#666" wx:if="{{proInfo.activity_title}}">
+          <text class="blue-tag">免邮</text>
+          {{special_tips[1].title}}
+        </view>
+      </view>
       <view class="iconfont icon-arrow-r"></view>
     </view>
   </view>
@@ -80,10 +87,8 @@
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="tit">优惠</view>
-    <block wx:for="{{special_tips}}">
-      <view class="tip-item"><view class="h4 flex">{{item.title}}</view><view class="txt">{{item.desc}}</view></view>
-    </block>
-
+    <view class="tip-item"><view class="h4 flex">{{special_tips[0].title}}</view><view class="txt">{{special_tips[0].desc}}</view></view>
+    <view class="tip-item" wx:if="{{proInfo.activity_title}}"><view class="h4 flex">{{special_tips[1].title}}</view><view class="txt">{{special_tips[1].desc}}</view></view>
     <view class="confirm-btn btn" bind:tap="close">知道了</view>
   </view>
 

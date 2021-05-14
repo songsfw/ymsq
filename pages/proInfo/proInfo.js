@@ -225,6 +225,7 @@ Page({
   onShow:function(){
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
+    console.log(currPage);
     let options = currPage.options
 
     let totalNum = wx.getStorageSync("total_num")

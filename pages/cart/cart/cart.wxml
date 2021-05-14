@@ -15,7 +15,7 @@
     </view>
     <text>面包</text>
   </view>
-  <view class="pro-tip"><text class="tag">免邮</text>{{tipsBread}}</view>
+  <view class="pro-tip" bind:tap="showNotice"><text class="tag">免邮</text>{{special_tips[0].title}}{{hasActive?'，'+special_tips[1].title:''}}</view>
   <view class="pro-list">
     <movable-area class="item bread-item" wx:for="{{breadLi}}" wx:for-index="index">
       <movable-view damping="50" x="{{item.txtStyle}}" class="move-area" direction="horizontal" out-of-bounds="false" friction="50">
@@ -229,6 +229,17 @@
       <view class="info" wx:if="{{cakeSelectedNum>0}}">共<text class="color-b"> {{cakeSelectedNum}} </text>件，合计：<text class="color-b">{{cakeSelectedPrice}}</text></view>
     </view>
     
+  </view>
+
+</view>
+
+<view class="pop-panel btm-panel tip-panel {{pop=='tip-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="tit">优惠</view>
+    <view class="tip-item"><view class="h4 flex">{{special_tips[0].title}}</view><view class="txt">{{special_tips[0].desc}}</view></view>
+    <view class="tip-item" wx:if="{{hasActive}}"><view class="h4 flex">{{special_tips[1].title}}</view><view class="txt">{{special_tips[1].desc}}</view></view>
+    <view class="confirm-btn btn" bind:tap="close">知道了</view>
   </view>
 
 </view>

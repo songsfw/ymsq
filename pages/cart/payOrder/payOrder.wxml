@@ -221,7 +221,7 @@
     </view>
     <view class="flex-center" wx:if="{{pay_style.third_card==1}}" bind:tap="useCard" data-type="2">
       <view class="name">
-        多美味卡
+        多美味/中票娱乐卡
         <text class="tip">(第三方礼品卡)</text>
       </view>
       <view class="val">

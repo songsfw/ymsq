@@ -112,8 +112,11 @@ Page({
               util.setTabBarBadge(total_num)
               wx.setStorageSync('total_num', total_num)
               let selectType = this.getSelectType(bread,cake)
-
+              let hasActive = bread.detail.some(item=>{
+                return item.special_tag=="活动商品"
+              })
               this.setData({
+                hasActive,
                 type:selectType.type,
                 noallBread: selectType.noallBread,
                 noallCake: selectType.noallCake,
@@ -447,8 +450,11 @@ Page({
         util.setTabBarBadge(total_num)
         wx.setStorageSync('total_num', total_num)
         let selectType = this.getSelectType(bread,cake)
-
+        let hasActive = bread.detail.some(item=>{
+          return item.special_tag=="活动商品"
+        })
         this.setData({
+          hasActive,
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
@@ -626,6 +632,12 @@ Page({
     }
 
   },
+  showNotice(e) {
+
+    this.setData({
+      pop: 'tip-panel'
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -641,16 +653,17 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
     let instructions = wx.getStorageSync('instructions')
 
-
     if(instructions){
+      console.log(instructions);
       instructions = JSON.parse(instructions)
       let txt =instructions['cart-top'],
-          tipsBread = instructions['cart-bread-tips'],
-          tipsCake = instructions['cart-cake-tips']
+          // tipsBread = instructions['cart-bread-tips'],
+          tipsCake = instructions['cart-cake-tips'],
+          special_tips =instructions['special_tips']
       this.setData({
-        tipsBread,
         tipsCake,
-        instructions:txt
+        instructions:txt,
+        special_tips
       })
     }else{
       api.getIntroduction().then(res=>{
@@ -658,12 +671,13 @@ Page({
         if(res){
           instructions = res.instructions
           let txt =instructions['cart-top'],
-          tipsBread = instructions['cart-bread-tips'],
-          tipsCake = instructions['cart-cake-tips']
+          //tipsBread = instructions['cart-bread-tips'],
+          tipsCake = instructions['cart-cake-tips'],
+          special_tips =instructions['special_tips']
           this.setData({
-            tipsBread,
             tipsCake,
-            instructions:txt
+            instructions:txt,
+            special_tips
           })
           wx.setStorageSync("instructions", JSON.stringify(res.instructions))
           

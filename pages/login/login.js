@@ -127,17 +127,36 @@ Page({
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
 
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
-      })
-    }
+    var pages = getCurrentPages();
+    console.log(pages[pages.length - 2]);
+    var currPage = pages[pages.length - 2];
+    var path = currPage.route
+    var options = currPage.options
+    let temp = ''
+    Object.keys(options).forEach(key=>{
+      temp+=`${key}=${options[key]}&`
+    })
+    console.log(temp);
+    console.log(currPage);
+
+    // if (wx.getUserProfile) {
+    //   this.setData({
+    //     canIUseGetUserProfile: true
+    //   })
+    // }
     
     userInfo = userInfo && JSON.parse(userInfo)
-    if(userInfo.is_authed==1){
-      wx.switchTab({
-        url:'/pages/index/index'
-      })
+    if(userInfo.openid){
+      if(path=='pages/index/index'){
+        wx.switchTab({
+          url:'/pages/index/index'
+        })
+      }else{
+        wx.navigateTo({
+          url:`/${path}?${temp}`
+        })
+      }
+      
     }
     this.setData({
       userInfo:userInfo,

@@ -25,3 +25,4 @@ page{background: #F6F6F6;}
 .arrow-r{display: inline-block; width: 8px;height: 14px;vertical-align: middle;margin-left: 20rpx;top:20px}
 
 .formPanel .popPanel{top: 30%;}
+.pop-panel .close{display: none;}

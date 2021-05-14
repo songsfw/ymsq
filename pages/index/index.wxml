@@ -55,11 +55,9 @@
         </swiper>
         <view class="show-btn">查看</view>
       </view>
-
-      <view class="active" wx:if="{{subscribe_com.img && cidx==3}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
+      <view class="active" wx:if="{{subscribe_com.img && cidx==2}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
         <image class="" src="{{subscribe_com.img}}" mode="widthFix"></image>
       </view>
-
       <!-- 分类推荐 -->
       <view class='main-content'
         style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx"

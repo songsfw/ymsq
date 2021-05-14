@@ -62,7 +62,33 @@ Page({
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
+    let instructions = wx.getStorageSync('instructions')
 
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      let group_chat =instructions['group-chat'],
+      subscribeUrl =instructions['subscribe-article']
+      this.setData({
+        subscribeUrl,
+        group_chat
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let group_chat =instructions['group-chat'],
+              subscribeUrl =instructions['subscribe-article']
+          this.setData({
+            subscribeUrl,
+            group_chat
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
+    this.getMemoDay()
     this.setData({
       btmHolder:btmHolder||0,
       fixedTop
@@ -96,12 +122,30 @@ Page({
         break;
     }
   },
+  showRule(){
+    this.setData({
+      popShow:true
+    })
+  },
+  getMemoDay(){
+    api.getMemoDay().then(res=>{
+      console.log(res);
+      if(!res) return
+      const { list, doc ,available_day} = res;
+      let dateList = []
+      list.forEach((item,index)=>{
+        dateList[index] = item
+      })
+      this.setData({
+        dateList:dateList,
+        doc,
+        available_day
+      })
+    })
+  },
   toMemo(){
     if(!this.data.user.subscribe){
-      wx.showToast({
-        icon:"none",
-        title:"请先关注公众号"
-      })
+      this.showRule()
       return
     }
     wx.navigateTo({
@@ -111,6 +155,11 @@ Page({
   getUserCenter(){
     api.getUserCenter().then(res=>{
       console.log(res);
+      if(res.user.subscribe){
+        this.setData({
+          popShow:false
+        })
+      }
       this.setData({
         user:res.user,
         order_unpaid:parseInt(res.user.order_unpaid),
