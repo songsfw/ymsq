@@ -1,3 +1,4 @@
+@import "../../../template/loading/loading.wxss";
 page{background: #F6F6F6;padding-top: 48px;}
 .item .tips{align-items: top; color: #999;}
 .item .border{position: relative;color: #ccc;padding:20rpx 40rpx;overflow: hidden;margin-left: -24rpx;margin-right: -24rpx;}

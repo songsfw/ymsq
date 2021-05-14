@@ -25,7 +25,14 @@ Page({
     // backListCurrentTab:null,
     backNum:1,//1是详情页返回
   },
-
+  preview(e) {
+    console.log(e.currentTarget.dataset.src)
+    let currentUrl = e.currentTarget.dataset.src
+    wx.previewImage({
+      current: currentUrl, // 当前显示图片的http链接
+      urls: this.data.proInfo.banner // 需要预览的图片http链接列表
+    })
+  },
   //改变商品数量
   minusFitting: util.debounce(function () {
     let skuNum = this.data.skuNum
@@ -47,6 +54,12 @@ Page({
       skuNum: skuNum
     })
   }),
+  showTip(e) {
+
+    this.setData({
+      pop: 'tip-panel'
+    })
+  },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop,
       action = e.currentTarget.dataset.action
@@ -93,7 +106,12 @@ Page({
           totalNum: totalNum,
           pop: 0
         })
-
+        wx.reportAnalytics('addcart', {
+          type: '面包',
+          tab_id: proId,
+          city_id: city_id,
+          source:'详情页'
+        });
         //压入数据
         //改变的 页面实例 对应的参数
         if(this.data.ctabTypeMealIdSpuId){
@@ -151,6 +169,12 @@ Page({
             icon: "success",
             title: '加入购物车成功'
           })
+          wx.reportAnalytics('addcart', {
+            type: '1',
+            tab_id: proId,
+            city_id: city_id,
+            source:'detail'
+          });
           if (toCart == 1) {
             wx.navigateTo({
               url: "/pages/cart/cart/cart"
@@ -201,6 +225,7 @@ Page({
   onShow:function(){
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
+    console.log(currPage);
     let options = currPage.options
 
     let totalNum = wx.getStorageSync("total_num")
@@ -228,7 +253,29 @@ Page({
   onLoad: function () {
     
     let btmHolder = wx.getStorageSync('btmHolder')
+    let instructions = wx.getStorageSync('instructions')
 
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      console.log(instructions);
+      let special_tips =instructions['special_tips']
+      this.setData({
+        special_tips
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let special_tips =instructions['special_tips']
+          this.setData({
+            special_tips
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
     this.setData({
       btmHolder: btmHolder || 0,
     })

@@ -10,7 +10,7 @@ page{background: #F6F6F6;}
 .item .option{position: absolute;right:-336rpx;top: 0;height: 100%;width: 336rpx;}
 .del,.set-def{display: flex;align-items: center;justify-content: center; width: 168rpx; color: #fff;background: #E02020;height: 100%;}
 .set-def{background: #f6f6f6;color: #222;}
-.card-info{width: 588rpx;margin:50rpx auto 32rpx auto ;}
+.card-info{width: 588rpx;margin:32rpx auto 20rpx auto;}
 .card-code{font-size: 26rpx;color: #222;margin-bottom: 16rpx;}
 .num{margin-top: 32rpx;color: #999;text-align: center;}
 .card-code-img{background: #e2e2e2;}

@@ -6,6 +6,7 @@
   <view class="tit">选择充值金额</view>
   <view class="">当前余额:￥<text>{{money}}</text></view>
 </view>
+<block wx:if="{{chargeList.length>0}}">
 <view class="money-box">
   <view class="item flex {{item.checked?'checked':''}}" bind:tap="setDefault" wx:for="{{chargeList}}" data-idx="{{index}}" data-id="{{item.recharge_id}}" wx:key="recharge_id">
     <view class="money">
@@ -30,6 +31,8 @@
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
   <view class="btn" bindtap="charge">立即充值</view>
 </view>
+</block>
+<view class="loading" wx:else>{{chargeList?'奋力加载中...':'暂无数据'}}</view>
 <view style="height:{{60+btmHolder}}px"></view>
 
 <phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

@@ -5,7 +5,7 @@
     current="{{currentSwiper}}" indicator-dots>
     <block wx:for="{{proInfo.banner}}" wx:for-index="index">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" mode="aspectFill" />
+        <image src="{{item}}" data-src="{{item}}" bind:tap="preview" class="slide-image" mode="aspectFill" />
       </swiper-item>
     </block>
   </swiper>
@@ -21,12 +21,26 @@
 </view>
 
 <view class="content">
-  <view class="tips flex">
-    <view class="tit">温馨提示</view>
-    <view class="txt flex-1">
-      <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
-      <!-- <view><text>◉</text>若作为TOP1的升级版，所有的用心都藏在内
-  馅里，一口咬下去的满足只有尝过才知道。</view> -->
+  <view class="tips">
+    <view class="flex"> 
+      <view class="tit">温馨提示</view>
+      <view class="txt flex-1">
+        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
+      </view>
+    </view>
+    <view class="flex" bind:tap="showTip"> 
+      <view class="tit">优惠活动</view>
+      <view class="flex-1">
+        <view class="desc txt" style="color:#666">
+          <text class="blue-tag">免邮</text>
+          {{special_tips[0].title}}
+        </view>
+        <view class="desc txt" style="color:#666" wx:if="{{proInfo.activity_title}}">
+          <text class="blue-tag">免邮</text>
+          {{special_tips[1].title}}
+        </view>
+      </view>
+      <view class="iconfont icon-arrow-r"></view>
     </view>
   </view>
   <view class="detail" wx:if="{{proInfo.detail.length>0}}">
@@ -69,12 +83,23 @@
 
 </view>
 
+<view class="pop-panel btm-panel tip-panel {{pop=='tip-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="tit">优惠</view>
+    <view class="tip-item"><view class="h4 flex">{{special_tips[0].title}}</view><view class="txt">{{special_tips[0].desc}}</view></view>
+    <view class="tip-item" wx:if="{{proInfo.activity_title}}"><view class="h4 flex">{{special_tips[1].title}}</view><view class="txt">{{special_tips[1].desc}}</view></view>
+    <view class="confirm-btn btn" bind:tap="close">知道了</view>
+  </view>
+
+</view>
+
 <view class="pop-panel btm-panel score-panel {{pop=='bread-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="info flex">
       <view class="pic">
-        <image src="{{proInfo.image}}" mode="scaleToFill"></image>
+        <image src="{{proInfo.image2}}" mode="scaleToFill"></image>
       </view>
       <view class="h3 flex">
         <view class="tit">{{proInfo.name}}</view>

@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    point:0,
     pointList:[],
     page:1
   },
@@ -22,7 +23,7 @@ Page({
       if(!res){
         this.setData({
           noMoreData: true,
-          pointList:[]
+          pointList:null
         })
         return false
       }
@@ -102,7 +103,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

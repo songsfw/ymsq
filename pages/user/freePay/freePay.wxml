@@ -19,7 +19,7 @@
     </view>
   </view>
   <view class="item flex">
-    <view><text>余额支付密码</text><text class="tag" wx:if="{{pwd_set}}">已设置</text></view>
+    <view class="flex-center"><text>余额支付密码</text><text class="tag" wx:if="{{pwd_set}}">已设置</text></view>
     <view class="edit">
       <text wx:if="{{pwd_set==0}}" bind:tap="changePwd">未设置</text>
       <text wx:else bind:tap="editPwd">修改</text>
@@ -70,4 +70,4 @@
     <view class="get-code color-b" wx:else><text>{{second}}</text></view>
   </view>
 </pop-panel>
-<phonePanel class="phonePanel" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
+<phonePanel class="phonePanel" maskTouch="{{false}}" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

@@ -45,12 +45,6 @@ Page({
       curitem:e.currentTarget.dataset.id,
     })
   },
-  onblur(){
-    console.log("111");
-    this.setData({
-      curitem:-1
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -112,9 +106,6 @@ Page({
       showDate:false,
       val:[],
     })
-  },
-  setClickDate(){
-
   },
   getDateList(def){
     console.log(def)
@@ -293,6 +284,9 @@ Page({
     api.setMemoDay(data).then(res=>{
       console.log(res);
       if(!res) return
+      this.setData({
+        curitem:-1
+      })
       wx.showToast({
         title: '纪念日设置成功'
       })

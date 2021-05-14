@@ -19,9 +19,9 @@ const returnData = res=>{
         return
       }
       isLogin=1
-      wx.navigateTo({
-        url: '/pages/login/login'
-      })
+      // wx.navigateTo({
+      //   url: '/pages/login/login'
+      // })
     }else if(data.status==1022){
       isLogin = 0
       console.log('未绑定手机');
@@ -42,8 +42,8 @@ const returnData = res=>{
     }
   }else if(res.statusCode == 500){
     wx.showModal({
-      title: '服务器错误',
-      content: '服务器错误，请刷新重试',
+      title: '网络错误',
+      content: '网络错误，请刷新重试',
       showCancel: false
     })
   }

@@ -11,16 +11,19 @@
     </view>
     <view class="money-box">
       <view class="h3 flex-center"><text ></text>麦点明细<text ></text></view>
-      <view class="item flex"  wx:for="{{pointList}}">
-        <view class="">
-          <view class="tit">{{item.title}}</view>
-          <view class="date">{{item.create_time}}</view>
+      <block wx:if="{{pointList.length>0}}">
+        <view class="item flex"  wx:for="{{pointList}}">
+          <view class="">
+            <view class="tit">{{item.title}}</view>
+            <view class="date">{{item.create_time}}</view>
+          </view>
+          <view class="price">{{item.symbol}}￥{{item.score}}</view>
         </view>
-        <view class="price">{{item.symbol}}￥{{item.score}}</view>
-      </view>
+      </block>
+      <view class="loading" wx:else>{{pointList?'奋力加载中...':'暂无数据'}}</view>
     </view>
-    <view class="logo">
+    <!-- <view class="logo">
       <image src="../../../image/logo.png"></image>
-    </view>
+    </view> -->
   </scroll-view>  
 </view>

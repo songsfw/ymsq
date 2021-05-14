@@ -104,7 +104,7 @@ Page({
     if(selectTag.length==0){
       wx.showToast({
         icon:"none",
-        title:"暂未选择标签"
+        title:"请为本次购物选择标签"
       })
       return
     }
@@ -178,7 +178,7 @@ Page({
           curTags:res.commentTags,
           proList:detail,
           score:initScore,
-          reward_price:res.reward_price
+          price:res.reward_price
         })
         return
       }

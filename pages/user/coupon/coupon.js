@@ -59,13 +59,6 @@ Page({
   },
   switchTab: function (e) {
     var currentId = e.currentTarget.dataset.tabid
-    let {
-      pageInfo,
-      mallLi,
-      shopLi,
-      usedLi,
-      expiredLi
-    } = this.data
     if (this.data.currentTab === currentId) {
       return false;
     } else {
@@ -76,6 +69,9 @@ Page({
   },
 
   getCoupon() {
+    this.setData({
+      showLoading: true
+    })
     api.getCoupon().then(res => {
       console.log(res);
       if (!res) return
@@ -108,6 +104,7 @@ Page({
       expiredLi = res.expired
 
       this.setData({
+        showLoading: false,
         pageInfo: obj,
         ['mallLi[' + (obj.mall.pageNum - 1) + ']']: this.getCurrList(mallLi, 1),
         ['shopLi[' + (obj.shop.pageNum - 1) + ']']: this.getCurrList(shopLi, 1),

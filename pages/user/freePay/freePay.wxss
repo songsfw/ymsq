@@ -2,7 +2,7 @@ page{background: #F6F6F6;}
 .innerwrap{border-top:20rpx solid #f6f6f6;background:#fff}
 .item{position: relative; padding:0 24rpx;border-bottom: 1px solid #F6F6F6;justify-content: space-between;align-items: center;line-height: 98rpx;font-size: 15px;}
 .item .tag{margin-left: 16rpx; font-size: 10px;color: #FA603D;
-  background: rgba(250, 96, 61, 0.1);padding:0 10rpx;line-height: 1;border-radius: 8rpx;border: 1px solid #FA603D;box-sizing: border-box;}
+  background: rgba(250, 96, 61, 0.1);padding:5rpx 10rpx;line-height: 1;border-radius: 8rpx;border: 1px solid #FA603D;box-sizing: border-box;}
 .picker,.edit{color: #C1996B;text-align: right;}
 
 .inputxt{align-items: center;border-bottom: 1px solid #F6F6F6;height: 49px;line-height: 49px;}
@@ -15,7 +15,7 @@ page{background: #F6F6F6;}
 .get-code{margin: 38rpx 0 0 0;font-size: 15px;}
 
 .show-more-main{display:flex;flex-direction:column;}
-.show-more{display: flex;flex-direction: row;justify-content:space-between;position: absolute;top:20px;right:0;}
+.show-more{position: absolute;top:0;right:0;}
 .show-more-true{display:block}
 .show-more-false{display:none}
 .arrow-bottom{margin-left: 10rpx;top:19px;}
@@ -25,3 +25,4 @@ page{background: #F6F6F6;}
 .arrow-r{display: inline-block; width: 8px;height: 14px;vertical-align: middle;margin-left: 20rpx;top:20px}
 
 .formPanel .popPanel{top: 30%;}
+.pop-panel .close{display: none;}

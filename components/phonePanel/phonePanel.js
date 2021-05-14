@@ -1,5 +1,6 @@
 const util = require('../../utils/util.js')
 const api = require('../../utils/api.js')
+const auth = require('../../utils/auth.js')
 Component({
   options:{
     styleIsolation:"apply-shared",
@@ -44,11 +45,13 @@ Component({
           iv:detail.iv
         }
         api.wxPhone(data).then(res=>{
+          
           console.log(res);
           if(!res){
+            auth.getLoginInfo()
             wx.showToast({
               icon:"none",
-              title:"绑定失败"
+              title:"网络繁忙,请重试"
             })
             return
           }
@@ -62,9 +65,10 @@ Component({
           this.triggerEvent('phoneSucess')
         })
       }else{
+        auth.getLoginInfo()
         wx.showToast({
           icon:"none",
-          title:"绑定失败"
+          title:"网络繁忙,请重试"
         })
       }
     },

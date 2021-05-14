@@ -1,6 +1,6 @@
 import {md5} from './md5';
 
-let ENV = 'dev'  //环境 pro:正式  dev:测试
+let ENV = 'pro'  //环境 pro:正式  dev:测试
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 var platform = ENV == 'pro' ? 'xcx' : 'wxxcx'
@@ -84,13 +84,54 @@ const request = (method,url,data,needToken=true)=>{
   })
 }
 
+function wxLogin() {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        console.log(res);
+        let code = res.code
+        resolve(code)
+      },
+      fail: function () {
+        wx.showModal({
+          title: '登录失败',
+          content: '登录失败，请刷新重试',
+          showCancel: false
+        })
+      }
+    })
+  })
+}
+function getLoginInfo() {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        console.log(res);
+        let code = res.code
+        resolve(code)
+      },
+      fail: function () {
+        wx.showModal({
+          title: '登录失败',
+          content: '登录失败，请刷新重试',
+          showCancel: false
+        })
+      }
+    })
+  })
+}
 
 function getReq(url, data = {}, needToken) {
+  
   return request("GET",url,data,needToken)
 }
 function postReq(url, data = {}, needToken) {
   return request("POST",url,data,needToken)
 }
+// async function postReq(url, data = {}, needToken) {
+
+//   return request("POST",url,data,needToken)
+// }
 
 module.exports = {
   GET: getReq,

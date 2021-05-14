@@ -201,7 +201,7 @@
       data-pop="showCoupon">
       <view class="name coupon">
         优惠券
-        <text wx:if="{{useDiscount}}">已选推荐优惠</text>
+        <text wx:if="{{useDiscount}}">已选择最佳优惠</text>
         <!-- <image src="../../../image/icon-coupon.png"></image> -->
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
@@ -221,7 +221,7 @@
     </view>
     <view class="flex-center" wx:if="{{pay_style.third_card==1}}" bind:tap="useCard" data-type="2">
       <view class="name">
-        多美味卡
+        多美味/中票娱乐卡
         <text class="tip">(第三方礼品卡)</text>
       </view>
       <view class="val">

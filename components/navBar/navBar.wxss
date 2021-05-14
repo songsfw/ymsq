@@ -28,7 +28,7 @@
 .return{position: absolute;z-index: 2;width: 70rpx;height: 100%;left: 0;top: 0;box-sizing: border-box;padding-left: 30rpx;}
 .return .arrow-left{position: absolute;left: 50%;top: 50%;transform: translate(0,-50%);}
 .return .arrow-left:after{border-color: #fff;
-    border-width: 1px;
+    border-width: 2px;
     width: 12px;
     height: 12px;}
 .homebtn{display: flex;
@@ -58,6 +58,9 @@
 
 .navBarWrap.transparent .navBar{background: none;}
 .navBarWrap.transparent .title{display: none;}
+
+.navBarWrap .navBar,
+.navBarWrap .navBar .navwrap{transition: background-color .3s linear;}
 .navBarWrap.fold .navBar,
 .navBarWrap.fold .navBar .navwrap{background: #fff;}
 .navBarWrap.fold{border-bottom: 1px solid #F6F6F6;}

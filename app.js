@@ -17,10 +17,8 @@ App({
       console.log(res);
       if(res){
         wx.setStorageSync("instructions", JSON.stringify(res.instructions))
-        
       }
     })
-    
     this.init()
   },
   async init() {
@@ -52,10 +50,7 @@ App({
           user_id: user_id,
           is_authed: is_authed,
           is_mobile: is_mobile,
-          openid: openid,
-          nickname: user_info.nickname,
-          photo: user_info.head_url,
-          phone: user_info.mobile
+          openid: openid
         }
         wx.setStorageSync("userInfo", JSON.stringify(userInfo))
 
@@ -105,11 +100,9 @@ App({
           console.log(addressInfo);
           wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
         }
-        //if(is_authed!=1){
-          wx.navigateTo({
-            url: '/pages/login/login'
-          })
-        //}
+        wx.navigateTo({
+          url: '/pages/login/login'
+        })
         
       }
     }
@@ -117,27 +110,6 @@ App({
     await this.getBtmHolder()
     wx.hideLoading()
   },
-
-  // getUserInfo(){
-  //   return new Promise(function(resolve,reject){
-  //     auth.getLoginInfo().then(res=>{
-  //       console.log(res);
-  //       if(res.statusCode==200){
-  //         let {openid,user_info,user_id} = res.data.result
-  //         let userInfo = {
-  //           user_id:user_id,
-  //           openid:openid,
-  //           nickname:user_info.nickname,
-  //           photo:user_info.head_url,
-  //           phone:user_info.mobile
-  //         }
-  //         resolve(userInfo)
-  //         openid && wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-  //       }
-
-  //     })
-  //   })
-  // },
   getBtmHolder() {
     return new Promise(function (resolve, reject) {
       wx.getSystemInfo({

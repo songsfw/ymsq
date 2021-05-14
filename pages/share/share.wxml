@@ -35,10 +35,10 @@
   <view class="hd"><image src="../../image/tit1.png" /><text >看看大家手气</text></view>
   <view class="list">
     <view class="item flex" wx:for="{{users}}">
-      <image src="{{item.user.head_url}}"></image>
+      <image src="{{item.user.head_url || '../../image/no-photo.png'}}"></image>
       <view class="txt flex-1 text-overflow">
         <view class="tit flex-center">
-          <text class="name ">{{item.user.nickname}}</text>
+          <text class="name ">{{item.user.nickname || '匿名用户'}}</text>
           <text class="date">{{item.create_time}}</text>
         </view>
         <view class="notice">{{item.remark}}</view>

@@ -6,6 +6,7 @@
   "navigationBarTextStyle":"black",
   "navigationStyle": "custom",
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "pop-panel": "/components/pop-panel/pop-panel"
   }
 }

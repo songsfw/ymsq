@@ -16,15 +16,15 @@ Page({
   onLoad: function (options) {
     let orderCode = options.orderCode
 
-    wx.getUserInfo({
-      success:res=> {
-        var userInfo = res.userInfo
-        var avatarUrl = userInfo.photo
-        this.setData({
-          avatarUrl:avatarUrl
-        })
-      }
-    })
+    // wx.getUserInfo({
+    //   success:res=> {
+    //     var userInfo = res.userInfo
+    //     var avatarUrl = userInfo.photo
+    //     this.setData({
+    //       avatarUrl:avatarUrl
+    //     })
+    //   }
+    // })
 
     this.setData({
       orderCode: orderCode
@@ -104,7 +104,6 @@ Page({
     api.hongbao(data).then(res=>{
       console.log(res);
       if(res){
-        
         let best_reward = res.best_reward,
             users = res.userRewardDataReader
         if(res.is_received){

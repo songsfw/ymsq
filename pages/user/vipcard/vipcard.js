@@ -9,10 +9,9 @@ Page({
    */
   data: {
     canInterval: true, //判断能不能轮询，切换到后台时不进行轮询
-    pay_code: '1234567890123456789',
     card_no: '',
     show:true,
-    balance:"0"
+    balance:"--"
   },
   /**
    * 生命周期函数--监听页面加载

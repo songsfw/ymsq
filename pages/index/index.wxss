@@ -1,9 +1,8 @@
 /**index.wxss**/
 page{background: #F4F9F5;}
-.fixedNav{position:fixed;width:100%;left:0;top:0; height:64px;z-index:22}
-.fixedNav.fixed{background-color: #fff;}
+.fixedNav{position:fixed;width:100%;left:0;top:0; height:64px;z-index:22;}
+/* .fixedNav.fixed{background-color: #fff;} */
 view{font-size:12px}
-.wrap-all{padding: 10px;}
 .navigator-hover{background-color: none;}
 .item{box-sizing: border-box}
 .col-2 .item{width: 50%;}
@@ -87,7 +86,9 @@ font-size: 12px;
 color: #666;
 }
 .swiper_item b{color: #000;font-weight: normal;}
-.search{position: fixed;left: 0;top: 0;right:0;margin:0 24rpx;box-sizing: border-box;z-index: 2;color: #999;background-color: #fff;padding-left: 10px;border-radius: 4rpx;}
+
+.search{position: fixed;left: 0;top: 0;right:0;margin:0 24rpx;box-sizing: border-box;z-index: 2;color: #999;background-color: #fff;padding-left: 10px;border-radius: 4rpx;transition: all .3s linear;opacity: 1;}
+.search.fixed{transform: translateY(-100%);opacity: 0;}
 .search text{font-size: 14px;}
 .search input{height:34px;line-height: 34px;margin-left: 10px;font-size: 14px;}
 .moreBtn{text-align: center;padding-top: 20rpx}
@@ -146,7 +147,7 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .iwx{width: 750rpx;height: 240rpx;}
 .main-content{padding: 25rpx 0;background-color: #F4F9F5;margin: 25rpx 0;}
 
-.notice-panel .popPanel{background: url(http://api-beta.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
+.notice-panel .popPanel{background: url(https://api.withwheat.com/img/panel-bg.png) no-repeat 0 0;width: 592rpx;background-size: 100% 100%;}
 .notice-panel .pop-body{padding-top:15px;}
 .pop-con view {font-weight:lighter;}
 .my-tip{display: flex;flex-direction: row;}
@@ -154,3 +155,5 @@ color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .my-tip-dian{line-height: 20px;font-size:11px;margin-top: 3px;}
 
 .notice-panel .pop-title{padding-top: 17px;}
+
+.loading{text-align: center;color: #999;position: absolute;width: 100%;left: 0;top: 50%;transform: translate(0,-50%);}

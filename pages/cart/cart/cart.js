@@ -115,7 +115,11 @@ Page({
               }
               wx.setStorageSync('total_num', total_num)
               let selectType = this.getSelectType(bread,cake)
+              let hasActive = bread.detail.some(item=>{
+                return item.special_tag=="活动商品"
+              })
               this.setData({
+                hasActive,
                 type:selectType.type,
                 noallBread: selectType.noallBread,
                 noallCake: selectType.noallCake,
@@ -147,6 +151,25 @@ Page({
     // let queryNode = query.selectAll('.pro-box')
     // return false;
     
+  },
+  showTip(){
+    wx.showToast({
+      icon:"none",
+      title:"蛋糕配件不允许单独购买，请与蛋糕一同购买",
+      duration:3000
+    })
+  },
+  toProInfo: function (e) {
+    let proId = e.currentTarget.dataset.proid
+    let type = e.currentTarget.dataset.type,isfit=e.currentTarget.dataset.isfit
+    if(isfit==1){
+      return
+    }
+    let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + proId + "";
+    console.log(url)
+    wx.navigateTo({
+      url: url
+    })
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
@@ -443,7 +466,12 @@ Page({
           app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
         }
 
+        let hasActive = bread.detail.some(item=>{
+          return item.special_tag=="活动商品"
+        })
+
         this.setData({
+          hasActive,
           type:selectType.type,
           noallBread: selectType.noallBread,
           noallCake: selectType.noallCake,
@@ -604,6 +632,12 @@ Page({
     }
 
   },
+  showNotice(e) {
+
+    this.setData({
+      pop: 'tip-panel'
+    })
+  },
   getCartInfo() {
     let total_num = wx.getStorageSync("total_num")
     if (total_num) {
@@ -631,10 +665,11 @@ Page({
       if(instructions){
         instructions = JSON.parse(instructions)
         let txt =instructions['cart-top'],
-            tipsBread = instructions['cart-bread-tips'],
-            tipsCake = instructions['cart-cake-tips']
+            // tipsBread = instructions['cart-bread-tips'],
+            tipsCake = instructions['cart-cake-tips'],
+            special_tips =instructions['special_tips']
         this.setData({
-          tipsBread,
+          special_tips,
           tipsCake,
           instructions:txt
         })
@@ -644,10 +679,11 @@ Page({
           if(res){
             instructions = res.instructions
             let txt =instructions['cart-top'],
-            tipsBread = instructions['cart-bread-tips'],
-            tipsCake = instructions['cart-cake-tips']
+            // tipsBread = instructions['cart-bread-tips'],
+            tipsCake = instructions['cart-cake-tips'],
+            special_tips =instructions['special_tips']
             this.setData({
-              tipsBread,
+              special_tips,
               tipsCake,
               instructions:txt
             })

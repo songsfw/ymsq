@@ -4,7 +4,7 @@
   <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}" indicator-dots>
     <block wx:for="{{proInfo.banner}}" wx:for-index="index">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" mode="aspectFill" />
+        <image src="{{item}}" data-src="{{item}}" bind:tap="preview"  class="slide-image" mode="aspectFill" />
       </swiper-item>
     </block>
   </swiper>
@@ -15,18 +15,25 @@
     <!-- <view class="tag">最快次日达</view> -->
   </view>
   <view class="tit"><text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text>{{proInfo.name}}</view>
-  <view class="desc" style="margin-bottom:20rpx">{{proInfo.chinese_brief}}</view>
+  <view class="desc" style="border:none">{{proInfo.chinese_brief}}</view>
   <view class="desc">{{proInfo.french_brief}}</view>
   <view class="tags flex"><text wx:for="{{proInfo.fname}}">{{item}}</text></view>
 </view>
 
 <view class="content">
-  <view class="tips flex">
-    <view class="tit">温馨提示</view>
-    <view class="txt flex-1">
-      <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
-      <!-- <view><text>◉</text>若作为TOP1的升级版，所有的用心都藏在内
-  馅里，一口咬下去的满足只有尝过才知道。</view> -->
+  <view class="tips">
+    <view class="flex"> 
+      <view class="tit">温馨提示</view>
+      <view class="txt flex-1">
+        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
+      </view>
+    </view>
+    <view class="flex-center" wx:if="{{proInfo.special_tag}}" bind:tap="showTip"> 
+      <view class="tit">优惠活动</view>
+      <view class="txt flex-1 text-overflow" style="color:#666">
+        <!-- <text class="blue-tag">免邮</text> -->
+        {{proInfo.activity_title}}</view>
+      <view class="iconfont icon-arrow-r"></view>
     </view>
   </view>
   <view class="detail" wx:if="{{proInfo.details.length>0}}">

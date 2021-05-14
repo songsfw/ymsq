@@ -29,7 +29,7 @@ Page({
     filter: 0
   },
   toPro(e) {
-    let urlType = e.currentTarget.dataset.type;
+    let urlType = e.currentTarget.dataset.type.toString();
     let url = e.currentTarget.dataset.url;
     console.log(urlType, url);
     switch (urlType) {
@@ -120,6 +120,9 @@ Page({
 
   },
   getIndexInfo: function () {
+    this.setData({
+      showLoading:true
+    })
     let city_id = this.data.addressInfo.city_id
     let data = {
       city_id: city_id == 0 ? "10216" : city_id
@@ -127,7 +130,7 @@ Page({
     api.getIndexInfo(data).then(res => {
       console.log(res);
       if(res){
-        let {notice,operate,message,show_subscribe} = res
+        let {notice,operate,message,subscribe_com} = res
         if(!operate){
           return
         }
@@ -165,6 +168,8 @@ Page({
           banner,
           menu,
           message,
+          subscribe_com,
+          showLoading:false,
           // block1:block1 || null,
           // block2:block2 || null,
           // block3:block3 || null,

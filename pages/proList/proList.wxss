@@ -26,8 +26,7 @@ page{background: #F9F9F9;height: auto;}
     margin-right: 10rpx;
     background: linear-gradient(to right,#ffa052,#f52422);
     border-radius: 8rpx;
-    margin-bottom: 0;
-    vertical-align: baseline;}
+    margin-bottom: 0;}
 .item .tags{padding: 0 20rpx 0 ;box-sizing: border-box;}
 .item .tags text{display:block;text-overflow: ellipsis;word-break:keep-all;overflow:hidden; font-size:12px;color: #999999;height: 18px;line-height: 18px; padding: 0 0px;border-radius:9px;margin-right: 5px;}
 .item .price{position: relative; justify-content: space-between;padding: 0 20rpx;height: 44px; align-items: center;}
@@ -51,7 +50,7 @@ page{background: #F9F9F9;height: auto;}
 .sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 12px 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
 .sub text{padding: 0 12px;line-height: 30px;background: #fff;border-radius: 15px;margin-right: 10px;flex-shrink: 0;font-size: 14px;}
-.sub-wrap{height: 42px;}
+.sub-wrap{height: 42px;position: sticky;z-index: 20;}
 .sub text.on{background:#C1996B;color: #fff;}
 .sub-wrap>.sub.sub-cake{padding: 0; }
 .moreBtn{text-align: center;padding-top: 20rpx}

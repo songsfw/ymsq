@@ -59,7 +59,7 @@
       <view class="pro-list">
         <view class="item flex" wx:for="{{proList}}">
           <view class="flex-center" style="overflow:hidden">
-            <image src="{{item.image_url}}" mode="aspectFill"></image>
+            <image src="{{item.image_url}}" mode="aspectFill" wx:if="{{item.image_url}}"></image>
             <text class="name text-overflow">{{item.name}}</text>
           </view>
           <view class="flex">

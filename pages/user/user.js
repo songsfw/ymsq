@@ -16,7 +16,9 @@ Page({
     orderlist:[],
     userLevel :{0:'普通会员',3:'试用会员',4:'金麦会员'},
     count:0,
-    user:null
+    user:null,
+    order_unpaid:0,
+    order_dispatching:0
   },
   getTab:function(e){
     let index = e.currentTarget.dataset.tabid;
@@ -60,7 +62,33 @@ Page({
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
+    let instructions = wx.getStorageSync('instructions')
 
+    if(instructions){
+      instructions = JSON.parse(instructions)
+      let group_chat =instructions['group-chat'],
+      subscribeUrl =instructions['subscribe-article']
+      this.setData({
+        subscribeUrl,
+        group_chat
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let group_chat =instructions['group-chat'],
+              subscribeUrl =instructions['subscribe-article']
+          this.setData({
+            subscribeUrl,
+            group_chat
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
+    this.getMemoDay()
     this.setData({
       btmHolder:btmHolder||0,
       fixedTop
@@ -75,9 +103,63 @@ Page({
   onReady: function () {
 
   },
+  toPro(e) {
+    let urlType = e.currentTarget.dataset.type.toString();
+    let url = e.currentTarget.dataset.url;
+    console.log(urlType, url);
+    switch (urlType) {
+      case "1":
+        wx.navigateTo({
+          url: "/pages/web/web?url=" + url
+        })
+        break;
+      case "5":
+        wx.navigateTo({
+          url: url
+        })
+        break;
+      default:
+        break;
+    }
+  },
+  showRule(){
+    this.setData({
+      popShow:true
+    })
+  },
+  getMemoDay(){
+    api.getMemoDay().then(res=>{
+      console.log(res);
+      if(!res) return
+      const { list, doc ,available_day} = res;
+      let dateList = []
+      list.forEach((item,index)=>{
+        dateList[index] = item
+      })
+      this.setData({
+        dateList:dateList,
+        doc,
+        available_day
+      })
+    })
+  },
+  toMemo(){
+    if(!this.data.user.subscribe){
+      this.showRule()
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/user/memoDay/memoDay'
+    })
+  },
   getUserCenter(){
     api.getUserCenter().then(res=>{
       console.log(res);
+      if(res.user.subscribe){
+        this.setData({
+          popShow:false
+        })
+      }
       this.setData({
         user:res.user,
         order_unpaid:parseInt(res.user.order_unpaid),

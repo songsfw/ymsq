@@ -2,8 +2,8 @@ const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let delivery = 10,
   mai = 0,
-  coupon = 0,
-  isPaying=false
+  coupon = 0
+  
 let txtCard = null,
   cartid = null,
   txt = ''
@@ -15,6 +15,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isPaying:false,
     is_ziti: "0",
     proNum: 2,
     showAll: false,
@@ -219,16 +220,19 @@ Page({
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
-    this.setData({
-      pop: pop
-    })
+    
     console.log(this.data)
     if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
         title: "请先选择可配送地址"
       })
+      return
     }
+
+    this.setData({
+      pop: pop
+    })
 
   },
   //麦点抵扣
@@ -860,11 +864,6 @@ Page({
       }
     }
 
-    if(isPaying){
-      return
-    }
-    isPaying=true  //正在支付
-    
     console.log(payQueue)
     console.log(balance_price)
 
@@ -914,22 +913,40 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
+
+    if(this.data.isPaying){
+      return
+    }
+    this.setData({
+      isPaying:true
+    })  //正在支付
+
     api.submmitOrder(data).then(res => {
       wx.hideLoading();
       console.log(res)
       if (!res) {
-        return
-      }
-
-      if (res == app.globalData.bindPhoneStat) {
         this.setData({
-          phoneStat: 1,
-          showPhonePanel: true
+          isPaying:false
         })
         return
       }
-      isPaying=false
+      
+      if (res == app.globalData.bindPhoneStat) {
+        this.setData({
+          phoneStat: 1,
+          showPhonePanel: true,
+          isPaying:false
+        })
+        return
+      }
+      this.setData({
+        isPaying:false
+      })
       let order_code = res.orderCode
+      //清除已记住的卡号密码
+      app.globalData.cardNo = ''
+      app.globalData.cardPwd = ''
+
       if (res.callPay) {
         let jsApiParameters = res.jsApiParameters
         let {
@@ -938,7 +955,7 @@ Page({
           signType,
           paySign
         } = jsApiParameters
-
+        wx.showLoading()
         wx.requestPayment({
           timeStamp: timeStamp,
           nonceStr: nonceStr,
@@ -952,11 +969,11 @@ Page({
               icon: 'none',
               duration: 1000,
               success: function () {
-                setTimeout(function () {
-                  wx.redirectTo({
-                    url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
-                  })
-                }, 1000)
+                wx.hideLoading()
+                wx.redirectTo({
+                  url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
+                })
+   
               }
             })
 
@@ -968,6 +985,7 @@ Page({
               icon: 'none',
               duration: 2000
             })
+            wx.hideLoading()
             wx.redirectTo({
               url: '/pages/user/order/order?type=1'
             })
@@ -978,14 +996,14 @@ Page({
           icon: "success",
           title: "支付成功"
         })
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
-          })
-        }, 1000)
+        wx.hideLoading()
+        wx.redirectTo({
+          url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
+        })
+        
       }
     })
-  },500),
+  },500,true),
   inputCard: util.debounce(function (e) {
     console.log('inputCard')
     let temp = e.detail.value
@@ -1236,9 +1254,11 @@ Page({
           duration: 2000
         })
         this.setData({
-          verifyed: true
+          popShow: false,
+          useBalance: true,
+          verifyed: true,
+          unuse: true
         })
-        this.closePanel()
         if (this.data.balanceInfo.pwd_set == 0) {
           //this.setBalancePrice()
           this.setData({

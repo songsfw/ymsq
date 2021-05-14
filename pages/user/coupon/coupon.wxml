@@ -1,3 +1,6 @@
+<!-- pages/user/order.wxml -->
+<import src="../../../template/loading/loading.wxml"/>
+<template is="loading" data="{{showLoading}}"></template>
 <!-- pages/user/user.wxml -->
 <view class="menu flex">
   <view bind:tap="switchTab" class="{{currentTab==0 ? 'on' : ''}}" data-tabid="0">
@@ -19,46 +22,48 @@
 </view>
 
 <view class="card" hidden="{{currentTab!=0}}">
-
-  <block wx:for="{{mallLi}}" wx:for-item="list">
-    <view class="item" wx:for="{{list}}" wx:key="id">
-      <view class="" wx:if="{{item.tag==''}}">{{item.tag}}</view>
-      <view class="{{item.tag=='快过期'?'tag tag1':'tag new'}}" wx:else>{{item.tag}}</view>
-      <view class="flex">
-        <view class="coupon-num flex">
-          <image src="../../../image/coupon1.png"></image>
-          <view class="txt">
-            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.money}}</text>张</view>
-            <view class="num" wx:if="{{item.cost_type==2}}">￥<text>{{item.money}}</text></view>
-            <text>{{item.remark}}</text>
+  <block wx:if="{{pageInfo.mall.count>0}}">
+    <block wx:for="{{mallLi}}" wx:for-item="list">
+      <view class="item" wx:for="{{list}}" wx:key="id">
+        <view class="" wx:if="{{item.tag==''}}">{{item.tag}}</view>
+        <view class="{{item.tag=='快过期'?'tag tag1':'tag new'}}" wx:else>{{item.tag}}</view>
+        <view class="flex">
+          <view class="coupon-num flex">
+            <image src="../../../image/coupon1.png"></image>
+            <view class="txt">
+              <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}</text>张</view>
+              <view class="num" wx:if="{{item.cost_type==2}}">￥<text>{{item.money}}</text></view>
+              <text>{{item.remark}}</text>
+            </view>
+          </view>
+          <view class="coupon-info flex-1">
+            <view class="tit">{{item.name}}</view>
+            <view class="date">{{item.valid_time}}</view>
+            <view class="txt flex">
+              <text>{{item.desc1}}</text>
+              <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去使用</navigator>
+            </view>
           </view>
         </view>
-        <view class="coupon-info flex-1">
-          <view class="tit">{{item.name}}</view>
-          <view class="date">{{item.valid_time}}</view>
-          <view class="txt flex">
-            <text>{{item.desc1}}</text>
-            <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去使用</navigator>
-          </view>
+        <view class="border">
+          <view></view>
         </view>
-      </view>
-      <view class="border">
-        <view></view>
-      </view>
-      <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
-        data-type="mallLi">
-        <view class="show-more">
-          <view id="desc2MallFont_{{item.id}}">使用规则</view>
+        <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+          data-type="mallLi">
           <view class="show-more">
-            <view>{{showStatus[item.id] ?'展开': '收起'}}</view>
-            <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+            <view id="desc2MallFont_{{item.id}}">使用规则</view>
+            <view class="show-more">
+              <view>{{showStatus[item.id] ?'展开': '收起'}}</view>
+              <view class="arrow-bottom {{showStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}"></view>
+            </view>
           </view>
+          <view class="flex-view-item {{showStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}</view>
         </view>
-        <view class="flex-view-item {{showStatus[item.id]?'show-more-false':'show-more-true'}}">{{item.desc2}}</view>
       </view>
-    </view>
+    </block>
+    <view wx:if="{{pageInfo.mall.noMoreData}}" class="more-btn">我可是有底线的</view>
   </block>
-  <block wx:if="{{pageInfo.mall.count==0}}">
+  <block wx:if="{{pageInfo.mall.count==0&&!showLoading}}">
     <view class="nodata">
       <view>
         <image src="../../../image/no-coupon.png"></image>
@@ -66,10 +71,7 @@
       <view class="txt">暂无优惠券</view>
     </view>
   </block>
-  <block wx:else>
-    <view wx:if="{{pageInfo.mall.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
-  </block>
+  
 </view>
 
 <view class="card" hidden="{{currentTab!=1}}">
@@ -82,7 +84,7 @@
         <view class="coupon-num flex">
           <image src="../../../image/coupon2.png"></image>
           <view class="txt">
-            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.money}}</text>张</view>
+            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}</text>张</view>
             <view class="num" wx:if="{{item.cost_type==2}}">￥<text>{{item.money}}</text></view>
             <text>{{item.remark}}</text>
           </view>
@@ -125,10 +127,6 @@
       <view class="txt">暂无优惠券</view>
     </view>
   </block>
-  <block wx:else>
-    <!-- <view wx:if="{{pageInfo.shop.noMoreData}}" class="more-btn">我可是有底线的</view> -->
-    <view wx:if="{{!pageInfo.shop.noMoreData}}" class="more-btn">加载中...</view>
-  </block>
 </view>
 
 <view class="card" hidden="{{currentTab!=2}}">
@@ -139,7 +137,7 @@
         <view class="coupon-num flex">
           <image src="../../../image/coupon1-1.png"></image>
           <view class="txt">
-            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.money}}</text>张</view>
+            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}</text>张</view>
             <view class="num" wx:if="{{item.cost_type==2}}">￥<text>{{item.money}}</text></view>
             <text>{{item.remark}}</text>
           </view>
@@ -179,7 +177,6 @@
   </block>
   <block wx:else>
     <view wx:if="{{pageInfo.used.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
   </block>
 </view>
 
@@ -190,7 +187,7 @@
         <view class="coupon-num flex">
           <image src="../../../image/coupon1-1.png"></image>
           <view class="txt">
-            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.money}}</text>张</view>
+            <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}</text>张</view>
             <view class="num" wx:if="{{item.cost_type==2}}">￥<text>{{item.money}}</text></view>
             <text>{{item.remark}}</text>
           </view>
@@ -230,6 +227,5 @@
   </block>
   <block wx:else>
     <view wx:if="{{pageInfo.expired.noMoreData}}" class="more-btn">我可是有底线的</view>
-    <view wx:else class="more-btn">加载中...</view>
   </block>
 </view>

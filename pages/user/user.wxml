@@ -7,9 +7,9 @@
 
     <view class="topinfo">
       <view class="user-top flex">
-        <image class="photo" src="{{userInfo.photo}}"></image>
+        <open-data type="userAvatarUrl" class="photo"></open-data>
         <view class="name flex-1">
-          <view class="tit">{{userInfo.nickname}}</view>
+          <open-data type="userNickName" class="tit"></open-data>
           <view class="iconAll level level-{{user.level || 0}}"></view>
         </view>
         <navigator url="/pages/user/vipcard/vipcard" class="qrCode"><image src="../../image/pay-code.png"></image><view>付款码</view></navigator>
@@ -17,20 +17,24 @@
       <navigator hover-class="none" url="/pages/user/vipcard/vipcard" class="vipcard"><image src="../../image/bg3.png"></image></navigator> 
       <view class="ym-pay flex">
         <navigator hover-class="none" url="/pages/account/maidian/maidian" >
-          <view hover-class="none" class="data">{{user.point}}</view>
+          <view hover-class="none" class="data">{{user.point || '----'}}</view>
           <text>麦点积分</text>
         </navigator>
         <navigator hover-class="none" url="/pages/account/account">
-          <view class="data">{{user.balance}}</view>
+          <view class="data">{{user.balance || '---'}}</view>
           <text>充值余额</text>
         </navigator>
         <navigator hover-class="none" url="/pages/user/coupon/coupon">
-          <view class="data">{{user.promotion}}</view>
+          <view class="data">{{user.promotion || '-'}}</view>
           <text>优惠券</text>
         </navigator>
       </view>
     </view>
  
+    <view class="active {{!user.bigday && user.subscribe ?'isMemo':''}}" wx:if="{{!user.bigday && !user.subscribe.img}}" bind:tap="toPro" data-url="{{user.subscribe_com.url}}" data-type="{{user.subscribe_com.type}}">
+      <image class="" src="{{user.subscribe_com.img}}" mode="widthFix"></image>
+    </view>
+
   <view class="menu flex">
     <view bind:tap="toOrder" data-type="1">
       
@@ -56,13 +60,13 @@
     <view class="tit">我的服务</view>
     <view class="service flex">
       <navigator hover-class="none" url="/pages/user/freePay/freePay">
-        <view class="iconAll user-pay"></view>
+        <view class="iconAll user-pay {{user.free_secret==0?'on':''}}"></view>
         <text>免密支付</text>
       </navigator>
-      <navigator hover-class="none" url="/pages/user/memoDay/memoDay">
-        <view class="iconAll user-heart"></view>
+      <view bind:tap="toMemo">
+        <view class="iconAll user-heart {{user.bigday?'':'on'}}"></view>
         <text>纪念日管理</text>
-      </navigator>
+      </view>
       <navigator hover-class="none" url="/pages/user/address/address" >
         <view class="iconAll user-local2"></view>
         <text>地址管理</text>
@@ -83,6 +87,10 @@
         <view class="iconAll user-service"></view>
         <text>联系客服</text>
       </view>
+      <view data-url="{{group_chat}}" data-type="1" bind:tap="toPro">
+        <view class="iconAll wechat"></view>
+        <text>加入群聊</text>
+      </view>
     </view>
   </view>
   <!-- <view class="logo">
@@ -91,3 +99,13 @@
   <!-- <view style="height:{{50+btmHolder}}px"></view> -->
 
 </view>
+
+<pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px" class="tips-panel">
+  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
+    <view style="padding:0 24rpx 24rpx 24rpx;">
+      <view wx:for="{{doc}}">{{item}}</view>
+      <view class="btn" bind:tap="toPro" data-url="{{subscribeUrl}}" data-type="1">去关注公众号</view>
+      <view class="tips">参加活动请先关注原麦山丘公众号</view>
+    </view>
+  </scroll-view>
+</pop-panel>

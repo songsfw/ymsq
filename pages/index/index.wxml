@@ -1,19 +1,19 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
-
-<view class="fixedNav {{fixedNav?'fixed':''}}">
+<view class="fixedNav">
   <navBar hasAddress navType="transparent" cityName="{{addressInfo}}" wx:if="{{showNav}}" isFold="{{fixedNav}}">
   </navBar>
 </view>
 <!-- <view class="bannerBg">
   <image src="{{curBg}}" mode="bottom"></image>
 </view> -->
-<navigator wx:if="{{!fixedNav}}" url="../../pages/search/search" class="search flex-center" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title || '搜索蛋糕面包'}}" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
+<navigator url="../../pages/search/search" class="search flex-center {{fixedNav?'fixed':''}}" style="margin-top:{{fixedTop}}px"><text class="iconfont icon-search"></text><input placeholder="{{banner[0].title || '搜索蛋糕面包'}}" placeholder-style="color:#aaa" type="text" disabled="{{true}}"/></navigator>
 <!-- 开始 -->
 <view class="wrap" style="background:{{globalStyle.background_color || '#F4F9F5'}}">
   <scroll-view scroll-y="true" class="contain" refresher-default-style="white" bindscroll="scroll" scroll-top="{{pos}}"
     refresher-enabled scroll-with-animation="true" refresher-triggered="{{triggered}}" bindrefresherrefresh="refresh">
     <!-- 组件部分 -->
+    <view class="loading" wx:if="{{showLoading}}">奋力加载中...</view>
     <block wx:for="{{components}}" wx:for-index="cidx">
       <!-- 轮播图 -->
       <view class="banner" wx:if="{{item.block_type == 4}}"
@@ -55,17 +55,18 @@
         </swiper>
         <view class="show-btn">查看</view>
       </view>
+      <view class="active" wx:if="{{subscribe_com.img && cidx==2}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
+        <image class="" src="{{subscribe_com.img}}" mode="widthFix"></image>
+      </view>
       <!-- 分类推荐 -->
       <view class='main-content'
         style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx"
         wx:if="{{item.block_type == 2}}">
         <view class='pro-block block3'>
-          <view wx:if="{{item.id!=34}}" class="title flex">
-            <block wx:if="{{item.componentDetail.box_style.background_image != ''}}">
-              <view style="height:84rpx">
-                <image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image>
-              </view>
-            </block>
+          <view wx:if="{{item.id!=34 && item.componentDetail.box_style.background_image != ''}}" class="title flex">
+            <view style="height:84rpx">
+              <image src="{{item.componentDetail.box_style.background_image}}" mode="heightFix"></image>
+            </view>
             <!-- <block wx:elif="{{item}}">
               <view style="height:34rpx" mode="heightFix"><image src=""></image></view>
             </block> -->
@@ -98,11 +99,9 @@
       </view>
 
     </block>
-
-    <view class="logo">
+    <view class="logo" wx:if="{{!showLoading}}">
       <image src="../../image/logo.png"></image>
     </view>
-
     <!-- <view style="height:{{50+btmHolder}}px"></view> -->
   </scroll-view>
 

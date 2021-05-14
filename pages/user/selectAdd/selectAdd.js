@@ -376,6 +376,13 @@ Page({
         selected: 1
       })
       //this.getPoi(res.latitude, res.longitude)
+    }).catch(err=>{
+      this.setData({
+        lng: err.longitude,
+        lat: err.latitude,
+        type,
+        selected: 1
+      })
     })
   },
 
