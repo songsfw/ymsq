@@ -31,7 +31,7 @@
       </view>
     </view>
  
-    <view class="active {{!user.bigday && user.subscribe ?'isMemo':''}}" wx:if="{{!user.bigday && !user.subscribe.img}}" bind:tap="toPro" data-url="{{user.subscribe_com.url}}" data-type="{{user.subscribe_com.type}}">
+    <view class="active {{!user.bigday && user.subscribe ?'isMemo':''}}" wx:if="{{!user.bigday || !user.subscribe}}" bind:tap="toPro" data-url="{{user.subscribe_com.url}}" data-type="{{user.subscribe_com.type}}">
       <image class="" src="{{user.subscribe_com.img}}" mode="widthFix"></image>
     </view>
 
