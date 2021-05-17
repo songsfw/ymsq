@@ -12,7 +12,7 @@ image{width: 100%;height: 100%}
 .checkbox.on view{border: none;}
 .checkbox.on view:before{display: block;}
 .pro-box .hd text{font-size: 16px;font-weight: bold;}
-.pro-box .hd .icon-notice2{margin-left: 20rpx;}
+.pro-box .hd .icon-notice2{margin-left: 20rpx;font-size: 14px;color: #ccc;}
 .pro-list{padding: 22rpx 0 56rpx 0;overflow: hidden;}
 .pro-list .item:last-child{margin-bottom: 0;}
 .pro-info{padding-bottom: 10px;}

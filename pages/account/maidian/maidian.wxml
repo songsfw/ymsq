@@ -17,7 +17,7 @@
             <view class="tit">{{item.title}}</view>
             <view class="date">{{item.create_time}}</view>
           </view>
-          <view class="price">{{item.symbol}}￥{{item.score}}</view>
+          <view class="price">{{item.symbol}} {{item.score}}</view>
         </view>
       </block>
       <view class="loading" wx:else>{{pointList?'奋力加载中...':'暂无数据'}}</view>
