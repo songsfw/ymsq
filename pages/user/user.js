@@ -31,7 +31,7 @@ Page({
   showService(){
     wx.showModal({
       title: '联系客服',
-      content: '400-992-6632',
+      content: '客服工作时间:9:00-21:00\n400-992-6632',
       confirmText:"拨打",
       cancelText:"取消",
       confirmColor:"#C1996B",

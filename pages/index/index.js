@@ -229,7 +229,13 @@ Page({
   catchTouchMove() {
     return false;
   },
-  onShow() {
+  async onShow() {
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
     //自定义tabbar选中
     // if (typeof this.getTabBar === 'function' &&
     //   this.getTabBar()) {
@@ -250,17 +256,6 @@ Page({
     if (addressInfo) {
       addressInfo = JSON.parse(addressInfo)
     }
-    console.log(wx.getStorageSync("userInfo"));
-    // if(!userInfo){
-    //   // wx.showToast({
-    //   //   icon:"none",
-    //   //   title:"未登录"
-    //   // })
-    //   return
-    // }else{
-    //   userInfo = JSON.parse(userInfo)
-    // }
-    console.log(addressInfo)
     this.setData({
       showNav: true,
       btmHolder: btmHolder || 0,

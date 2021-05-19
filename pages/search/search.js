@@ -9,9 +9,6 @@ let getWord = ''; //触发存储搜索关键字
 let timer = null;
 
 // 购物车相关
-let lastTypeMealIdSpuId;
-let proNum;
-let testProNum = 0;
 let trueStock = {}; //真实购物车数量
 Page({
   customData: {

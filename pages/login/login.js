@@ -31,7 +31,7 @@ Page({
       desc: '为了您更便捷购物，请先微信授权',
       success:res=>{
         let timestamp = (new Date()).valueOf()
-        var {openid,is_mobile} = this.data.userInfo
+        var {openid} = this.data
         console.log(res);
         let data = {
           encryptedData: res.encryptedData,
@@ -42,7 +42,6 @@ Page({
         }
         api.appLogin(data)
         .then(res=>{
-          console.log(is_mobile);
           console.log(res);
           if(!res){
             return
@@ -55,6 +54,7 @@ Page({
               'userInfo.photo':user_info.head_url,
               'userInfo.is_authed':user_info.is_authed
             })
+            
             wx.setStorageSync("userInfo", JSON.stringify(this.data.userInfo))
           }
           
@@ -77,7 +77,7 @@ Page({
     var userDetail = detailInfo.userInfo
     console.log(e.detail);
     let timestamp = (new Date()).valueOf()
-    var {openid,is_mobile} = this.data.userInfo
+    var {openid} = this.data
     if (userDetail) { //同意授权
       let data = {
         encryptedData: detailInfo.encryptedData,
@@ -88,7 +88,6 @@ Page({
       }
       api.appLogin(data)
       .then(res=>{
-        console.log(is_mobile);
         console.log(res);
         if(!res){
           return
@@ -122,44 +121,40 @@ Page({
       delta: 1
     })
   },
-  onLoad () {
-    let userInfo = wx.getStorageSync("userInfo")
+  async onLoad () {
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      console.log(loginInfo);
+    }
+
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
 
-    var pages = getCurrentPages();
-    console.log(pages[pages.length - 2]);
-    var currPage = pages[pages.length - 2];
-    var path = currPage.route
-    var options = currPage.options
-    let temp = ''
-    Object.keys(options).forEach(key=>{
-      temp+=`${key}=${options[key]}&`
-    })
-    console.log(temp);
-    console.log(currPage);
+    // var pages = getCurrentPages();
+    // console.log(pages);
+    // var currPage = pages[pages.length - 2];
+    // var path = currPage.route
+    // var options = currPage.options
+    // let temp = ''
+    // Object.keys(options).forEach(key=>{
+    //   temp+=`${key}=${options[key]}&`
+    // })
+    // console.log(temp);
+    // console.log(currPage);
 
-    // if (wx.getUserProfile) {
-    //   this.setData({
-    //     canIUseGetUserProfile: true
-    //   })
-    // }
-    
-    userInfo = userInfo && JSON.parse(userInfo)
-    if(userInfo.openid){
-      if(path=='pages/index/index'){
-        wx.switchTab({
-          url:'/pages/index/index'
-        })
-      }else{
-        wx.navigateTo({
-          url:`/${path}?${temp}`
-        })
-      }
-      
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
     }
+    console.log(loginInfo);
+    userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+    console.log(userInfo);
     this.setData({
       userInfo:userInfo,
+      openid:loginInfo.openid,
       show:true,
       fixedTop:fixedTop
     })
@@ -188,46 +183,6 @@ Page({
         },3000)
       })
     }
-    
-    // let loginInfo = await auth.getLoginInfo()
-    // console.log(loginInfo);
-    // let local
-    // if(loginInfo.statusCode==200){
-    //   let {openid,user_info,user_id,is_authed,address_info} = loginInfo.data.result
-    //   let userInfo = {
-    //     user_id:user_id,
-    //     is_authed:is_authed,
-    //     openid:openid,
-    //     nickname:user_info.nickname,
-    //     photo:user_info.head_url,
-    //     phone:user_info.mobile
-    //   }
-    //   if(address_info){
-    //     wx.setStorageSync("addressInfo", JSON.stringify(address_info))
-    //   }else{
-    //     try {
-    //       local = await util.getLocation()
-    //     } catch (error) {
-    //       local = error
-    //     }
-        
-    //     console.log(local);
-    //     let data = {
-    //       lng:local.longitude,
-    //       lat:local.latitude
-    //     }
-    //     console.log(data)
-    //     addressInfo = await api.getUserLocation(data)
-    //     addressInfo = addressInfo.address_info
-    //     console.log(addressInfo)
-    //     wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
-    //   }
-    //   wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-    //   this.setData({
-    //     userInfo:userInfo,
-    //     show:true
-    //   })
-    // }
 
   },
   onShow() {

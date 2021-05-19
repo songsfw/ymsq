@@ -1,5 +1,7 @@
 const api = require('../../utils/api.js')
-
+const auth = require('../../utils/auth.js')
+let app = getApp()
+let loginInfo = null
 // pages/share/share
 Page({
 
@@ -16,22 +18,24 @@ Page({
   onLoad: function (options) {
     let orderCode = options.orderCode
 
-    // wx.getUserInfo({
-    //   success:res=> {
-    //     var userInfo = res.userInfo
-    //     var avatarUrl = userInfo.photo
-    //     this.setData({
-    //       avatarUrl:avatarUrl
-    //     })
-    //   }
-    // })
-
     this.setData({
       orderCode: orderCode
     })
     
   },
   open(){
+    console.log(this.data.userInfo);
+    if(this.data.userInfo.is_authed==0){
+      auth.getUserProfile(this.data.userInfo).then(res=>{
+        console.log(res);
+        this.getHongbao()
+      })
+    }else{
+      this.getHongbao()
+    }
+    
+  },
+  getHongbao(){
     let step
     let data ={
       order_code:this.data.orderCode
@@ -90,8 +94,17 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  async onShow () {
+    let userInfo = wx.getStorageSync('userInfo')
+    
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+    userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+
     this.setData({
+      userInfo:userInfo,
       showLoading:true
     })
     let step=0
@@ -128,7 +141,7 @@ Page({
           step:step,
           self_reward:res.self_reward,
           rule:res.rule,
-          userInfo:res.user_info,
+          mainUser:res.user_info,
           setmeal_data:res.setmeal_data
         })
       }

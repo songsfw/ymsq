@@ -88,7 +88,7 @@
                   <view class="add iconfont icon-add pro-{{pro.meal_id}} {{showStock[currentTab][pro.meal_id]==0?'unuse':''}}" catch:tap="addCart" data-img="{{pro.img}}"
                     data-id="{{pro.meal_id}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}"
                     data-typeMealIdSpuId="{{pro.type}}_{{pro.meal_id}}_{{pro.spu_id}}" data-type="{{pro.type}}"
-                    data-spuid="{{pro.spu_id}}">
+                    data-spuid="{{pro.spu_id}}" data-name="{{pro.name}}">
                     <text wx:if="{{pro.selectNumberLength>0}}" class="cart-motion-t"
                       style="{{pro.cornerTagStyle}}">{{pro.selected}}</text>
                   </view>
@@ -172,7 +172,7 @@
         <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
       </view>
     </view>
-    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" >加入购物车</view>
+    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}" data-name="{{proInfo.name}}" >加入购物车</view>
   </view>
 
 </view>

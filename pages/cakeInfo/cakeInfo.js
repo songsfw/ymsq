@@ -198,7 +198,14 @@ Page({
       }  
     }
   },
-  onShow(){
+  async onShow(){
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     let options = currPage.options

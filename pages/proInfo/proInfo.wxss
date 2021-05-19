@@ -102,3 +102,4 @@ page{background:#F6F6F6;height: auto;}
 .tip-panel .tit{text-align: center;font-size: 16px;font-weight: 500;}
 .tip-panel .h4{color: #C1996B;font-size: 14px;margin-bottom: 10px;font-weight: 500;}
 .tip-item{margin-bottom: 20px;}
+.item-wrap{min-height: 440rpx;margin-top: 20px;}

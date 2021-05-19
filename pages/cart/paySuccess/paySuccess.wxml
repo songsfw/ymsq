@@ -1,10 +1,10 @@
 <!-- pages/user/user.wxml -->
-<navBar navType="transparent" hasReturn></navBar>
+<navBar navType="transparent" hasReturn isFold="{{isFold}}"></navBar>
 <view class="bannerBg">
   <image src="../../../image/success-bg.png"></image>
 </view>
 <view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
-  <scroll-view scroll-y="true" class="contain">
+  
     <view class="account">
       <view class="txt">
         <view>
@@ -76,7 +76,7 @@
 
       </block>
     </view>
-  </scroll-view>
+  
 </view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 

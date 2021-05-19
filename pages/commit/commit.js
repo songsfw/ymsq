@@ -148,7 +148,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  async onLoad (options) {
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+
     let orderCode = options.orderCode
 
     let btmHolder = wx.getStorageSync('btmHolder')
@@ -221,6 +228,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    
     if(this.data.isShare){
       setTimeout(() => {
         wx.navigateBack({

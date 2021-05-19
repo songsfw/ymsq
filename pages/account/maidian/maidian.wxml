@@ -20,7 +20,7 @@
           <view class="price">{{item.symbol}} {{item.score}}</view>
         </view>
       </block>
-      <view class="loading" wx:else>{{pointList?'奋力加载中...':'暂无数据'}}</view>
+      <view class="loading" wx:else>{{pointList.length==0?'暂无数据':''}}</view>
     </view>
     <!-- <view class="logo">
       <image src="../../../image/logo.png"></image>

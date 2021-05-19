@@ -92,7 +92,7 @@
     <view class="tit2">恭喜您获得红包</view>
     <view class="price">{{price}}<text>元</text></view>
     <view class="tip">已存入余额, 付款时可抵用现金</view>
-    <button class="share-btn" open-type="share">去分享抢红包</button>
+    <button class="share-btn" open-type="share">分享后还可领取红包</button>
   </view>
   <view class="iconfont icon-close close" bind:tap="close"></view>
 </view>

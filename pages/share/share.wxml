@@ -5,7 +5,7 @@
     <image class="bg" src="https://api.withwheat.com/img/stat3.jpg"></image>
     <view class="bd step1">
       <view class="photo">
-        <image src="{{avatarUrl || userInfo.head_url}}"></image>
+        <image src="{{mainUser.head_url || '../../image/no-photo.png'}}"></image>
       </view>
       <view class="tip">
         <view>我买了一些好东西</view>
@@ -21,13 +21,13 @@
       <view class="tit2">获得一个现金红包</view>
       <view class="price">{{self_reward}}<text>元</text></view>
       <view class="tip">已存入余额, 付款时可抵用现金</view>
-      <navigator url="/pages/proList/proList" open-type="switchTab" class="share-btn">立即使用</navigator>
+      <navigator hover-class="none" url="/pages/proList/proList" open-type="switchTab" class="share-btn">立即使用</navigator>
     </view>
   </block>
   <block wx:if="{{step==3}}">
     <image class="bg" src="https://api.withwheat.com/img/stat1.jpg"></image>
     <view class="bd step3">
-      <navigator class="home-btn" open-type="switchTab" url="../index/index"></navigator>
+      <navigator hover-class="none" class="home-btn" open-type="switchTab" url="../index/index"></navigator>
     </view>
   </block>
 </view>

@@ -1,6 +1,7 @@
 // pages/user/user.js
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
+const auth = require('../../utils/auth.js')
 const app = getApp()
 let timer = null,
   proNum = 0
@@ -200,6 +201,16 @@ Page({
       this.setData({
         fittings: false
       })
+    }
+  },
+  checkLogin(){
+    if(this.data.userInfo.is_authed==0){
+      auth.getUserProfile(this.data.userInfo).then(res=>{
+        console.log(res);
+        this.Settlement()
+      })
+    }else{
+      this.Settlement()
     }
   },
   Settlement(){

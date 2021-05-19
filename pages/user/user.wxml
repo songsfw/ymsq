@@ -101,11 +101,15 @@
 </view>
 
 <pop-panel title="规则说明" showbody showConfirm="{{false}}" showCancel="{{false}}" popShow="{{popShow}}" width="315px" class="tips-panel">
-  <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con" slot="txt">
-    <view style="padding:0 24rpx 24rpx 24rpx;">
-      <view wx:for="{{doc}}">{{item}}</view>
+  <view slot="txt">
+    <scroll-view show-scrollbar="{{false}}" enhanced="{{true}}" scroll-y="{{true}}" class="pop-con">
+      <view style="padding:0 24rpx 24rpx 24rpx;">
+        <view wx:for="{{doc}}">{{item}}</view>
+      </view>
+    </scroll-view>
+    <view>
       <view class="btn" bind:tap="toPro" data-url="{{subscribeUrl}}" data-type="1">去关注公众号</view>
       <view class="tips">参加活动请先关注原麦山丘公众号</view>
     </view>
-  </scroll-view>
+  </view>
 </pop-panel>

@@ -11,7 +11,7 @@
         </block>
     </view>
     
-    <!-- <view class='getWXAuth' wx:if="{{userInfo.is_authed==0}}">
+    <view class='getWXAuth' wx:if="{{openid}}">
       <button class='authorizeBtn' wx:if="{{canIUseGetUserProfile&&show}}" bindtap="onGotUserProFile">
         获取授权
       </button>
@@ -21,8 +21,8 @@
       <view class="txt">
         <view>为了您更便捷购物，请先微信授权</view>
       </view>
-    </view> -->
-    <view class='tip'>登录原麦山丘...</view>
+    </view>
+    <!-- <view class='tip'>登录原麦山丘...</view> -->
   </view>
 </view>
 <!-- <phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel> -->

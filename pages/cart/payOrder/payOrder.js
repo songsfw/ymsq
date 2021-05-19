@@ -459,6 +459,10 @@ Page({
           unUsedShowStatus
         })
         this.initOrderPrice()
+        wx.reportAnalytics('payorder', {
+          type: "面包",
+          total_price: cart_data.total_price,
+        });
       })
 
     } else {
@@ -509,8 +513,13 @@ Page({
           txtCardObj: txtCard,
         })
         this.initOrderPrice()
+        wx.reportAnalytics('payorder', {
+          type: "蛋糕",
+          total_price: cart_data.total_price,
+        });
       })
     }
+    
   },
   //初始化订单金额 扣除麦点 余额
   //hasDelivery false 免邮 10
@@ -1453,6 +1462,7 @@ Page({
       btmHolder: btmHolder || 0,
       userInfo: JSON.parse(userInfo),
     })
+    
   },
   watch: {
     'payQueue': function (value, oldValue) {

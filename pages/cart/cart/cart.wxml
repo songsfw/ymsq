@@ -104,7 +104,7 @@
 </view>
 <view class="pro-box">
   <view class="fittings" wx:if="{{fittingsList.length>0}}">
-    <view class="hd" bind:tap="showTip"><text>蛋糕配件</text> (不可食用)<text class="iconfont icon-notice2"></text></view>
+    <view class="hd flex-center" bind:tap="showTip"><text>蛋糕配件</text> (不可食用)<text class="iconfont icon-notice2"></text></view>
     <scroll-view scroll-x="{{true}}">
       <view class="flex list">
         <view class="item fit-item" wx:for="{{fittingsList}}" catch:tap="selectFittings" data-idx="{{index}}"
@@ -142,7 +142,7 @@
       <view class="flex-center"><text>合计：</text>
         <view class="num">￥<text>{{totalPrice}}</text></view>
       </view>
-      <view class="buy-btn" bind:tap="Settlement">去结算 <text >({{cakeSelectedNum+breadSelectedNum}})</text></view>
+      <view class="buy-btn" bind:tap="checkLogin">去结算 <text >({{cakeSelectedNum+breadSelectedNum}})</text></view>
     </view>
   </view>
 </view>

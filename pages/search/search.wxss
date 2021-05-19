@@ -44,6 +44,8 @@ page{background: #F9F9F9;height: 100%;}
 .topBar .cart .card-num{
   background:#F5222D;
   font-size:8px;
+  width: 10px;height: 10px;border-radius: 50%;
+  right:7px;top:5px;
   /* width:28rpx; */
   /* height:28rpx; */
   color:#FFFFFF;
@@ -190,7 +192,7 @@ page{background: #F9F9F9;height: 100%;}
 }
 .groupTag .groupTagItem{
   color:#333333;
-  padding:14rpx 20rpx 10rpx 14rpx;
+  padding:14rpx 14rpx 10rpx 14rpx;
   background:#F6F6F6;
   border-radius: 3px;
   margin-right:20rpx;

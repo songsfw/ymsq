@@ -225,6 +225,7 @@ Page({
   },
   addCart: function (e) {
     let proId = e.currentTarget.dataset.id,
+      name = e.currentTarget.dataset.name,
       img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
       proInPage = e.currentTarget.dataset.idx, //当前商品所在页
@@ -288,6 +289,7 @@ Page({
         proId: proId,
         typeMealIdSpuId: typeMealIdSpuId,
         cityId: city_id,
+        name:name,
         selected: curPro.selected,
         itemIdx: itemIdx,
         trueCityId: this.data.trueCityId,
@@ -310,6 +312,7 @@ Page({
           curType: this.data.prePushWatchHash[info]['curType'],
           proId: this.data.prePushWatchHash[info]['proId'],
           typeMealIdSpuId: this.data.prePushWatchHash[info]['typeMealIdSpuId'],
+          name:this.data.prePushWatchHash[info]['name'],
           cityId: this.data.prePushWatchHash[info]['cityId'],
           selected: this.data.prePushWatchHash[info]['selected'],
           maxStock: this.data.prePushWatchHash[info]['curStock'],
@@ -349,6 +352,7 @@ Page({
         wx.reportAnalytics('addcart', {
           type: params['curType']==1?"面包":"蛋糕",
           tab_id: params['proId'],
+          proname:params['name'],
           city_id: params['trueCityId'],
           source:'列表页'
         });
@@ -804,7 +808,7 @@ Page({
     })
   },
   confirmCake: util.debounce(function (e) {
-    let proId = e.currentTarget.dataset.sku
+    let proId = e.currentTarget.dataset.sku,name = e.currentTarget.dataset.name
     let {
       city_id,
       skuNum,
@@ -836,6 +840,7 @@ Page({
         wx.reportAnalytics('addcart', {
           type: '蛋糕',
           tab_id: proId,
+          proname:name,
           city_id: this.data.trueCityId,
           source:'列表页'
         });
@@ -928,8 +933,12 @@ Page({
   //     })
   //   }
   // },
-  onShow() {
-    console.log('onshow ---------------')
+  async onShow() {
+    let userInfo = wx.getStorageSync('userInfo')
+    if(!userInfo){
+      userInfo = await app.wxLogin()
+    }
+
     if (this.data.backFrom == 1) {
       console.log("详情")
       util.setTabBarBadge(wx.getStorageSync("total_num"));

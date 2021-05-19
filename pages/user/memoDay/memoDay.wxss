@@ -20,7 +20,7 @@ page{background: #F6F6F6;}
   border-radius: 50%;
 color: #fff;text-align: center;line-height: 60rpx;font-size: 12px;}
 .tips-panel .pop-title{padding-top: 17px;}
-.tips-panel .pop-body{padding-top:15px;}
+.tips-panel .pop-body{padding-top:15px;color: #222;font-weight: lighter;}
 .date-panel{position: fixed;left: 0;bottom: 0;transform: translateY(100%); width: 100%;z-index: 11;background: #fff;
   border-radius: 16rpx 16rpx 0 0;overflow: hidden;transition: all .3s ease-in;}
 .date-panel.on{transform: translateY(0)}

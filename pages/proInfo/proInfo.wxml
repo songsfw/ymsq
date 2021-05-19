@@ -88,8 +88,14 @@
   <view class="iconfont icon-close close" bind:tap="close"></view>
   <view class="pop-con">
     <view class="tit">优惠</view>
-    <view class="tip-item"><view class="h4 flex">{{special_tips[0].title}}</view><view class="txt">{{special_tips[0].desc}}</view></view>
-    <view class="tip-item" wx:if="{{proInfo.activity_title}}"><view class="h4 flex">{{special_tips[1].title}}</view><view class="txt">{{special_tips[1].desc}}</view></view>
+    <view class="item-wrap">
+      <view class="tip-item">
+        <view class="h4 flex">{{special_tips[0].title}}</view>
+        <view class="txt">{{special_tips[0].desc}}</view>
+      </view>
+    
+      <view class="tip-item" wx:if="{{proInfo.activity_title}}"><view class="h4 flex">{{special_tips[1].title}}</view><view class="txt">{{special_tips[1].desc}}</view></view>
+    </view>
     <view class="confirm-btn btn" bind:tap="close">知道了</view>
   </view>
 

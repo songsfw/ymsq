@@ -23,7 +23,7 @@ Page({
       if(!res){
         this.setData({
           noMoreData: true,
-          pointList:null
+          pointList:[]
         })
         return false
       }

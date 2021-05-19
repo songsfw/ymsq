@@ -182,6 +182,16 @@ Page({
       pop: 0
     })
   },
+  checkLogin(){
+    if(this.data.userInfo.is_authed==0){
+      auth.getUserProfile(this.data.userInfo).then(res=>{
+        console.log(res);
+        this.Settlement()
+      })
+    }else{
+      this.Settlement()
+    }
+  },
   Settlement(){
     let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {

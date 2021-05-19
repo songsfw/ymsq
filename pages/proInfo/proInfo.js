@@ -222,12 +222,19 @@ Page({
       }  
     }
   },
-  onShow:function(){
+  async onShow(){
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null,local=null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+    
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     console.log(currPage);
     let options = currPage.options
-
+    let btmHolder = wx.getStorageSync('btmHolder')
     let totalNum = wx.getStorageSync("total_num")
     let proId = options.proId
     let addressInfo = wx.getStorageSync("addressInfo")
@@ -241,6 +248,7 @@ Page({
       // this.data.backListCurrentTab = options.currenttab
     }
     this.setData({
+      btmHolder: btmHolder || 0,
       is_show: false,
       city_id: city_id,
       proId: proId,
@@ -252,7 +260,7 @@ Page({
   },
   onLoad: function () {
     
-    let btmHolder = wx.getStorageSync('btmHolder')
+    
     let instructions = wx.getStorageSync('instructions')
 
     if(instructions){
@@ -276,9 +284,6 @@ Page({
         }
       })
     }
-    this.setData({
-      btmHolder: btmHolder || 0,
-    })
 
     //this.initData()
   },

@@ -11,7 +11,14 @@ Page({
     
   },
 
-  onLoad: function (options) {
+  async onLoad (options) {
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+
     let url = options.url || '';
     let toFollow = options.toFollow
     if(toFollow&&toFollow==1){

@@ -26,7 +26,7 @@
     </view>
     <view class='cart' bindtap="toCartPage">
       <image src="/image/icon-cart.png"></image>
-      <view class="card-num" style="{{totalNumStyle}}" wx:if="{{totalNum>0}}">{{totalNum>99?"99+":totalNum}}</view>
+      <view class="card-num" wx:if="{{totalNum>0}}"></view>
     </view>
   </view>
 

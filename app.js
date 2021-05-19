@@ -1,8 +1,8 @@
 //app.js
 import 'umtrack-wx';
-const auth = require('utils/auth.js')
 const api = require('utils/api.js')
 const util = require('utils/util.js')
+let local=null
 App({
   umengConfig: {
     appKey: '60584221b8c8d45c13a9a6bc', //由友盟分配的APP_KEY
@@ -12,103 +12,111 @@ App({
     uploadUserInfo: true // 上传用户信息，上传后可以查看有头像的用户分享信息，同时在查看用户画像时，公域画像的准确性会提升。
   },
   onLaunch: function (options) {
-    
-    api.getIntroduction().then(res=>{
-      console.log(res);
-      if(res){
-        wx.setStorageSync("instructions", JSON.stringify(res.instructions))
-      }
-    })
-    this.init()
+    this.getBtmHolder()
+    //this.init()
   },
-  async init() {
-    console.log("---app onload--");
-    var is_authed, local = null,
-      is_mobile = null
-    let userInfo = wx.getStorageSync('userInfo')
-    if (userInfo && JSON.parse(userInfo).openid) {
-      is_authed = JSON.parse(userInfo).is_authed
-    } else {
-      
-      let loginInfo = await auth.getLoginInfo()
-      console.log(loginInfo)
-      if (loginInfo.statusCode == 200) {
-        let result = loginInfo.data.result
-        is_authed = result.is_authed
-        is_mobile = result.is_mobile
-
-        let {
-          openid,
-          user_info,
-          user_id,
-          address_info
-        } = result
-        //给友盟openid
-        wx.uma.setOpenid(openid)
-
-        userInfo = {
-          user_id: user_id,
-          is_authed: is_authed,
-          is_mobile: is_mobile,
-          openid: openid
-        }
-        wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-
-        console.log(address_info)
-        if (!address_info.city_id) {
-          try {
-            local = await util.getLocation()
-          } catch (error) {
-            local = error
-          }
-
-          console.log(local);
-          let data = {
-            lng: local.longitude,
-            lat: local.latitude
-          }
-          console.log(data)
-          let addressInfo = await api.getUserLocation(data)
-          console.log(addressInfo)
-          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
-        } else {
-          let {
-            address: addresstxt,
-            id,
-            area_id,
-            area_name,
-            old_city_id,
-            city_name,
-            address_detail,
-            is_default,
-            mobile,
-            name
-          } = user_info.default_address
-          let addressInfo = {
-            address: addresstxt,
-            id: id,
-            area_id: area_id,
-            area_name: area_name,
-            city_id: old_city_id,
-            city_name: city_name,
-            address_detail: address_detail,
-            is_default: is_default,
-            mobile: mobile,
-            name: name,
-            is_ziti: address_info.is_ziti
-          }
-          console.log(addressInfo);
-          wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
-        }
-        wx.navigateTo({
-          url: '/pages/login/login'
-        })
-        
+  async getAddress(loginInfo){
+    let {
+      user_info,
+      address_info
+    } = loginInfo
+    if (!address_info.city_id) {
+      try {
+        local = await util.getLocation()
+      } catch (error) {
+        local = error
       }
+      let data = {
+        lng: local.longitude,
+        lat: local.latitude
+      }
+      console.log(data)
+      let addressInfo = await api.getUserLocation(data)
+      wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
+    } else {
+      let {
+        address: addresstxt,
+        id,
+        area_id,
+        area_name,
+        old_city_id,
+        city_name,
+        address_detail,
+        is_default,
+        mobile,
+        name
+      } = user_info.default_address
+      let addressInfo = {
+        address: addresstxt,
+        id: id,
+        area_id: area_id,
+        area_name: area_name,
+        city_id: old_city_id,
+        city_name: city_name,
+        address_detail: address_detail,
+        is_default: is_default,
+        mobile: mobile,
+        name: name,
+        is_ziti: address_info.is_ziti
+      }
+      console.log(addressInfo);
+      wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
     }
-    
-    await this.getBtmHolder()
-    wx.hideLoading()
+  },
+  wxLogin() {
+    return new Promise((resolve, reject) => {
+      var is_authed,is_mobile = null,userInfo=null
+      wx.login({
+        success: res => {
+          console.log(res);
+          let code = res.code
+          let data = {
+            code: code
+          };
+          api.getLoginInfo(data).then(loginInfo=>{
+            if (loginInfo.statusCode == 200) {
+              let result = loginInfo.data.result
+              is_authed = result.is_authed
+              is_mobile = result.is_mobile
+      
+              let {
+                openid,
+                user_id,
+                head_url,
+                nickname
+              } = result
+              //给友盟openid
+              wx.uma.setOpenid(openid)
+              console.log(result);
+              userInfo = {
+                user_id: user_id,
+                is_authed: is_authed,
+                is_mobile: is_mobile,
+                openid: openid,
+                nickname,
+                head_url
+              }
+              wx.setStorageSync("userInfo", JSON.stringify(userInfo))
+
+              resolve(result)
+              api.getIntroduction().then(res=>{
+                console.log(res);
+                if(res){
+                  wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+                }
+              })
+            }
+          })
+        },
+        fail: function () {
+          wx.showModal({
+            title: '登录失败',
+            content: '登录失败，请刷新重试',
+            showCancel: false
+          })
+        }
+      })
+    })
   },
   getBtmHolder() {
     return new Promise(function (resolve, reject) {

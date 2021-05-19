@@ -1,5 +1,6 @@
 // pages/user/user.js
 const api = require('../../../utils/api.js')
+const util = require('../../../utils/util.js')
 const app = getApp()
 let tempOrderNo = '';
 let tempAfter = 0;
@@ -11,6 +12,20 @@ Page({
   data: {
     pop: 0,
   },
+  onPageScroll: util.throttle(function (e) {
+    //debounce()
+    var scrollTop = e.scrollTop
+
+    if (scrollTop > 0) {
+      this.setData({
+        isFold: true
+      })
+    } else {
+      this.setData({
+        isFold: false
+      })
+    }
+  },100),
   close() {
     let  that = this;
     if (tempAfter == 1) {
