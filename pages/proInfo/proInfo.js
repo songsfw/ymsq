@@ -134,9 +134,9 @@ Page({
     } = this.data
     console.log(proInfo);
     return {
-      title: `好友邀你购买${proInfo.name}`,
+      title: `好友与你分享${proInfo.name}`,
       path: '/pages/proInfo/proInfo?id=2&proId=' + proInfo.id,
-      imageUrl: proInfo.image
+      imageUrl: proInfo.img
     }
   },
   addCart(toCart) {

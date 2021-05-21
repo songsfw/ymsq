@@ -225,7 +225,7 @@ Page({
     if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
-        title: "请先选择可配送地址"
+        title: "有不可配送商品，更换地址或删除不可配送商品"
       })
       return
     }
@@ -390,6 +390,7 @@ Page({
       address_id: address_id
     }
     if (type == "1") {
+      txtCard = null
       //面包
       api.getOrderBread(data).then(res => {
         console.log(res);
@@ -777,11 +778,14 @@ Page({
       zitiPhone: val
     })
   }, 300),
-  bindPhoneSucess() {
+  bindPhoneSucess(e) {
+    this.setData({
+      'userInfo.phone':e.detail
+    })
     this.submmitOrder()
   },
   submmitOrder: util.debounce(function () {
-
+    let that = this
     let {
       cart_data,
       address,
@@ -955,7 +959,6 @@ Page({
       //清除已记住的卡号密码
       app.globalData.cardNo = ''
       app.globalData.cardPwd = ''
-
       if (res.callPay) {
         let jsApiParameters = res.jsApiParameters
         let {
@@ -982,13 +985,24 @@ Page({
                 wx.redirectTo({
                   url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
                 })
-   
+                
+                wx.reportAnalytics('payinfo', {
+                  paytype: "微信支付",
+                  cart_type:data.cart_type==1?"面包":"蛋糕",
+                  balance_price:data.balance_price,
+                  promotion_price:data.promotion_price,
+                  delivery_price:data.delivery_price,
+                  point_price:data.point_price,
+                  wx_price:res["to_pay_price "],
+                  total_price:cart_data.total_price,
+                  user_id:that.data.userInfo.user_id
+                });
               }
             })
 
           },
-          fail(res) {
-            console.log(res)
+          fail(err) {
+            console.log(err)
             wx.showToast({
               title: "支付失败",
               icon: 'none',
@@ -1009,7 +1023,16 @@ Page({
         wx.redirectTo({
           url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
         })
-        
+        wx.reportAnalytics('payinfo', {
+          paytype: "余额支付",
+          cart_type:data.cart_type==1?"面包":"蛋糕",
+          balance_price:data.balance_price,
+          delivery_price:data.delivery_price,
+          point_price:data.point_price,
+          promotion_price:data.promotion_price,
+          total_price:cart_data.total_price,
+          user_id:that.data.userInfo.user_id
+        });
       }
     })
   },500,true),
@@ -1411,26 +1434,6 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  // async getUserLocation(){
-  //   let local,addressInfo
-  //   try {
-  //     local = await util.getLocation()
-  //   } catch (error) {
-  //     local = error
-  //   }
-  //   let data = {
-  //     lng:local.longitude,
-  //     lat:local.latitude
-  //   }
-  //   //当前定位地址
-  //   addressInfo = await api.getUserLocation(data)
-  //   //addressInfo = addressInfo.address_info
-  //   console.log(addressInfo)
-  //   this.setData({
-  //     is_ziti:addressInfo.address_info.is_ziti
-  //   })
-  //   console.log(addressInfo)
-  // },
   onLoad: function (options) {
     //this.getUserLocation()
     let userInfo = wx.getStorageSync('userInfo')

@@ -26,11 +26,11 @@
     <view class="flex" bind:tap="showTip"> 
       <view class="tit">优惠活动</view>
       <view class="flex-1">
-        <view class="desc txt" style="color:#666">
+        <view class="desc txt" style="color:#222">
           <text class="blue-tag">免邮</text>
           {{special_tips[0].title}}
         </view>
-        <view class="desc txt" style="color:#666" wx:if="{{proInfo.activity_title}}">
+        <view class="desc txt" style="color:#222" wx:if="{{proInfo.activity_title}}">
           <text class="blue-tag">免邮</text>
           {{special_tips[1].title}}
         </view>

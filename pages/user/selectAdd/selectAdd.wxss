@@ -9,7 +9,7 @@ page{padding-top:550rpx;}
 .search text{position: absolute;left: 0;top: 0;height: 66rpx;line-height: 66rpx;left:20rpx;color: #ccc;}
 .address-list{background: #fff;height: 100%;}
 
-.address-list .item:first-child:after{content: "\e60a";    position: absolute;right: 20rpx;top: 50%;transform: translateY(-50%);color: #f5222d;}
+.address-list .item:first-child:after{content: "\e650";    position: absolute;right: 20rpx;top: 50%;transform: translateY(-50%);color: #f5222d;}
 .scroll{height: 100%;}
 .item{position: relative; padding:18rpx 24rpx;border-bottom: 1px solid #F6F6F6;}
 .item .tit{font-size: 15px;}

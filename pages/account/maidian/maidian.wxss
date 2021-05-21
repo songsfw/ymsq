@@ -18,4 +18,4 @@ page{background: #F6F6F6;}
 .money-box .h3 text{display: inline-block;width: 4px;border-left: 2px solid #C1996B;border-right: 2px solid #C1996B;transform: skew(-30deg);justify-content: center;height: 14px;margin: 0 16px;}
 .money-box .h3 text:last-child{margin-left: 14px;}
 .money-box view:last-child{border: none;}
-.loading{text-align: center;color: #999;position: absolute;width: 100%;left: 0;top: 50%;transform: translate(0,-50%);}
+.loading{text-align: center;color: #999;position: absolute;width: 100%;left: 0;top: 20%;}

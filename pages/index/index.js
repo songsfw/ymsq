@@ -117,7 +117,11 @@ Page({
   // }
   //},100),
   onShareAppMessage: function (res) {
-
+    return {
+      title: '原麦山丘',
+      path: '/pages/index/index',
+      imageUrl:"../../image/share.jpg"
+    }
   },
   getIndexInfo: function () {
     this.setData({

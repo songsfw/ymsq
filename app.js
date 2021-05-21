@@ -14,8 +14,43 @@ App({
   onLaunch: function (options) {
     this.getBtmHolder()
     //this.init()
+    this.autoUpdate()
+  },
+  autoUpdate:function(){
+    var self=this
+    // 获取小程序更新机制兼容
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager()
+      //1. 检查小程序是否有新版本发布
+      updateManager.onCheckForUpdate(function (res) {
+        // 请求完新版本信息的回调
+        if (res.hasUpdate) {
+          //2. 小程序有新版本，则静默下载新版本，做好更新准备
+          updateManager.onUpdateReady(function () {
+            wx.showModal({
+              title: '更新提示',
+              content: '新版本已经准备好，是否重启应用？',
+              success: function (res) {
+                if (res.confirm) {
+                  //3. 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                  updateManager.applyUpdate()
+                }
+              }
+            })
+          })
+          updateManager.onUpdateFailed(function () {
+            // 新的版本下载失败
+            wx.showModal({
+              title: '已经有新版本了哟~',
+              content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
+            })
+          })
+        }
+      })
+    }
   },
   async getAddress(loginInfo){
+    wx.showLoading()
     let {
       user_info,
       address_info
@@ -61,9 +96,12 @@ App({
       }
       console.log(addressInfo);
       wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
+      
     }
+    wx.hideLoading()
   },
   wxLogin() {
+    wx.showLoading()
     return new Promise((resolve, reject) => {
       var is_authed,is_mobile = null,userInfo=null
       wx.login({
@@ -78,12 +116,11 @@ App({
               let result = loginInfo.data.result
               is_authed = result.is_authed
               is_mobile = result.is_mobile
-      
+              
               let {
                 openid,
                 user_id,
-                head_url,
-                nickname
+                user_info
               } = result
               //给友盟openid
               wx.uma.setOpenid(openid)
@@ -92,13 +129,20 @@ App({
                 user_id: user_id,
                 is_authed: is_authed,
                 is_mobile: is_mobile,
-                openid: openid,
-                nickname,
-                head_url
+                openid: openid
               }
+              if(is_mobile==1){
+                userInfo.phone=user_info.mobile
+              }
+              if(is_authed==1){
+                userInfo.nickname=user_info.nickname
+                userInfo.head_url=user_info.head_url
+              }
+
               wx.setStorageSync("userInfo", JSON.stringify(userInfo))
 
               resolve(result)
+              wx.hideLoading()
               api.getIntroduction().then(res=>{
                 console.log(res);
                 if(res){
@@ -114,6 +158,7 @@ App({
             content: '登录失败，请刷新重试',
             showCancel: false
           })
+          wx.hideLoading()
         }
       })
     })

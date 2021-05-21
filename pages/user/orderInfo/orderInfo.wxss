@@ -1,12 +1,12 @@
 page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
-.banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(http://api-beta.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
+.banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(https://api.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
 .navBarWrap.fold .arrow-left:after{border-color: #000 !important;}
 .order-type{width: 100%;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
 .return .arrow-left:after{border-color: #fff !important;border-width: 2px !important;}
-.order-type .txt{font-size:18px;}
-.order-type .txt image{width: 48rpx;height: 40rpx;vertical-align: bottom;}
-.order-type .status{font-size:14px;margin-top: 8px;}
+.order-type .txt{font-size:18px;font-weight: 500;}
+.order-type .txt image{width: 48rpx;vertical-align: bottom;}
+.order-type .status{font-size:14px;margin-top: 10px;}
 .order-wp{padding:20rpx 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;z-index: 20;justify-content: flex-end;align-items: center;box-sizing: border-box;padding:10px 20rpx}
@@ -51,16 +51,17 @@ page{background: #F6F6F6;height: auto;}
 .pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px;font-weight: 500;}
 .pro-info .price .count{color: #999;}
-.pro-wp{padding:0 20rpx 36rpx 20rpx;}
+.pro-wp{padding:0 20rpx 26rpx 20rpx;}
 .pro-wp .item:last-child{margin-bottom: 0;}
-.more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
+.more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding: 26rpx 0;
+  border-top: 1px solid #f6f6f6;}
 .more-pro .icon-arrow-btm{transition: all linear .3s;}
 .more-pro.on .icon-arrow-btm{transform: rotateX(180deg);}
 .order-tips{padding:0 20rpx;line-height:100rpx;height: 100rpx;font-size: 13px;}
 .order-tips input{text-align: right;}
 .order-tips.on{color: #F5222D;}
 .pay-info{padding: 0 20rpx 20rpx 20rpx;}
-.pay-info .hd{margin:0}
+.pay-info .hd{margin:0;margin-bottom: 10px;}
 .pay-info .txtitem{justify-content: space-between;height: 36px;line-height: 36px;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
 .pay-info .name{font-size:13px;}
@@ -76,7 +77,7 @@ page{background: #F6F6F6;height: auto;}
 .pay-info .total-price view{font-size: 18px;color: #C1996B;font-weight: 500;}
 .pay-info .total-price view text{font-size: 14px;font-weight: normal;}
 
-.txt-card{margin-top: 20rpx; height: 20px;line-height: 20px;padding-left: 5px;color: #C1996B;}
+.txt-card{margin-top: 10rpx; height: 20px;line-height: 20px;padding-left: 5px;color: #C1996B;}
 .txt-card .h4{color: #fff;background-color: #C1996B;font-size: 13px;width: 61px;height: 20px;line-height: 20px;text-align: center;border-radius: 2px;flex-shrink: 0;}
 .txt-card .txt{margin-left: 32rpx;}
 
@@ -136,7 +137,7 @@ page{background: #F6F6F6;height: auto;}
   border-radius: 44rpx;
   color: #fff;
   text-align: center;
-  font-size: 30rpx;}
+  font-size: 30rpx;border: none;}
 
 .post-panel{width: 510rpx;height: 930rpx;left: 50%;top: 50%;transform: translate(-50%,-50%);background: none;position: absolute;top:45%;}
 .post-panel image{border-radius: 20rpx;}

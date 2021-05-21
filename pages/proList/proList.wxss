@@ -22,7 +22,7 @@ page{background: #F9F9F9;height: auto;}
 .item .tit text{color: #fff;font-size: 9px;
     height: 16px;line-height: 16px;
     display: inline-block;
-    padding: 0 8px;
+    padding: 0 6px;
     margin-right: 10rpx;
     background: linear-gradient(to right,#ffa052,#f52422);
     border-radius: 8rpx;

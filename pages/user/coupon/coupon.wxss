@@ -24,7 +24,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .coupon-num .txt .num text{font-size: 30px;line-height: 1; vertical-align: text-bottom;}
 .coupon-num .txt>text{font-size: 11px;}
 .coupon-info{margin-left: 32rpx;}
-.coupon-info .tit{font-size: 16px;}
+.coupon-info .tit{font-size: 15px;line-height: 21px;}
 .coupon-info .date{font-size: 11px;color: #999;margin: 3px 0 10px 0;}
 .coupon-info .txt{font-size: 11px;color: #C1996B;justify-content: space-between;align-items: center;}
 .coupon-info .btn{width:64px;height: 26px;line-height: 26px;border-radius: 13px;font-size: 14px;flex-shrink: 0;margin-left:46rpx ;}

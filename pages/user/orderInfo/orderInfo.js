@@ -434,7 +434,7 @@ Page({
    */
   onLoad: function (options) {
     let orderCode = options.code,stat = options.stat
-
+    console.log(stat);
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')

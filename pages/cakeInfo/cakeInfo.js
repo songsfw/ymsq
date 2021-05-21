@@ -84,9 +84,9 @@ Page({
   onShareAppMessage: function (res) {
     let {proInfo} = this.data
     return {
-      title: `好友邀你购买${proInfo.name}`,
+      title: `好友与你分享${proInfo.name}`,
       path:'/pages/cakeInfo/cakeInfo?id=2&proId=' + proInfo.sku_id,
-      imageUrl: proInfo.image
+      imageUrl: proInfo.img
     }
   },
   toCart(){

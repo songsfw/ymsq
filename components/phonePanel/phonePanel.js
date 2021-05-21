@@ -62,7 +62,7 @@ Component({
             popShow:false
           })
           wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-          this.triggerEvent('phoneSucess')
+          this.triggerEvent('phoneSucess',mobile)
         })
       }else{
         auth.getLoginInfo()

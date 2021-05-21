@@ -506,8 +506,11 @@ Page({
       url:"/pages/user/adddata/adddata"
     })
   },
-  bindPhoneSucess() {
-    console.log('success');
+  bindPhoneSucess(e) {
+    console.log(e.detail);
+    this.setData({
+      'userInfo.phone':e.detail
+    })
   },
   /**
    * 生命周期函数--监听页面加载

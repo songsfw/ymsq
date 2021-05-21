@@ -51,8 +51,12 @@ Page({
       if(!res){
         wx.showToast({
           icon:"none",
-          title:"领取失败"
+          title:"手慢了，红包已抢完了呀"
         })
+        this.setData({
+          step:3
+        })
+        return
       }
       if(res.type=='reward'){
         step=2

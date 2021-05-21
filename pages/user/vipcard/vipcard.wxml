@@ -1,21 +1,27 @@
 <!-- pages/user/user.wxml -->
-<view class="bg"></view>
 <view class="card">
-  <view class="hd flex">
-    <view class="icon-logo">
-      <image src="../../../image/icon-logo.png"></image>
-    </view>
-    <view class="info flex-1">
-      <view class="logo-txt"><image src="../../../image/logo-txt.png" /></view>
-      <text class="color-b">可用余额:{{show?balance:"******"}}元</text>
-    </view>
-    <view class="show" bindtap="changeMoney">
-      <text class="iconfont icon-eye" wx:if="{{show}}"></text>
-      <text class="iconfont icon-eye2" wx:else></text>
+  <view class="icon-logo">
+    <image src="../../../image/icon-logo.png"></image>
+  </view>
+  <view class="hd">
+    <view class="tit">可用余额:</view>
+    <view class="flex-center info">
+      <view class="money">{{show?balance+"元":"******"}}<text></text></view>
+      <view class="show" bindtap="changeMoney">
+        <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+        <text class="iconfont icon-eye2" wx:else></text>
+      </view>
     </view>
   </view>
   <view class="myline">
     <image src="../../../image/myline.png" style="height:40rpx"></image>
+  </view>
+  <view class="active flex-center" wx:if="{{!subscribe}}" bind:tap="toPro">
+    <view>
+      <view>请先关注原麦官方公众号再付款，成功后可得原麦红包奖励哦～</view>
+      <text>关注原麦山丘</text>
+    </view>
+    <view class="wxbtn">去关注</view>
   </view>
   <view class="card-info">
     <view class="card-code">NO.{{card_no}}</view>

@@ -19,7 +19,7 @@
     <view class="bd step2">
       <view class="tit">恭喜您</view>
       <view class="tit2">获得一个现金红包</view>
-      <view class="price">{{self_reward}}<text>元</text></view>
+      <view class="price">{{self_reward || ''}}<text>元</text></view>
       <view class="tip">已存入余额, 付款时可抵用现金</view>
       <navigator hover-class="none" url="/pages/proList/proList" open-type="switchTab" class="share-btn">立即使用</navigator>
     </view>

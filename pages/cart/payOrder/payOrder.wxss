@@ -50,7 +50,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px}
 .pro-info .price .count{color: #999;}
-.pro-wp{padding-bottom: 36rpx;}
+.pro-wp{padding-bottom: 26rpx;}
 .pro-wp .item:last-child{margin-bottom: 0;}
 .more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
 .more-pro .icon-arrow-btm{transition: all linear .3s;}

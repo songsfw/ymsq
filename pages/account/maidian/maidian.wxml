@@ -11,7 +11,7 @@
     </view>
     <view class="money-box">
       <view class="h3 flex-center"><text ></text>麦点明细<text ></text></view>
-      <block wx:if="{{pointList.length>0}}">
+      <block wx:if="{{pointList.length==0}}">
         <view class="item flex"  wx:for="{{pointList}}">
           <view class="">
             <view class="tit">{{item.title}}</view>
@@ -20,7 +20,10 @@
           <view class="price">{{item.symbol}} {{item.score}}</view>
         </view>
       </block>
-      <view class="loading" wx:else>{{pointList.length==0?'暂无数据':''}}</view>
+      <view class="loading nodata" wx:else>
+        <view><image src="../../../image/no-data.png"></image></view>
+        <view class="txt">暂无数据</view>
+      </view>
     </view>
     <!-- <view class="logo">
       <image src="../../../image/logo.png"></image>

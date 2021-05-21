@@ -4,9 +4,9 @@
 <view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
   <view class="order-type">
     <view class="txt">
-      <!-- <image wx:if="{{stat==1}}" src="../../../image/icon-od4.png"></image> -->
-      <image wx:if="{{stat==2}}" src="../../../image/icon-od4.png"></image>
-      <image wx:if="{{stat==3}}" src="../../../image/icon-od1.png"></image>
+      <image wx:if="{{stat==4}}" mode="widthFix" src="../../../image/icon-od7.png"></image>
+      <image wx:if="{{stat==2}}" mode="widthFix" src="../../../image/icon-od4.png"></image>
+      <image wx:if="{{stat==3}}" mode="widthFix" src="../../../image/icon-od1.png"></image>
       {{status.title}}</view>
     <view class="status"><block wx:if="{{timingTxt}}">{{timingTxt}}</block> {{status.msg}}</view>
   </view>

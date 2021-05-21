@@ -611,12 +611,14 @@ Page({
     this.flashTap();
     // this.toCart = this.selectComponent('#toCartId');
     let addressInfo = wx.getStorageSync("addressInfo")
+    let btmHolder = wx.getStorageSync('btmHolder')
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     //默认不存在的城市 显示全国
     this.data.trueCityId = city_id;
     city_id = city_id == 0 ? '10216' : city_id;
     let totalNumber = wx.getStorageSync('total_num') || 0;
     this.setData({
+      btmHolder,
       city_id: city_id || '10216',
       totalNum: totalNumber,
       totalNumStyle: this.getTotalNumStyle(totalNumber) || '',

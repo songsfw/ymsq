@@ -19,6 +19,30 @@ Page({
   onLoad: function (options) {
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
+
+    let instructions = wx.getStorageSync('instructions')
+    if(instructions){
+      console.log(instructions);
+      instructions = JSON.parse(instructions)
+      let url =instructions['subscribe-article']
+      this.setData({
+        url
+      })
+    }else{
+      api.getIntroduction().then(res=>{
+        console.log(res);
+        if(res){
+          instructions = res.instructions
+          let url =instructions['subscribe-article']
+          this.setData({
+            url
+          })
+          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+          
+        }
+      })
+    }
+
     this.setData({
       btmHolder:btmHolder,
       show:app.globalData.isShowScore
@@ -30,19 +54,28 @@ Page({
       url:"/pages/account/account"
     })
   },
+  toPro(e) {
+    wx.navigateTo({
+      url: `/pages/web/web?url=${this.data.url}`
+    })
+  },
+  
   vipCard(){
+    wx.showLoading()
     if(timer){
       clearTimeout(timer)
     }
     api.getVipCard().then(res=>{
+      wx.hideLoading()
       console.log(res);
-      const { pay_code, card_no ,balance} = res;
+      const { pay_code, card_no ,balance,subscribe} = res;
       //const codeStr = `${code.slice(0, 4)}****${code.slice(20)}`;
       wxbarcode.barcode('barcode', pay_code, 588, 300);
       this.setData({
         pay_code,
         card_no,
-        balance
+        balance,
+        subscribe
       })
       timer = setTimeout(()=>{
         this.vipCard()
@@ -59,7 +92,14 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  async onShow () {
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+    
     this.vipCard()
     this.setData({
       canInterval: true

@@ -44,8 +44,8 @@ page{background: #F9F9F9;height: 100%;}
 .topBar .cart .card-num{
   background:#F5222D;
   font-size:8px;
-  width: 10px;height: 10px;border-radius: 50%;
-  right:7px;top:5px;
+  width:8px;height:8px;border-radius: 50%;
+  right:9px;top:5px;
   /* width:28rpx; */
   /* height:28rpx; */
   color:#FFFFFF;
