@@ -182,7 +182,7 @@ Page({
     this.getProList()
   },
   addChartPreView(currentTab, idx, itemIdx, totalNum) {
-    if (this.data.trueCityId == 0) {
+    if (this.data.trueCityId == 0 || !app.globalData.breadCityList.hasOwnProperty(this.data.trueCityId)) {
       wx.showToast({
         icon: "none",
         title: '当前配送地址暂不支持购买此商品！'

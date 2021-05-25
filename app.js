@@ -202,7 +202,8 @@ App({
     cardPwd: null,
     thirdCardNo: null,
     thirdCardPwd: null,
-    proSource: 1
+    proSource: 1,
+    breadCityList:{"10216":"1"},
   },
   watch: {
     'watchNum': function (value, oldValue) {
@@ -273,6 +274,7 @@ App({
     }
     return style;
   },
+  
   data: {
     ProductList_ProList: {}, //列表页信息
     ProductList_ProListIndex: {}, //列表页索引信息
