@@ -174,11 +174,15 @@ Page({
     api.getCakeProInfo(data).then(res=>{
       wx.stopPullDownRefresh()
       console.log(res)
-      let selectSku = Object.assign({},res.sku_list[res.sku_id])
       if(res){
+        let selectSku = Object.assign({},res.sku_list[res.sku_id])
         this.setData({
           proInfo:res,
           selectSku:selectSku
+        })
+      }else{
+        wx.navigateBack({
+          delta: 1
         })
       }
     })

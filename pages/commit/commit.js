@@ -149,6 +149,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad (options) {
+    wx.showLoading({mask:true})
     let userInfo = wx.getStorageSync('userInfo')
     let loginInfo = null
     if(!userInfo){
@@ -165,6 +166,10 @@ Page({
     }
     api.getComment(data).then(res=>{
       console.log(res);
+      wx.hideLoading()
+      if(!res){
+        return
+      }
       let commentStat = res.hasComment
       let detail=res.orderReader.detail
 

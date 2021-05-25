@@ -204,6 +204,10 @@ Page({
           is_show: true,
           proInfo: res
         })
+      }else{
+        wx.navigateBack({
+          delta: 1
+        })
       }
     })
   },

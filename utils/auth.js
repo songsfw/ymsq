@@ -1,4 +1,5 @@
 const api = require('api.js')
+
 //微信登录
 function wxLogin() {
   return new Promise((resolve, reject) => {
@@ -14,6 +15,19 @@ function wxLogin() {
           content: '登录失败，请刷新重试',
           showCancel: false
         })
+      }
+    })
+  })
+}
+
+function checkSession(){
+  return new Promise((resolve,reject)=>{
+    wx.checkSession({
+      success () {
+        resolve()
+      },
+      fail () {
+        reject()
       }
     })
   })
@@ -47,6 +61,7 @@ function getUserProfile(userInfo){
         .then(res=>{
           console.log(res);
           if(!res){
+            reject(res)
             return
           }
           let result = res.data.result
@@ -77,5 +92,6 @@ module.exports = {
   getUserProfile:getUserProfile,
   getLoginInfo:getLoginInfo,
   wxLogin: wxLogin,
+  checkSession:checkSession
   //appLogin: appLogin
 };

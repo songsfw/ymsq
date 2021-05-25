@@ -1031,6 +1031,7 @@ Page({
           point_price:data.point_price,
           promotion_price:data.promotion_price,
           total_price:cart_data.total_price,
+          wx_price:'0',
           user_id:that.data.userInfo.user_id
         });
       }
@@ -1127,7 +1128,7 @@ Page({
         unuse: true
       })
     }
-  }, 500),
+  }, 200),
   confirmInput: util.debounce(function (e) {
     let val = e.detail.value
     let initPwd = this.data.initPwd || ''
@@ -1144,7 +1145,7 @@ Page({
         unuse: true
       })
     }
-  }, 500),
+  }, 200),
   verifyPwd(val) {
     let data = {
       password: val

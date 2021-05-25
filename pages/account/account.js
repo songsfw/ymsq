@@ -9,7 +9,7 @@ Page({
   data: {
     userInfo:null,
     count:0,
-    money:"123"
+    money:'---'
   },
   changeMoney(){
     let show = app.globalData.isShowBalance

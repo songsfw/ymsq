@@ -23,16 +23,50 @@ Page({
     })
     
   },
-  open(){
+  async open(){
     console.log(this.data.userInfo);
-    if(this.data.userInfo.is_authed==0){
-      auth.getUserProfile(this.data.userInfo).then(res=>{
-        console.log(res);
+    try {
+      await auth.checkSession()
+      if(this.data.userInfo.is_authed==0){
+        if (wx.getUserProfile) {
+          auth.getUserProfile(this.data.userInfo).then(res=>{
+            console.log(res);
+            this.getHongbao()
+          }).catch(err=>{
+            console.log(err);
+            wx.showToast({
+              icon:"none",
+              title:"授权失败，稍后重试"
+            })
+          })
+        }else{
+          this.getHongbao()
+        }
+      }else{
         this.getHongbao()
-      })
-    }else{
-      this.getHongbao()
+      }
+    } catch (error) {
+      if(this.data.userInfo.is_authed==0){
+        loginInfo = await auth.getLoginInfo()
+        if (wx.getUserProfile) {
+          auth.getUserProfile(this.data.userInfo).then(res=>{
+            console.log(res);
+            this.getHongbao()
+          }).catch(err=>{
+            console.log(err);
+            wx.showToast({
+              icon:"none",
+              title:"授权失败，稍后重试"
+            })
+          })
+        }else{
+          this.getHongbao()
+        }
+      }else{
+        this.getHongbao()
+      }
     }
+    
     
   },
   getHongbao(){

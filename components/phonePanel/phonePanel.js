@@ -48,11 +48,6 @@ Component({
           
           console.log(res);
           if(!res){
-            auth.getLoginInfo()
-            wx.showToast({
-              icon:"none",
-              title:"网络繁忙,请重试"
-            })
             return
           }
           let mobile = res.mobile
@@ -65,10 +60,9 @@ Component({
           this.triggerEvent('phoneSucess',mobile)
         })
       }else{
-        auth.getLoginInfo()
         wx.showToast({
           icon:"none",
-          title:"网络繁忙,请重试"
+          title:"绑定失败"
         })
       }
     },

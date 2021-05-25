@@ -1,9 +1,8 @@
 // pages/user/user.js
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+const auth = require('../../../utils/auth.js')
 const app = getApp()
-let timer = null,
-  proNum = 0
 Page({
 
   /**
@@ -182,15 +181,51 @@ Page({
       pop: 0
     })
   },
-  checkLogin(){
-    if(this.data.userInfo.is_authed==0){
-      auth.getUserProfile(this.data.userInfo).then(res=>{
-        console.log(res);
+  async checkLogin(){
+    try {
+      await auth.checkSession()
+      if(this.data.userInfo.is_authed==0){
+        if (wx.getUserProfile) {
+          auth.getUserProfile(this.data.userInfo).then(res=>{
+            console.log(res);
+            this.Settlement()
+          }).catch(err=>{
+            console.log(err);
+            wx.showToast({
+              icon:"none",
+              title:"授权失败，稍后重试"
+            })
+          })
+        }else{
+          this.Settlement()
+        }
+      }else{
         this.Settlement()
-      })
-    }else{
-      this.Settlement()
+      }
+    } catch (error) {
+      console.log('session失效');
+      if(this.data.userInfo.is_authed==0){
+        loginInfo = await auth.getLoginInfo()
+        if (wx.getUserProfile) {
+          auth.getUserProfile(this.data.userInfo).then(res=>{
+            console.log(res);
+            this.Settlement()
+          }).catch(err=>{
+            console.log(err);
+            wx.showToast({
+              icon:"none",
+              title:"授权失败，稍后重试"
+            })
+          })
+        }else{
+          this.Settlement()
+        }
+      }else{
+        this.Settlement()
+      }
     }
+    
+    
   },
   Settlement(){
     let {cakeLi,breadLi}=this.data

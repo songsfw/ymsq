@@ -153,7 +153,9 @@ Page({
     })
   },
   getUserCenter(){
+    wx.showLoading({mask:true})
     api.getUserCenter().then(res=>{
+      wx.hideLoading()
       console.log(res);
       if(res.user.subscribe){
         this.setData({

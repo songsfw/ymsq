@@ -2,50 +2,44 @@ const {GET,POST,ENV} = require('request.js')
 console.log(ENV);
 //var baseUrl = 'https://api-beta.withwheat.com/v1'
 var baseUrl = ENV == 'pro' ? 'https://api.withwheat.com/v1' : 'https://api-beta.withwheat.com/v1'
-var isLogin = 0
+
 const returnData = res=>{
   if(res.statusCode == 200){
     let data = res.data
     console.log(data)
     if(data.status==0){
-      isLogin = 0
       var result = data.result
       return result
     }else if(data.status==-5){
-      isLogin = 0
       return false
     }else if(data.status==1001){
-      if(isLogin==1){  //防止同时多个接口1001重复跳授权页
-        return
-      }
-      isLogin=1
+      
       // wx.navigateTo({
       //   url: '/pages/login/login'
       // })
     }else if(data.status==1022){
-      isLogin = 0
       console.log('未绑定手机');
       return '1022'
     }else if(data.status==5016){
-      isLogin = 0
       return false
     }else{
-      isLogin = 0
       //特殊状态统一处理
       if(data.message){
         wx.showToast({
           icon:"none",
-          title:data.message
+          title:data.message,
+          duration:3000
         })
       }
       return false
     }
   }else if(res.statusCode == 500){
-    wx.showModal({
-      title: '网络错误',
-      content: '网络错误，请刷新重试',
-      showCancel: false
-    })
+    // wx.showModal({
+    //   title: '网络错误',
+    //   content: '网络错误，请刷新重试',
+    //   showCancel: false
+    // })
+    console.log('500：接口/参数错误');
   }
 }
 

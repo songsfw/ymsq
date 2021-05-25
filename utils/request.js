@@ -75,9 +75,10 @@ const request = (method,url,data,needToken=true)=>{
         console.log("---失败---",res);
         wx.showModal({
           title: '网络错误',
-          content: '网络出错，请刷新重试',
+          content: '网络拥堵，请刷新重试',
           showCancel: false
         })
+        wx.hideLoading()
         //hideLoading()
       }
     })

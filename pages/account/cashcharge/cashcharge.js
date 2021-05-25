@@ -147,6 +147,9 @@ Page({
         wx.hideLoading()
         console.log(res)
         if(!res){
+          this.setData({
+            isCharging:0
+          })
           return
         }
         // if(res==app.globalData.bindPhoneStat){
