@@ -1,6 +1,6 @@
 import {md5} from './md5';
 
-let ENV = 'dev'  //环境 pro:正式  dev:测试
+let ENV = 'pro'  //环境 pro:正式  dev:测试
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 var platform = ENV == 'pro' ? 'xcx' : 'wxxcx'
@@ -75,7 +75,7 @@ const request = (method,url,data,needToken=true)=>{
         console.log("---失败---",res);
         wx.showModal({
           title: '网络错误',
-          content: '网络拥堵，请刷新重试',
+          content: '网络繁忙，请刷新重试',
           showCancel: false
         })
         wx.hideLoading()

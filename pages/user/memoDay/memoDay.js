@@ -252,7 +252,9 @@ Page({
     })
   },
   getMemoDay(){
+    wx.showLoading({mask:true})
     api.getMemoDay().then(res=>{
+      wx.hideLoading()
       console.log(res);
       if(!res) return
       const { list, doc ,available_day} = res;
