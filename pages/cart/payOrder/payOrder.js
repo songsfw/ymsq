@@ -221,7 +221,7 @@ Page({
     if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
-        title: "有不可配送商品，更换地址或删除不可配送商品"
+        title: "不可配送，更换地址或删除不可配送商品"
       })
       return
     }

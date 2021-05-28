@@ -198,8 +198,9 @@ Page({
   },
   async onShow(){
     let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
-    if(!userInfo){
+    if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
@@ -207,7 +208,7 @@ Page({
     var currPage = pages[pages.length - 1];
     let options = currPage.options
 
-    let addressInfo = wx.getStorageSync("addressInfo")
+    addressInfo = wx.getStorageSync("addressInfo")
     addressInfo = JSON.parse(addressInfo)
     let totalNum = wx.getStorageSync("total_num")
     let city_id = addressInfo.city_id

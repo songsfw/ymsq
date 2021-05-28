@@ -231,11 +231,13 @@ Page({
   },
   async onShow() {
     let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
-    if(!userInfo){
+    if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
+
     //自定义tabbar选中
     // if (typeof this.getTabBar === 'function' &&
     //   this.getTabBar()) {
@@ -250,9 +252,9 @@ Page({
     console.log(fixedTop)
 
     //let userInfo = wx.getStorageSync("userInfo")
-    let addressInfo = wx.getStorageSync("addressInfo")
+    
     let btmHolder = wx.getStorageSync('btmHolder')
-
+    addressInfo = wx.getStorageSync("addressInfo")
     if (addressInfo) {
       addressInfo = JSON.parse(addressInfo)
     }

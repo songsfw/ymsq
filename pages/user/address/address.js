@@ -1,8 +1,7 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 const app = getApp()
-var timer = null,
-  startX = 0
+var startX = 0
 Page({
 
   /**
@@ -190,6 +189,7 @@ Page({
     let data = {
       address_id: id
     }
+    wx.showLoading({mask:true})
     api.delAddress(data).then(res => {
       console.log(res);
       let addressInfo = wx.getStorageSync('addressInfo')
@@ -213,9 +213,10 @@ Page({
               is_ziti: default_address.is_ziti
             }
             wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
-            
+            if(source!=0){
+              this.setPrePageStat(id)
+            }
           }else{
-
             util.getLocation().then(res=>{
               console.log(res);
               let data = {
@@ -227,14 +228,17 @@ Page({
               console.log(data)
               api.getUserLocation(data).then(local=>{
                 wx.setStorageSync("addressInfo", JSON.stringify(local.address_info))
+                if(source!=0){
+                  this.setPrePageStat(id)
+                }
+                
               })
+              
             })
             
             
           }
-          if(source!=0){
-            this.setPrePageStat(id)
-          }
+          
         }
  
         this.getAddress()
@@ -245,6 +249,7 @@ Page({
           duration: 3000
         })
       }
+      wx.hideLoading()
     })
   },
   getAddress() {

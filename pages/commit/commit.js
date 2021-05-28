@@ -84,6 +84,7 @@ Page({
   },
   addComment(){
     let {orderCode,comment,star,selectTag,proList,commentStat}=this.data
+    let hasSpecial = null
     if(commentStat){
       this.setData({
         pop: 'hongbao'
@@ -114,6 +115,14 @@ Page({
       wx.showToast({
         icon:"none",
         title:"暂未填写评价"
+      })
+      return
+    }
+    hasSpecial = util.checkSpecialStr(comment)
+    if(hasSpecial){
+      wx.showToast({
+        icon:'none',
+        title:"不能提交特殊字符"
       })
       return
     }
@@ -162,8 +171,9 @@ Page({
     console.log(num);
     wx.showLoading({mask:true})
     let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
-    if(!userInfo){
+    if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }

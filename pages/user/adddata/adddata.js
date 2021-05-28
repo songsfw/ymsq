@@ -114,12 +114,13 @@ Page({
       mobile:mobile,
       title:title,
     }
-
+    wx.showLoading({mask:true})
     //修改
     if(this.data.type=="1"){
       data.id = id
       console.log(data)
       api.editAddress(data).then(res => {
+        wx.hideLoading()
         console.log(res);
         if(res){
           
@@ -134,8 +135,8 @@ Page({
             name:name,
             is_ziti:res.is_ziti
           }
-          
           if(source=='1'){
+            //订单结算页
             //切换城市后 重置所选商品类型 1 面包 2 蛋糕
             app.globalData.proType=''
             wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
@@ -164,6 +165,7 @@ Page({
       console.log(data)
       api.addAddress(data).then(res => {
         console.log(res);
+        wx.hideLoading()
         if(res){
           
           let addressInfo = {

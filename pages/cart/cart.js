@@ -1,9 +1,8 @@
 // pages/user/user.js
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
-const auth = require('../../utils/auth.js')
 const app = getApp()
-let loginInfo = null,startX= 0
+let startX= 0
 Page({
 
   /**
@@ -20,11 +19,7 @@ Page({
     btmHolder: 0,
     fittings: false,
     pop: 0,
-    skuNum: 1,
-    //delStatus: 0,
-    //breadItemIds: {}, //move
-    //cakeItemIds: {}, //move
-
+    skuNum: 1
   },
   touchE: function (e) {
     // console.log(e);
@@ -105,6 +100,7 @@ Page({
   },
   delPro(e) {
     let id = e.currentTarget.dataset.id
+
     let { city_id } = this.data
     let data = {
       city_id: city_id,
@@ -122,7 +118,6 @@ Page({
           this.setData({
             showLoading: true
           })
-          //this.data.delStatus = 1;
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
@@ -143,10 +138,7 @@ Page({
         }
       }
     })
-    // let query = wx.createSelectorQuery()
-    // let queryNode = query.selectAll('.pro-box')
-    // return false;
-    
+
   },
   showTip(){
     wx.showToast({
@@ -160,6 +152,10 @@ Page({
     let proId = e.currentTarget.dataset.proid
     let type = e.currentTarget.dataset.type,isfit=e.currentTarget.dataset.isfit
     if(!proId){
+      wx.showToast({
+        icon:"none",
+        title:"未获取到商品信息"
+      })
       return
     }
     if(isfit==1){
@@ -181,28 +177,6 @@ Page({
     this.setData({
       pop: 0
     })
-  },
-  getSelectedPro() {
-    let {
-      cakeLi,
-    } = this.data
-    let selectedCake = null
-      //totalPrice = 0
-
-    function getSelected(type) {
-      return pro => pro.is_selected == type;
-    }
-    
-    selectedCake = cakeLi.filter(getSelected("1"))
-    if (selectedCake.length > 0) {
-      this.setData({
-        fittings: true
-      })
-    } else {
-      this.setData({
-        fittings: false
-      })
-    }
   },
   Settlement(){
     let {cakeLi,breadLi}=this.data
@@ -359,7 +333,6 @@ Page({
     }
     console.log(data);
     if (option == "plus") {
-      //proNum++
       data.number = 1
       this.setCartNum(data)
     }
@@ -433,13 +406,9 @@ Page({
     }
   },
   getChartData() {
-    //let proType = app.globalData.proType
     let data = {
       city_id: !this.data.city_id || this.data.city_id == 0?  10216 :this.data.city_id,
     }
-    // if(proType){
-    //   data.type=proType
-    // }
     api.getChartData(data).then(res => {
       console.log(res);
       this.setData({
@@ -481,12 +450,7 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
-        // let noallBread = res.bread.detail.some(item => {
-        //   return item.is_selected == "0"
-        // })
-        // let noallCake = res.cake.detail.some(item => {
-        //   return item.is_selected == "0"
-        // })
+
         this.setData({
           cakeSelectedNum:cake.select_number,
           breadSelectedNum:bread.select_number,
@@ -499,7 +463,6 @@ Page({
           cakeLi: cake.detail,
           totalPrice:res.select_price,
         })
-        //this.getSelectedPro()
       }
 
     })
@@ -706,7 +669,6 @@ Page({
     //     selected: 2
     //   })
     // }
-    let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo && JSON.parse(addressInfo).city_id

@@ -1,16 +1,14 @@
 // pages/user/user.js
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
-const auth = require('../../../utils/auth.js')
 const app = getApp()
+let startX= 0
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    startX: 0, //开始坐标
-    startY: 0,
     curProId: -1,
     userInfo: null,
     count: 0,
@@ -21,11 +19,7 @@ Page({
     btmHolder: 0,
     fittings: false,
     pop: 0,
-    skuNum: 1,
-    //delStatus: 0,
-    //breadItemIds: {}, //move
-    //cakeItemIds: {}, //move
-
+    skuNum: 1
   },
   touchE: function (e) {
     // console.log(e);
@@ -36,7 +30,7 @@ Page({
       //手指移动结束后触摸点位置的X坐标
       var endX = e.changedTouches[0].clientX;
       //触摸开始与结束，手指移动的距离
-      var disX = that.data.startX - endX;
+      var disX = startX - endX;
       //如果距离小于删除按钮的1/2，不显示删除按钮
       var txtStyle = disX > 80 / 2 ? -158 : 0;
 
@@ -77,19 +71,42 @@ Page({
   },
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
+    startX= e.changedTouches[0].clientX
+  },
+  initCartData(res){
+    let bread = res.bread,
+          cake = res.cake,
+          total_num = res.total_number
+
+    wx.setStorageSync('total_num', total_num)
+    let selectType = this.getSelectType(bread,cake)
+    let hasActive = bread.detail.some(item=>{
+      return item.special_tag=="活动商品"
+    })
     this.setData({
-      startX: e.changedTouches[0].clientX,
+      hasActive,
+      type:selectType.type,
+      noallBread: selectType.noallBread,
+      noallCake: selectType.noallCake,
+      cakeSelectedNum:cake.select_number,
+      breadSelectedNum:bread.select_number,
+      cakeSelectedPrice:cake.select_price,
+      breadSelectedPrice:bread.select_price,
+      breadLi: bread.detail,
+      totalPrice:res.select_price,
+      cakeLi: cake.detail,
+      fittingsList: res.fittings,
     })
   },
   delPro(e) {
-    let id = e.currentTarget.dataset.id,skuid = e.currentTarget.dataset.skuid,spuid = e.currentTarget.dataset.spuid,type = e.currentTarget.dataset.type
+    let id = e.currentTarget.dataset.id
+    //,skuid = e.currentTarget.dataset.skuid,spuid = e.currentTarget.dataset.spuid,type = e.currentTarget.dataset.type
     let { city_id } = this.data
     let data = {
       city_id:city_id,
       cart_id: id
     }
-    let proId = spuid||skuid
-
+    //let proId = spuid||skuid
     wx.showModal({
       title: '',
       content: '是否将该商品从购物车移除',
@@ -98,41 +115,39 @@ Page({
       confirmColor: "#C1996B",
       success: res => {
         if (res.confirm) {
-          //this.data.delStatus = 1;
+          wx.showLoading({mask:true})
           api.deletePro(data).then(res => {
             console.log(res);
+            wx.hideLoading()
             if(res){
-              let bread = res.bread,
-                  cake = res.cake,
-                  total_num = res.total_number
+              this.initCartData(res)
+              // let bread = res.bread,
+              //     cake = res.cake,
+              //     total_num = res.total_number
 
-              var pages = getCurrentPages();
-              if(pages.length > 1){
-                //上一个页面实例对象
-                //var prePage = pages[pages.length - 2];
-                app.inCartRefreshList({type:type,proId:proId,selected:0});
-              }
-              wx.setStorageSync('total_num', total_num)
-              let selectType = this.getSelectType(bread,cake)
-              let hasActive = bread.detail.some(item=>{
-                return item.special_tag=="活动商品"
-              })
-              this.setData({
-                hasActive,
-                type:selectType.type,
-                noallBread: selectType.noallBread,
-                noallCake: selectType.noallCake,
-                cakeSelectedNum:cake.select_number,
-                breadSelectedNum:bread.select_number,
-                cakeSelectedPrice:cake.select_price,
-                breadSelectedPrice:bread.select_price,
-                breadLi: bread.detail,
-                totalPrice:res.select_price,
-                cakeLi: cake.detail,
-                fittingsList: res.fittings,
-              })
-              
-              
+              // var pages = getCurrentPages();
+              // if(pages.length > 1){
+              //   app.inCartRefreshList({type:type,proId:proId,selected:0});
+              // }
+              // wx.setStorageSync('total_num', total_num)
+              // let selectType = this.getSelectType(bread,cake)
+              // let hasActive = bread.detail.some(item=>{
+              //   return item.special_tag=="活动商品"
+              // })
+              // this.setData({
+              //   hasActive,
+              //   type:selectType.type,
+              //   noallBread: selectType.noallBread,
+              //   noallCake: selectType.noallCake,
+              //   cakeSelectedNum:cake.select_number,
+              //   breadSelectedNum:bread.select_number,
+              //   cakeSelectedPrice:cake.select_price,
+              //   breadSelectedPrice:bread.select_price,
+              //   breadLi: bread.detail,
+              //   totalPrice:res.select_price,
+              //   cakeLi: cake.detail,
+              //   fittingsList: res.fittings,
+              // })
             } else {
               wx.showToast({
                 title: '删除失败',
@@ -146,10 +161,6 @@ Page({
         }
       }
     })
-    // let query = wx.createSelectorQuery()
-    // let queryNode = query.selectAll('.pro-box')
-    // return false;
-    
   },
   showTip(){
     wx.showToast({
@@ -161,6 +172,13 @@ Page({
   toProInfo: function (e) {
     let proId = e.currentTarget.dataset.proid
     let type = e.currentTarget.dataset.type,isfit=e.currentTarget.dataset.isfit
+    if(!proId){
+      wx.showToast({
+        icon:"none",
+        title:"未获取到商品信息"
+      })
+      return
+    }
     if(isfit==1){
       return
     }
@@ -234,11 +252,11 @@ Page({
       }
     })
 
-  }),
+  },500,true),
   //改变商品数量
   minusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
-      spuid = e.currentTarget.dataset.spuid,
+      //spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
       num = e.currentTarget.dataset.num,
       stock = e.currentTarget.dataset.stock
@@ -249,15 +267,14 @@ Page({
         })
         return
       }
-    this.addChart("minus", skuid, type, num,spuid)
+    this.addChart("minus", skuid, type, num)
   },
   plusNum(e) {
     let skuid = e.currentTarget.dataset.skuid,
-      spuid = e.currentTarget.dataset.spuid,
+      //spuid = e.currentTarget.dataset.spuid,
       type = e.currentTarget.dataset.type,
       num = e.currentTarget.dataset.num,
       stock = e.currentTarget.dataset.stock
-      console.log(spuid);
       if(stock==0){
         wx.showToast({
           icon:"none",
@@ -265,7 +282,7 @@ Page({
         })
         return
       }
-    this.addChart("plus", skuid, type, num,spuid)
+    this.addChart("plus", skuid, type, num)
   },
   //改变商品数量
   minusFitting: util.debounce(function () {
@@ -314,7 +331,7 @@ Page({
         this.setData({
           pop: 0
         })
-        this.getChartData()
+        this.initCartData()
       }
 
     })
@@ -336,8 +353,14 @@ Page({
       'fitting.sku': sku
     })
   },
-  addChart: util.debounce(function (option, skuid, type, num,spuid) {
-    //spuid 返回列表页更新蛋糕库存用到
+  addChart: util.debounce(function (option, skuid, type, num) {
+    if(!skuid){
+      wx.showToast({
+        icon:"none",
+        title: "商品失效，重新加购试试？"
+      })
+      return
+    }
     let {
       city_id
     } = this.data
@@ -349,9 +372,8 @@ Page({
     }
     console.log(data);
     if (option == "plus") {
-      //proNum++
       data.number = 1
-      this.setCartNum(data,spuid)
+      this.setCartNum(data)
     }
     if (option == "minus") {
       if (num == 1) {
@@ -364,7 +386,7 @@ Page({
           success: res => {
             if (res.confirm) {
               data.number = -1
-              this.setCartNum(data,spuid)
+              this.setCartNum(data)
             } else if (res.cancel) {
               return
             }
@@ -373,18 +395,19 @@ Page({
         
       } else {
         data.number = -1
-        this.setCartNum(data,spuid)
+        this.setCartNum(data)
       }
       //proNum--
     }
 
   }),
 
-  setCartNum(data,spuid) {
+  setCartNum(data) {
     api.setChart(data).then(res => {
       console.log(res);
       if (res) {
-        this.getChartData(data.tab_id,data.type,spuid)
+        this.initCartData(res)
+        //this.getChartData(data.tab_id,data.type,spuid)
       }
     })
   },
@@ -441,8 +464,12 @@ Page({
       if (res) {
         let bread = res.bread,
           cake = res.cake
-        wx.setStorageSync('total_num', res.total_number)
-        let selectType = this.getSelectType(bread,cake)
+        this.initCartData(res)
+        if(this.data.pop=='order-panel' && cake.select_number==0 && bread.select_number==0){
+          this.close()
+        }
+        // wx.setStorageSync('total_num', res.total_number)
+        // let selectType = this.getSelectType(bread,cake)
         // var pages = getCurrentPages();
         // let proId = spuid||skuid
         // if(pages.length > 1 && skuid){
@@ -462,25 +489,23 @@ Page({
         //   }
         //   app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
         // }
-
-        let hasActive = bread.detail.some(item=>{
-          return item.special_tag=="活动商品"
-        })
-
-        this.setData({
-          hasActive,
-          type:selectType.type,
-          noallBread: selectType.noallBread,
-          noallCake: selectType.noallCake,
-          cakeSelectedNum:cake.select_number,
-          breadSelectedNum:bread.select_number,
-          cakeSelectedPrice:cake.select_price,
-          breadSelectedPrice:bread.select_price,
-          breadLi: bread.detail,
-          totalPrice:res.select_price,
-          cakeLi: cake.detail,
-          fittingsList: res.fittings,
-        })
+        // let hasActive = bread.detail.some(item=>{
+        //   return item.special_tag=="活动商品"
+        // })
+        // this.setData({
+        //   hasActive,
+        //   type:selectType.type,
+        //   noallBread: selectType.noallBread,
+        //   noallCake: selectType.noallCake,
+        //   cakeSelectedNum:cake.select_number,
+        //   breadSelectedNum:bread.select_number,
+        //   cakeSelectedPrice:cake.select_price,
+        //   breadSelectedPrice:bread.select_price,
+        //   breadLi: bread.detail,
+        //   totalPrice:res.select_price,
+        //   cakeLi: cake.detail,
+        //   fittingsList: res.fittings,
+        // })
       }
       wx.stopPullDownRefresh()
     })
@@ -517,7 +542,6 @@ Page({
           cakeLi: cake.detail,
           totalPrice:res.select_price,
         })
-        //this.getSelectedPro()
       }
 
     })
@@ -537,32 +561,15 @@ Page({
 
     if (type == "1") {
       if (noallBread) {
-        // this.setData({
-        //   noallBread: false,
-        //   // noallCake: true,
-        //   // fittings: false
-        // })
         data.action = "1"
       } else {
-        // this.setData({
-        //   noallBread: true
-        // })
         data.action = "0"
       }
     }
     if (type == "2") {
       if (noallCake) {
-        // this.setData({
-        //  // noallBread: true,
-        //   noallCake: false,
-        //   //fittings: true
-        // })
         data.action = "1"
       } else {
-        // this.setData({
-        //   noallCake: true,
-        //   //fittings: false
-        // })
         data.action = "0"
       }
     }
@@ -590,8 +597,6 @@ Page({
           cakeLi: cake.detail,
           totalPrice:res.select_price,
         })
-
-        //this.getSelectedPro()
       }
 
     })
@@ -724,7 +729,6 @@ Page({
     //     selected: 2
     //   })
     // }
-    let sysInfo = app.globalSystemInfo;
     let userInfo = wx.getStorageSync("userInfo")
     let addressInfo = wx.getStorageSync("addressInfo")
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
