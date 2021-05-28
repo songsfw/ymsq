@@ -1,7 +1,7 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let tempOrderNo = '';
-let tempAfter = 0,isPaying=false;
+let tempAfter = 0
 Page({
 
   /**
@@ -185,20 +185,21 @@ Page({
     })
   },
   payOrder:util.debounce(function (e) {
+    wx.showLoading({mask:true,title:'正在支付'})
     let code = e.currentTarget.dataset.code
     let data = {
       order_code: code
     }
-    if(isPaying){
-      return
-    }
-    isPaying=true  //正在支付
+    // if(isPaying){
+    //   return
+    // }
+    // isPaying=true  //正在支付
 
     api.payOrder(data).then(res => {
-
+      wx.hideLoading()
       console.log(res);
       if (res) {
-        isPaying=false
+        //isPaying=false
         let jsApiParameters = res.jsApiParameters
         let {
           timeStamp,

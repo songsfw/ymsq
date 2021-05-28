@@ -15,7 +15,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isPaying:false,
     is_ziti: "0",
     proNum: 2,
     showAll: false,
@@ -33,8 +32,6 @@ Page({
 
     // checkChange: true,
     // checkDateChange: true,
-    // tempTime: -1,
-    // tempDate: -1,
 
     //配送end
     payQueue: [10, 0, 0, 0, 0],
@@ -43,7 +40,6 @@ Page({
     curId: -1,
     curtabid: 1,
     pop: 0,
-    isLoad:false,
     hasDelivery: true,
     hasMai: true,
     hasCard: false,
@@ -271,9 +267,7 @@ Page({
       startCheck:false,
       selectDate:this.data.checkDate,
       // selectTime:-1,
-
       pop: 0,
-      tempTime: -1,
       // checkChange: true,
       // checkDateChange: true,
       // selectDate: this.data.checkDate || 0,
@@ -333,9 +327,6 @@ Page({
       // selectDate:this.data.selectDate,
       checkDate:this.data.selectDate,
       checkTime:selectTime,
-      // checkChange: false,
-      // tempTime: selectTime,
-      // tempDate: this.data.selectDate,
     })
     this.confirmDate();
     // this.close();
@@ -345,7 +336,6 @@ Page({
     this.setData({
       selectTime: selectTime,
       checkChange: false,
-      tempTime: selectTime,
       tempDate: this.data.selectDate,
     })
   },
@@ -603,7 +593,6 @@ Page({
     console.log(newPayQueue)
 
     this.setData({
-      isLoad:true,
       useCoupon,
       hasDelivery,
       payQueue: newPayQueue,
@@ -618,6 +607,9 @@ Page({
     payPrice = payQueue.reduce((pre, cur) => {
       return util.floatObj().subtract(pre, cur)
     }, payPrice)
+    if(payPrice<0){
+      payPrice=0
+    }
     console.log(payPrice)
     //payPrice = parseFloat(payPrice)
     
@@ -785,6 +777,7 @@ Page({
     this.submmitOrder()
   },
   submmitOrder: util.debounce(function () {
+    
     let that = this
     let {
       cart_data,
@@ -923,38 +916,22 @@ Page({
     console.log('---支付参数---')
     console.log(data)
     console.log('------')
-    wx.showLoading({
-      title: '加载中'
-    })
-
-    if(this.data.isPaying){
-      return
-    }
-    this.setData({
-      isPaying:true
-    })  //正在支付
+    wx.showLoading({mask:true,title:'正在支付'})
 
     api.submmitOrder(data).then(res => {
       wx.hideLoading();
       console.log(res)
       if (!res) {
-        this.setData({
-          isPaying:false
-        })
         return
       }
       
       if (res == app.globalData.bindPhoneStat) {
         this.setData({
           phoneStat: 1,
-          showPhonePanel: true,
-          isPaying:false
+          showPhonePanel: true
         })
         return
       }
-      this.setData({
-        isPaying:false
-      })
       let order_code = res.orderCode
       //清除已记住的卡号密码
       app.globalData.cardNo = ''

@@ -47,7 +47,7 @@
     </view>
   </view>
 </view>
-<view class="option flex" style="padding-bottom:{{btmHolder}}px">
+<view class="option flex" style="padding-bottom:{{btmHolder}}px;display:{{!is_show?'none':'flex'}}">
   <view class="flex">
     <navigator hover-class="none"  class="home" open-type="switchTab" url="/pages/index/index" bindtap="toIndexPage">
       <view class="icon"><image src="../../image/icon-home.png"></image></view>

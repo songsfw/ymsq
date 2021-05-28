@@ -19,7 +19,7 @@
     </view>
   <!-- <view wx:else style="padding-top:24rpx;"></view> -->
 </view>
-<view class="sub-wrap" style="height:{{currentTab!=2?'42':'80'}}px;" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}" style="top:{{fixedTop}}px">
+<view class="sub-wrap" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}" style="height:{{currentTab!=2?'42':'80'}}px;top:{{fixedTop}}px">
   <scroll-view scroll-into-view="{{categoryId}}" fast-deceleration="true" enhanced="true" scroll-left="{{categoryleft}}" scroll-with-animation="true" show-scrollbar="false" class="sub {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}">
     <view class="flex category-container">
       <block wx:if="{{currentTab == 1}}">
@@ -71,7 +71,7 @@
       <view class="listItemwp flex">
         <block wx:for="{{showList[currentTab]}}" wx:for-index="idx">
           <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
-            <view class="item" bind:tap="toProInfo" data-idx="{{idx}}" data-itemidx="{{itemIdx}}" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-currenttab="{{currentTab}}"
+            <view class="item" bind:tap="toProInfo" data-name="{{pro.name}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-currenttab="{{currentTab}}"
               data-type="{{pro.type}}">
               <view class="pic {{showStock[currentTab][pro.meal_id]==0?'sold-out':''}}">
                 <view class="tag">已售罄</view>

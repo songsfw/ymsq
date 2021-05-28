@@ -40,7 +40,7 @@
     <view class="flex"> 
       <view class="tit">温馨提示</view>
       <view class="txt flex-1">
-        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏</view>
+        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏，长期储存建议冷冻</view>
       </view>
     </view>
   </view>

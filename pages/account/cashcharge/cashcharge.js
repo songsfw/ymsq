@@ -11,8 +11,7 @@ Page({
     result:'',
     pwd:'',
     type:1,
-    pop:0,
-    isCharging:0
+    pop:0
   },
   changeShow(){
     let show = this.data.show
@@ -64,7 +63,7 @@ Page({
       pop:0
     })
   },
-  chashCharge(){
+  chashCharge:util.debounce(function(){
     let {result,pwd,use,type}=this.data
     
     if(result==""){
@@ -83,7 +82,7 @@ Page({
       })
       return false
     }
-    
+    wx.showLoading({mask:true})
     if(use==1){
       let data = {
         card_no:result,
@@ -93,6 +92,7 @@ Page({
       }
       console.log(data)
       api.useCard(data).then(res=>{
+        wx.hideLoading();
         console.log(res)
         if(!res){
           return
@@ -134,22 +134,11 @@ Page({
         card:result,
         pwd:pwd
       }
-      if(this.data.isCharging==1){
-        return
-      }
-      this.setData({
-        isCharging:1
-      })
-      wx.showLoading({
-        title: '加载中',
-      })
+      
       api.chashCharge(data).then(res=>{
-        wx.hideLoading()
+        wx.hideLoading();
         console.log(res)
         if(!res){
-          this.setData({
-            isCharging:0
-          })
           return
         }
         // if(res==app.globalData.bindPhoneStat){
@@ -163,17 +152,16 @@ Page({
         wx.showToast({
           title: '充值成功',
           icon: 'none',
-          duration: 4000
+          duration: 3000
         })
         this.setData({
           result:'',
-          pwd:"",
-          isCharging:0
+          pwd:""
         })
       })
     }
 
-  },
+  },300,false),
   useChashCharge(){
     let {result,pwd,type,usePrice}=this.data
     var pages = getCurrentPages();

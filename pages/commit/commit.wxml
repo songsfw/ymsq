@@ -78,7 +78,8 @@
   
 </view>
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
-  <view class="btn" bindtap="addComment">{{commentStat?"查看红包":"提交评价"}}</view>
+  <view class="btn" bindtap="checkHongbao" wx:if="{{commentStat}}">查看红包</view>
+  <view class="btn" bindtap="addComment" wx:else>提交评价</view>
 </view>
 <view class="logo">
   <image src="../../image/logo.png"></image>

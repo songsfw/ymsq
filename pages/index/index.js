@@ -173,11 +173,7 @@ Page({
           menu,
           message,
           subscribe_com,
-          showLoading:false,
-          // block1:block1 || null,
-          // block2:block2 || null,
-          // block3:block3 || null,
-          curBg: banner[0].image_url
+          showLoading:false
         })
       }
       //wx.stopPullDownRefresh() //停止下拉刷新

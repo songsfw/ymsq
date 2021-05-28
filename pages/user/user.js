@@ -131,15 +131,9 @@ Page({
     api.getMemoDay().then(res=>{
       console.log(res);
       if(!res) return
-      const { list, doc ,available_day} = res;
-      let dateList = []
-      list.forEach((item,index)=>{
-        dateList[index] = item
-      })
+      const {doc} = res;
       this.setData({
-        dateList:dateList,
-        doc,
-        available_day
+        doc
       })
     })
   },
@@ -173,22 +167,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = addressInfo&&JSON.parse(addressInfo).city_id
     //自定义tabbar选中
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        count:"",
-        selected: 3
-      })
-    }
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     count:"",
+    //     selected: 3
+    //   })
+    // }
     let userInfo = wx.getStorageSync("userInfo")
     if(userInfo){
       userInfo = JSON.parse(userInfo)
     }
     this.setData({
-      city_id,
       userInfo
     })
     this.getUserCenter();

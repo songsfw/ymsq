@@ -2,6 +2,7 @@ const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
 const app = getApp()
 let initScore = [0,0,0,0,0],tags=null,status=[],selectTagArr=[],selectTag = [],delivery_status=0,old_status=''
+let num=0,contentTxt="网络繁忙，刷新页面？",confirmTxt="刷新"
 Page({
 
   /**
@@ -11,6 +12,7 @@ Page({
     score:[0,0,0,0,0],
     star:0,
     pop: 0,
+    commentStat:false
   },
   close(){
     this.setData({
@@ -115,6 +117,7 @@ Page({
       })
       return
     }
+    wx.showLoading({mask:true,title:"提交中"})
     detail = JSON.stringify(detail)
     let data = {
       order_code:orderCode,
@@ -124,6 +127,7 @@ Page({
       tags:selectTag
     }
     api.setComment(data).then(res=>{
+      wx.hideLoading()
       console.log(res);
       if(!res){
         return
@@ -136,10 +140,16 @@ Page({
       }
 
       this.setData({
+        commentStat:true,
         price:res.price,
         pop: 'hongbao'
       })
       
+    })
+  },
+  checkHongbao(){
+    this.setData({
+      pop: 'hongbao'
     })
   },
   bindPhoneSucess(){
@@ -149,6 +159,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad (options) {
+    console.log(num);
     wx.showLoading({mask:true})
     let userInfo = wx.getStorageSync('userInfo')
     let loginInfo = null
@@ -156,9 +167,11 @@ Page({
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
-
+    if(num==2){
+      contentTxt="模块加载失败，重启小程序？"
+      confirmTxt="重启"
+    }
     let orderCode = options.orderCode
-
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     let data = {
@@ -168,6 +181,24 @@ Page({
       console.log(res);
       wx.hideLoading()
       if(!res){
+        wx.showModal({
+          content:contentTxt,
+          showCancel: false,
+          confirmText: confirmTxt,
+          success: res=> {
+            if (res.confirm) {
+              if(num==3){
+                wx.switchTab({
+                  url:"/pages/index/index"
+                })
+                return
+              }else{
+                this.onLoad(options)
+              }
+              num+=1
+            }
+          }
+        });
         return
       }
       let commentStat = res.hasComment
@@ -221,7 +252,6 @@ Page({
     
 
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -261,7 +291,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
   },
 
   /**

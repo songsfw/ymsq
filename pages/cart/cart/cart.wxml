@@ -142,7 +142,7 @@
       <view class="flex-center"><text>合计：</text>
         <view class="num">￥<text>{{totalPrice}}</text></view>
       </view>
-      <view class="buy-btn" bind:tap="checkLogin">去结算 <text >({{cakeSelectedNum+breadSelectedNum}})</text></view>
+      <view class="buy-btn" bind:tap="Settlement">去结算 <text >({{cakeSelectedNum+breadSelectedNum}})</text></view>
     </view>
   </view>
 </view>

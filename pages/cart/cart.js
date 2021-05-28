@@ -3,15 +3,13 @@ const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
 const auth = require('../../utils/auth.js')
 const app = getApp()
-let loginInfo = null
+let loginInfo = null,startX= 0
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    startX: 0, //开始坐标
-    startY: 0,
     curProId: -1,
     userInfo: null,
     count: 0,
@@ -37,7 +35,7 @@ Page({
       //手指移动结束后触摸点位置的X坐标
       var endX = e.changedTouches[0].clientX;
       //触摸开始与结束，手指移动的距离
-      var disX = that.data.startX - endX;
+      var disX = startX - endX;
       //如果距离小于删除按钮的1/2，不显示删除按钮
       var txtStyle = disX > 80 / 2 ? -158 : 0;
 
@@ -78,8 +76,31 @@ Page({
   },
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
+    startX= e.changedTouches[0].clientX
+  },
+  initCartData(res){
+    let bread = res.bread,
+        cake = res.cake,
+        total_num = res.total_number
+    util.setTabBarBadge(total_num)
+    wx.setStorageSync('total_num', total_num)
+    let selectType = this.getSelectType(bread,cake)
+    let hasActive = bread.detail.some(item=>{
+      return item.special_tag=="活动商品"
+    })
     this.setData({
-      startX: e.changedTouches[0].clientX,
+      hasActive,
+      type:selectType.type,
+      noallBread: selectType.noallBread,
+      noallCake: selectType.noallCake,
+      cakeSelectedNum:cake.select_number,
+      breadSelectedNum:bread.select_number,
+      cakeSelectedPrice:cake.select_price,
+      breadSelectedPrice:bread.select_price,
+      breadLi: bread.detail,
+      totalPrice:res.select_price,
+      cakeLi: cake.detail,
+      fittingsList: res.fittings,
     })
   },
   delPro(e) {
@@ -105,30 +126,7 @@ Page({
           api.deletePro(data).then(res => {
             console.log(res);
             if(res){
-              //this.getChartData()
-              let bread = res.bread,
-                  cake = res.cake,
-                  total_num = res.total_number
-              util.setTabBarBadge(total_num)
-              wx.setStorageSync('total_num', total_num)
-              let selectType = this.getSelectType(bread,cake)
-              let hasActive = bread.detail.some(item=>{
-                return item.special_tag=="活动商品"
-              })
-              this.setData({
-                hasActive,
-                type:selectType.type,
-                noallBread: selectType.noallBread,
-                noallCake: selectType.noallCake,
-                cakeSelectedNum:cake.select_number,
-                breadSelectedNum:bread.select_number,
-                cakeSelectedPrice:cake.select_price,
-                breadSelectedPrice:bread.select_price,
-                breadLi: bread.detail,
-                totalPrice:res.select_price,
-                cakeLi: cake.detail,
-                fittingsList: res.fittings,
-              })
+              this.initCartData(res)
             } else {
               wx.showToast({
                 title: '删除失败',
@@ -158,8 +156,12 @@ Page({
     })
   },
   toProInfo: function (e) {
+    
     let proId = e.currentTarget.dataset.proid
     let type = e.currentTarget.dataset.type,isfit=e.currentTarget.dataset.isfit
+    if(!proId){
+      return
+    }
     if(isfit==1){
       return
     }
@@ -202,53 +204,6 @@ Page({
       })
     }
   },
-  async checkLogin(){
-    let status
-    try {
-      await auth.checkSession()
-      if(this.data.userInfo.is_authed==0){
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.Settlement()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.Settlement()
-        }
-      }else{
-        this.Settlement()
-      }
-    } catch (error) {
-      status='session失效'
-      loginInfo = await auth.getLoginInfo()
-      if(this.data.userInfo.is_authed==0){
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.Settlement()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.Settlement()
-        }
-      }else{
-        this.Settlement()
-      }
-    }
-    console.log(status);
-    
-  },
   Settlement(){
     let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {
@@ -267,6 +222,7 @@ Page({
     }
   },
   getOrder: util.debounce(function (e) {
+    wx.showLoading({mask:true})
     let type=""
     if(e){
       let curType = e.currentTarget.dataset.type
@@ -291,6 +247,7 @@ Page({
       return false
     }
     api.commitChart(data).then(res => {
+      wx.hideLoading()
       console.log(res)
       if (res) {
         wx.navigateTo({
@@ -341,6 +298,7 @@ Page({
     let data = {
       city_id: city_id,
       type: '2',
+      is_list:1,
       tab_id: proId,
       number: skuNum
     }
@@ -360,8 +318,7 @@ Page({
         this.setData({
           pop: 0
         })
-        //this.getProList()
-        this.getChartData()
+        this.initCartData()
       }
 
     })
@@ -384,12 +341,19 @@ Page({
     })
   },
   addChart: util.debounce(function (option, skuid, type, num) {
-
+    if(!skuid){
+      wx.showToast({
+        icon:"none",
+        title: "商品失效，重新加购试试？"
+      })
+      return
+    }
     let {
       city_id
     } = this.data
     let data = {
       city_id: city_id,
+      is_list:1,
       type: type,
       tab_id: skuid,
     }
@@ -428,9 +392,8 @@ Page({
 
   setCartNum(data) {
     api.setChart(data).then(res => {
-      console.log(res);
       if (res) {
-        this.getChartData()
+        this.initCartData(res)
       }
     })
   },
@@ -491,31 +454,8 @@ Page({
         return
       }
       if (res) {
-        let bread = res.bread,
-          cake = res.cake,
-          total_num = res.total_number
-        util.setTabBarBadge(total_num)
-        wx.setStorageSync('total_num', total_num)
-        let selectType = this.getSelectType(bread,cake)
-        let hasActive = bread.detail.some(item=>{
-          return item.special_tag=="活动商品"
-        })
-        this.setData({
-          hasActive,
-          type:selectType.type,
-          noallBread: selectType.noallBread,
-          noallCake: selectType.noallCake,
-          cakeSelectedNum:cake.select_number,
-          breadSelectedNum:bread.select_number,
-          cakeSelectedPrice:cake.select_price,
-          breadSelectedPrice:bread.select_price,
-          breadLi: bread.detail,
-          totalPrice:res.select_price,
-          cakeLi: cake.detail,
-          fittingsList: res.fittings,
-        })
-        //this.data.delStatus = 0;
-        //this.getSelectedPro()
+        let bread =  res.bread,cake = res.cake
+        this.initCartData(res)
         if(this.data.pop=='order-panel' && cake.select_number==0 && bread.select_number==0){
           this.close()
         }

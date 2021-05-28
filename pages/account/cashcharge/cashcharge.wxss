@@ -1,3 +1,4 @@
+@import "../../../template/loading/loading.wxss";
 page{border-top: 1px solid #F6F6F6;}
 .card{text-align: center;padding:32rpx 0 50rpx 0;background-color: #F6F6F6;}
 .card .card-wp{position: relative; width: 638rpx;height: 366rpx;margin: 0 auto;box-shadow: 0px 4px 12px 0px rgba(105, 105, 105, 0.5);border-radius: 16rpx;overflow: hidden;}

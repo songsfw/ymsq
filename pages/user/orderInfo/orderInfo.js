@@ -151,16 +151,18 @@ Page({
   }, 500),
 
   payOrder:util.debounce(function (e) {
+    wx.showLoading({mask:true,title:'正在支付'})
     let { orderCode } = this.data
     let data = {
       order_code:orderCode
     }
-    if(isPaying){
-      return
-    }
-    isPaying=true  //正在支付
+    // if(isPaying){
+    //   return
+    // }
+    // isPaying=true  //正在支付
     api.payOrder(data).then(res=>{
-      isPaying=false
+      wx.hideLoading()
+      //isPaying=false
       console.log(res);
       let jsApiParameters = res.jsApiParameters
       let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
@@ -560,30 +562,39 @@ Page({
     let pages = getCurrentPages();
     let currentPage = pages[pages.length-1];
     console.log(currentPage.options)
-    let data = {
-      order_code:currentPage.options.code
-    }
-    api.preShareOrder(data).then(res=>{
-      console.log(res);
-      if(!res){
-        return
+    let order_code = currentPage.options.code
+    if(order_code){
+      let data = {
+        order_code:order_code
       }
-      this.setData({
-        shareInfo:res
+      api.preShareOrder(data).then(res=>{
+        console.log(res);
+        if(!res){
+          return
+        }
+        this.setData({
+          shareInfo:res
+        })
       })
-    })
-
-    this.initOrderData();
-
-    // api.preShareOrder(data).then(res=>{
-    //   console.log(res);
-    //   if(!res){
-    //     return
-    //   }
-    //   this.setData({
-    //     'shareInfo.action':res.action
-    //   })
-    // })
+  
+      this.initOrderData();
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '订单详情获取失败，返回重试',
+        showCancel:false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.navigateBack({
+              delta: 1
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
 
   },
 

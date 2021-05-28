@@ -80,6 +80,13 @@ Page({
   },
   confirmBread: util.debounce(function (e) {
     let proId = e.currentTarget.dataset.id
+    if(!proId){
+      wx.showToast({
+        icon:"none",
+        title:"商品暂时不可购买"
+      })
+      return 
+    }
     let {
       city_id,
       skuNum,
@@ -196,7 +203,9 @@ Page({
     let data = {
       meal_id: this.data.proId
     }
+    wx.showLoading({mask:true})
     api.getProInfo(data).then(res => {
+      wx.hideLoading()
       wx.stopPullDownRefresh()
       console.log(res)
       if (res) {
@@ -242,7 +251,8 @@ Page({
     let totalNum = wx.getStorageSync("total_num")
     let proId = options.proId
     let addressInfo = wx.getStorageSync("addressInfo")
-    let city_id = JSON.parse(addressInfo).city_id
+    addressInfo = JSON.parse(addressInfo)
+    let city_id = addressInfo.city_id
 
     if (options.ctabTypeMealIdSpuId) {
       this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId

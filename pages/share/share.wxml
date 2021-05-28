@@ -11,7 +11,7 @@
         <view>我买了一些好东西</view>
         <view>获得了一个拼手气红包与你分享</view>
       </view>
-      <view class="open-btn" bind:tap="open"><image src="../../image/icon1.png"></image></view>
+      <view class="open-btn" bind:tap="getHongbao"><image src="../../image/icon1.png"></image></view>
     </view>
   </block>
   <block wx:if="{{step==2}}">

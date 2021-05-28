@@ -23,52 +23,21 @@ Page({
     })
     
   },
-  async open(){
-    console.log(this.data.userInfo);
-    try {
-      await auth.checkSession()
-      if(this.data.userInfo.is_authed==0){
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.getHongbao()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.getHongbao()
-        }
-      }else{
-        this.getHongbao()
-      }
-    } catch (error) {
-      if(this.data.userInfo.is_authed==0){
-        loginInfo = await auth.getLoginInfo()
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.getHongbao()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.getHongbao()
-        }
-      }else{
-        this.getHongbao()
-      }
-    }
-    
-    
-  },
+  // open(){
+  //   console.log(this.data.userInfo);
+  //   if(this.data.userInfo.is_authed==0){
+  //     if (wx.getUserProfile) {
+  //       auth.getUserProfile(this.data.userInfo).then(res=>{
+  //         console.log(res);
+  //         this.getHongbao()
+  //       })
+  //     }else{
+  //       this.getHongbao()
+  //     }
+  //   }else{
+  //     this.getHongbao()
+  //   }
+  // },
   getHongbao(){
     let step
     let data ={
@@ -133,17 +102,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   async onShow () {
-    let userInfo = wx.getStorageSync('userInfo')
-    
-    if(!userInfo){
-      loginInfo = await app.wxLogin()
-      await app.getAddress(loginInfo)
-    }
-    userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+    wx.showLoading({mask:true})
+    // if(!userInfo){
+    loginInfo = await app.wxLogin()
+    await app.getAddress(loginInfo)
+    //}
+    let userInfo = JSON.parse(wx.getStorageSync('userInfo'))
 
     this.setData({
       userInfo:userInfo,
-      showLoading:true
     })
     let step=0
     let pages = getCurrentPages();
@@ -153,6 +120,7 @@ Page({
       order_code:orderCode
     }
     api.hongbao(data).then(res=>{
+      wx.hideLoading()
       console.log(res);
       if(res){
         let best_reward = res.best_reward,
@@ -183,9 +151,6 @@ Page({
           setmeal_data:res.setmeal_data
         })
       }
-      this.setData({
-        showLoading:false
-      })
     })
   },
 

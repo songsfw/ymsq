@@ -51,6 +51,7 @@ App({
   },
   async getAddress(loginInfo){
     wx.showLoading()
+    let addressInfo = null
     let {
       user_info,
       address_info
@@ -66,7 +67,7 @@ App({
         lat: local.latitude
       }
       console.log(data)
-      let addressInfo = await api.getUserLocation(data)
+      addressInfo = await api.getUserLocation(data)
       wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
     } else {
       let {
@@ -81,7 +82,7 @@ App({
         mobile,
         name
       } = user_info.default_address
-      let addressInfo = {
+      addressInfo = {
         address: addresstxt,
         id: id,
         area_id: area_id,

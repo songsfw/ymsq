@@ -182,7 +182,7 @@ Page({
     this.getProList()
   },
   addChartPreView(currentTab, idx, itemIdx, totalNum) {
-    if (this.data.trueCityId == 0 || !app.globalData.breadCityList.hasOwnProperty(this.data.trueCityId)) {
+    if (this.data.trueCityId == 0) {
       wx.showToast({
         icon: "none",
         title: '当前配送地址暂不支持购买此商品！'
@@ -232,6 +232,13 @@ Page({
       itemIdx = e.currentTarget.dataset.itemidx,
       curType = e.currentTarget.dataset.type,
       curSpuid = e.currentTarget.dataset.spuid; //当前商品所在页序号
+    if(!proId){
+      wx.showToast({
+        icon:"none",
+        title:"商品暂时不可购买"
+      })
+      return 
+    }
     //如果是蛋糕触发函数
     if (curType == 2) {
       this.showPop(e);
@@ -334,13 +341,27 @@ Page({
   // },
   syncTocart(params) {
     console.log('syncTocart:', params);
+    let type = params['curType']==1?"面包":"蛋糕"
     let data = {
       city_id: params['trueCityId'],
       type: params['curType'],
       tab_id: params['proId'],
       number: params['addNum'],
     }
-
+    wx.reportAnalytics('addcart', {
+      type: type,
+      tab_id: params['proId'],
+      proname:params['name'],
+      city_id: params['trueCityId'],
+      source:'列表页'
+    });
+    if(!data.tab_id){
+      wx.showToast({
+        icon:"none",
+        title: `${type}模块加载失败`
+      })
+      return
+    }
     api.setChart(data).then(res => {
       if (res) {
         wx.setStorageSync("total_num", this.data.totalNum)
@@ -349,13 +370,7 @@ Page({
           icon: 'none',
           duration: 2000
         })
-        wx.reportAnalytics('addcart', {
-          type: params['curType']==1?"面包":"蛋糕",
-          tab_id: params['proId'],
-          proname:params['name'],
-          city_id: params['trueCityId'],
-          source:'列表页'
-        });
+        
       } else {
         console.log(res)
         wx.showToast({
@@ -365,6 +380,7 @@ Page({
         })
       }
     })
+    
   },
   getMoreCacheData() {
     let currentTab = parseInt(this.data.currentTab);
@@ -470,11 +486,27 @@ Page({
     let proId = e.currentTarget.dataset.proid
     let idx = e.currentTarget.dataset.idx
     let itemidx = e.currentTarget.dataset.itemidx
+    let proName = e.currentTarget.dataset.name
     let spuId = e.currentTarget.dataset.spuid
     let type = e.currentTarget.dataset.type
     let currenttab = e.currentTarget.dataset.currenttab
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
     url += '&ctabTypeMealIdSpuId=' + currenttab + "_" + type + "_" + proId + "_" + spuId;
+
+    if((proId==undefined && type==1)||(spuId==undefined && type==2)){
+      wx.showToast({
+        icon:"none",
+        title: "详情模块加载失败"
+      })
+      wx.reportAnalytics('addcart', {
+        type: type,
+        tab_id: proId,
+        proname:proName,
+        city_id: this.data.trueCityId,
+        source:'列表页'
+      });
+      return 
+    }
     // url+="&_um_campaign=60657afd18b72d2d2441584b&_um_channel=60657afd18b72d2d2441584c"
     console.log(url)
     wx.navigateTo({
@@ -724,6 +756,7 @@ Page({
 
   },
   showPop(e) {
+    wx.showLoading({mask:true})
     let proId = e.currentTarget.dataset.id,
       img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
@@ -752,11 +785,12 @@ Page({
       spu_id: curSpuid
     }
     api.getCakeProInfo(data).then(res => {
-      wx.stopPullDownRefresh()
+      wx.hideLoading()
       console.log(res)
       let selectSku = Object.assign({}, res.sku_list[res.sku_id])
       if (res) {
         this.setData({
+          skuNum:1,
           proInfo: res,
           selectSku: selectSku,
           pop: 'cake-panel',
@@ -822,6 +856,20 @@ Page({
       tab_id: proId,
       number: skuNum
     }
+    wx.reportAnalytics('addcart', {
+      type: '蛋糕',
+      tab_id: proId,
+      proname:name,
+      city_id: this.data.trueCityId,
+      source:'列表页'
+    });
+    if(!proId){
+      wx.showToast({
+        icon:"none",
+        title: "蛋糕模块加载失败"
+      })
+      return
+    }
     totalNum = totalNum + skuNum
     api.setChart(data).then(res => {
       if (res) {
@@ -837,21 +885,9 @@ Page({
           totalNum: totalNum,
           pop: 0
         })
-        wx.reportAnalytics('addcart', {
-          type: '蛋糕',
-          tab_id: proId,
-          proname:name,
-          city_id: this.data.trueCityId,
-          source:'列表页'
-        });
-        // if (action == 1) {
-        //   app.globalData.proType = "2"
-        //   wx.navigateTo({
-        //     url: "/pages/cart/cart/cart"
-        //   })
-        // }
       }
     })
+    
   }, 300, true),
   refreshProList(mealId, spuId, typeId, num = null) {
     // console.log(mealId, spuId, typeId);
@@ -935,8 +971,10 @@ Page({
   // },
   async onShow() {
     let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
     if(!userInfo){
-      userInfo = await app.wxLogin()
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
     }
 
     if (this.data.backFrom == 1) {

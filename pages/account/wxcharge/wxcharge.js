@@ -70,10 +70,12 @@ Page({
       })
       return
     }
+    wx.showLoading({mask:true})
     let data = {
       recharge_id:checkedId
     }
     api.wxCharge(data).then(res=>{
+      wx.hideLoading()
       console.log(res);
       if(!res){
         return false

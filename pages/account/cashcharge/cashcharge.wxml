@@ -1,4 +1,6 @@
-<!-- pages/user/user.wxml -->
+<!-- pages/cashcharge/cashcharge.wxml -->
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
 <view class="card">
   <view class="card-wp">
     <image wx:if="{{type==1}}" src="../../../image/card1.png" />

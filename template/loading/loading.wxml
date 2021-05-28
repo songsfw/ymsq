@@ -1,12 +1,12 @@
 <template name="loading">
-
-      <view class="spinner"  wx:if="{{showLoading}}">
-    <view class="rect1"></view>
-    <view class="rect2"></view>
-    <view class="rect3"></view>
-    <view class="rect4"></view>
-    <view class="rect5"></view>
-</view>
-
-
+  <view class="loading-mask" wx:if="{{showLoading}}">
+    <view class="spinner">
+      <view class="rect1"></view>
+      <view class="rect2"></view>
+      <view class="rect3"></view>
+      <view class="rect4"></view>
+      <view class="rect5"></view>
+    </view>
+  </view>
+  
 </template>

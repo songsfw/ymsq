@@ -181,52 +181,6 @@ Page({
       pop: 0
     })
   },
-  async checkLogin(){
-    try {
-      await auth.checkSession()
-      if(this.data.userInfo.is_authed==0){
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.Settlement()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.Settlement()
-        }
-      }else{
-        this.Settlement()
-      }
-    } catch (error) {
-      console.log('session失效');
-      if(this.data.userInfo.is_authed==0){
-        loginInfo = await auth.getLoginInfo()
-        if (wx.getUserProfile) {
-          auth.getUserProfile(this.data.userInfo).then(res=>{
-            console.log(res);
-            this.Settlement()
-          }).catch(err=>{
-            console.log(err);
-            wx.showToast({
-              icon:"none",
-              title:"授权失败，稍后重试"
-            })
-          })
-        }else{
-          this.Settlement()
-        }
-      }else{
-        this.Settlement()
-      }
-    }
-    
-    
-  },
   Settlement(){
     let {cakeLi,breadLi}=this.data
     let isBread = breadLi.some(item => {
@@ -245,6 +199,7 @@ Page({
     }
   },
   getOrder: util.debounce(function (e) {
+    wx.showLoading({mask:true})
     let type=""
     if(e){
       let curType = e.currentTarget.dataset.type
@@ -270,6 +225,7 @@ Page({
       return false
     }
     api.commitChart(data).then(res => {
+      wx.hideLoading()
       console.log(res)
       if (res) {
         wx.navigateTo({
@@ -338,6 +294,7 @@ Page({
     let data = {
       city_id: city_id,
       type: '2',
+      is_list:1,
       tab_id: proId,
       number: skuNum
     }
@@ -357,7 +314,6 @@ Page({
         this.setData({
           pop: 0
         })
-        //this.getProList()
         this.getChartData()
       }
 
@@ -387,6 +343,7 @@ Page({
     } = this.data
     let data = {
       city_id: city_id,
+      is_list:1,
       type: type,
       tab_id: skuid,
     }
@@ -467,13 +424,9 @@ Page({
     }
   },
   getChartData(skuid,CurType,spuid) {
-    //let proType = app.globalData.proType
     let data = {
-      city_id: this.data.city_id
+      city_id: !this.data.city_id || this.data.city_id == 0?  10216 :this.data.city_id
     }
-    // if(proType){
-    //   data.type=proType
-    // }
     api.getChartData(data).then(res => {
       console.log(res);
       if (!res) {
@@ -490,26 +443,25 @@ Page({
           cake = res.cake
         wx.setStorageSync('total_num', res.total_number)
         let selectType = this.getSelectType(bread,cake)
-        var pages = getCurrentPages();
-        let proId = spuid||skuid
-        if(pages.length > 1 && skuid){
-          //上一个页面实例对象
-          var prePage = pages[pages.length - 2];
-          if(CurType==1){
-            var curItem = bread.detail.find(item=>{
-              return item.sku_id == skuid
-            })
+        // var pages = getCurrentPages();
+        // let proId = spuid||skuid
+        // if(pages.length > 1 && skuid){
+        //   //上一个页面实例对象
+        //   if(CurType==1){
+        //     var curItem = bread.detail.find(item=>{
+        //       return item.sku_id == skuid
+        //     })
             
-            var curNum = curItem && curItem.sku_number || 0
-          }
-          if(CurType==2){
-            var curItem = cake.detail.find(item=>{
-              return item.sku_id == skuid
-            })
-            var curNum = curItem && curItem.sku_number || 0
-          }
-          app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
-        }
+        //     var curNum = curItem && curItem.sku_number || 0
+        //   }
+        //   if(CurType==2){
+        //     var curItem = cake.detail.find(item=>{
+        //       return item.sku_id == skuid
+        //     })
+        //     var curNum = curItem && curItem.sku_number || 0
+        //   }
+        //   app.inCartRefreshList({type:CurType,proId:proId,selected:curNum});
+        // }
 
         let hasActive = bread.detail.some(item=>{
           return item.special_tag=="活动商品"

@@ -30,6 +30,16 @@ Page({
     let data = {
       content:this.data.txt
     }
+    let hasSpecial = util.checkSpecialStr(this.data.txt)
+    console.log(hasSpecial);
+    if(hasSpecial){
+      wx.showToast({
+        icon:'none',
+        title:"不能提交特殊字符"
+      })
+      return
+    }
+    console.log(this.data.txt);
     api.feedBack(data).then(res=>{
       console.log(res);
       if(res){

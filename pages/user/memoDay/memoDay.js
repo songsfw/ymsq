@@ -81,6 +81,8 @@ Page({
   },
   confirmDate(e){
     let {currIdx,year} = this.data
+    console.log(this.data.val);
+    console.log(this.data.value);
     let val = this.data.val || this.data.value
     val = val.length>0 ? val:e.currentTarget.dataset.value;
     if(!val[2]){
@@ -97,7 +99,7 @@ Page({
     this.setData({
       clickPop:false,
       ['dateList['+currIdx+'].date']:yearStr,
-      value:[],
+      value:[100,0,0]
     })
     this.closeDate()
   },
@@ -262,6 +264,7 @@ Page({
       list.forEach((item,index)=>{
         dateList[index] = item
       })
+      console.log(dateList);
       this.setData({
         dateList:dateList,
         doc,
@@ -275,8 +278,72 @@ Page({
     })
   },
   save(){
-    
+    let j=0
     let {dateList} = this.data
+    let istitle = null
+    for(let i=0;i<dateList.length;i++){
+      istitle=false
+      let item = dateList[i]
+      if(item.id!=0){
+        if(item.title==""){
+          wx.showToast({
+            icon:'none',
+            title:"请输入纪念日名称"
+          })
+          break
+        }
+        if(item.date==""){
+          wx.showToast({
+            icon:'none',
+            title:"请选择纪念日期"
+          })
+          break
+        }
+      }else{
+        if(item.title==""&&item.date==""){
+          j++
+        }
+      }
+
+      let hasSpecial = util.checkSpecialStr(item.title)
+      if(hasSpecial){
+        wx.showToast({
+          icon:'none',
+          title:"不能提交特殊字符"
+        })
+        break
+      }
+
+      if(item.title==""&&item.date!=""){
+        wx.showToast({
+          icon:'none',
+          title:"请设置纪念日名称"
+        })
+        break
+      }
+      if(item.title!=""&&item.date==""){
+        wx.showToast({
+          icon:'none',
+          title:"请设置纪念日期"
+        })
+        break
+      }
+      console.log("123123");
+      istitle=true
+    }
+    console.log(istitle);
+    console.log(j);
+    if(j==dateList.length){
+      wx.showToast({
+        icon:'none',
+        title:"请设置纪念日"
+      })
+      return
+    }
+    
+    if(!istitle){
+      return
+    }
 
     let newdateLi = JSON.stringify(dateList)
     let data = {

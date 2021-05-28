@@ -2,6 +2,18 @@ const formatDate = date => {
   return date.split("-").join("/")
 }
 
+//特殊字符 emoji
+const checkSpecialStr=(str)=>{
+  var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
+	regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+  var reg = /[\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/;
+  if(regEn.test(str) || regCn.test(str) || reg.test(str)) {
+    return true;
+  }else{
+    return false
+  }
+}
+
 //验证手机正则
 const isMobile = (mobile) => {
   return (/^(?:13\d|16\d|15\d|17\d|18\d|145|147)-?\d{5}(\d{3}|\*{3})$/.test(mobile));
@@ -502,5 +514,6 @@ module.exports = {
   formatePrice,
   bezier,
   charLen,
-  setTabBarBadge
+  setTabBarBadge,
+  checkSpecialStr
 }

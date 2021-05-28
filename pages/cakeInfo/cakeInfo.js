@@ -97,13 +97,6 @@ Page({
     let proId = e.currentTarget.dataset.sku
     let {city_id,skuNum,action,totalNum}=this.data
 
-    // if(skuNum==0){
-    //   this.setData({
-    //     pop:0
-    //   })
-    //   return
-    // }
-
     let data = {
       city_id: city_id,
       type:'2',
@@ -130,12 +123,7 @@ Page({
         if(this.data.ctabTypeMealIdSpuId){
           app.refreshList(this.data.ctabTypeMealIdSpuId,skuNum);
         }
-        wx.reportAnalytics('addcart', {
-          type: '蛋糕',
-          tab_id: proId,
-          city_id: city_id,
-          source:'详情页'
-        });
+        
         if(action==1){
           this.data.backNum = 0;
           app.globalData.proType = "2"
@@ -143,11 +131,14 @@ Page({
             url:"/pages/cart/cart/cart"
           })
         }
-        
-        
       }
-      
     })
+    wx.reportAnalytics('addcart', {
+      type: '蛋糕',
+      tab_id: proId,
+      city_id: city_id,
+      source:'详情页'
+    });
   },300,true),
   cartPageSyncData(){
     let pages = getCurrentPages(); // 子页面
@@ -171,12 +162,15 @@ Page({
     let data = {
       spu_id:this.data.proId
     }
+    wx.showLoading({mask:true})
     api.getCakeProInfo(data).then(res=>{
+       wx.hideLoading()
       wx.stopPullDownRefresh()
       console.log(res)
       if(res){
         let selectSku = Object.assign({},res.sku_list[res.sku_id])
         this.setData({
+          is_show: true,
           proInfo:res,
           selectSku:selectSku
         })
@@ -209,16 +203,15 @@ Page({
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
-
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     let options = currPage.options
 
     let addressInfo = wx.getStorageSync("addressInfo")
+    addressInfo = JSON.parse(addressInfo)
     let totalNum = wx.getStorageSync("total_num")
-    let city_id = JSON.parse(addressInfo).city_id
+    let city_id = addressInfo.city_id
     let proId = options.proId
-    console.log('---------',proId)
     let btmHolder = wx.getStorageSync('btmHolder')
     let sData = {
       totalNum:totalNum,
