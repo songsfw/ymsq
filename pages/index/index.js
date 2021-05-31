@@ -233,7 +233,7 @@ Page({
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
-    if(!userInfo || !addressInfo){
+    if(!userInfo && !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }

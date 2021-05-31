@@ -331,7 +331,7 @@ Page({
         this.setData({
           pop: 0
         })
-        this.initCartData()
+        this.initCartData(res)
       }
 
     })

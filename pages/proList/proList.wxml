@@ -19,7 +19,7 @@
     </view>
   <!-- <view wx:else style="padding-top:24rpx;"></view> -->
 </view>
-<view class="sub-wrap" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}" style="height:{{currentTab!=2?'42':'80'}}px;top:{{fixedTop}}px">
+<view class="sub-wrap" wx:if="{{(currentTab == 1 || currentTab==2) && showCategory[currentTab].length!=0}}" style="height:{{currentTab!=2?'42':'77'}}px;top:{{fixedTop}}px">
   <scroll-view scroll-into-view="{{categoryId}}" fast-deceleration="true" enhanced="true" scroll-left="{{categoryleft}}" scroll-with-animation="true" show-scrollbar="false" class="sub {{currentTab==2?'sub-cake':''}}" scroll-x="{{true}}">
     <view class="flex category-container">
       <block wx:if="{{currentTab == 1}}">

@@ -292,7 +292,7 @@ Page({
         this.setData({
           pop: 0
         })
-        this.initCartData()
+        this.initCartData(res)
       }
 
     })
@@ -604,7 +604,6 @@ Page({
     let instructions = wx.getStorageSync('instructions')
 
     if(instructions){
-      console.log(instructions);
       instructions = JSON.parse(instructions)
       let txt =instructions['cart-top'],
           // tipsBread = instructions['cart-bread-tips'],

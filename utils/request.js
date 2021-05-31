@@ -75,7 +75,7 @@ const request = (method,url,data,needToken=true)=>{
         console.log(url)
         console.log("---失败---",res);
         wx.showModal({
-          title: '网络错误',
+          title: '网络繁忙',
           content: '网络繁忙，请刷新重试',
           showCancel: false
         })

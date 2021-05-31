@@ -35,8 +35,8 @@ const returnData = res=>{
     }
   }else if(res.statusCode == 500){
     // wx.showModal({
-    //   title: '网络错误',
-    //   content: '网络错误，请刷新重试',
+    //   title: '网络繁忙',
+    //   content: '网络繁忙，请刷新重试',
     //   showCancel: false
     // })
     console.log('500：接口/参数错误');
