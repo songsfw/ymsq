@@ -33,8 +33,11 @@ Component({
     }
   },
   methods: {
-    onGotUserPhone: function (e) {
+    async onGotUserPhone (e) {
       console.log(e);
+      let loginInfo = await auth.getLoginInfo()
+      console.log(loginInfo);
+
       let detail = e.detail
       let userInfo = wx.getStorageSync("userInfo")
         console.log(userInfo);

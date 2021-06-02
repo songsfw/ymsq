@@ -1,3 +1,4 @@
+@import "../../../template/loading/loading.wxss";
 page{
   background: #F6F6F6;height: auto;
 }

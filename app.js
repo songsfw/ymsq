@@ -50,7 +50,6 @@ App({
     }
   },
   async getAddress(loginInfo){
-    wx.showLoading()
     let addressInfo = null
     let {
       user_info,
@@ -99,10 +98,8 @@ App({
       wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
       
     }
-    wx.hideLoading()
   },
   wxLogin() {
-    wx.showLoading()
     return new Promise((resolve, reject) => {
       var is_authed,is_mobile = null,userInfo=null
       wx.login({
@@ -143,13 +140,12 @@ App({
               wx.setStorageSync("userInfo", JSON.stringify(userInfo))
 
               resolve(result)
-              wx.hideLoading()
-              api.getIntroduction().then(res=>{
-                console.log(res);
-                if(res){
-                  wx.setStorageSync("instructions", JSON.stringify(res.instructions))
-                }
-              })
+              // api.getIntroduction().then(res=>{
+              //   console.log(res);
+              //   if(res){
+              //     wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+              //   }
+              // })
             }
           })
         },

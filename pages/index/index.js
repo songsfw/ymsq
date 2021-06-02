@@ -233,19 +233,10 @@ Page({
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
-    if(!userInfo && !addressInfo){
+    if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
-
-    //自定义tabbar选中
-    // if (typeof this.getTabBar === 'function' &&
-    //   this.getTabBar()) {
-    //   this.getTabBar().setData({
-    //     count:"",
-    //     selected: 0
-    //   })
-    // }
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;

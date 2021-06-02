@@ -364,7 +364,13 @@ Page({
   }),
 
   setCartNum(data) {
+    this.setData({
+      showLoading: true
+    })
     api.setChart(data).then(res => {
+      this.setData({
+        showLoading: false
+      })
       if (res) {
         this.initCartData(res)
       }
@@ -409,6 +415,9 @@ Page({
     let data = {
       city_id: !this.data.city_id || this.data.city_id == 0?  10216 :this.data.city_id,
     }
+    this.setData({
+      showLoading: true
+    })
     api.getChartData(data).then(res => {
       console.log(res);
       this.setData({

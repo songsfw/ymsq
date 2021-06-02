@@ -166,7 +166,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  async onShow () {
     //自定义tabbar选中
     // if (typeof this.getTabBar === 'function' &&
     //   this.getTabBar()) {
@@ -175,10 +175,16 @@ Page({
     //     selected: 3
     //   })
     // }
-    let userInfo = wx.getStorageSync("userInfo")
-    if(userInfo){
-      userInfo = JSON.parse(userInfo)
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let loginInfo = null
+    if(!userInfo || !addressInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
     }
+    
+    userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+    
     this.setData({
       userInfo
     })

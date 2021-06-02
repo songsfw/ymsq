@@ -1,7 +1,6 @@
 //index.js
 const util = require('../../utils/util.js')
 const api = require('../../utils/api.js')
-
 const app = getApp()
 
 let timer = null
@@ -79,6 +78,7 @@ Page({
     app.globalData.proType = "1";
   },
   confirmBread: util.debounce(function (e) {
+    wx.showLoading({mask:true})
     let proId = e.currentTarget.dataset.id
     if(!proId){
       wx.showToast({
@@ -102,6 +102,7 @@ Page({
     }
     totalNum = totalNum + skuNum
     api.setChart(data).then(res => {
+      wx.hideLoading()
       console.log(res);
       if (res) {
         wx.setStorageSync('total_num', totalNum)
@@ -147,6 +148,7 @@ Page({
     }
   },
   addCart(toCart) {
+    wx.showLoading({mask:true})
     let proId = this.data.proId
     let city_id = "10216"
 
@@ -165,6 +167,7 @@ Page({
       }
       console.log(data);
       api.setChart(data).then(res => {
+        wx.hideLoading()
         console.log(res);
         if (res.status == "2001") {
           wx.showToast({
@@ -238,17 +241,17 @@ Page({
   async onShow(){
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
-    let loginInfo = null,local=null
+    let loginInfo = null
     if(!userInfo || !addressInfo){
+      wx.showLoading({mask:true,title:"登录中..."})
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      wx.hideLoading()
     }
-    
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
-    console.log(currPage);
     let options = currPage.options
-    let btmHolder = wx.getStorageSync('btmHolder')
+    
     let totalNum = wx.getStorageSync("total_num")
     let proId = options.proId
     addressInfo = wx.getStorageSync("addressInfo")
@@ -257,13 +260,8 @@ Page({
 
     if (options.ctabTypeMealIdSpuId) {
       this.data.ctabTypeMealIdSpuId = options.ctabTypeMealIdSpuId
-      
-      // this.data.backListIdx = options.idx
-      // this.data.backListItemidx = options.itemidx
-      // this.data.backListCurrentTab = options.currenttab
     }
     this.setData({
-      btmHolder: btmHolder || 0,
       is_show: false,
       city_id: city_id,
       proId: proId,
@@ -273,11 +271,17 @@ Page({
     this.getProInfo()
 
   },
-  onLoad: function () {
+  onLoad: function (options) {
     
-    
+    let btmHolder = wx.getStorageSync('btmHolder')
     let instructions = wx.getStorageSync('instructions')
-
+    // let isWxPromote = null
+    // if(options.promote){
+    //   isWxPromote=options.promote
+    // }
+    this.setData({
+      btmHolder: btmHolder || 0
+    })
     if(instructions){
       instructions = JSON.parse(instructions)
       console.log(instructions);
@@ -299,7 +303,7 @@ Page({
         }
       })
     }
-
+    
     //this.initData()
   },
   onReady: function () {

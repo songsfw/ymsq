@@ -152,7 +152,6 @@ Page({
     console.log(e)
     let type = e.type, moving = false
     if (type == 'end') {
-      console.log("111")
       let {latitude,longitude}=e.detail.centerLocation
       this.getPoi(latitude,longitude)
       //this.getCenterLocation()

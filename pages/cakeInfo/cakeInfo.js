@@ -201,8 +201,10 @@ Page({
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
     if(!userInfo || !addressInfo){
+      wx.showLoading({mask:true,title:"登录中..."})
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      wx.hideLoading()
     }
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
@@ -213,10 +215,9 @@ Page({
     let totalNum = wx.getStorageSync("total_num")
     let city_id = addressInfo.city_id
     let proId = options.proId
-    let btmHolder = wx.getStorageSync('btmHolder')
+    
     let sData = {
       totalNum:totalNum,
-      btmHolder:btmHolder||0,
       city_id:city_id,
       proId: proId,
     }
@@ -230,7 +231,10 @@ Page({
   },
   onLoad: function (options) {
     let instructions = wx.getStorageSync('instructions')
-
+    let btmHolder = wx.getStorageSync('btmHolder')
+    this.setData({
+      btmHolder:btmHolder||0
+    })
     if(instructions){
       instructions = JSON.parse(instructions)
       console.log(instructions);

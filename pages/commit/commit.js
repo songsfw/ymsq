@@ -169,11 +169,12 @@ Page({
    */
   async onLoad (options) {
     console.log(num);
-    wx.showLoading({mask:true})
+    
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
     if(!userInfo || !addressInfo){
+      wx.showLoading({mask:true,title:"登录中..."})
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
@@ -181,6 +182,7 @@ Page({
       contentTxt="模块加载失败，重启小程序？"
       confirmTxt="重启"
     }
+    wx.showLoading({mask:true,title:"加载评论模块"})
     let orderCode = options.orderCode
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
@@ -189,7 +191,7 @@ Page({
     }
     api.getComment(data).then(res=>{
       console.log(res);
-      wx.hideLoading()
+      
       if(!res){
         wx.showModal({
           content:contentTxt,
@@ -209,6 +211,7 @@ Page({
             }
           }
         });
+        wx.hideLoading()
         return
       }
       let commentStat = res.hasComment
@@ -253,6 +256,7 @@ Page({
         curTags:tags['1'],
         proList:detail
       })
+      wx.hideLoading()
     })
 
     this.setData({

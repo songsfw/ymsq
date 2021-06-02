@@ -300,7 +300,14 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  async onShow () {
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let loginInfo = null
+    if(!userInfo || !addressInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
     this.getCoupon()
   },
 

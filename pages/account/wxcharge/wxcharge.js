@@ -139,13 +139,21 @@ Page({
       })
     })
   },
-  onLoad: function (options) {
+  async onLoad (options) {
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
     this.setData({
       btmHolder:btmHolder||0
     })
-    
+
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let loginInfo = null
+    if(!userInfo || !addressInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+
     api.chargeList().then(res=>{
       console.log(res);
       if(res){

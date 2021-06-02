@@ -7,7 +7,8 @@
     </view>
   </view>
 </view> -->
-
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
 <view class="pro-box" wx:if="{{breadLi.length>0}}">
   <view class="hd flex" bind:tap="selectAll" data-type="1">
     <view class="checkbox {{noallBread?'':'on'}}">

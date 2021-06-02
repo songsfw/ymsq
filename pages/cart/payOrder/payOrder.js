@@ -361,7 +361,8 @@ Page({
   },
   initOrderData() {
     wx.showLoading({
-      title: '加载中'
+      mask:true,
+      title: '加载中...'
     })
     let {
       type,
@@ -384,6 +385,7 @@ Page({
       //面包
       api.getOrderBread(data).then(res => {
         console.log(res);
+        wx.hideLoading();
         if (!res) {
           return
         }
@@ -460,6 +462,7 @@ Page({
       txtCard = {}
       //蛋糕
       api.getOrderCake(data).then(res => {
+        wx.hideLoading();
         console.log(res);
         let cart_data = res.cart_data
         let newcart_data = {
@@ -510,7 +513,6 @@ Page({
         });
       })
     }
-    
   },
   //初始化订单金额 扣除麦点 余额
   //hasDelivery false 免邮 10
@@ -599,7 +601,7 @@ Page({
       oldMaiPrice:jinmai.now_price || 0,
     })
 
-    wx.hideLoading();
+    
   },
   setPayPrice(payQueue) {
     let payPrice = this.data.cart_data.price
@@ -944,7 +946,6 @@ Page({
           signType,
           paySign
         } = jsApiParameters
-        wx.showLoading()
         wx.requestPayment({
           timeStamp: timeStamp,
           nonceStr: nonceStr,
@@ -958,7 +959,6 @@ Page({
               icon: 'none',
               duration: 1000,
               success: function () {
-                wx.hideLoading()
                 wx.redirectTo({
                   url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
                 })
@@ -996,7 +996,6 @@ Page({
           icon: "success",
           title: "支付成功"
         })
-        wx.hideLoading()
         wx.redirectTo({
           url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
         })
@@ -1243,7 +1242,7 @@ Page({
         initPwd,
         balanceInfo
       } = this.data
-      if (confirmPwd.length < 6 || initPwd.length < 6) {
+      if (!confirmPwd || confirmPwd.length < 6 || !initPwd || initPwd.length < 6) {
         wx.showToast({
           title: '请输入6位数字密码',
           icon: 'none',
@@ -1283,7 +1282,7 @@ Page({
       let verify = this.data.verify,
         phone = this.data.userInfo.phone
 
-      if (verify.length < 6) {
+      if (!verify || verify.length < 6) {
         wx.showToast({
           title: '请输入6位验证码',
           icon: 'none',
