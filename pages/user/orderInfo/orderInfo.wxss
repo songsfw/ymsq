@@ -148,7 +148,7 @@ page{background: #F6F6F6;height: auto;}
   height: 20px;
   color: #fff;}
 
-.pay-btn{background: #C1996B;color:white}
+.pay-btn{background: #C1996B;color:white;border:1px solid #C1996B}
 .share-remark{display: flex;flex-direction: column;justify-content:space-between;color:white;text-align:center}
 .share-remark-tip{font-size:13px;margin:7px;}
 .share-remark-save{font-size:12px;border:1px solid white;border-radius: 50px;margin:0 auto;width:137px;padding:5px;}

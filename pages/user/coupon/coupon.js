@@ -1,7 +1,7 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 const wxbarcode = require('../../../utils/initBarCode.js')
-
+let app = getApp()
 let mallLi = null,
   usedLi = null,
   shopLi = null,

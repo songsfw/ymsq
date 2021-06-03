@@ -215,7 +215,7 @@ Page({
         return
       }
       let commentStat = res.hasComment
-      let detail=res.orderReader.detail
+      let detail=res.orderReader.detail || []
 
       if(commentStat){
         let score = this.data.score,star = parseInt(res.defaultStar)-1

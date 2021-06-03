@@ -5,7 +5,7 @@ const date = new Date()
 var monString = ["正","二","三","四","五","六","七","八","九","十","冬","腊"];
 var numString = ["一","二","三","四","五","六","七","八","九","十"];
 var start = date.getFullYear() - 100
-
+let app = getApp()
 Page({
 
   /**
