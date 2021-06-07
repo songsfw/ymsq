@@ -760,18 +760,18 @@ Page({
       payQueue: newPayQueue
     })
   },
-  inputZitiName: util.debounce(function (e) {
+  inputZitiName: function (e) {
     let val = e.detail.value
     this.setData({
       zitiName: val
     })
-  }, 300),
-  inputZitiPhone: util.debounce(function (e) {
+  },
+  inputZitiPhone:function (e) {
     let val = e.detail.value
     this.setData({
       zitiPhone: val
     })
-  }, 300),
+  },
   bindPhoneSucess(e) {
     this.setData({
       'userInfo.phone':e.detail
@@ -1046,7 +1046,7 @@ Page({
     }
     txt = temp == "" ? defTxt : temp,
       cartid = e.currentTarget.dataset.cartid
-  }, 200),
+  }),
   setTxt(e) {
     console.log('setTxt')
     if (cartid) {
@@ -1088,7 +1088,7 @@ Page({
       })
     }
   },
-  initPwdInput: util.debounce(function (e) {
+  initPwdInput:function (e) {
     let val = e.detail.value
     let confirmPwd = this.data.confirmPwd || ''
     this.setData({
@@ -1104,7 +1104,7 @@ Page({
         unuse: true
       })
     }
-  }, 200),
+  },
   confirmInput: util.debounce(function (e) {
     let val = e.detail.value
     let initPwd = this.data.initPwd || ''

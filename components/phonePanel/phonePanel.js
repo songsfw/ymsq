@@ -74,16 +74,16 @@ Component({
         step:2
       })
     },
-    inputMobi:util.debounce(function(e){
+    inputMobi:function(e){
       this.setData({
         mobile:e.detail.value
       })
-    },300),
-    inputCode:util.debounce(function(e){
+    },
+    inputCode:function(e){
       this.setData({
         code:e.detail.value
       })
-    },300),
+    },
     secondDown(num){
       if(num==0){
         clearTimeout(timer)

@@ -13,13 +13,12 @@
       </view></view>
 
       <view class="money">{{show?money:"******"}}</view>
-      <navigator url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信充值</navigator>
+      <view class="flex charge">
+        <navigator hover-class="none" url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信充值</navigator>
+        <navigator hover-class="none" class="btn wx-charge" url="/pages/account/cashcharge/cashcharge">现金卡充值</navigator>
+      </view>
     </view>
     <view class="option">
-      <navigator hover-class="none" class="flex" url="/pages/account/cashcharge/cashcharge">
-        <text>现金卡充值</text>
-        <view class="iconfont icon-arrow-r"></view>
-      </navigator>
       <navigator hover-class="none" url="/pages/account/balance/balance" class="flex">
         <text>余额明细</text>
         <view class="iconfont icon-arrow-r"></view>

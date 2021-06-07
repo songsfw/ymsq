@@ -123,8 +123,7 @@ color: #666;
 .notice .txt{width: auto; border-left: 1px solid #ccc;padding-left: 16rpx;}
 .notice .tit{font-size: 14px;font-weight: bold;justify-content: space-between;}
 .notice .tit .iconfont{transform: rotate(180deg);font-weight: normal;}
-.notice-panel{line-height: 28px;height: 0;transition: height .2s linear;}
-.notice.show .notice-panel{height: 300rpx;}
+
 .notice .icon-top{width: 17px;height: 9px;flex-shrink: 0;}
 .notice swiper{height: 100%;width: 100%;}
 .notice swiper view{height:18px;color: #333;font-size: 13px;}

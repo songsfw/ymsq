@@ -124,14 +124,13 @@ Page({
     }
   },
   getIndexInfo: function () {
-    this.setData({
-      showLoading:true
-    })
+    wx.showLoading({mask:true})
     let city_id = this.data.addressInfo.city_id
     let data = {
-      city_id: city_id == 0 ? "10216" : city_id
+      city_id: city_id == 0 || city_id == '' ? "10216" : city_id
     }
     api.getIndexInfo(data).then(res => {
+      wx.hideLoading()
       console.log(res);
       if(res){
         let {notice,operate,message,subscribe_com} = res
@@ -172,8 +171,7 @@ Page({
           banner,
           menu,
           message,
-          subscribe_com,
-          showLoading:false
+          subscribe_com
         })
       }
       //wx.stopPullDownRefresh() //停止下拉刷新
@@ -236,16 +234,13 @@ Page({
     if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      addressInfo = wx.getStorageSync("addressInfo")
     }
 
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    console.log(fixedTop)
-
-    //let userInfo = wx.getStorageSync("userInfo")
     
     let btmHolder = wx.getStorageSync('btmHolder')
-    addressInfo = wx.getStorageSync("addressInfo")
     if (addressInfo) {
       addressInfo = JSON.parse(addressInfo)
     }

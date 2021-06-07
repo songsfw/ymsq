@@ -204,13 +204,13 @@ Page({
       wx.showLoading({mask:true,title:"登录中..."})
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      addressInfo = wx.getStorageSync("addressInfo")
       wx.hideLoading()
     }
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     let options = currPage.options
 
-    addressInfo = wx.getStorageSync("addressInfo")
     addressInfo = JSON.parse(addressInfo)
     let totalNum = wx.getStorageSync("total_num")
     let city_id = addressInfo.city_id

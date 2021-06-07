@@ -156,13 +156,8 @@ Page({
     let data = {
       order_code:orderCode
     }
-    // if(isPaying){
-    //   return
-    // }
-    // isPaying=true  //正在支付
     api.payOrder(data).then(res=>{
       wx.hideLoading()
-      //isPaying=false
       console.log(res);
       let jsApiParameters = res.jsApiParameters
       let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
@@ -567,7 +562,9 @@ Page({
       let data = {
         order_code:order_code
       }
+      wx.showLoading({mask:true})
       api.preShareOrder(data).then(res=>{
+        wx.hideLoading()
         console.log(res);
         if(!res){
           return

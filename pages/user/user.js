@@ -149,7 +149,6 @@ Page({
   getUserCenter(){
     wx.showLoading({mask:true})
     api.getUserCenter().then(res=>{
-      wx.hideLoading()
       console.log(res);
       if(res.user.subscribe){
         this.setData({
@@ -161,6 +160,7 @@ Page({
         order_unpaid:parseInt(res.user.order_unpaid),
         order_dispatching:parseInt(res.user.order_dispatching)
       })
+      wx.hideLoading()
     })
   },
   /**

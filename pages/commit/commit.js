@@ -191,7 +191,7 @@ Page({
     }
     api.getComment(data).then(res=>{
       console.log(res);
-      
+      wx.hideLoading()
       if(!res){
         wx.showModal({
           content:contentTxt,
@@ -211,13 +211,14 @@ Page({
             }
           }
         });
-        wx.hideLoading()
+
         return
       }
       let commentStat = res.hasComment
       let detail=res.orderReader.detail || []
 
       if(commentStat){
+
         let score = this.data.score,star = parseInt(res.defaultStar)-1
         let commentDetail = res.commentDetailReader
         score.forEach((item,index)=>{
@@ -256,7 +257,7 @@ Page({
         curTags:tags['1'],
         proList:detail
       })
-      wx.hideLoading()
+      
     })
 
     this.setData({

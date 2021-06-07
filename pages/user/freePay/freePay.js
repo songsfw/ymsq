@@ -31,7 +31,7 @@ Page({
     }
   },
   //旧密码
-  oldPwdInput:util.debounce(function(e){
+  oldPwdInput:function(e){
     let val = e.detail.value
     let newPwd = this.data.newPwd || ''
     this.setData({
@@ -47,9 +47,9 @@ Page({
         unuse:true
       })
     }
-  },500),
+  },
   //新密码
-  newPwdInput:util.debounce(function(e){
+  newPwdInput:function(e){
     let val = e.detail.value
     let oldPwd = this.data.oldPwd || ''
     this.setData({
@@ -65,9 +65,9 @@ Page({
         unuse:true
       })
     }
-  },500),
+  },
   //初始密码
-  initPwdInput:util.debounce(function(e){
+  initPwdInput:function(e){
     let val = e.detail.value
     let confirmPwd = this.data.confirmPwd || ''
     this.setData({
@@ -83,7 +83,7 @@ Page({
         unuse:true
       })
     }
-  },500),
+  },
   //确认密码
   confirmInput:util.debounce(function(e){
     let val = e.detail.value
@@ -101,7 +101,7 @@ Page({
         unuse:true
       })
     }
-  },500),
+  }),
   verifyPwd(val){
     let data = {
       password:val

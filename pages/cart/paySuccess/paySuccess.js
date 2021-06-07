@@ -229,7 +229,9 @@ Page({
       btmHolder: btmHolder,
       order_code: order_code
     })
+    wx.showLoading({mask:true})
     api.preShareOrder(data).then(res => {
+      wx.hideLoading()
       console.log(res);
       if (!res) {
         return

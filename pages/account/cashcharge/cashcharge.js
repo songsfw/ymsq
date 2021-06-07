@@ -44,12 +44,12 @@ Page({
     this.setData({
       pwd: e.detail.value
     })
-  },300),
+  }),
   inputRes:util.debounce(function(e){
     this.setData({
       result: e.detail.value
     })
-  },300),
+  }),
   bindPhoneSucess(){
     this.chashCharge()
   },
@@ -82,7 +82,9 @@ Page({
       })
       return false
     }
-    wx.showLoading({mask:true})
+    this.setData({
+      showLoading:true
+    })
     if(use==1){
       let data = {
         card_no:result,
@@ -92,7 +94,10 @@ Page({
       }
       console.log(data)
       api.useCard(data).then(res=>{
-        wx.hideLoading();
+        //wx.hideLoading();
+        this.setData({
+          showLoading:false
+        })
         console.log(res)
         if(!res){
           return
@@ -136,7 +141,10 @@ Page({
       }
       
       api.chashCharge(data).then(res=>{
-        wx.hideLoading();
+        //wx.hideLoading();
+        this.setData({
+          showLoading:false
+        })
         console.log(res)
         if(!res){
           return
