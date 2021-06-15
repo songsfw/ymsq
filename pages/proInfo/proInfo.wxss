@@ -40,7 +40,7 @@ page{background:#F6F6F6;height: auto;}
 .tips .txt view:last-child{margin-bottom: 0}
 .tips .desc{margin-bottom: 10px;}
 .tips .desc:last-child{margin-bottom: 0;}
-.tips>view{margin-bottom: 10px;}
+.tips>view{margin-bottom: 15px;}
 .tips>view:last-child{margin-bottom: 0;}
 .detail{background: #fff;}
 .detail .tit{position: relative; text-align: center;padding:18rpx 0}

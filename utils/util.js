@@ -4,10 +4,10 @@ const formatDate = date => {
 
 //特殊字符 emoji
 const checkSpecialStr=(str)=>{
-  var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
-	regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+  // var regEn = /[`~@#$%^&*()_+<>"{}\/'[\]]/im,
+	// regCn = /[·#￥（——）“”‘|《》、【】[\]]/im;
   var reg = /[\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/;
-  if(regEn.test(str) || regCn.test(str) || reg.test(str)) {
+  if(reg.test(str)) {
     return true;
   }else{
     return false
@@ -306,6 +306,7 @@ function getLocation() {
           latitude: latitude,
           longitude: longitude
         }
+        console.log(location);
         resolve(location)
       },
       fail(err) {

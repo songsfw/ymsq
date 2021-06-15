@@ -23,7 +23,6 @@
     "pages/account/maidian/maidian",
     "pages/account/cashcharge/cashcharge",
     "pages/account/balance/balance",
-    "pages/login/login",
     "pages/cart/cart",
     "pages/cart/payOrder/payOrder",
     "pages/cart/cart/cart",

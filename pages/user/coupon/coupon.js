@@ -47,15 +47,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    let end = new Date().getFullYear()
-    let userInfo = wx.getStorageSync('userInfo')
-    if (userInfo) {
-      userInfo = JSON.parse(userInfo)
-    }
-    this.setData({
-      user_id: userInfo.user_id
-    })
+  onLoad: function () {
+    
   },
   switchTab: function (e) {
     var currentId = e.currentTarget.dataset.tabid
@@ -301,12 +294,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   async onShow () {
+    let pages = getCurrentPages();
+    let currentPage = pages[pages.length - 1];
+    let from = currentPage.options.from
+
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null
     if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+    }
+  
+    let user_id=userInfo.user_id
+    if(from==1){
+      wx.reportAnalytics('coupon_sms', {
+        user_id: user_id,
+      });
     }
     this.getCoupon()
   },

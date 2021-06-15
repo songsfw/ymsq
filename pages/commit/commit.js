@@ -12,7 +12,8 @@ Page({
     score:[0,0,0,0,0],
     star:0,
     pop: 0,
-    commentStat:false
+    commentStat:false,
+    proList:[]
   },
   close(){
     this.setData({

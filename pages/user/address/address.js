@@ -224,6 +224,13 @@ Page({
                 lat: res.latitude
               }
               return data
+            }).catch(err=>{
+              console.log(err);
+              let data = {
+                lng: err.longitude,
+                lat: err.latitude
+              }
+              return data
             }).then(data=>{
               console.log(data)
               api.getUserLocation(data).then(local=>{

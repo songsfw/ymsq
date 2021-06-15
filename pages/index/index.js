@@ -3,7 +3,6 @@ const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
 
 const app = getApp()
-var timer = null
 
 Page({
   data: {
@@ -26,7 +25,7 @@ Page({
     pageNum: 1,
     popup: false,
     mask: false,
-    filter: 0
+    filter: 0,
   },
   toPro(e) {
     let urlType = e.currentTarget.dataset.type.toString();
@@ -86,8 +85,12 @@ Page({
     }, 1000);
   },
   refresh: function () {
+    if(!this.data.addressInfo){
+      return
+    }
+    let cityId = this.data.cityId
 
-    this.getIndexInfo()
+    this.getIndexInfo(cityId)
   },
 
   //onPageScroll: util.throttle(function (e) {
@@ -123,11 +126,10 @@ Page({
       imageUrl:"../../image/share.jpg"
     }
   },
-  getIndexInfo: function () {
+  getIndexInfo: function (cityid) {
     wx.showLoading({mask:true})
-    let city_id = this.data.addressInfo.city_id
     let data = {
-      city_id: city_id == 0 || city_id == '' ? "10216" : city_id
+      city_id: cityid == 0 || cityid == '' ? "10216" : cityid
     }
     api.getIndexInfo(data).then(res => {
       wx.hideLoading()
@@ -141,27 +143,9 @@ Page({
         let globalStyle = operate[0].box_style
         let banner = components[0] && components[0].componentDetail.imageReader,
             menu = components[1] && components[1].componentDetail.imageReader
-            // block1 = components[2] && components[2].componentDetail,
-            // block2 = components[3] && components[3].componentDetail,
-            // block3 = components[4] && components[4].componentDetail
 
         wx.setStorageSync("total_num", res.cart.total_number)
         util.setTabBarBadge(res.cart.total_number)
-        // if(res.cart.total_num>0){
-        //   let  totalNum = res.cart.total_num.toString()|| '0'
-        //   if(res.cart.total_num>=100){
-        //     totalNum = '99+';
-        //   }
-
-        //   wx.setTabBarBadge({
-        //     index: 2,
-        //     text: totalNum
-        //   })
-        // }else{
-        //   wx.removeTabBarBadge({
-        //     index: 2
-        //   })
-        // }
 
         this.setData({
           triggered: false,
@@ -244,24 +228,32 @@ Page({
     if (addressInfo) {
       addressInfo = JSON.parse(addressInfo)
     }
+
     this.setData({
       showNav: true,
       btmHolder: btmHolder || 0,
+      cityId:addressInfo.city_id,
       addressInfo: addressInfo,
-      //userInfo:userInfo,
       fixedTop: fixedTop
     })
-
-    this.getIndexInfo();
-
   },
-  onLoad: function (options) {
-    //console.log('111',wx.canIUse('scroll-view.refresher-enabled'))
-
+  onLoad (options) {
+    
+    util.setWatcher(this);
   },
   onHide: function () {
     this.setData({
       showNav: false
     })
-  }
+  },
+  watch: {
+    'cityId': function (value, oldValue) {
+      console.log("watch");
+      console.log(value);
+      if (value == oldValue) {
+        return
+      }
+      this.getIndexInfo(value);
+    }
+  },
 })

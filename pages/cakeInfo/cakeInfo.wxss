@@ -36,7 +36,7 @@ page{background:#F6F6F6;}
 .tips .txt view{margin-bottom: 20rpx}
 .tips .txt text{margin-right:10px ;}
 .tips .txt view:last-child{margin-bottom: 0}
-.tips>view{margin-bottom: 10px;}
+.tips>view{margin-bottom: 15px;}
 .tips>view:last-child{margin-bottom: 0;}
 .option .home .icon,
 .option .cart .icon{width: 50rpx;height: 50rpx;margin: 0 auto;}

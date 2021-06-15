@@ -154,7 +154,6 @@ Page({
     if (type == 'end') {
       let {latitude,longitude}=e.detail.centerLocation
       this.getPoi(latitude,longitude)
-      //this.getCenterLocation()
       moving = true
     } else {
       this.setData({
@@ -222,6 +221,14 @@ Page({
   // },
   getPoi: util.debounce(function (lat, lng) {
     let { city } = this.data, location = null
+    if(!city){
+      city = [
+        {id: "110100", name: "北京市"},
+        {id: "310100", name: "上海市"},
+        {id: "320500", name: "苏州市"},
+        {id: "330100", name: "杭州市"}
+      ]
+    }
     //let polygons = this.data.polygons
     //let hasAdd
     if (lat && lng) {
@@ -374,7 +381,6 @@ Page({
         type,
         selected: 1
       })
-      //this.getPoi(res.latitude, res.longitude)
     }).catch(err=>{
       this.setData({
         lng: err.longitude,

@@ -22,9 +22,17 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  async onLoad (options) {
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
+
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let loginInfo = null
+    if(!userInfo || !addressInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
 
     this.setData({
       show:app.globalData.isShowBalance,

@@ -216,9 +216,9 @@ Page({
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
-    
-    console.log(this.data)
-    if (pop == "showTime" && this.data.delivery.delivery_times.length == 0) {
+    let delivery = this.data.delivery,
+        delivery_times = delivery.delivery_times || []
+    if (pop == "showTime" && delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
         title: "不可配送，更换地址或删除不可配送商品"
@@ -262,15 +262,10 @@ Page({
     this.close()
   },
   close() {
-    console.log('close   dddd ')
     this.setData({
       startCheck:false,
       selectDate:this.data.checkDate,
-      // selectTime:-1,
-      pop: 0,
-      // checkChange: true,
-      // checkDateChange: true,
-      // selectDate: this.data.checkDate || 0,
+      pop: 0
     })
   },
   selectDate(e) {
@@ -307,10 +302,6 @@ Page({
 
     this.setData({
       dateStr: dateStr,
-      // checkDate: selectDate,
-      // checkTime: selectTime,
-      // checkChange: true,
-      // checkDateChange: true,
       selectDateTxt: delivery.delivery_times[checkDate].date,
       selectTimeTxt: selectTimeTxt,
       stock_type: stock_type
@@ -339,13 +330,6 @@ Page({
       tempDate: this.data.selectDate,
     })
   },
-
-  // inputRemark: util.debounce(function (e) {
-  //   this.setData({
-  //     error: false,
-  //     remark: e.detail.value
-  //   })
-  // }, 500),
   selectAdd(e) {
     if (this.data.ziti == '1') {
       wx.showToast({
@@ -1400,12 +1384,13 @@ Page({
       this.setData({
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
-        address_id: addressInfo.id,
+        address_id: addressInfo.id || 0,
         addressInfo: addressInfo,
+        zitiName: addressInfo.name,
+        zitiPhone: addressInfo.mobile,
         'address.is_address': true
       })
     }
-    console.log("1", addressInfo.id);
     this.initOrderData();
   },
   /**
@@ -1426,14 +1411,13 @@ Page({
         changedId: addressInfo.id,
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
-        address_id: addressInfo.id,
+        address_id: addressInfo.id || 0,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,
         addressInfo: addressInfo,
         'address.is_address': true
       })
     }
-    console.log("2", addressInfo.id);
     this.initOrderData();
     this.getWxUrl()
     util.setWatcher(this);
@@ -1466,12 +1450,13 @@ Page({
         this.setData({
           is_ziti: addressInfo.is_ziti,
           city_id: addressInfo.city_id,
-          address_id: addressInfo.id,
+          address_id: addressInfo.id || 0,
           addressInfo: addressInfo,
+          zitiName: addressInfo.name,
+          zitiPhone: addressInfo.mobile,
           'address.is_address': true
         })
       }
-      console.log("1", addressInfo.id);
       this.initOrderData();
       //this.setPayPrice(value)
     }
@@ -1504,7 +1489,7 @@ Page({
     //   })
 
     // }
-    // console.log("2",addressInfo.id);
+    //关注公众号
     if(this.data.changeFollow){
       this.hasChangeFollow()
     }

@@ -65,7 +65,6 @@ App({
         lng: local.longitude,
         lat: local.latitude
       }
-      console.log(data)
       addressInfo = await api.getUserLocation(data)
       wx.setStorageSync("addressInfo", JSON.stringify(addressInfo.address_info))
     } else {
@@ -94,7 +93,6 @@ App({
         name: name,
         is_ziti: address_info.is_ziti
       }
-      console.log(addressInfo);
       wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
       
     }
@@ -140,12 +138,6 @@ App({
               wx.setStorageSync("userInfo", JSON.stringify(userInfo))
 
               resolve(result)
-              // api.getIntroduction().then(res=>{
-              //   console.log(res);
-              //   if(res){
-              //     wx.setStorageSync("instructions", JSON.stringify(res.instructions))
-              //   }
-              // })
             }
           })
         },
