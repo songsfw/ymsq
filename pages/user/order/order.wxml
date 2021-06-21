@@ -70,7 +70,6 @@
         </block>
         <block wx:if="{{order.status==3}}">
           <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
-          <!-- <navigator wx:if="{{order.comment_status==1}}" url="/pages/hasCommit/hasCommit?orderCode={{order.order_code}}" class="btn pay-btn">查看评价</navigator> -->
           <navigator url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">{{order.comment_status==1?'查看评价':'去评价'}}</navigator>
         </block>
       </view>

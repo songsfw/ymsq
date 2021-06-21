@@ -1,6 +1,6 @@
 page{background: #F6F6F6;}
 
-.address{margin:24rpx;background: #fff;font-size: 14px;border-radius: 8rpx;padding:26rpx 20rpx}
+.card{margin:20rpx;background: #fff;font-size: 14px;border-radius: 8rpx;padding:26rpx 20rpx}
 .inputxt{position: relative;}
 .inputxt textarea{width: 100%;padding: 20rpx;box-sizing: border-box; background-color: #F6F6F6;height: 280rpx;border-radius: 8rpx;}
 .count{position: absolute;right: 20rpx;bottom: 20rpx;font-size: 12px;color: #aaa;}
@@ -13,7 +13,7 @@ page{background: #F6F6F6;}
 .tags{margin-bottom:40rpx ; flex-wrap: wrap;}
 .tags text{padding:0 10px;height: 26px;line-height: 26px;color: #666;background: #F6F6F6;border-radius: 13px;margin: 0 30rpx 30rpx 0;}
 .tags text.on{color: #fff;background: #C1996B;}
-.pro-list{margin-top: 50rpx;}
+.pro-list{}
 .pro-list .item{justify-content: space-between;align-items: center;margin-bottom: 20rpx;}
 .pro-list .item image{width: 80rpx;height: 80rpx;margin-right: 20rpx;flex-shrink: 0;}
 .pro-list .opt image{width: 36rpx;height: 36rpx;}
@@ -38,3 +38,5 @@ page{background: #F6F6F6;}
 .tip{color: #B6120C;font-size: 24rpx;}
 .share-btn{margin: 122rpx auto 0 auto; width: 460rpx;height: 100rpx;line-height: 100rpx;border-radius: 50rpx;font-size: 40rpx;color: #AB0D03;background: linear-gradient(179deg, #FEE9CD 0%, #FFB780 100%);box-shadow: 0px 4px 16px 8px rgba(187, 37, 28, 0.57);}
 .fixedBtn{background: #fff;}
+
+.section textarea{width: 100%;height: 60px;padding:10px;box-sizing: border-box; background-color: #F6F6F6;font-size: 14px;}

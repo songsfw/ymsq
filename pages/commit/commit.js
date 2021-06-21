@@ -67,14 +67,14 @@ Page({
       selectTagArr
     })
   },
-  inputTxt:util.debounce(function(e){
+  inputTxt(e){
     let val = e.detail.value
     console.log(val);
     this.setData({
       count:val.length,
       comment:val
     })
-  },500),
+  },
   setStatus(e){
     let curStatus = e.currentTarget.dataset.status,
     idx = e.currentTarget.dataset.idx
@@ -82,6 +82,15 @@ Page({
     this.setData({
       ['proList['+idx+'].stat']:curStatus
     })
+  },
+  inputComment(e){
+    let val = e.detail.value
+    let idx = e.currentTarget.dataset.idx
+    console.log(val);
+    this.setData({
+      ['proList['+idx+'].comment']:val,
+    })
+    console.log(this.data.proList);
   },
   addComment(){
     let {orderCode,comment,star,selectTag,proList,commentStat}=this.data
@@ -95,7 +104,7 @@ Page({
     let detail=[]
     proList.find(item=>{
       if(item.stat){
-        detail.push({meal_id:item.id,meal_name:item.name,meal_content:"",meal_grade:item.stat})
+        detail.push({meal_id:item.meal_id,meal_name:item.name,meal_content:item.comment || item.default_comment,meal_grade:item.stat})
       }
     })
     if(!star || star==0){

@@ -304,9 +304,9 @@ Page({
     if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      userInfo = wx.getStorageSync('userInfo')
     }
-  
-    let user_id=userInfo.user_id
+    let user_id=userInfo&&JSON.parse(userInfo).user_id
     if(from==1){
       wx.reportAnalytics('coupon_sms', {
         user_id: user_id,

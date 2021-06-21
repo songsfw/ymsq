@@ -334,6 +334,11 @@ const setComment = (data) => {
   return POST(baseUrl + "/share/order-comment",data).then(res => returnData(res))
 }
 
+//评论列表
+const getCommitList = (params) => {
+  return POST(baseUrl + "/comment/list", params).then(res => returnData(res))
+}
+
 //领取列表
 const hongbao = (data) => {
   return POST(baseUrl + "/share/receive-list",data).then(res => returnData(res))
@@ -384,6 +389,8 @@ const keywordSearch = (params) => {
   //关键字搜索
   return POST(baseUrl + "/product/search-list", params).then(res => returnData(res));
 }
+
+
 
 module.exports = {
   getIndexInfo:getIndexInfo,
@@ -450,5 +457,6 @@ module.exports = {
   wxPhone,
   getIntroduction,
   keywordSearch,
-  keywordList
+  keywordList,
+  getCommitList
 }

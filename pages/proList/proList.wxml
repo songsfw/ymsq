@@ -74,6 +74,7 @@
             <view class="item" bind:tap="toProInfo" data-name="{{pro.name}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-currenttab="{{currentTab}}"
               data-type="{{pro.type}}">
               <view class="pic {{showStock[currentTab][pro.meal_id]==0?'sold-out':''}}">
+                <image class="pro-logo" src="../../image/cake-logo.png" wx:if="{{pro.type==2}}"></image>
                 <view class="tag">已售罄</view>
                 <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
               </view>

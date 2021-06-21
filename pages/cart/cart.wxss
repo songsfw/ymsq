@@ -33,7 +33,7 @@ page{background: #F6F6F6;height: auto;}
 .item .tit{font-size: 14px;color: #222;margin-bottom: 6px;font-weight: 500;margin-top: 2px;}
 .item .tag{margin-bottom: 10px;display: flex;flex-wrap: wrap; height: 18px;overflow: hidden;}
 .item .tag text{color: #aaa; font-size: 12px; margin:0 5px 2px 0; }
-.item .tit .tag{color: #fff;font-size: 10px;padding:4rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;height: auto; vertical-align: middle;}
+.item .tit .tag{color: #fff;font-size: 10px;padding:4rpx 4rpx;margin-right: 10rpx;background: linear-gradient(to right,#ffa052,#f52422);border-radius: 8rpx;margin-bottom: 0;height: auto; vertical-align: middle;flex-shrink: 0;}
 .item .tag text:after{content: "|"; font-size: 10px; display: inline-block; margin-left: 10rpx;}
 .item .tag text:last-child:after{display: none;}
 .item .price{justify-content: space-between;align-items: center;font-weight: 500;text-align: right;color: #C1996B;}

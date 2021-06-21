@@ -6,7 +6,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .item .hd .date{color: #999;line-height: 18px;}
 .item .hd .status{color: #C1996B;}
 .option{justify-content:flex-end;align-items: center;padding: 0 20rpx;}
-.option .btn{width: auto;padding: 0 15px; height: 30px;line-height: 30px;border-radius:15px;font-size: 14px;margin-left: 12px;}
+.option .btn{width: auto;padding: 0 15px; height: 30px;line-height: 30px;border-radius:15px;font-size: 14px;margin-left: 12px;margin-top: 20px;}
 .option .time{color: #999;font-size: 14px;}
 .btn1{background: #fff;color: #222;border: 1px solid #ccc;}
 .pic-box{align-items: center;padding:0 10px;margin: 15px 0;box-sizing: border-box;}
@@ -17,7 +17,7 @@ page{background: #F6F6F6;padding-top: 48px;}
 .pic-box .pic1 .h3{font-size: 14px;}
 .pic-box .count{position: absolute;right: 0;bottom: 0;background: rgba(0, 0, 0, .4);line-height: 1; color: #fff;font-size: 22rpx;border-radius: 8rpx 0 0 0 ;padding: 4rpx 6rpx;}
 
-.total{text-align: right;padding: 0 24rpx;margin-bottom: 20px;}
+.total{text-align: right;padding: 0 24rpx;}
 .total text{font-size: 16px;}
 
 .card{padding-top:20rpx ;}

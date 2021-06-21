@@ -52,7 +52,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '原麦山丘',
-      path: '/pages/index/index',
+      path: '/pages/web/web?url='+this.data.webUrl,
       imageUrl:"../../image/share.jpg"
     }
   }

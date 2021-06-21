@@ -12,40 +12,40 @@ page{background: #F9F9F9;height: auto;}
 .listItemwp{flex-wrap: wrap;}
 .item{box-sizing: border-box;background: #fff;width: 342rpx;margin: 0 18rpx 18rpx 0;border-radius: 0 ;overflow: hidden;}
 .listItemwp .item:nth-child(2n){margin-right: 0;}
-.item .info{padding-top: 20rpx;}
+.item .info{padding-top: 10px;}
 .item .pic{position: relative; width: 342rpx;height: 342rpx;overflow: hidden;background: #fff;}
 .item .pic.sold-out image{opacity: .9;}
 .item .pic .tag{display: none;}
 .item .pic.sold-out .tag{display: block; position: absolute;left: 50%;top: 50%; font-size: 14px;color: #fff;width: 124rpx; line-height: 124rpx;height: 124rpx;text-align: center;border-radius: 50%;transform: translate(-50%,-50%);z-index: 2;background-color: rgba(0, 0, 0, 0.4);}
 
-.item .tit{font-size: 14px;color: #222;margin-bottom: 8px;padding: 0 20rpx;font-weight: 500;}
+.item .tit{font-size: 14px;color: #222;margin-bottom: 7px;padding: 0 20rpx;font-weight: 500;line-height: 1;}
 .item .tit text{color: #fff;font-size: 9px;
-    height: 16px;line-height: 16px;
+    height: 14px;line-height: 14px;
     display: inline-block;
-    padding: 0 6px;
+    padding: 0 4px;
     margin-right: 10rpx;
     background: linear-gradient(to right,#ffa052,#f52422);
-    border-radius: 8rpx;
+    border-radius: 2px;
     margin-bottom: 0;
-vertical-align: bottom;}
+vertical-align: top;}
 .item .tags{padding: 0 20rpx 0 ;box-sizing: border-box;}
-.item .tags text{display:block;text-overflow: ellipsis;word-break:keep-all;overflow:hidden; font-size:12px;color: #999999;height: 18px;line-height: 18px; padding: 0 0px;border-radius:9px;margin-right: 5px;}
+.item .tags text{display:block;text-overflow: ellipsis;word-break:keep-all;overflow:hidden; font-size:11px;color: #999999;height: 15px;line-height: 15px; padding: 0 0px;}
 .item .price{position: relative; justify-content: space-between;padding: 0 20rpx;height: 44px; align-items: center;}
-.item .price .num{font-size: 11px;color: #222222;}
+.item .price .num{font-size: 11px;color: #222;}
 .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
-.item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 24px;text-align: center;line-height: 44px;}
 .item .price .add.unuse{color: #ccc}
 .menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;}
 .isFixed{position: fixed;left:0;width: 100%;box-sizing: border-box;}
 
 .main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
 .main view:after{display: none; content: '';position: absolute;left: 50%; bottom:0;width: 80rpx;height: 10rpx;background: linear-gradient(270deg, #E2C9A4 0%, #C1996B 100%);transform: translateX(-50%);border-radius: 5rpx;}
-.main view.on{color: #222222;font-weight:bold;font-size:17px;overflow: hidden;}
+.main view.on{color: #222;font-weight:bold;font-size:17px;overflow: hidden;}
 /* .main view.on:after{display: block;margin-bottom:22rpx} */
 .main view.menuline{position: absolute;top:0;left:0;width:100%;z-index: -1;justify-content:center}
 .main view.menuline .menuline-1{width:0;height:0;}
 .main view.menuline .menuline-1.show{width:80rpx;height:1px;border-bottom:8rpx solid #C1996B;padding-top: 28px}
-.main view.linegroup{columns: #222222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
+.main view.linegroup{columns: #222;display: inline-block;position: relative;z-index: 1;font-size:15px;padding: 0 5rpx;}
 .main view.linegroup.on{font-size:17px;width:100%;}
 
 .sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 12px 24rpx;}
@@ -131,17 +131,19 @@ vertical-align: bottom;}
 
 .category-cake-item{display:flex;flex-direction: column;font-size:11px;word-break:keep-all;white-space:nowrap;}
 .category-cake-item{width:67px;height:77px;flex-shrink:0;}
-.category-cake-item .txt{color:#999999;padding: 0 12px;line-height: 30px;background: none;margin-right: 10px;flex-shrink: 0;font-size: 11px;padding:0;margin:0 auto;}
-.category-cake-item .txt.on{background:none;color: #222222;border-radius: 0;font-size: 12px;font-weight: bold;}
+.category-cake-item .txt{color:#999;padding: 0 12px;line-height: 30px;background: none;margin-right: 10px;flex-shrink: 0;font-size: 11px;padding:0;margin:0 auto;}
+.category-cake-item .txt.on{background:none;color: #222;border-radius: 0;font-size: 12px;font-weight: bold;}
 .category-cake-item .img{width:27px;height:27px;display: flex;justify-content:center;margin:20px auto 0;}
 .category-cake-item .img.on{width:38px;height:38px;margin-top:20rpx}
 
 /* 关于我们 */
 .about-main{background:#F9F9F9;border-radius:8rpx; }
-.a-m-item{display:flex;flex-direction: column;margin-bottom: 30rpx;background:#FFFFFF}
+.a-m-item{display:flex;flex-direction: column;margin-bottom: 30rpx;background:#FFF}
 .a-m-i-img{width:100%;height:320rpx;}
 .a-m-item image{width:100%;height:100%;border-radius:8rpx 8rpx 0rpx 0rpx;}
 
 .a-m-i-content{display:flex;flex-direction: column;padding:30rpx 30rpx 20rpx;border-radius:0rpx 0rpx 8rpx 8rpx;}
-.a-m-i-c-title{font-size: 16px;color:#222222;margin-bottom: 8rpx;font-weight: 400;}
-.a-m-i-c-desc{font-size: 13px;color:#AAAAAA;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.a-m-i-c-title{font-size: 16px;color:#222;margin-bottom: 8rpx;font-weight: 400;}
+.a-m-i-c-desc{font-size: 13px;color:#AAA;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+
+.pro-logo{position: absolute;left: 24rpx;top: 24rpx;width: 114rpx;height: 20rpx;opacity: .65;}

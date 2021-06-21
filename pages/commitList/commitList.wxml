@@ -1,54 +1,15 @@
 <!-- index.wxml -->
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
-<view class="banner">
-  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"
-    current="{{currentSwiper}}" indicator-dots>
-    <block wx:for="{{proInfo.banner}}" wx:for-index="index">
-      <swiper-item>
-        <image src="{{item}}" data-src="{{item}}" bind:tap="preview" class="slide-image" mode="aspectFill" />
-      </swiper-item>
-    </block>
-  </swiper>
-</view>
-<view class="proInfo">
-  <view class="price flex">
-    <view>￥<text>{{proInfo.price}}</text></view>
-    <view class="tag flex-center"><image src="../../image/icon-send.png"></image> <text>最快次日达</text></view>
-  </view>
-  <view class="tit"><text wx:if="{{proInfo.special_tag}}">{{proInfo.special_tag}}</text>{{proInfo.name}}</view>
-  <view class="desc">{{proInfo.selling_point}}</view>
-  <view class="tags flex"><text wx:for="{{proInfo.tags}}">{{item}}</text></view>
-</view>
 
-<view class="content">
-  <view class="tips">
-    
-    <view class="flex" bind:tap="showTip"> 
-      <view class="tit">优惠活动</view>
-      <view class="flex-1 flex-center" style="justify-content: space-between;">
-        <view class="desc flex-center txt" style="color:#222">
-          <text class="blue-tag">免邮</text>
-          <view class="text-overflow">
-{{special_tips[0].title}} <block wx:if="{{proInfo.activity_title}}">{{special_tips[1].title}}</block></view>
-        </view>
-        <view class="iconfont icon-arrow-r"></view>
-      </view>
+<view class="msg-box" wx:if="{{comment.flag==1}}">
+  <block wx:if="{{comment.list.length>0}}">
+    <view class="title flex-center">
+      <view>商品评价<text>（{{comment.info.count}}）</text></view>
+      <view>好评率 <text>{{comment.info.reputation || 99}}%</text></view>
     </view>
-    <view class="flex"> 
-      <view class="tit">温馨提示</view>
-      <view class="txt flex-1">
-        <view><text>◉</text>若不及时食用，请放置0-10摄氏度冷藏，长期储存建议冷冻</view>
-      </view>
-    </view>
-  </view>
-  <view class="msg-box" wx:if="{{proInfo.comment.flag==1}}">
-    <block wx:if="{{proInfo.comment.list.length>0}}">
-      <view class="title flex-center" data-proid="{{proId}}" data-id="{{proInfo.comment.info.max_id}}" bind:tap="toMsg">
-        <view>商品评价<text>（{{proInfo.comment.info.count}}）</text></view>
-        <view>好评率 <text>{{proInfo.comment.info.reputation || 99}}%</text> <text class="iconfont icon-arrow-r"></text></view>
-      </view>
-      <view class="msg-list">
-        <view class="item flex" wx:for="{{proInfo.comment.list}}">
+    <view class="msg-list">
+      <block wx:for="{{list}}" wx:for-item="comment">
+        <view class="item flex" wx:for="{{comment}}">
           <view class="photo"><image src="{{item.user_head_url || '../../image/no-photo.png'}}"></image> </view>
           <view class="flex-1">
             <view class="hd flex-center">
@@ -61,35 +22,25 @@
             <view class="txt">{{item.content}}</view>
           </view>
         </view>
-        <view class="all-btn flex-center" data-proid="{{proId}}" data-id="{{proInfo.comment.info.max_id}}" bind:tap="toMsg"><view >查看全部评论</view> <text class="iconfont icon-arrow-r"></text></view>
-      </view>
-    </block>
-    <block wx:else>
-      <view class="title flex-center">
-        <view>商品评价</view>
-        <view><text>暂无评价</text></view>
-      </view>
-    </block>
-  </view>
-  
-  <view class="detail" wx:if="{{proInfo.detail.length>0}}">
-    <view class="tit">
-      <image src="../../image/pro-tit.jpg"></image>
-    </view>
-    <view class="flex">
-      <view class="flex-1">
-        <image lazy-load src="{{proInfo.detail}}" mode="widthFix" ></image>
-      </view>
-    </view>
-  </view>
+
+
+      </block>
+<!--       
+      <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view> -->
+      <view class="logo">
+  <image src="../../image/logo.png"></image>
 </view>
+    </view>
+  </block>
+</view>
+
 <view id="bottom_menu" class="option flex" style="padding-bottom:{{btmHolder}}px;display:{{!is_show?'none':'flex'}}">
   <view class="flex">
-    <navigator hover-class="none"  class="home" open-type="switchTab" url="/pages/index/index" bindtap="toIndexPage">
+    <navigator hover-class="none"  class="home" open-type="switchTab" url="/pages/index/index">
       <view class="icon"><image src="../../image/icon-home.png"></image></view>
       <text>首页</text>
     </navigator>
-    <navigator hover-class="none" class="cart" bind:tap="toCart" url="/pages/cart/cart/cart{{toCartParams}}">
+    <navigator hover-class="none" class="cart" bind:tap="toCart" url="/pages/cart/cart/cart">
       <block wx:if="{{totalNum>0}}">
         <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
         <view class="num num99" wx:else>99+</view>

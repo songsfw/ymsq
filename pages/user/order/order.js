@@ -287,7 +287,9 @@ Page({
     this.getOrder()
   },
   onPullDownRefresh() { //下拉刷新
-
+    this.setData({
+      page: 1
+    })
     this.getOrder()
   },
   showTips() {

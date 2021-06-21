@@ -216,8 +216,8 @@ Page({
   },
   showPop(e) {
     let pop = e.currentTarget.dataset.pop
-    let delivery = this.data.delivery,
-        delivery_times = delivery.delivery_times || []
+    let delivery = this.data.delivery
+    let delivery_times = delivery.delivery_times || []
     if (pop == "showTime" && delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
@@ -1410,7 +1410,7 @@ Page({
         type: type,
         changedId: addressInfo.id,
         is_ziti: addressInfo.is_ziti,
-        city_id: addressInfo.city_id,
+        city_id: addressInfo.city_id || 0,
         address_id: addressInfo.id || 0,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,

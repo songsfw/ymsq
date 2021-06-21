@@ -192,7 +192,9 @@ page{background: #F9F9F9;height: 100%;}
 }
 .groupTag .groupTagItem{
   color:#333333;
-  padding:14rpx 14rpx 10rpx 14rpx;
+  padding:0 10px;
+  height: 31px;
+  line-height: 31px;
   background:#F6F6F6;
   border-radius: 3px;
   margin-right:20rpx;
@@ -203,14 +205,15 @@ page{background: #F9F9F9;height: 100%;}
 
 }
 .groupTag .groupTagItem image{
-  width:40rpx;
-  height:40rpx;
-  margin-right:8rpx;
+  width:14px;
+  height:19px;
+  margin-right:10rpx;
 }
 .groupTag .groupTagItem text{
   white-space:nowrap; 
   font-size:13px;
-  line-height: 26px;
+  line-height: 31px;
+  height: 31px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

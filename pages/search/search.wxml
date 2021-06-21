@@ -44,8 +44,8 @@
 
           <view class='flex groupTag'>
             <view wx:for="{{item.list}}" data-word="{{item.name}}" data-idx="{{index}}" wx:key="index"
-              class="groupTagItem" bindtap='clickTap'>
-              <image wx:if="{{item.img}}" src="{{item.img}}"></image>
+              class="groupTagItem flex-center" bindtap='clickTap'>
+              <image wx:if="{{item.img}}" src="/image/hot.png"></image>
               <text class='flex-1'>{{item.name}}</text>
             </view>
           </view>

@@ -7,14 +7,14 @@ page{background:#F6F6F6;}
 .item{box-sizing: border-box}
 .proInfo{padding: 0 20rpx;background: #fff;margin-bottom: 20rpx;}
 .proInfo .tit{font-size: 18px;margin: 9px 0 8px 0;font-weight: bold;}
-.proInfo .tit text{    color: #fff;
-    font-size: 10px;
-    padding: 4rpx 4rpx;
+.proInfo .tit text{display:inline-block;color: #fff;
+    font-size: 9px;
+    padding: 0 4px;
     margin-right: 10rpx;
     background: linear-gradient(to right,#ffa052,#f52422);
-    border-radius: 8rpx;
+    border-radius: 2px;
     margin-bottom: 0;
-    vertical-align: middle;}
+    vertical-align: middle;height: 16px;line-height: 16px;}
 .proInfo .desc{color: #999;font-size: 13px;border-bottom: 1px dashed #F6F6F6;padding-bottom: 8px;}
 .proInfo .tags{margin-top: 8px;}
 .proInfo .tags text{margin:0 20rpx 20rpx 0;flex-shrink: 0;}
@@ -31,10 +31,9 @@ page{background:#F6F6F6;}
 .price .tag{font-size: 12px;border: 1px solid #C1996B;line-height: 1;padding:2px 5px ;border-radius: 8rpx;height: 17px;box-sizing: border-box;}
 .tips{background-color: #fff;padding: 30rpx 24rpx;margin-bottom: 20rpx;}
 .tips .icon-arrow-r{font-size: 12px;}
-.tips .tit{width:54px;flex-shrink: 0;font-size: 13px;margin-right: 30rpx;font-weight: 500;color: #999;}
-.tips .txt{color: #FA603D;font-size: 13px}
-.tips .txt view{margin-bottom: 20rpx}
-.tips .txt text{margin-right:10px ;}
+.tips .tit{width:54px;flex-shrink: 0;font-size: 13px;margin-right: 30rpx;font-weight: 500;}
+.tips .txt view{margin-bottom: 20rpx;font-size: 13px;color: #222;}
+.tips .txt text{margin-right:10px;color: #64c000;}
 .tips .txt view:last-child{margin-bottom: 0}
 .tips>view{margin-bottom: 15px;}
 .tips>view:last-child{margin-bottom: 0;}
@@ -43,7 +42,7 @@ page{background:#F6F6F6;}
 .option .home,
 .option .cart{position: relative; width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
 .option .btn{width: 224rpx;height: 80rpx;line-height: 80rpx;color: #fff;text-align: center;box-shadow: 0px 4px 8px 0px #F4F3F1;font-weight: 500;}
-.option .add-btn{background: rgba(193, 153, 107, .25);border-radius: 40rpx 0 0 40rpx;color: #AC7D46;}
+.option .add-btn{background: rgb(255,246,233);border-radius: 40rpx 0 0 40rpx;color: #AC7D46;}
 .option .buy-btn{margin-right: 20rpx;background: #C1996B;border-radius:  0 40rpx 40rpx 0;color: #fff;}
 
 .option .cart .num{position: absolute;

@@ -223,6 +223,12 @@ Page({
       }
     })
   },
+  toMsg(e){
+    let max_id = e.currentTarget.dataset.id,proId=e.currentTarget.dataset.proid
+    wx.navigateTo({
+      url: `/pages/commitList/commitList?max_id=${max_id}&proId=${proId}`
+    })
+  },
   toIndexPage(){
     let pages = getCurrentPages(); // 子页面
     if (pages.length > 1) {
