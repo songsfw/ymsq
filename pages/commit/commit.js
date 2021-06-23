@@ -124,10 +124,18 @@ Page({
     if(!comment){
       wx.showToast({
         icon:"none",
-        title:"暂未填写评价"
+        title:"请填写订单评价"
       })
       return
     }
+    if(proList.length!=detail.length){
+      wx.showToast({
+        icon:"none",
+        title:"请填写商品评价"
+      })
+      return
+    }
+
     hasSpecial = util.checkSpecialStr(comment)
     if(hasSpecial){
       wx.showToast({
@@ -157,12 +165,38 @@ Page({
         })
         return
       }
-
-      this.setData({
-        commentStat:true,
-        price:res.price,
-        pop: 'hongbao'
+      api.getComment(data).then(res=>{
+        console.log(res);
+        wx.hideLoading()
+        let commentStat = res.hasComment
+        let detail=res.orderReader.detail || []
+        if(commentStat){
+          let score = this.data.score,star = parseInt(res.defaultStar)-1
+          let commentDetail = res.commentDetailReader
+          score.forEach((item,index)=>{
+            if(star<index){
+              initScore[index]=0
+            }else{
+              initScore[index]=1
+            }
+          })
+          this.setData({
+            commentStat:commentStat,
+            commentDetail:commentDetail,
+            commentContent:res.commentContent,
+            curTags:res.commentTags,
+            proList:detail,
+            score:initScore,
+            price:res.reward_price,
+            pop: 'hongbao'
+          })
+        }
       })
+      // this.setData({
+      //   commentStat:true,
+      //   price:res.price,
+      //   pop: 'hongbao'
+      // })
       
     })
   },
@@ -174,6 +208,20 @@ Page({
   bindPhoneSucess(){
     this.addComment()
   },
+  onPageScroll: util.throttle(function (e) {
+    //debounce()
+    var scrollTop = e.scrollTop
+
+    if (scrollTop > 0) {
+      this.setData({
+        isFold: true
+      })
+    } else {
+      this.setData({
+        isFold: false
+      })
+    }
+  },100),
   /**
    * 生命周期函数--监听页面加载
    */
@@ -250,9 +298,9 @@ Page({
         return
       }
       
-      detail.forEach(item=>{
-        item.stat=1
-      })
+      // detail.forEach(item=>{
+      //   item.stat=1
+      // })
       console.log(detail);
       tags = res.tags
 
@@ -265,6 +313,7 @@ Page({
       this.setData({
         commentStat:commentStat,
         curTags:tags['1'],
+        delivery_time:res.orderReader.delivery_time,
         proList:detail
       })
       

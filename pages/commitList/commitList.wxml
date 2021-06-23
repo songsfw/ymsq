@@ -17,7 +17,7 @@
                 <view class="name">{{item.user_nick ||'匿名用户'}}</view>
                 <view class="date">{{item.create_time}}</view>
               </view>
-            <view class="stat"><image src="../../image/icon-like.jpg"></image></view>
+            <view class="stat"><image src="../../image/icon-like.png"></image></view>
             </view>
             <view class="txt">{{item.content}}</view>
           </view>
@@ -25,11 +25,11 @@
 
 
       </block>
-<!--       
-      <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view> -->
-      <view class="logo">
+      
+      <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
+      <!-- <view class="logo">
   <image src="../../image/logo.png"></image>
-</view>
+</view> -->
     </view>
   </block>
 </view>

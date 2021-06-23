@@ -65,7 +65,7 @@ page{background:#F6F6F6;height: auto;}
 .item-wrap{min-height: 440rpx;margin-top: 20px;}
 
 .msg-box{padding: 0 12px 20rpx 12px;background-color: #fff;line-height: 1;margin-top:20rpx;}
-.msg-box .title{padding: 14px 0 16px 0;justify-content: space-between;}
+.msg-box .title{padding:28rpx 0;justify-content: space-between;border-bottom: 1px solid #F6F6F6;margin-bottom: 20rpx;}
 .msg-box .title view{font-size: 13px;}
 .msg-box .title view:first-child{font-size:16px;font-weight: 500;}
 .msg-box .title text{font-size: 13px;color: #999;}
@@ -73,9 +73,7 @@ page{background:#F6F6F6;height: auto;}
 .msg-list .hd{justify-content: space-between;}
 .msg-list .name{font-size: 13px;color: #666;margin-bottom: 4px;}
 .msg-list .date{font-size: 12px;color: #999;}
-.msg-list .stat{width: 80rpx;height: 33rpx;}
+.msg-list .stat{width: 76rpx;height: 34rpx;}
 .msg-list .txt{font-size: 14px;color: #222;margin-top: 10px;line-height: 1.5;}
-.msg-list .item{margin-bottom: 32px;}
+.msg-list .item{padding-bottom: 15px;border-bottom: 1px solid #F6F6F6; margin-bottom: 16px;}
 .msg-list .item:last-child{margin-bottom: 0;}
-.all-btn{font-size: 14px;color: #999;text-align: center;}
-.all-btn text{vertical-align: text-bottom;}

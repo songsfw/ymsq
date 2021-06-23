@@ -1,14 +1,22 @@
 <!-- pages/user/user.wxml -->
-<view class="code">订单号：{{orderCode}}</view>
-
+<navBar navType="transparent" hasReturn isFold="{{isFold}}" title="订单评论"></navBar>
+<view class="banner-bg"></view>
 <view class="main" wx:if="{{commentStat}}">
-  <view class="card">
+  <view class="card card1">
+    <view class="order-info flex-center">
+      <image src="../../image/icon-logo.png"></image>
+      <view>
+        <view class="code">订单号：{{orderCode}}</view>
+        <view class="date">{{delivery_time}} 订单完成</view>
+      </view>
+    
+    </view>
     <view class="hd">
       您对原麦山丘的商品还满意吗？
     </view>
     <view class="bd">
-      <view class="scoreitem flex">
-        <text>订单评分:</text>
+      <view class="scoreitem flex-center">
+        <text>商品总体</text>
         <view class="score flex">
           <block wx:for="{{5}}">
             <text class="iconAll {{score[index]==1?'selected':''}}" data-idx="{{index}}"></text>
@@ -24,7 +32,7 @@
   </view>
   
   <view class="pro-list">
-    <block wx:for="{{proList}}">
+    <block wx:for="{{proList}}" wx:for-index="index">
       <view class="card">
         <view class="item flex">
           <view class="flex-center" style="overflow:hidden">
@@ -41,7 +49,7 @@
           </view>
         </view>
         <view class="section">
-          <textarea value="{{item.default_comment}}" disabled/>
+          <textarea value="{{commentDetail[item.meal_id].content}}" disabled />
         </view>
       </view>
     </block>
@@ -49,12 +57,20 @@
   </view>
 </view>
 <view class="main" wx:else>
-  <view class="card">
+  <view class="card card1">
+    <view class="order-info flex-center">
+      <image src="../../image/icon-logo.png"></image>
+      <view>
+        <view class="code">订单号：{{orderCode}}</view>
+        <view class="date">{{delivery_time}} 订单完成</view>
+      </view>
+    
+    </view>
     <view class="hd">
       您对原麦山丘的商品还满意吗？
     </view>
-    <view class="scoreitem flex">
-      <text>订单评分:</text>
+    <view class="scoreitem flex-center">
+      <text>商品总体</text>
       <view class="score flex">
         <block wx:for="{{5}}">
           <text class="iconAll {{score[index]==1?'selected':''}}" data-idx="{{index}}" bind:tap="selected"></text>
@@ -62,7 +78,7 @@
       </view>
     </view>
     <view class="tags flex" wx:if="{{star>0}}"><text class="{{selectTagArr[index]==1?'on':''}}" bind:tap="selectTag" data-idx="{{index}}" wx:for="{{curTags}}">{{item}}</text></view>
-    <view class="inputxt">
+    <view class="inputxt" wx:if="{{star>0}}">
       <textarea placeholder="口味赞 包装好 配送快 推荐给大家" placeholder-style="color:#aaa;" maxlength="50" bindinput="inputTxt" />
       <view class="count">{{count||0}}/50</view>
     </view>
@@ -84,7 +100,7 @@
             </view>
           </view>
         </view>
-        <view class="section">
+        <view class="section" wx:if="{{item.stat}}">
           <textarea data-idx="{{index}}" value="{{item.default_comment}}" bindinput="inputComment" />
         </view>
 

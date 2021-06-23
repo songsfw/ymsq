@@ -31,7 +31,7 @@
           <view class="text-overflow">
 {{special_tips[0].title}} <block wx:if="{{proInfo.activity_title}}">{{special_tips[1].title}}</block></view>
         </view>
-        <view class="iconfont icon-arrow-r"></view>
+        <view class="iconfont icon-arrow-r" style="margin-left:-16rpx"></view>
       </view>
     </view>
     <view class="flex"> 
@@ -45,7 +45,7 @@
     <block wx:if="{{proInfo.comment.list.length>0}}">
       <view class="title flex-center" data-proid="{{proId}}" data-id="{{proInfo.comment.info.max_id}}" bind:tap="toMsg">
         <view>商品评价<text>（{{proInfo.comment.info.count}}）</text></view>
-        <view>好评率 <text>{{proInfo.comment.info.reputation || 99}}%</text> <text class="iconfont icon-arrow-r"></text></view>
+        <view class="flex-center">好评率 <text>{{proInfo.comment.info.reputation || 99}}%</text> <text class="iconfont icon-arrow-r" style="margin-left:16rpx"></text></view>
       </view>
       <view class="msg-list">
         <view class="item flex" wx:for="{{proInfo.comment.list}}">
@@ -56,7 +56,7 @@
                 <view class="name">{{item.user_nick ||'匿名用户'}}</view>
                 <view class="date">{{item.create_time}}</view>
               </view>
-            <view class="stat"><image src="../../image/icon-like.jpg"></image></view>
+            <view class="stat"><image src="../../image/icon-like.png"></image></view>
             </view>
             <view class="txt">{{item.content}}</view>
           </view>

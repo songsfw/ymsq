@@ -1,7 +1,9 @@
 {
   "navigationBarTitleText": "订单评论",
   "backgroundTextStyle": "dark",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "phonePanel": "/components/phonePanel/phonePanel"
+    "phonePanel": "/components/phonePanel/phonePanel",
+    "navBar": "/components/navBar/navBar"
   }
 }
