@@ -353,6 +353,10 @@ const getHongbao = (data) => {
 const feedBack = (data) => {
   return POST(baseUrl + "/user-feedback/create",data).then(res => returnData(res))
 }
+//跟新用户信息
+const changeUserInfo = (data) => {
+  return POST(baseUrl + "/user/change-user-info",data).then(res => returnData(res))
+}
 
 //门店券
 const storeCoupon = (data) => {
@@ -458,5 +462,6 @@ module.exports = {
   getIntroduction,
   keywordSearch,
   keywordList,
-  getCommitList
+  getCommitList,
+  changeUserInfo
 }

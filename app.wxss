@@ -118,6 +118,16 @@ image{max-width: 100%}
 .pop-panel.upPanel{transform: translateY(0);}
 .btm-panel{transform: translateY(100%);transition: all .3s linear;}
 
+.active-btm{position: fixed;left:50%;bottom:30rpx;width: 275px;padding:0 10px;box-sizing: border-box; height: 36px;line-height: 36px;text-align: center;color: #fff;background-color: #C1996B;border-radius: 18px;margin-left: -137px;}
+.active-btm image{width: 14px;height: 14px;margin-right: 5px;}
+.active-btm .txt{text-align: left;}
+.active-btm .icon-close{position: absolute;left:8px;top: -7px;color: #fff; width: 15px;height: 15px;background:#222;opacity: .5;border-radius: 50%;line-height: 15px;}
+.active-btm .icon-close:before{display: inline-block; font-size: 12px;transform:scale(.4);}
+.active-btm .btn2{width: 53px;
+  height: 22px;
+  background: #FFF;
+  border-radius: 11px;text-align: center;line-height: 22px;color: #C1996B;}
+
 .upmotion{animation: uplist .3s;}
 @keyframes uplist{
 0% {

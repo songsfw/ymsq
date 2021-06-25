@@ -206,22 +206,22 @@ Page({
       })
     }
   },
-  inputName:util.debounce(function(e){
+  inputName:function(e){
     this.setData({
       'address.name':e.detail.value
     })
     console.log(this.data.address.name)
-  },300),
-  inputMobi:util.debounce(function(e){
+  },
+  inputMobi:function(e){
     this.setData({
       'address.mobile':e.detail.value
     })
-  },300),
-  inputAdd:util.debounce(function(e){
+  },
+  inputAdd:function(e){
     this.setData({
       'address.address_detail':e.detail.value
     })
-  },300),
+  },
   /**
    * 生命周期函数--监听页面加载
    */

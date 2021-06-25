@@ -35,7 +35,12 @@ Component({
   methods: {
     async onGotUserPhone (e) {
       console.log(e);
-      let loginInfo = await auth.getLoginInfo()
+      let loginInfo=null,isLiving=null
+      try {
+        isLiving = await auth.checkSession()
+      } catch (error) {
+        loginInfo = await auth.getLoginInfo()
+      }
       console.log(loginInfo);
 
       let detail = e.detail
@@ -146,7 +151,7 @@ Component({
             popShow:false
           })
           wx.setStorageSync("userInfo", JSON.stringify(userInfo))
-          this.triggerEvent('phoneSucess')
+          this.triggerEvent('phoneSucess',mobile)
         }
         
       })

@@ -1,0 +1,44 @@
+<!-- pages/user/user.wxml -->
+<view class="address">
+  <view class="userInfo" bind:tap="toUserInfo">
+    <view class="photo">
+      <view class="iconAll level level-{{user.level || 0}}"></view>
+      <open-data type="userAvatarUrl" class=""></open-data>
+    </view>
+    <open-data type="userNickName" class="name text-overflow"></open-data>
+  </view>
+  <view class="inputxt text-overflow">
+    <text>昵称</text>
+    <open-data type="userNickName" class="name"></open-data>
+  </view>
+  <view class="inputxt sex-item">
+    <text>性别</text>
+    <view bind:tap="radioChange" wx:for="{{sex}}" wx:key="{{item.value}}" data-value="{{item.value}}" class="sex flex-center {{item.value==1?'man':''}} {{item.value==userInfo.real_gender?'on':''}}">
+      <view></view>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+  <view class="inputxt">
+    <text>生日</text>
+    <view class="item flex-center flex-1">
+      <picker mode="date" class="flex-1" value="{{date}}" start="{{start}}" end="{{end}}" bindchange="bindDateChange">
+        <text class="{{userInfo.birthday=='0000-00-00'?'def-txt':''}}">{{userInfo.birthday=='0000-00-00'?'请选择生日':userInfo.birthday}}</text>
+      </picker>
+      <view class="iconfont icon-arrow-r"></view>
+    </view>
+  </view>
+  <view class="inputxt">
+    <text>手机号</text>
+    <view class="item flex-center flex-1" bindtap="bindPhone">
+      <input class="flex-1" disabled placeholder="请绑定手机号" value="{{userInfo.phone}}" placeholder-style="color:#aaa;font-weight:normal" />
+      <view class="btn2">{{userInfo.is_mobile==0?'手机绑定':'重新绑定'}}</view>
+    </view>
+  </view>
+  
+</view>
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
+  <view class="btn" bindtap="saveInfo">保存</view>
+</view>
+<view style="height:{{56+btmHolder}}px"></view>
+
+<phonePanel class="phonePanel" maskTouch="{{false}}" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>

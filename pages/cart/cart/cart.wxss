@@ -14,7 +14,7 @@ image{width: 100%;height: 100%}
 .checkbox.on view:before{display: block;}
 .pro-box .hd text{font-size: 16px;font-weight: bold;margin-right: 5px;}
 .pro-box .hd .icon-notice2{margin-left: 20rpx;font-size: 14px;color: #ccc;}
-.pro-list{padding: 22rpx 0 56rpx 0;overflow: hidden;}
+.pro-list{padding: 22rpx 0 26rpx 0;overflow: hidden;}
 .pro-list .item:last-child{margin-bottom: 0;}
 .pro-info{padding-bottom: 10px;}
 .pro-info .pic{position: relative; width: 90px;height: 90px;overflow: hidden;margin-right: 20rpx;background: #F6F6F6;border-radius: 4px;}
@@ -25,7 +25,7 @@ image{width: 100%;height: 100%}
 .pro-info .checkbox{margin-right: 20rpx;}
 .pro-info .txt{justify-content: space-between;flex-direction: column;}
 .item{position: relative;width: 100%; align-items: center;}
-.bread-item{height: 100px;}
+.bread-item{height: 110px;}
 .cake-item{height: 110px;}
 .item-wrap{width:662rpx;height: 100%;align-items: flex-start;}
 .move-area{width:820rpx;height:100%;}

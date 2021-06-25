@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    tip:"当前区域不在配送范围",
     cityName: "北京市",
     selected: 0,
     index: 0,
@@ -152,7 +153,15 @@ Page({
     console.log(e)
     let type = e.type, moving = false
     if (type == 'end') {
+      if(!e.detail.centerLocation){
+        this.setData({
+          tip:"微信版本过低，无法获取位置",
+          hasAdd:false
+        })
+        return
+      }
       let {latitude,longitude}=e.detail.centerLocation
+      
       this.getPoi(latitude,longitude)
       moving = true
     } else {

@@ -538,9 +538,12 @@ Page({
   onShow: function () {
     let userInfo = wx.getStorageSync('userInfo')
     this.freePayInfo()
-    this.setData({
-      userInfo:JSON.parse(userInfo)
-    })
+    if(userInfo){
+      this.setData({
+        userInfo:JSON.parse(userInfo)
+      })
+    }
+    
   },
 
   /**

@@ -6,6 +6,7 @@ const app = getApp()
 
 Page({
   data: {
+    showAct:true,
     showNav: true,
     banner: [],
     autoplay: true,
@@ -92,7 +93,11 @@ Page({
 
     this.getIndexInfo(cityId)
   },
-
+  hideAct(){
+    this.setData({
+      showAct:false
+    })
+  },
   //onPageScroll: util.throttle(function (e) {
   //debounce()
   // var scrollTop = e.scrollTop
@@ -135,7 +140,7 @@ Page({
       wx.hideLoading()
       console.log(res);
       if(res){
-        let {notice,operate,message,subscribe_com} = res
+        let {notice,operate,message,subscribe_com,subscribe,bigday} = res
         if(!operate){
           return
         }
@@ -154,7 +159,9 @@ Page({
           notice: notice,
           banner,
           menu,
+          bigday,
           message,
+          subscribe,
           subscribe_com
         })
       }
@@ -238,7 +245,9 @@ Page({
     })
   },
   onLoad (options) {
-    
+    this.setData({
+      showAct:true
+    })
     util.setWatcher(this);
   },
   onHide: function () {

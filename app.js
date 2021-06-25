@@ -125,6 +125,8 @@ App({
                 user_id: user_id,
                 is_authed: is_authed,
                 is_mobile: is_mobile,
+                birthday:user_info.birthday,
+                real_gender:user_info.real_gender,
                 openid: openid
               }
               if(is_mobile==1){

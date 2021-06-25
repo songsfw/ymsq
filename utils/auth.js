@@ -24,10 +24,10 @@ function checkSession(){
   return new Promise((resolve,reject)=>{
     wx.checkSession({
       success () {
-        resolve()
+        resolve(true)
       },
       fail () {
-        reject()
+        reject(false)
       }
     })
   })
@@ -70,6 +70,8 @@ function getUserProfile(userInfo){
             userInfo.is_authed=result.is_authed
             userInfo.nickname=user_info.nickname
             userInfo.photo=user_info.head_url
+            userInfo.birthday=user_info.birthday
+            userInfo.real_gender=user_info.real_gender
 
             wx.setStorageSync("userInfo", JSON.stringify(userInfo))
             resolve(userInfo)

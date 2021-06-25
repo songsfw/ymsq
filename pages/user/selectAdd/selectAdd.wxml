@@ -32,7 +32,7 @@
       <view class="nodata" wx:if="{{hasAdd}}">
         <image src="../../../image/loading.jpg"></image>
       </view>
-      <view wx:else class="tip">当前区域不在配送范围</view>
+      <view wx:else class="tip">{{tip}}</view>
     </block>
     <block wx:if="{{poi.length>0}}">
       <view class="item iconfont" wx:for="{{poi}}" wx:key="id" bind:tap="selectAdd" data-address="{{item.address}}" data-lng = "{{item.location.lng}}" data-prov="{{item.ad_info.city}}" data-district="{{item.ad_info.district}}" data-lat = "{{item.location.lat}}" data-title="{{item.title}}">

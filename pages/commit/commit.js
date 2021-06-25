@@ -94,7 +94,7 @@ Page({
   },
   addComment(){
     let {orderCode,comment,star,selectTag,proList,commentStat}=this.data
-    let hasSpecial = null
+    let hasSpecial = null,msgHasSpecial = null
     if(commentStat){
       this.setData({
         pop: 'hongbao'
@@ -104,6 +104,9 @@ Page({
     let detail=[]
     proList.find(item=>{
       if(item.stat){
+        if(item.comment){
+          msgHasSpecial = util.checkSpecialStr(item.comment)
+        }
         detail.push({meal_id:item.meal_id,meal_name:item.name,meal_content:item.comment || item.default_comment,meal_grade:item.stat})
       }
     })
@@ -137,7 +140,7 @@ Page({
     }
 
     hasSpecial = util.checkSpecialStr(comment)
-    if(hasSpecial){
+    if(hasSpecial || msgHasSpecial){
       wx.showToast({
         icon:'none',
         title:"不能提交特殊字符"

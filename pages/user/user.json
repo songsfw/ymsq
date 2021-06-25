@@ -7,6 +7,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "pop-panel": "/components/pop-panel/pop-panel"
+    "pop-panel": "/components/pop-panel/pop-panel",
+    "phonePanel": "/components/phonePanel/phonePanel"
   }
 }

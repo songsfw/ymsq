@@ -15,6 +15,7 @@
     "pages/user/selectAdd/selectAdd",
     "pages/user/vipcard/vipcard",
     "pages/user/order/order",
+    "pages/user/userInfo/userInfo",
     "pages/account/account",
     "pages/user/message/message",
     "pages/user/coupon/coupon",

@@ -1,6 +1,7 @@
 // pages/user/user.js
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
+const auth = require('../../utils/auth.js')
 const app = getApp()
 Page({
 
@@ -18,7 +19,13 @@ Page({
     count:0,
     user:null,
     order_unpaid:0,
-    order_dispatching:0
+    order_dispatching:0,
+    showAct:true
+  },
+  hideAct(){
+    this.setData({
+      showAct:false
+    })
   },
   getTab:function(e){
     let index = e.currentTarget.dataset.tabid;
@@ -90,6 +97,7 @@ Page({
     }
     this.getMemoDay()
     this.setData({
+      showAct:true,
       btmHolder:btmHolder||0,
       fixedTop
     })
@@ -146,6 +154,32 @@ Page({
       url: '/pages/user/memoDay/memoDay'
     })
   },
+  toUserInfo(){
+    let userInfo = this.data.userInfo
+    let is_authed = userInfo.is_authed
+    if(is_authed==0){
+      auth.getUserProfile(userInfo).then(res=>{
+        console.log(res);
+        wx.navigateTo({
+          url:"/pages/user/userInfo/userInfo"
+        }) 
+      })
+    }else{
+      wx.navigateTo({
+        url:"/pages/user/userInfo/userInfo"
+      })
+    }
+  },
+  bindPhone(){
+    this.setData({
+      showPhonePanel: true
+    })
+  },
+  bindPhoneSucess(e){
+    this.setData({
+      'userInfo.is_mobile':1
+    })
+  },
   getUserCenter(){
     wx.showLoading({mask:true})
     api.getUserCenter().then(res=>{
@@ -175,17 +209,25 @@ Page({
     //     selected: 3
     //   })
     // }
+
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
-    let loginInfo = null
+    let loginInfo = null,isLiving=null
     if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
     }
     
+    try {
+      isLiving = await auth.checkSession()
+    } catch (error) {
+      loginInfo = await app.wxLogin()
+    }
+    console.log(isLiving);
     userInfo = JSON.parse(wx.getStorageSync('userInfo'))
-    
+
     this.setData({
+      
       userInfo
     })
     this.getUserCenter();

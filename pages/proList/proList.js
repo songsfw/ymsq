@@ -248,7 +248,8 @@ Page({
       currentTab,
       city_id,
     } = this.data
-    console.log(city_id);
+    console.log(this.data.showStock);
+    console.log(this.data.showStock[currentTab][proId]);
 
     if (this.data.showStock[currentTab][proId] == 0) {
       return
