@@ -493,14 +493,14 @@ Page({
     let currenttab = e.currentTarget.dataset.currenttab
     let url = "/pages/" + (type == 1 ? 'proInfo/proInfo' : 'cakeInfo/cakeInfo') + "?proId=" + (type == 1 ? proId : spuId) + "";
     url += '&ctabTypeMealIdSpuId=' + currenttab + "_" + type + "_" + proId + "_" + spuId;
-
+    let category = type==1?"面包":"蛋糕",userId = this.data.userId
     if((proId==undefined && type==1)||(spuId==undefined && type==2)){
       wx.showToast({
         icon:"none",
         title: "详情模块加载失败"
       })
       wx.reportAnalytics('addcart', {
-        type: type,
+        type: category,
         tab_id: proId,
         proname:proName,
         city_id: this.data.trueCityId,
@@ -513,6 +513,7 @@ Page({
     wx.navigateTo({
       url: url
     })
+    wx.uma.trackEvent('proInfo', { 'type':category,'ItemName':`${userId}_${proName}`});
   },
   onPullDownRefresh() { //下拉刷新
     this.data.isPullDownRefresh = true;
@@ -976,8 +977,9 @@ Page({
     if(!userInfo){
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      userInfo = wx.getStorageSync('userInfo')
     }
-
+    userInfo = JSON.parse(userInfo)
     if (this.data.backFrom == 1) {
       console.log("详情")
       util.setTabBarBadge(wx.getStorageSync("total_num"));
@@ -999,6 +1001,7 @@ Page({
     this.setData({
       // cakeList: null,
       // breadList: null,
+      userId:userInfo.user_id,
       currentTab: proType,
       cateChosed: {},
       city_id: city_id || '10216',

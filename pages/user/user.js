@@ -112,22 +112,18 @@ Page({
 
   },
   toPro(e) {
-    let urlType = e.currentTarget.dataset.type.toString();
+    let urlType = e.currentTarget.dataset.type;
     let url = e.currentTarget.dataset.url;
     console.log(urlType, url);
-    switch (urlType) {
-      case "1":
-        wx.navigateTo({
-          url: "/pages/web/web?url=" + url
-        })
-        break;
-      case "5":
-        wx.navigateTo({
-          url: url
-        })
-        break;
-      default:
-        break;
+    if(urlType==1){
+      wx.navigateTo({
+        url: "/pages/web/web?url=" + url
+      })
+    }
+    if(urlType==5){
+      wx.navigateTo({
+        url: url
+      })
     }
   },
   showRule(){

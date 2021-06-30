@@ -763,7 +763,7 @@ Page({
     this.submmitOrder()
   },
   submmitOrder: util.debounce(function () {
-    
+    let hasSpecial = null,message=null
     let that = this
     let {
       cart_data,
@@ -897,8 +897,18 @@ Page({
     }
     if (txtCard) {
       console.log(txtCard)
-      data.message = JSON.stringify(txtCard)
+      message = JSON.stringify(txtCard)
+      hasSpecial = util.checkSpecialStr(message)
+      if(hasSpecial){
+        wx.showToast({
+          icon:'none',
+          title:"巧克力牌不能为特殊字符"
+        })
+        return
+      }
+      data.message = message
     }
+
     console.log('---支付参数---')
     console.log(data)
     console.log('------')

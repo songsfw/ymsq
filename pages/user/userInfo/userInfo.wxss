@@ -38,3 +38,4 @@ page{background: #F6F6F6;height: auto;}
 .sex.on.man{color: #4176FF;}
 .sex.man view:after{background-color: #4176FF;}
 .sex.on.man view:after{display: block; transform:scale(1)}
+.picker text{display: block; height: 49px;}

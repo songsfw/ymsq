@@ -14,8 +14,8 @@
 
       <view class="money">{{show?money:"******"}}</view>
       <view class="flex charge">
-        <navigator hover-class="none" class="btn wx-charge" url="/pages/account/cashcharge/cashcharge">现金卡充值</navigator>
-        <navigator hover-class="none" url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信充值</navigator>
+        <navigator hover-class="none" class="btn wx-charge" url="/pages/account/cashcharge/cashcharge">现金/储值卡绑定</navigator>
+        <navigator hover-class="none" url="/pages/account/wxcharge/wxcharge" class="btn wx-charge">微信支付充值</navigator>
       </view>
     </view>
     <view class="option">

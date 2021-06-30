@@ -48,7 +48,7 @@
             </view>
           </view>
         </view>
-        <view class="section">
+        <view class="section" wx:if="{{commentDetail[item.meal_id].content}}">
           <textarea value="{{commentDetail[item.meal_id].content}}" disabled />
         </view>
       </view>

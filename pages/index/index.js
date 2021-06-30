@@ -29,10 +29,11 @@ Page({
     filter: 0,
   },
   toPro(e) {
-    let urlType = e.currentTarget.dataset.type.toString();
+    let urlType = e.currentTarget.dataset.type;
+    let urlTypeStr = urlType.toString()
     let url = e.currentTarget.dataset.url;
-    console.log(urlType, url);
-    switch (urlType) {
+    console.log(urlTypeStr, url);
+    switch (urlTypeStr) {
       case "1":
         wx.navigateTo({
           url: "/pages/web/web?url=" + url

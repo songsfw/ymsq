@@ -74,12 +74,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
+    let btmHolder = wx.getStorageSync('btmHolder')
+    btmHolder = btmHolder>0?btmHolder:12
     let end = new Date().getFullYear()
     let userInfo = wx.getStorageSync('userInfo')
     if(userInfo){
       userInfo = JSON.parse(userInfo)
     }
     this.setData({
+      btmHolder,
       userInfo,
       start:end-100,
       end

@@ -21,8 +21,8 @@
   <view class="inputxt">
     <text>生日</text>
     <view class="item flex-center flex-1">
-      <picker mode="date" class="flex-1" value="{{date}}" start="{{start}}" end="{{end}}" bindchange="bindDateChange">
-        <text class="{{userInfo.birthday=='0000-00-00'?'def-txt':''}}">{{userInfo.birthday=='0000-00-00'?'请选择生日':userInfo.birthday}}</text>
+      <picker mode="date" class="flex-1 picker" value="{{date}}" start="{{start}}" end="{{end}}" bindchange="bindDateChange">
+        <text class="{{userInfo.birthday?'':'def-txt'}}">{{userInfo.birthday?userInfo.birthday:'请选择生日'}}</text>
       </picker>
       <view class="iconfont icon-arrow-r"></view>
     </view>
