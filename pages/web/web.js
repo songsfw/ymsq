@@ -53,7 +53,7 @@ Page({
     return {
       title: '原麦山丘',
       path: '/pages/web/web?url='+this.data.webUrl,
-      imageUrl:"../../image/share.jpg"
+      imageUrl:"https://api.withwheat.com/img/share.jpg"
     }
   }
 })

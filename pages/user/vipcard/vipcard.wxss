@@ -53,3 +53,5 @@ transform: translateX(0);
 .active{padding:20rpx 0 28rpx 16rpx;margin: 0 26rpx; border-bottom: 1px dashed #E9E9E9;font-size: 14px;font-weight: 500;}
 .active text{color: #aaa;font-size: 12px;margin-top: 2px;}
 .wxbtn{width: 63px;height: 27px;line-height: 27px;margin-left: 17px; color: #fff;background: linear-gradient(159deg, #FF9979 0%, #FA623B 71%, #F52222 100%);border-radius: 13px;text-align: center;flex-shrink: 0;}
+.tips{margin: 24rpx 24rpx 0 24rpx;color: #aaa;}
+.tips text{font-size: 12px;}

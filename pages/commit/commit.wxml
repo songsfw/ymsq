@@ -1,6 +1,8 @@
 <!-- pages/user/user.wxml -->
 <navBar navType="transparent" hasReturn isFold="{{isFold}}" title="订单评论"></navBar>
+<view style="position:absolute;top:0;width:100%;overflow:hidden;height:418rpx;z-index:0">
 <view class="banner-bg"></view>
+</view>
 <view class="main" wx:if="{{commentStat}}">
   <view class="card card1">
     <view class="order-info flex-center">
@@ -111,8 +113,8 @@
 </view>
 
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
-  <view class="btn" bindtap="checkHongbao" wx:if="{{commentStat}}">查看红包</view>
-  <view class="btn" bindtap="addComment" wx:else>提交评价</view>
+  <view class="btn" bindtap="checkHongbao" wx:if="{{is_reward}}">查看红包</view>
+  <view class="btn" bindtap="addComment" wx:else>{{commentStat?'领取红包':'提交评价'}}</view>
 </view>
 <view class="logo">
   <image src="../../image/logo.png"></image>
@@ -120,7 +122,7 @@
 <view style="height:{{56+btmHolder}}px"></view>
 <view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
 <view class="pop-panel hongbao-panel" wx:if="{{pop=='hongbao'}}">
-  <image src="../../image/hongbao.png"></image>
+  <image src="https://api.withwheat.com/img/hongbao.png"></image>
   <view class="pop-con">
     <view class="tit">评价成功</view>
     <view class="tit2">恭喜您获得红包</view>

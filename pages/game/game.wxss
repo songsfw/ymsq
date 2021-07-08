@@ -1,0 +1,322 @@
+/**index.wxss**/
+/*--public style--*/
+view{font-size:12px;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+page{background: #151052}
+.bg{position: absolute;left: 0;top: 0; width:100% ;height: 100%;z-index: 0;}
+.lay-left{position: relative; width:750rpx; background: url(https://api-beta.withwheat.com/img/game8.jpg) no-repeat center top;background-size: 100% auto;padding-bottom: 50rpx;padding-top:30rpx}
+.paw{
+    position: absolute;
+    left: 0;
+    width: 46px;
+    height: 250px;
+    top: 5px;
+    margin-left: 9px;
+    z-index: 1;
+    transition: all 1s ease-in;
+}
+.paw.stop_paw{transform: translate3D(0,0,0);}
+.paw .paw-top{
+    width: 35px;
+    height: 26px;
+    margin-left: 5px;
+}
+.paw .paw-middle{    width: 7px;
+    height: 40px;
+    margin-left: 20px;}
+.paw .paw-bottom{position: relative;width: 44px;height:40px; margin-left: 2px; z-index:0; -moz-transform-origin: center 18px; -webkit-transform-origin: center 18px; transform-origin: center 18px; -moz-transition: -moz-transform .4s ease-out; -webkit-transition: -webkit-transform .4s ease-out; transition: transform .4s ease-in;margin-top: -1px;}
+.paw.left-moving .paw-bottom{-webkit-transform: rotate(-10deg); -moz-transform: rotate(-10deg); transform: rotate(-10deg);}
+.paw.right-moving .paw-bottom{-webkit-transform: rotate(10deg); -moz-transform: rotate(10deg); transform: rotate(10deg);}
+.paw.winning .paw-bottom{height: 119px;}
+	
+.option{
+    position: absolute;
+    top: 530px;
+    left: 83px;
+    z-index: 3;
+}
+.option view{width: 65px;height: 43px;position: absolute;cursor: pointer;bottom: 15px;}
+
+.option .startbtn{left: 5px;}
+
+.option .endbtn{left: 115px;}
+.option view.btn-hover{
+    bottom:12px;
+    transform: scale(1,.9);
+    -webkit-transform: scale(1,.9); /* Safari and Chrome */
+}
+.wawa-wrap{width: 219px;height: 243px;position: absolute;top: 165px;left:66px;overflow: hidden;z-index: 2;}
+.game-wp .wa1{width: 227px;height: 60px;position: absolute;top: 359px;left: 61px;z-index: 3;}
+.game-wp .wa2{width: 200px;height:73px;position: absolute;top:328px;left: 72px;z-index: 2;}
+.game-wp .wa3{width: 194px;height: 89px;position: absolute;top: 294px;left: 77px;z-index: 1;}
+
+.lay-left .count{
+    position: absolute;
+    width: 182px;
+    height: 19px;
+    top: 441px;
+    left: 83px;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+}
+.chance{position: absolute;color: #fff;left: 0;width: 57px;height: 26px;line-height: 26px;text-align: center;z-index: 2;font-size: 11px;top: 81px;}
+.gift{position: absolute;right:9px;top: 55px;width:31px;height: 63px;z-index: 2;}
+.chance image{position: absolute;width: 100%;height: 100%;left: 0;top: 0;z-index: -1;}
+.grab-chance{font-size: 9px;}
+.grab-chance text{color: #36FFEA;}
+.game-wp{position: relative; width: 346px;height:587px;z-index: 1;margin: 0 auto;}
+.game-wp .game-bg{position: absolute;left: 0;top: 0;width: 346px;height:587px ;}
+.title{position: relative; width:750rpx;height:160rpx ;margin: 0 auto;z-index: 2;}
+.box-wp{width: 660rpx;margin: 12px auto 0 auto;}
+.box-wp .box{background: url(https://api-beta.withwheat.com/img/b2.png) repeat-y center top;background-size: 100% 160px;margin-top: -30px;padding: 0 35px;color: #fff;}
+.box-wp:before{content: "";display: block;width:660rpx;height:160rpx;background: url(https://api-beta.withwheat.com/img/b1.png) no-repeat center top;background-size: 100% 100%;}
+.box-wp2:after{content: "";display: block;width: 660rpx;height:78rpx;background: url(https://api-beta.withwheat.com/img/b3.png) no-repeat center bottom;background-size: 100% 116px;}
+.notice .txt{color: #fff;font-size: 14px;margin-bottom:19px ;}
+.notice .h3{color: #FFA9CF;font-size: 15px;font-weight: 500;}
+.notice .txt2{color:#36FFEA;font-size: 11px;}
+.animate_paw{
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+  
+@keyframes pawMotion {
+    0% {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0)
+    }
+
+    50% {
+        -webkit-transform: translate3d(160px,0,0);
+        transform: translate3d(160px,0,0)
+    }
+    100% {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0)
+    }
+}
+
+.animate_pawMotion {
+-webkit-animation-name: pawMotion;
+animation-name: pawMotion
+}
+.animate_pause {
+    animation-play-state:paused;
+}
+.animate_run {
+    animation-play-state:running;
+}
+
+.animate_pawMotion2 {
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+    -webkit-animation-name: pawMotion2;
+    animation-name: pawMotion2
+}
+
+@keyframes pawMotion2 {
+    0% {
+        transform: rotate(0);
+    }
+    5% {
+        transform: rotate(10deg);
+    }
+    45% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    55% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(-10deg);
+    }
+}
+
+.animate_gan{
+    -webkit-animation-duration: .8s;
+    animation-duration: .8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-timing-function:ease;
+}
+  
+@keyframes ganMotion_down {
+    0% {
+        height:40px
+    }
+
+    100% {
+        height:158px
+    }
+}
+@keyframes ganMotion_up {
+    0% {
+        height:158px
+    }
+
+    100% {
+        height:40px
+    }
+}
+
+.animate_ganMotion_down {
+-webkit-animation-name: ganMotion_down;
+animation-name: ganMotion_down
+}
+.animate_ganMotion_up {
+-webkit-animation-name: ganMotion_up;
+animation-name: ganMotion_up
+}
+
+.caideng{position: absolute;
+    width: 293px;
+    height: 328px;
+    left: 28px;
+    top: 130px;
+    opacity: 0;
+}
+.animate_light{
+    -webkit-animation-name: lightMotion;
+    animation-name: lightMotion;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    animation-iteration-count:infinite;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-timing-function:ease;
+
+}
+  
+@keyframes lightMotion {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+       opacity:1;
+    }
+}
+
+.pic-box{flex-wrap: wrap;justify-content: space-between;}
+.pic-box .item{box-sizing: border-box;background: #fff;width: 49%;    margin: 0 0 2% 0;border-radius: 0 ;overflow: hidden;flex-shrink: 0;border-radius: 8px;}
+.pic-box .item .info{padding-top: 8px;}
+.pic-box .item .pic{position: relative; width: 100%;height: 0;padding-top:100%;overflow: hidden;background: #fff;}
+.pic-box .item .pic .tag{display: none;}
+.pic-box .item .pic image{position: absolute;left: 0;top: 0; width: 100%;height: 100%;}
+.pic-box .item .tit{font-size: 14px;color: #222;margin-bottom: 8px;padding: 0 20rpx;font-weight: 500;line-height: 1;}
+.pic-box .item .tit text{    color: #fff;
+    font-size: 9px;
+    line-height: 1;
+    padding: 4rpx 4rpx;
+    margin-right: 10rpx;
+    background: linear-gradient(to right,#ffa052,#f52422);
+    border-radius: 8rpx;
+    margin-bottom: 0;
+    vertical-align: baseline;}
+.pic-box .item .tags{padding: 0 20rpx 0 ;box-sizing: border-box;}
+.pic-box .item .tags text{display:block;text-overflow: ellipsis;word-break:keep-all;overflow:hidden; font-size:12px;color: #999999;height: 18px;line-height: 18px; padding: 0 0px;border-radius:9px;margin-right: 5px;}
+.pic-box .item .price{position: relative; justify-content: space-between;padding:8px 20rpx;align-items: center;line-height: 1;}
+.pic-box .item .price .num{font-size: 11px;color: #222;}
+.pic-box .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
+.pic-box .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 22px;text-align: center;line-height: 44px;}
+.pic-box .item .price .add.unuse{color: #ccc}
+.gift-list{flex-wrap: wrap;justify-content: space-between;}
+.gift-list image{width: 48%;margin-bottom: 4%;}
+.popPanel{ position: fixed;top: 50%;left: 50%;margin: -150px 0 0 -144px;width: 289px;height: 301px; padding: 34px;z-index: 101;overflow: hidden;box-sizing: border-box;background: url(https://api-beta.withwheat.com/img/game-popbg.png) no-repeat;background-size: 100% 100%;}
+.popPanel .bg{position: absolute;left: 0;top: 0;z-index: 0;}
+.pop-wp{position: relative;z-index: 1;}
+.pop-option{margin-top: 26px;}
+.pop-option image{width: 84px;height: 28px;}
+.pop-body{text-align: center;margin-top: 15px;}
+.pop-body image{width:177px;height: 92px;}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.pop-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color:#FF83AD;
+  margin-bottom: 10px;
+  line-height: 1;
+  text-shadow: 0px 4px 6px #1A1062;
+}
+
+.pop-option {
+  justify-content: space-around;
+  margin-top: 25px;
+}
+.pop-wp .txt{color:#8DF1DD;text-align: center;height: 35px;}
+.pop-option view image{height:28px;width: 100px;}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+@keyframes bounceIn {
+    0%,20%,40%,60%,80%,to {
+        -webkit-animation-timing-function: cubic-bezier(.215,.61,.355,1);
+        animation-timing-function: cubic-bezier(.215,.61,.355,1)
+    }
+
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.3,.3,.3);
+        transform: scale3d(.3,.3,.3)
+    }
+
+    20% {
+        -webkit-transform: scale3d(1.1,1.1,1.1);
+        transform: scale3d(1.1,1.1,1.1)
+    }
+
+    40% {
+        -webkit-transform: scale3d(.9,.9,.9);
+        transform: scale3d(.9,.9,.9)
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(1.03,1.03,1.03);
+        transform: scale3d(1.03,1.03,1.03)
+    }
+
+    80% {
+        -webkit-transform: scale3d(.97,.97,.97);
+        transform: scale3d(.97,.97,.97)
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1)
+    }
+}
+
+.bounceIn {
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn
+}

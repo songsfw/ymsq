@@ -1,0 +1,99 @@
+<view class="chance">
+    <image src="../../image/game2.png"></image>
+    剩余{{gameInfo.left_times || '0'}}次</view>
+<navigator url="/pages/giftList/giftList?lotteryid={{lottery_id}}" class="gift">
+    <image src="../../image/gift.png"></image>
+</navigator>
+<view class="lay-left">
+    <view class="game-wp">
+        <image src="../../image/game-bg.png" class="game-bg"></image>
+        <view class="wawa-wrap">
+            <view class="paw animate_paw {{start?'animate_pawMotion':''}} {{isGrabbing?'animate_pause':''}}">
+                <view class="paw-top"><image src="../../image/game5.png"></image></view>
+                <view class="paw-middle animate_gan {{isGrabbing?'animate_ganMotion_down':''}} {{isGrabbingEnd?'animate_ganMotion_up':''}}">
+                    <image src="../../image/game6.png"></image>
+                </view>
+                <view class="paw-bottom {{!isGrabbing && start?'animate_pawMotion2':''}}">
+                    <image wx:if="{{gameResult==0}}" src="../../image/game7.png"></image>
+                    <image wx:else src="../../image/game7_1.png"></image>
+                </view>
+            </view>
+        </view>
+        <view class="wa1"><image src="../../image/gift1.png"></image></view>
+        <view class="wa2"><image src="../../image/gift2.png"></image></view>
+        <view class="wa3"><image src="../../image/gift3.png"></image></view>
+        <view class="caideng animate_light"><image src="../../image/game3.png"></image></view>
+        <view class="option">
+            <view class="startbtn" hover-class="btn-hover" bind:tap="start"><image src="../../image/start-btn.png"></image></view>
+            <view class="endbtn" hover-class="btn-hover" bind:tap="grab"><image src="../../image/grab-btn.png"></image></view>
+        </view>
+        <view class="count" wx:if="{{paytype==2}}">
+            <text class="grab-chance">我的麦点:<text>{{gameInfo.user_asset}}</text> | {{payment}}麦点/1次</text>
+        </view>
+    </view>
+    <view class="title" style="margin-top:-55rpx"><image src="https://api-beta.withwheat.com/img/game-title0.png"></image></view>
+   <view class="box-wp box-wp2">
+       <view class="box gift-list flex">
+            <image wx:for="{{detail}}" src="{{item.image_url}}" mode="widthFix"></image>
+       </view>
+   </view>
+    <view class="title" style="margin-top:-30rpx"><image src="../../image/t1.png"></image></view>
+    <view class="box-wp box-wp2">
+       <view class="box notice">
+           <block wx:for="{{rule}}">
+                <view class="h3">{{item[0]}}</view>
+                <view class="txt">{{item[1]}}</view>
+           </block>
+           <view class="txt2">【通过不正当手段参与活动获得奖励，我司有权撤销奖励，在法律范围内我公司有最终活动解释权】</view>
+       </view>
+   </view>
+    <view class="title" style="margin-top:-30rpx"><image src="../../image/t2.png"></image></view>
+    <view class="box-wp box-wp2">
+       <view class="box">
+           <view class="pic-box flex">
+
+            <view class="item" wx:for="{{proList}}" wx:for-item="pro" bind:tap="toPro" data-url="{{pro.type==1?pro.meal_id:pro.spu_id}}" data-type="{{pro.type}}">
+            <view class="pic">
+                <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
+            </view>
+            <view class="info">
+                <view class="tit text-overflow"><text wx:if="{{pro.special_tag}}">{{pro.special_tag}}</text>{{pro.name}}</view>
+                <view class="tags text-overflow">
+                <text>{{pro.selling_point}}</text>
+                </view>
+                <view class="price flex">
+                <view class="num">￥<text>{{pro.price}}</text></view>
+                </view>
+            </view>
+            </view>
+
+        </view>
+       </view>
+   </view>
+   
+</view>
+
+<view class="mask" wx:if="{{popShow}}" bind:tap="initGame">
+</view>
+<view class="popPanel animated bounceIn" wx:if="{{popShow}}">
+  <view class="pop-wp">
+    <view class="pop-title">~ {{ popConfig.title }} ~</view>
+    <view class="txt"><text>{{popConfig.text}}</text></view>
+    <view class="pop-body">
+        <image wx:if="{{popConfig.status==1}}" src="{{popConfig.img}}"></image>
+        <image wx:else style="width:164rpx;height:164rpx" src="https://api-beta.withwheat.com/img/nogift.png"></image>
+    </view>
+    <view class="pop-option flex">
+        <view class=" cancle-btn" wx:if="{{popConfig.status!=2}}" bind:tap="initGame">
+            <image src="../../image/game-btn2.png"></image>
+        </view>
+        <view class="confirm-btn" wx:if="{{popConfig.status!=1}}" bind:tap="close">
+            <image src="../../image/game-btn1.png" style="width:139px" wx:if="{{popConfig.status==2}}"></image>
+            <image wx:else src="../../image/game-btn4.png"></image>
+        </view>
+        <view class=" confirm-btn" wx:if="{{popConfig.status==1}}" bind:tap="toIndex">
+            <image src="../../image/game-btn3.png"></image>
+        </view>
+    </view>
+  </view>
+</view>

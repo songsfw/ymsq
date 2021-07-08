@@ -29,8 +29,8 @@ Page({
     filter: 0,
   },
   toPro(e) {
-    let urlType = e.currentTarget.dataset.type;
-    let urlTypeStr = urlType.toString()
+    let urlTypeStr = e.currentTarget.dataset.type;
+    console.log(typeof urlType);
     let url = e.currentTarget.dataset.url;
     console.log(urlTypeStr, url);
     switch (urlTypeStr) {
@@ -129,7 +129,7 @@ Page({
     return {
       title: '原麦山丘',
       path: '/pages/index/index',
-      imageUrl:"../../image/share.jpg"
+      imageUrl:"https://api.withwheat.com/img/share.jpg"
     }
   },
   getIndexInfo: function (cityid) {

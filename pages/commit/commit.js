@@ -93,9 +93,9 @@ Page({
     console.log(this.data.proList);
   },
   addComment(){
-    let {orderCode,comment,star,selectTag,proList,commentStat}=this.data
+    let {orderCode,comment,star,selectTag,proList,commentStat,is_reward}=this.data
     let hasSpecial = null,msgHasSpecial = null
-    if(commentStat){
+    if(is_reward){
       this.setData({
         pop: 'hongbao'
       })
@@ -107,7 +107,7 @@ Page({
         if(item.comment){
           msgHasSpecial = util.checkSpecialStr(item.comment)
         }
-        detail.push({meal_id:item.meal_id,meal_name:item.name,meal_content:item.comment || item.default_comment,meal_grade:item.stat})
+        detail.push({meal_id:item.meal_id,meal_name:item.name,meal_content:item.comment || item.default_comment || '',meal_grade:item.stat})
       }
     })
     if(!star || star==0){
@@ -171,7 +171,7 @@ Page({
       api.getComment(data).then(res=>{
         console.log(res);
         wx.hideLoading()
-        let commentStat = res.hasComment
+        let commentStat = res.hasComment,is_reward = res.is_reward
         let detail=res.orderReader.detail || []
         if(commentStat){
           let score = this.data.score,star = parseInt(res.defaultStar)-1
@@ -184,6 +184,7 @@ Page({
             }
           })
           this.setData({
+            is_reward:is_reward,
             commentStat:commentStat,
             commentDetail:commentDetail,
             commentContent:res.commentContent,
@@ -275,7 +276,7 @@ Page({
 
         return
       }
-      let commentStat = res.hasComment
+      let commentStat = res.hasComment,is_reward=res.is_reward
       let detail=res.orderReader.detail || []
 
       if(commentStat){
@@ -290,6 +291,7 @@ Page({
           }
         })
         this.setData({
+          is_reward:is_reward,
           commentStat:commentStat,
           commentDetail:commentDetail,
           commentContent:res.commentContent,
@@ -314,6 +316,7 @@ Page({
       delivery_status=res.orderReader.delivery_status
       old_status=res.orderReader.old_status
       this.setData({
+        is_reward:is_reward,
         commentStat:commentStat,
         curTags:tags['1'],
         delivery_time:res.orderReader.delivery_time,

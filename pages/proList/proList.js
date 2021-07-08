@@ -687,6 +687,18 @@ Page({
             tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
           }
           break;
+        case 5:
+          console.log('switch  = 5')
+          for (let tmpKey in app.data.ProductList_ProList[app.globalData.proType]) {
+            let tmpVal = app.data.ProductList_ProList[app.globalData.proType][tmpKey];
+            let ctabTypeMealIdSpuId = app.globalData.proType + '_' + tmpVal['type'] + '_' + tmpVal['meal_id'] + "_" + tmpVal['spu_id'];
+            app.data.ProductList_ProListIndex[ctabTypeMealIdSpuId] = tmpKey;
+            // console.log(tmpVal)
+            let selectNumberLength = tmpVal.selected > 0 ? tmpVal.selected.toString().length : 0;
+            tmpVal['selectNumberLength'] = selectNumberLength;
+            tmpVal['cornerTagStyle'] = this.getAddTapNumStyle(tmpVal.selected);
+          }
+          break;
         case 4:
           console.log(4)
           break;
@@ -943,7 +955,6 @@ Page({
   },
   getAddTapNumStyle(num) {
     let selectNumberLength = num > 0 ? num.toString().length : 0;
-    // tempList['selectNumberLength'] = selectNumberLength;
     let style = "";
     switch (selectNumberLength) {
       case 1:

@@ -331,6 +331,7 @@ Page({
       console.log(res);
       let orderData = res.order
       let newOrderData = {
+        pay_price:orderData.pay_price,
         comment_status:orderData.comment_status,
         old_status:orderData.old_status,
         count:orderData.count,

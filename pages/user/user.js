@@ -142,6 +142,9 @@ Page({
     })
   },
   toMemo(){
+    if(!this.data.user){
+      return
+    }
     if(!this.data.user.subscribe){
       this.showRule()
       return
@@ -197,15 +200,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   async onShow () {
-    //自定义tabbar选中
-    // if (typeof this.getTabBar === 'function' &&
-    //   this.getTabBar()) {
-    //   this.getTabBar().setData({
-    //     count:"",
-    //     selected: 3
-    //   })
-    // }
-
+    wx.showLoading({mask:true})
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null,isLiving=null
@@ -221,7 +216,7 @@ Page({
     }
     console.log(isLiving);
     userInfo = JSON.parse(wx.getStorageSync('userInfo'))
-
+    wx.hideLoading()
     this.setData({
       
       userInfo

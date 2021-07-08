@@ -3,7 +3,7 @@ console.log(ENV);
 //var baseUrl = 'https://api-beta.withwheat.com/v1'
 var baseUrl = ENV == 'pro' ? 'https://api.withwheat.com/v1' : 'https://api-beta.withwheat.com/v1'
 
-const returnData = res=>{
+const returnData = (res,needToast=false)=>{
   if(res.statusCode == 200){
     let data = res.data
     console.log(data)
@@ -14,9 +14,6 @@ const returnData = res=>{
       return false
     }else if(data.status==1001){
       
-      // wx.navigateTo({
-      //   url: '/pages/login/login'
-      // })
     }else if(data.status==1022){
       console.log('未绑定手机');
       return '1022'
@@ -24,6 +21,9 @@ const returnData = res=>{
       return false
     }else{
       //特殊状态统一处理
+      if(needToast){
+        return data
+      }
       if(data.message){
         wx.showToast({
           icon:"none",
@@ -31,6 +31,7 @@ const returnData = res=>{
           duration:2000
         })
       }
+      console.log("111");
       return false
     }
   }else if(res.statusCode == 500){
@@ -394,7 +395,25 @@ const keywordSearch = (params) => {
   return POST(baseUrl + "/product/search-list", params).then(res => returnData(res));
 }
 
+const getGameInfo = (params) => {
+  //游戏信息
+  return POST(baseUrl + "/lottery/info", params).then(res => returnData(res));
+}
 
+const getGift = (params) => {
+  //抽奖
+  return POST(baseUrl + "/lottery/take-out", params).then(res => returnData(res));
+}
+
+const getGiftList = (params) => {
+  //中奖记录
+  return POST(baseUrl + "/lottery/lottery-history", params).then(res => returnData(res));
+}
+
+const startGame = (params) => {
+  //中奖记录
+  return POST(baseUrl + "/lottery/before-take-out", params).then(res => returnData(res,true));
+}
 
 module.exports = {
   getIndexInfo:getIndexInfo,
@@ -463,5 +482,9 @@ module.exports = {
   keywordSearch,
   keywordList,
   getCommitList,
-  changeUserInfo
+  changeUserInfo,
+  getGameInfo,
+  getGift,
+  getGiftList,
+  startGame
 }

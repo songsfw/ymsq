@@ -1,5 +1,10 @@
 //app.js
 import 'umtrack-wx';
+// var fundebug = require('utils/fundebug.1.3.1.min.js');
+// fundebug.init(
+// {
+//     apikey : '05bb7bb968530f0b763cd18f315a4b8e991b7fb61164fb86e59a4da888c785f4'
+// })
 const api = require('utils/api.js')
 const util = require('utils/util.js')
 let local=null
@@ -125,7 +130,7 @@ App({
                 user_id: user_id,
                 is_authed: is_authed,
                 is_mobile: is_mobile,
-                birthday:user_info.birthday,
+                birthday:user_info.birthday || "0000-00-00",
                 real_gender:user_info.real_gender,
                 openid: openid
               }

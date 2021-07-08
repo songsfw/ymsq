@@ -1,0 +1,33 @@
+<!-- pages/user/user.wxml -->
+<navBar navType="transparent" hasReturn isFold="{{isFold}}" title="我的奖品"></navBar>
+
+<view style="position:absolute;top:0;width:100%;overflow:hidden;height:418rpx;z-index:0">
+  <view class="banner-bg"></view>
+</view>
+<view class="main">
+  <view class="card card1">
+    <navigator hover-class="none" url="/pages/user/coupon/coupon" class="title">优惠券也可在【我的-优惠券】中查看</navigator>
+    <block wx:for="{{list}}" wx:for-item="giftList">
+      <view class="item flex-center" wx:for="{{giftList}}">
+        <view class="pic"><image src="{{item.image}}"></image></view>
+        <view class="info flex-1">
+          <view class="h3">{{item.lottery_name}}</view>
+          <view class="date">{{item.create_time}}</view>
+        </view>
+      </view>
+    </block>
+    
+    <block wx:if="{{list[0].length==0}}">
+      <view class="nodata">
+        <view>
+          <image src="../../image/no-coupon.png"></image>
+        </view>
+        <view class="txt">暂无数据</view>
+      </view>
+    </block>
+    <view class="next" wx:else>{{noMoreData?"我是有底线的":""}}</view>
+  </view>
+  
+</view>
+
+<view style="height:{{56+btmHolder}}px"></view>

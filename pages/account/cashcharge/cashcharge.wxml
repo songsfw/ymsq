@@ -3,8 +3,8 @@
 <template is="loading" data="{{showLoading}}"></template>
 <view class="card">
   <view class="card-wp">
-    <image wx:if="{{type==1}}" src="../../../image/card1.png" />
-    <image wx:else src="../../../image/third-card.png" />
+    <image wx:if="{{type==1}}" src="https://api.withwheat.com/img/card1.jpg" />
+    <image wx:else src="https://api.withwheat.com/img/third-card.png" />
     <view class="rule-btn" bind:tap="showRule">使用规则</view>
     <view class="price-info flex" wx:if="{{showPriceInfo}}">
       <text>余额:{{card_balance}}</text>

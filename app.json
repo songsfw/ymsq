@@ -31,7 +31,9 @@
     "pages/web/web",
     "pages/commit/commit",
     "pages/commitList/commitList",
-    "pages/share/share"
+    "pages/share/share",
+    "pages/game/game",
+    "pages/giftList/giftList"
   ],
   
   "tabBar": {

@@ -177,7 +177,7 @@
         <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
         <text wx:else>实付金额：</text>
         <view>
-          <text>￥</text>{{orderData.weixin_price}}
+          <text>￥</text>{{orderData.pay_price}}
         </view>
       </view>
     </view>

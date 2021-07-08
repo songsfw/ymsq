@@ -30,6 +30,7 @@
     </view>
     <view class="txt">扫码付款</view>
   </view>
+  <view class="tips"><text class="iconfont icon-notice2"></text> 原麦山丘动物园店、十里堡门店暂不支持会员余额支付给您带来不便请谅解！</view>
 </view>
 
 <view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">

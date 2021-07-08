@@ -55,9 +55,10 @@
         </swiper>
         <view class="show-btn">查看</view>
       </view>
-      <view class="active" wx:if="{{!bigday && subscribe && cidx==2}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
+      <view class="active" wx:if="{{!bigday && subscribe && cidx==2}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="5">
         <image class="" src="{{subscribe_com.img}}" mode="widthFix"></image>
       </view>
+      
       <!-- 分类推荐 -->
       <view class='main-content'
         style="background-color:{{item.componentDetail.box_style.background_color}};background-image:{{item.componentDetail.box_style.background_image}};border-radius:{{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_top_radius || 8}}rpx {{item.componentDetail.box_style.border_bottom_radius ||8}}rpx {{item.componentDetail.box_style.border_bottom_radius || 8}}rpx;margin-top:{{item.componentDetail.box_style.margin_top || 0}}rpx;margin-right:{{item.componentDetail.box_style.margin_right || 24}}rpx;margin-bottom:{{item.componentDetail.box_style.margin_bottom || 0}}rpx;margin-left:{{item.componentDetail.box_style.margin_left || 24}}rpx"
@@ -109,7 +110,7 @@
 <view class="gotop" bindtap="gotop" wx:if="{{showGoto}}">
   <image src="../../image/icon-top.png"></image>
 </view>
-<view class="active-btm flex-center" wx:if="{{showAct && !subscribe}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="{{subscribe_com.type}}">
+<view class="active-btm flex-center" wx:if="{{showAct && !subscribe}}" bind:tap="toPro" data-url="{{subscribe_com.url}}" data-type="1">
   <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAMAAABIzV/hAAAAk1BMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ROyVeAAAAMHRSTlMAHRpYxcMF+s9+Ihf238cKAnhTMevJuYJ9buPTzLWwrKJiTD8mEA3w1JuNims4LCcGZaqCAAAAxklEQVQoz82Q2RaCIBRFUSsqMTOHbHZurvP/X1ekIhi9t5/OXZvLgkMkvHVFfnDAUy98z0Fiud/iscOHYDXvmQXDycvvVkKxUxczSpvTxRaRvGcGdNHmaotYUmcsu8E4MlMMNg3k+2NcRV7xpY6SrUXewycyEaZtdJj6lyXEo6hDFFLcmjTCRlUWPKHGfTX5DxWLNiaqKjY54biGwGyw35S8JWjhXV2GNYOaGScMw6HcuDHluERDBI6vUxk3gznRkTrsYEvzCyVuFnp3mJGBAAAAAElFTkSuQmCC"></image>
   <text class="flex-1 txt">关注公众号，随时接收最新信息</text>
   <view class="btn2">去关注</view>

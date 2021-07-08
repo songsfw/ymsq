@@ -3,6 +3,8 @@ page{background: #F6F6F6;overflow-x: hidden;}
 .navBarWrap.transparent .title{display: block !important;color: #222;}
 .banner-bg{position: absolute;width: 170%;
     left: -32%;top:0;height:350rpx;z-index: -1;overflow:hidden;background:linear-gradient(168deg, #FFEACC 0%, #C1996B 100%);border-radius: 0 0 50% 50%;}
+.main{    position: relative;
+    z-index: 1;}
 .card{margin:20rpx;background: #fff;font-size: 14px;border-radius: 8rpx;padding:12rpx 20rpx}
 .inputxt{position: relative;}
 .inputxt textarea{width: 100%;padding: 20rpx;box-sizing: border-box; background-color: #F6F6F6;height: 280rpx;border-radius: 8rpx;}
