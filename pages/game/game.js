@@ -10,8 +10,40 @@ Page({
     gameResult:0
   },
   
-  onShow: function () {
+  async onShow () {
+    let userInfo = wx.getStorageSync('userInfo')
+    let addressInfo = wx.getStorageSync("addressInfo")
+    let loginInfo = null
+    if(!userInfo || !addressInfo){
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+    }
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];
+    let options = currPage.options
+    let lottery_id = options.lotteryid || 4;
+
+    let data = {
+      lottery_id:lottery_id
+    }
+    wx.showLoading({mask:true,title:"加载游戏模块"})
+    api.getGameInfo(data).then(res=>{
+      wx.hideLoading()
+      console.log(res);
+      let info = res['lottery-info']
+      this.setData({
+        rule:info.rules,
+        paytype:info.condition_payment_type,
+        detail:info.detail_arr,
+        payment:info.condition_payment_val,
+        proList:res.meal,
+        gameInfo:res.user
+      })
+    })
     
+    this.setData({
+      lottery_id:lottery_id
+    })
   },
   toPro(e) {
     let url = e.currentTarget.dataset.url,type = e.currentTarget.dataset.type;
@@ -27,7 +59,7 @@ Page({
   },
   toIndex(){
     wx.switchTab({
-      url: "/pages/index/index"
+      url: "/pages/proList/proList"
     })
   },
   close(){
@@ -36,8 +68,6 @@ Page({
     })
   },
   start:function(){
-    clearTimeout(timer)
-    clearTimeout(timer2)
     let popConfig =null
     let {start,isGrabbing}=this.data
     let data = {
@@ -148,42 +178,41 @@ Page({
       isGrabbing:true,
     })
   },
-  async onLoad (options) {
-    let userInfo = wx.getStorageSync('userInfo')
-    let addressInfo = wx.getStorageSync("addressInfo")
-    let loginInfo = null
-    if(!userInfo || !addressInfo){
-      loginInfo = await app.wxLogin()
-      await app.getAddress(loginInfo)
-    }
+  onLoad (options) {
+    // let userInfo = wx.getStorageSync('userInfo')
+    // let addressInfo = wx.getStorageSync("addressInfo")
+    // let loginInfo = null
+    // if(!userInfo || !addressInfo){
+    //   loginInfo = await app.wxLogin()
+    //   await app.getAddress(loginInfo)
+    // }
 
-    let lottery_id = options.lotteryid || 4;
+    // let lottery_id = options.lotteryid || 4;
 
-    let data = {
-      lottery_id:lottery_id
-    }
-    wx.showLoading({mask:true,title:"加载游戏模块"})
-    api.getGameInfo(data).then(res=>{
-      wx.hideLoading()
-      console.log(res);
-      let info = res['lottery-info']
-      this.setData({
-        rule:info.rules,
-        paytype:info.condition_payment_type,
-        detail:info.detail_arr,
-        payment:info.condition_payment_val,
-        proList:res.meal,
-        gameInfo:res.user
-      })
-    })
+    // let data = {
+    //   lottery_id:lottery_id
+    // }
+    // wx.showLoading({mask:true,title:"加载游戏模块"})
+    // api.getGameInfo(data).then(res=>{
+    //   wx.hideLoading()
+    //   console.log(res);
+    //   let info = res['lottery-info']
+    //   this.setData({
+    //     rule:info.rules,
+    //     paytype:info.condition_payment_type,
+    //     detail:info.detail_arr,
+    //     payment:info.condition_payment_val,
+    //     proList:res.meal,
+    //     gameInfo:res.user
+    //   })
+    // })
     
-    this.setData({
-      lottery_id:lottery_id
-    })
+    // this.setData({
+    //   lottery_id:lottery_id
+    // })
   },
-  onUnload: function (e) {
-    
-  },
+  onUnload(){
+  }
   /**
    * 用户点击右上角分享
    */

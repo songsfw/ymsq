@@ -12,20 +12,20 @@ Page({
     noMoreData:false
   },
 
-  onPageScroll: util.throttle(function (e) {
-    //debounce()
-    var scrollTop = e.scrollTop
+  // onPageScroll: util.throttle(function (e) {
+  //   //debounce()
+  //   var scrollTop = e.scrollTop
 
-    if (scrollTop > 0) {
-      this.setData({
-        isFold: true
-      })
-    } else {
-      this.setData({
-        isFold: false
-      })
-    }
-  },100),
+  //   if (scrollTop > 0) {
+  //     this.setData({
+  //       isFold: true
+  //     })
+  //   } else {
+  //     this.setData({
+  //       isFold: false
+  //     })
+  //   }
+  // },100),
   getGiftList(){
     wx.showLoading({mask:true,title:"加载中..."})
     let noMoreData = false
@@ -38,15 +38,19 @@ Page({
       console.log(res);
       wx.hideLoading()
       let total_page = res.total_page
-      if(page==total_page+1){
+      if(page==total_page){
         noMoreData=true
       }
       this.setData({
+        total_page,
         ['list[' + (page - 1) + ']']: res.detail,
         noMoreData
       })
       
     })
+  },
+  lower(){
+    this.nextPage()
   },
   /**
    * 生命周期函数--监听页面加载

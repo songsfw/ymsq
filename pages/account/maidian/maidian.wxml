@@ -4,7 +4,7 @@
   <image src="http://api.withwheat.com/img/mai-bg.png" mode="widthFix"></image>
 </view>
 <view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
-  <scroll-view scroll-y="true" class="contain">
+  <scroll-view scroll-y="true" class="contain" bindscrolltolower="lower">
     <view class="info">
       <view class="tit">我的麦点</view>
       <view class="score">{{point}}</view>

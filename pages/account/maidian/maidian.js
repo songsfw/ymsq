@@ -43,7 +43,7 @@ Page({
     })
     this.getPoint()
   },
-  onReachBottom: function () {
+  lower: function () {
     if(this.data.noMoreData){
       return false
     }
