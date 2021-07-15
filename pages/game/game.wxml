@@ -28,7 +28,7 @@
             <view class="endbtn" hover-class="btn-hover" bind:tap="grab"><image src="../../image/grab-btn.png"></image></view>
         </view>
         <view class="count" wx:if="{{paytype==2}}">
-            <text class="grab-chance">我的麦点:<text>{{gameInfo.user_asset}}</text>　|　{{payment}}麦点/1次</text>
+            <text class="grab-chance">我的麦点:<text>{{gameInfo.user_asset}}</text>　　|　　{{payment}}麦点/1次</text>
         </view>
     </view>
     <view class="title" style="margin-top:-55rpx"><image src="https://api.withwheat.com/img/game-title0.png"></image></view>
@@ -90,11 +90,13 @@
             <image src="../../image/game-btn2.png"></image>
         </view>
         <view class="confirm-btn" wx:if="{{popConfig.status!=1}}" bind:tap="close">
-            <image src="../../image/game-btn1.png" style="width:139px" wx:if="{{popConfig.status==2}}"></image>
-            <image wx:else src="../../image/game-btn4.png"></image>
+            <image src="../../image/game-btn4.png"></image>
         </view>
         <view class=" confirm-btn" wx:if="{{popConfig.status==1}}" bind:tap="toIndex">
             <image src="../../image/game-btn3.png"></image>
+        </view>
+        <view class="confirm-btn" wx:if="{{popConfig.status==2}}" bind:tap="toCoupon">
+            <image src="../../image/game-btn5.png"></image>
         </view>
     </view>
   </view>

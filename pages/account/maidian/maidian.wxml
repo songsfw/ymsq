@@ -11,14 +11,16 @@
     </view>
     <view class="money-box">
       <view class="h3 flex-center"><text ></text>麦点明细<text ></text></view>
-      <block wx:if="{{pointList.length>0}}">
-        <view class="item flex"  wx:for="{{pointList}}">
-          <view class="">
-            <view class="tit">{{item.title}}</view>
-            <view class="date">{{item.create_time}}</view>
+      <block wx:if="{{list[0].length>0}}">
+        <block wx:for="{{list}}" wx:for-item="itemarr">
+          <view class="item flex" wx:for="{{itemarr}}">
+            <view class="">
+              <view class="tit">{{item.title}}</view>
+              <view class="date">{{item.create_time}}</view>
+            </view>
+            <view class="price">{{item.symbol}} {{item.score}}</view>
           </view>
-          <view class="price">{{item.symbol}} {{item.score}}</view>
-        </view>
+        </block>
       </block>
       <view class="loading nodata" wx:else>
         <view><image src="../../../image/no-data.png"></image></view>

@@ -38,7 +38,7 @@ Page({
       console.log(res);
       wx.hideLoading()
       let total_page = res.total_page
-      if(page==total_page){
+      if(total_page==0 || page==total_page){
         noMoreData=true
       }
       this.setData({
@@ -60,8 +60,10 @@ Page({
     let lottery_id = options.lotteryid || 4;
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
-    
+    let sysInfo = app.globalSystemInfo;
+    let fixedTop = sysInfo.navBarHeight;
     this.setData({
+      fixedTop,
       lottery_id:lottery_id,
       btmHolder:btmHolder||0
     })
@@ -119,9 +121,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.data.noMoreData) {
-      return false
-    }
-    this.getMoreData()
+    // if (this.data.noMoreData) {
+    //   return false
+    // }
+    // this.getMoreData()
   },
 })

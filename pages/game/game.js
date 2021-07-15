@@ -4,7 +4,7 @@ const api = require("../../utils/api");
 const app = getApp()
 
 var timer = null,timer2=null;
-let title="",text="",img="",status=0
+let title="",text="",img="",status=0,running=false
 Page({
   data: {
     gameResult:0
@@ -27,18 +27,35 @@ Page({
       lottery_id:lottery_id
     }
     wx.showLoading({mask:true,title:"加载游戏模块"})
+    running=false
     api.getGameInfo(data).then(res=>{
       wx.hideLoading()
       console.log(res);
+      if(!res){
+        wx.showModal({
+          content: '游戏模块加载失败，重试',
+          showCancel:false,
+          success (res) {
+            if (res.confirm) {
+              wx.switchTab({
+                url: "/pages/index/index"
+              })
+            }
+          }
+        })
+        return
+      }
       let info = res['lottery-info']
-      this.setData({
-        rule:info.rules,
-        paytype:info.condition_payment_type,
-        detail:info.detail_arr,
-        payment:info.condition_payment_val,
-        proList:res.meal,
-        gameInfo:res.user
-      })
+      if(info){
+        this.setData({
+          rule:info.rules,
+          paytype:info.condition_payment_type,
+          detail:info.detail_arr,
+          payment:info.condition_payment_val,
+          proList:res.meal,
+          gameInfo:res.user
+        })
+      }
     })
     
     this.setData({
@@ -62,10 +79,13 @@ Page({
       url: "/pages/proList/proList"
     })
   },
-  close(){
-    this.setData({
-      popShow:false
+  toCoupon(){
+    wx.navigateTo({
+      url: "/pages/user/coupon/coupon"
     })
+  },
+  close(){
+    this.initGame()
   },
   start:function(){
     let popConfig =null
@@ -73,10 +93,12 @@ Page({
     let data = {
       lottery_id:this.data.lottery_id
     }
-    if(start||isGrabbing){
-      console.log('抓取中');
+
+    if(start||isGrabbing || running){
+      wx.showToast({icon:"none",title:"游戏进行中..."})
       return
     }
+    running=true
     api.startGame(data).then(res=>{
       console.log(res);
       if(res.status && res.status!=0){
@@ -89,7 +111,7 @@ Page({
           popShow:true,
           popConfig
         })
-       
+        running=false
       }else{
         this.setData({
           start:true,
@@ -102,6 +124,7 @@ Page({
     
   },
   initGame(){
+    running=false
     this.setData({
       gameResult:0,
       start:false,
@@ -114,9 +137,11 @@ Page({
     let data = {
       lottery_id:this.data.lottery_id
     }
+    wx.showLoading({mask:true})
     let popConfig =null
     
       api.getGift(data).then(res=>{
+        wx.hideLoading()
         console.log(res);
         let lotteryInfo = res['lottery-info']
         if(lotteryInfo.type=="locking"){
@@ -149,7 +174,9 @@ Page({
             popShow:true
           })
         }, 800);
+        running=false
         this.setData({
+          //start:false,
           lotteryInfo:lotteryInfo,
           gameResult:lotteryInfo.type,
           gameInfo:res.user,
@@ -161,7 +188,7 @@ Page({
   grab: function () {
     let {start,isGrabbing}=this.data
     if(isGrabbing){
-      console.log('抓取中');
+      wx.showToast({icon:"none",title:"抓取中，请稍后"})
       return
     }
     if(!start){

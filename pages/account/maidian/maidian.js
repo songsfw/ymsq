@@ -23,14 +23,16 @@ Page({
       if(!res){
         this.setData({
           noMoreData: true,
-          pointList:[]
+          list:[]
         })
         return false
       }
       if(res){
+        let noMoreData = res.list.length==0?true:false
         this.setData({
+          noMoreData,
           point:res.point,
-          pointList:res.list
+          ['list[' + (this.data.page - 1) + ']']: res.list,
         })
       }
       

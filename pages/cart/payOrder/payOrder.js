@@ -912,7 +912,7 @@ Page({
     console.log('---支付参数---')
     console.log(data)
     console.log('------')
-    wx.showLoading({mask:true,title:'支付中,请勿重复点击'})
+    wx.showLoading({mask:true,title:'支付中...'})
 
     api.submmitOrder(data).then(res => {
       wx.hideLoading();
