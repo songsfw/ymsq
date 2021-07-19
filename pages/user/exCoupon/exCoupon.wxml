@@ -1,0 +1,15 @@
+<!-- pages/cashcharge/cashcharge.wxml -->
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
+<view class="card">
+  <navigator class="notice" hover-class="none" url="/pages/user/exRule/exRule"><text class="iconfont icon-notice2"></text> 查看兑换规则</navigator>
+  <view class="card-wp">
+    <image src="https://api-beta.withwheat.com/img/coupon0719.jpg" />
+  </view>
+</view>
+
+<view class="inputxt">
+  <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入兑换码" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
+</view>
+<view class="exChange" bindtap="exChange">兑换</view>
+

@@ -98,6 +98,10 @@
         <view class="iconAll wechat"></view>
         <text>加入群聊</text>
       </view>
+      <navigator hover-class="none" url="/pages/user/coupon/coupon" >
+        <view class="iconAll user-coupon"></view>
+        <text>兑换码</text>
+      </navigator>
     </view>
   </view>
   <!-- <view class="logo">

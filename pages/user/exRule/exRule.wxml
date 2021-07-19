@@ -1,0 +1,17 @@
+<!-- pages/cashcharge/cashcharge.wxml -->
+<view class="card">
+  <view class="h3"><text >兑换说明</text></view>
+  <view class="txt">1、兑换码为一串数字和字母的组合，在“原麦山丘”
+小程序-点击“我的-我的服务-兑换码”，输入兑换码
+后即可兑换原麦山丘优惠券。</view>
+  <view class="txt">2、成功兑换后的优惠券，可前往“我的-优惠券”
+进行查看。</view>
+  <view class="h3"><text >兑换有效期</text></view>
+  <view class="txt">1、若兑换码所兑换的优惠券具有兑换有效期，有效
+期过期后将无法兑换，请在领取后尽快兑换使用。兑
+换码有效期可咨询发码方或客服。</view>
+  <view class="h3"><text >使用说明</text></view>
+  <view class="txt">1、同一兑换码仅可兑换一张优惠券，成功兑换后兑
+换码立即失效，不可重复兑换。</view>
+  <view class="txt">2、兑换码仅限兑换优惠券，不可兑换现金或找零</view>
+</view>

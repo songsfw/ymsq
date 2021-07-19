@@ -56,6 +56,7 @@ image{width: 100%;height: 100%}
 .user-service{background-position:0 -123px;}
 .user-area{background-position:0 -248px;}
 .user-store{background-position:0 -275px;}
+.user-coupon{background-position:-35px -124px;}
 .logo{margin:0rpx auto;padding:110rpx;}
 .wechat{background-position:-34px -98px;}
 

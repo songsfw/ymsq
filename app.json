@@ -33,6 +33,8 @@
     "pages/commitList/commitList",
     "pages/share/share",
     "pages/game/game",
+    "pages/user/exCoupon/exCoupon",
+    "pages/user/exRule/exRule",
     "pages/giftList/giftList"
   ],
   
