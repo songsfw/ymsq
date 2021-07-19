@@ -156,7 +156,7 @@ Page({
           status=0
         }else{
           title='恭喜您'
-          text="中奖啦！\n运气爆棚，获得了一下奖品"
+          text="中奖啦！\n运气爆棚，获得了以下奖品"
           img=lotteryInfo.image
           status=1
         }
