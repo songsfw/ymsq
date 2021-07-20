@@ -417,7 +417,7 @@ const startGame = (params) => {
 
 const exChangeCoupon = (params) => {
   //兑换优惠券
-  return POST(baseUrl + "/user-promotion/convert-code", params).then(res => returnData(res));
+  return POST(baseUrl + "/user-promotion/convert-code", params).then(res => returnData(res,true));
 }
 
 module.exports = {

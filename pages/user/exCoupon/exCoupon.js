@@ -7,9 +7,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    unuse:false,
+    result:""
   },
   inputRes(e){
+    if( e.detail.value.length>0 ){
+      this.setData({
+        unuse:true
+      })
+    }else{
+      this.setData({
+        tips:"",
+        unuse:false
+      })
+    }
     this.setData({
       result: e.detail.value
     })
@@ -37,7 +48,10 @@ Page({
         showLoading:false
       })
       console.log(res)
-      if(!res){
+      if(res.status&&res.status!="200"){
+        this.setData({
+          tips:res.message
+        })
         return
       }
       wx.showModal({

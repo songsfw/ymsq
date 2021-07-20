@@ -3,5 +3,5 @@ page{background-color: #F6F6F6;}
 .h3{position: relative; float: left; color:#000;font-size: 15px;margin-bottom: 12px;margin-top: 20px;font-weight: bold;}
 .h3 text{position: relative;z-index: 1;padding-bottom: 4px;}
 .txt{margin-bottom: 10px;font-size: 14px;color: #333;clear: both;}
-.h3::after{content: "";position: absolute;left: 50%;bottom: 0;transform: translateX(-50%);height:5px;background-color: #C1996B;width: 96%;z-index:0;}
+.h3::after{content: "";position: absolute;left: 50%;bottom: 1px;transform: translateX(-50%);height:5px;background-color: #C1996B;width: 88%;z-index:0;}
 .card .h3:first-child{margin-top: 0;}
