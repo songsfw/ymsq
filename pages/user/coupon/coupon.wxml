@@ -229,3 +229,9 @@
     <view wx:if="{{pageInfo.expired.noMoreData}}" class="more-btn">我可是有底线的</view>
   </block>
 </view>
+
+<view class="ios-padding option-wp">
+  <navigator class="" url="/pages/user/exCoupon/exCoupon">兑换码</navigator>
+</view>
+
+<view style="height:{{50+btmHolder}}px"></view>

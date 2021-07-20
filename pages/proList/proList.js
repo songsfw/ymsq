@@ -226,7 +226,6 @@ Page({
   addCart: function (e) {
     let proId = e.currentTarget.dataset.id,
       name = e.currentTarget.dataset.name,
-      img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
       proInPage = e.currentTarget.dataset.idx, //当前商品所在页
       itemIdx = e.currentTarget.dataset.itemidx,
@@ -248,14 +247,10 @@ Page({
       currentTab,
       city_id,
     } = this.data
-    console.log(this.data.showStock);
-    console.log(this.data.showStock[currentTab][proId]);
 
     if (this.data.showStock[currentTab][proId] == 0) {
       return
     }
-
-
     // console.log(proId, proInPage, itemIdx,currentTab,'typeMealIdSpuId',typeMealIdSpuId);
     //存储真实库存
     if (typeof (trueStock[typeMealIdSpuId]) == 'undefined') {
@@ -772,7 +767,6 @@ Page({
   showPop(e) {
     wx.showLoading({mask:true})
     let proId = e.currentTarget.dataset.id,
-      img = e.currentTarget.dataset.img,
       typeMealIdSpuId = e.currentTarget.dataset.typemealidspuid,
       proInPage = e.currentTarget.dataset.idx, //当前商品所在页
       itemIdx = e.currentTarget.dataset.itemidx,

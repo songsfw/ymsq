@@ -27,7 +27,7 @@
       <view class="tit">优惠活动</view>
       <view class="flex-1 flex-center" style="justify-content: space-between;">
         <view class="desc flex-center txt" style="color:#222">
-          <text class="blue-tag">免邮</text>
+          <text class="blue-tag" wx:if="{{special_tips[0].title}}">免邮</text>
           <view class="text-overflow">
 {{special_tips[0].title}} <block wx:if="{{proInfo.activity_title}}">{{special_tips[1].title}}</block></view>
         </view>

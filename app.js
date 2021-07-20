@@ -1,10 +1,10 @@
 //app.js
 import 'umtrack-wx';
-// var fundebug = require('utils/fundebug.1.3.1.min.js');
-// fundebug.init(
-// {
-//     apikey : '05bb7bb968530f0b763cd18f315a4b8e991b7fb61164fb86e59a4da888c785f4'
-// })
+var fundebug = require('utils/fundebug.1.3.1.min.js');
+fundebug.init(
+{
+    apikey : '05bb7bb968530f0b763cd18f315a4b8e991b7fb61164fb86e59a4da888c785f4'
+})
 const api = require('utils/api.js')
 const util = require('utils/util.js')
 let local=null

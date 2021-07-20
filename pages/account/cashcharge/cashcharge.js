@@ -40,16 +40,16 @@ Page({
       }
     })
   },
-  inputPwd:util.debounce(function(e){
+  inputPwd(e){
     this.setData({
       pwd: e.detail.value
     })
-  }),
-  inputRes:util.debounce(function(e){
+  },
+  inputRes(e){
     this.setData({
       result: e.detail.value
     })
-  }),
+  },
   bindPhoneSucess(){
     this.chashCharge()
   },

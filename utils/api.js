@@ -415,6 +415,11 @@ const startGame = (params) => {
   return POST(baseUrl + "/lottery/before-take-out", params).then(res => returnData(res,true));
 }
 
+const exChangeCoupon = (params) => {
+  //兑换优惠券
+  return POST(baseUrl + "/user-promotion/convert-code", params).then(res => returnData(res,true));
+}
+
 module.exports = {
   getIndexInfo:getIndexInfo,
   getUserLocation:getUserLocation,
@@ -486,5 +491,6 @@ module.exports = {
   getGameInfo,
   getGift,
   getGiftList,
-  startGame
+  startGame,
+  exChangeCoupon
 }

@@ -29,13 +29,13 @@ view{font-size:12px}
 .mask{position: fixed;left: 0;top: 0;right:0;bottom: 0;background: rgba(0,0,0,.3);z-index:10}
 
 .menu{
-    padding: 40rpx 50rpx 20rpx 50rpx;
+    padding: 30rpx 50rpx 18rpx 50rpx;
     box-sizing: border-box;
-    background-color: #fff;}
+    background-color: #fff;justify-content: space-around;}
 .menu>view{margin-right:56rpx ;flex-shrink: 0;}
 .menu>view:last-child{margin-right: 0;}
-.menu .pic{width:120rpx;height: 120rpx;overflow: hidden;border-radius: 50%;padding: 10rpx;box-sizing: border-box;border:1rpx solid #f0f0f0;border-left-color:#C1996B;border-right-color:#C1996B;transform: rotate(45deg);}
-.menu .text{margin-top: 22rpx; text-align: center;font-size: 14px;}
+.menu .pic{width:112rpx;height:112rpx;overflow: hidden;border-radius: 50%;padding: 10rpx;box-sizing: border-box;border:1rpx solid #f0f0f0;border-left-color:#C1996B;border-right-color:#C1996B;transform: rotate(45deg);}
+.menu .text{margin-top: 18rpx; text-align: center;font-size: 14px;}
 .menu view image{ border-radius:50%;transform: rotate(-45deg);}
 
 .pro-block .title{position: relative;justify-content: space-between;align-items: center;margin-bottom: 20rpx;}

@@ -48,7 +48,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    
+    let btmHolder = wx.getStorageSync('btmHolder')
+    this.setData({
+      btmHolder: btmHolder || 0
+    })
   },
   switchTab: function (e) {
     var currentId = e.currentTarget.dataset.tabid

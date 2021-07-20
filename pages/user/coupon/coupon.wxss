@@ -57,3 +57,4 @@ page{background: #F6F6F6;padding-top: 48px;}
 .card-code-img{margin-top: 20rpx;}
 .card-code-img canvas{width: 100%;}
 .card_no{text-align: center;color: #999;margin: 40rpx 0 20rpx 0;}
+.option-wp{height: 50px;text-align: center;font-size: 15px;color: #333;line-height: 50px;box-shadow: 0px -10px 18px 0px rgba(0, 0, 0, 0.04);background: #fff;}
