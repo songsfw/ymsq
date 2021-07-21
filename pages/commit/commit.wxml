@@ -38,7 +38,7 @@
       <view class="card">
         <view class="item flex">
           <view class="flex-center" style="overflow:hidden">
-            <image src="{{item.image_url}}" mode="aspectFill"></image>
+            <image src="{{item.image_url2}}" mode="aspectFill"></image>
             <text class="name text-overflow">{{item.name}}</text>
           </view>
           <view class="flex">

@@ -83,7 +83,7 @@
               <view class="tag text-overflow" wx:if="{{item.is_fittings==0}}">
                 <text wx:if="{{item.size}}">{{item.size}}</text>
                 <text wx:if="{{item.edible}}">{{item.edible}}</text>
-                <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+                <!-- <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text> -->
               </view>
               <view class="price flex" wx:if="{{item.has_stock!=0}}">
                 <view class="num">￥<text>{{item.sku_price}}</text></view>

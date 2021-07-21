@@ -61,6 +61,7 @@ Component({
           let mobile = res.mobile
           userInfo.phone=mobile
           userInfo.is_mobile=1
+          app.globalData.is_mobile=1
           this.setData({
             popShow:false
           })
@@ -147,6 +148,7 @@ Component({
         if(res){
           userInfo.phone=mobile
           userInfo.is_mobile=1
+          app.globalData.is_mobile=1
           this.setData({
             popShow:false
           })

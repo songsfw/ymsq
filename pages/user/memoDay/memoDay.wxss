@@ -36,7 +36,7 @@ picker-view view{color: #999;transition: font-size linear .05s;}
 .date-mask{position: fixed;left: 0;top: 0;width: 100%;height: 100%;background:rgba(0,0,0,.8);z-index: 2;opacity: 0.8;}
 .rule-btn .iconfont{margin-right: 5px;}
 .rule-btn{width: 50px;flex-shrink: 0;justify-content: flex-end;}
-.item .tip{margin-left: 20rpx;color: #999;}
+.item .tip{margin-left: 20rpx;color: #000;font-weight: bold;}
 .item>view{position: relative;z-index: 2;}
 .item .bg{position: absolute;left: 0;top: 0;display: none;width: 702rpx;height: 252rpx;}
 .item.showbg .bg{display: block;}

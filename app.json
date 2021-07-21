@@ -67,7 +67,7 @@
     }]
   },
   "networkTimeout": {
-    "request": 10000
+    "request": 20000
   },
   "window": {
     "backgroundTextStyle": "dark",

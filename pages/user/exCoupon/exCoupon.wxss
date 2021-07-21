@@ -1,7 +1,7 @@
 @import "../../../template/loading/loading.wxss";
 page{border-top: 1px solid #F6F6F6;}
 .card{text-align: center;padding:30rpx 0 90rpx 0;background-color: #F6F6F6;}
-.card .card-wp{position: relative; width: 548rpx;height: 232rpx;margin: 0 auto;overflow: hidden;}
+.card .card-wp{position: relative; width: 572rpx;height: 256rpx;margin: 0 auto;overflow: hidden;}
 
 .inputxt{width: 650rpx;
     height: 92rpx;

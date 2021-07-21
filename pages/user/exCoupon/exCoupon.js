@@ -27,7 +27,10 @@ Page({
   },
   exChange:util.debounce(function(){
     let {result}=this.data
+    let pages = getCurrentPages();
+    var prePage = pages[pages.length - 2];
     
+    console.log(pages);
     if(result==""){
       wx.showToast({
         title: '请输入兑换码',
@@ -54,9 +57,10 @@ Page({
         })
         return
       }
+      let content =  `您成功兑换一张${res.name},可在【我的-优惠券】查看`
       wx.showModal({
         title: '兑换成功',
-        content: res.desc2,
+        content: content,
         confirmText:"去使用",
         cancelText:"查看",
         success (res) {
@@ -65,9 +69,16 @@ Page({
               url:"/pages/proList/proList"
             })
           } else if (res.cancel) {
-            wx.navigateBack({
-              delta: 1
-            })
+            if(prePage.route=="pages/user/user"){
+              wx.redirectTo({
+                url: '/pages/user/coupon/coupon'
+              })
+            }else{
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+
           }
         }
       })
