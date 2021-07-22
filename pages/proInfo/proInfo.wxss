@@ -52,7 +52,7 @@ page{background:#F6F6F6;height: auto;}
 .option .home,
 .option .cart{position: relative; width:120rpx;text-align: center;flex-shrink: 0;color: #333;}
 .option .btn{width: 210rpx;height: 78rpx;line-height: 80rpx;color: #fff;text-align: center;font-weight: 500;border-radius: 8rpx;}
-.option .add-btn{margin-right: 20rpx; background: rgb(255,246,233);background: #333;}
+.option .add-btn{margin-right: 20rpx;background: #333;}
 .option .saleout{background: rgb(255,246,233);color: #AC7D46;border-radius:8rpx;}
 .option .buy-btn{margin-right: 20rpx;background: #C1996B;color: #fff;}
 .option .cart .num{position: absolute;
