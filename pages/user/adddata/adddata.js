@@ -45,7 +45,7 @@ Page({
   },
   addAddress(){
     console.log(this.data.address)
-    let {id,address, address_detail, mobile, name,location,district,province,title,is_ziti,city_id} = this.data.address
+    let {id,address, address_detail, mobile, name,location,district,province,title,city_id} = this.data.address
     let is_default = this.data.is_default
     console.log(this.data)
     let source = this.data.source
@@ -110,7 +110,6 @@ Page({
       address:newAdd,
       address_detail:address_detail,
       is_default:is_default,
-      // city_name:city_name,
       mobile:mobile,
       title:title,
     }
@@ -128,7 +127,6 @@ Page({
             address: address,
             id: id,
             city_id: res.city_id,
-            // city_name: city_name,
             address_detail:address_detail,
             is_default:is_default,
             mobile:mobile,
@@ -172,7 +170,6 @@ Page({
             address: address,
             id: res.address_id,
             city_id: res.city_id,
-            //city_name: city_name,
             address_detail:address_detail,
             is_default:is_default,
             mobile:mobile,

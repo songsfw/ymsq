@@ -411,7 +411,7 @@ const getGiftList = (params) => {
 }
 
 const startGame = (params) => {
-  //中奖记录
+  //校验游戏开始
   return POST(baseUrl + "/lottery/before-take-out", params).then(res => returnData(res,true));
 }
 

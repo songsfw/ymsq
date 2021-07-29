@@ -302,17 +302,17 @@ Page({
         })
         return
       }
-      
-      // detail.forEach(item=>{
-      //   item.stat=1
-      // })
-      console.log(detail);
-      tags = res.tags
 
+      tags = res.tags || {
+        1: ["口味差", "分量不足", "包装不好", "环境差", "配送慢"],
+        2: ["口味一般", "分量一般", "包装普通", "环境一般", "配送一般"],
+        3: ["口味一般", "分量一般", "包装普通", "环境一般", "配送一般"],
+        4: ["味道赞", "分量足", "包装精美", "环境好", "配送快"],
+        5: ["味道赞", "分量足", "包装精美", "环境好", "配送快"]
+      }
       tags['1'].forEach(item=>{
         selectTagArr.push(0)
       })
-      console.log(selectTagArr);
       delivery_status=res.orderReader.delivery_status
       old_status=res.orderReader.old_status
       this.setData({

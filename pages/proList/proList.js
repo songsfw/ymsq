@@ -878,8 +878,10 @@ Page({
       })
       return
     }
+    wx.showLoading({mask:true})
     totalNum = totalNum + skuNum
     api.setChart(data).then(res => {
+      wx.hideLoading()
       if (res) {
         util.setTabBarBadge(totalNum)
         wx.setStorageSync('total_num', totalNum)

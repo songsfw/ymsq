@@ -1,6 +1,6 @@
 import {md5} from './md5';
 
-let ENV = 'pro'  //环境 pro:正式  dev:测试
+let ENV = 'dev'  //环境 pro:正式  dev:测试
 var WITHWHEAT_APPID = "withwheat-10000";
 var WITHWHEAT_SECRET = 'b8158eb67da3211012b8ebd0fe76fc79'
 var platform = ENV == 'pro' ? 'xcx' : 'wxxcx'
@@ -31,7 +31,7 @@ var platform = ENV == 'pro' ? 'xcx' : 'wxxcx'
 const request = (method,url,data,needToken=true)=>{
   var userInfo = wx.getStorageSync("userInfo")
   var openid = userInfo && JSON.parse(userInfo).openid
-  let timestamp = (new Date()).valueOf()
+  let timestamp = new Date().valueOf()
   let queryString = "";
   let defData = {
     app_id:WITHWHEAT_APPID,

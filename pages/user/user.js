@@ -183,6 +183,7 @@ Page({
     wx.showLoading({mask:true})
     api.getUserCenter().then(res=>{
       console.log(res);
+      wx.hideLoading()
       if(res.user.subscribe){
         this.setData({
           popShow:false
@@ -193,20 +194,21 @@ Page({
         order_unpaid:parseInt(res.user.order_unpaid),
         order_dispatching:parseInt(res.user.order_dispatching)
       })
-      wx.hideLoading()
+      
     })
   },
   /**
    * 生命周期函数--监听页面显示
    */
   async onShow () {
-    wx.showLoading({mask:true})
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
     let loginInfo = null,isLiving=null
     if(!userInfo || !addressInfo){
+      wx.showLoading({mask:true})
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
+      wx.hideLoading()
     }
     
     try {
@@ -216,9 +218,8 @@ Page({
     }
     console.log(isLiving);
     userInfo = JSON.parse(wx.getStorageSync('userInfo'))
-    wx.hideLoading()
+    
     this.setData({
-      
       userInfo
     })
     this.getUserCenter();

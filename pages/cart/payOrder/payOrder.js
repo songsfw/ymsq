@@ -915,9 +915,9 @@ Page({
     wx.showLoading({mask:true,title:'支付中...'})
 
     api.submmitOrder(data).then(res => {
-      wx.hideLoading();
       console.log(res)
       if (!res) {
+        wx.hideLoading();
         return
       }
       
@@ -926,6 +926,7 @@ Page({
           phoneStat: 1,
           showPhonePanel: true
         })
+        wx.hideLoading();
         return
       }
       let order_code = res.orderCode
@@ -949,6 +950,7 @@ Page({
           success(payres) {
             console.log(payres);
             wx.showToast({
+              mask:true,
               title: '支付成功',
               icon: 'none',
               duration: 1000,
@@ -956,7 +958,7 @@ Page({
                 wx.redirectTo({
                   url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
                 })
-                
+                wx.hideLoading();
                 wx.reportAnalytics('payinfo', {
                   paytype: "微信支付",
                   cart_type:data.cart_type==1?"面包":"蛋糕",
@@ -974,19 +976,22 @@ Page({
           },
           fail(err) {
             console.log(err)
+            // wx.hideLoading()
             wx.showToast({
               title: "支付失败",
               icon: 'none',
               duration: 2000
             })
-            wx.hideLoading()
             wx.redirectTo({
               url: '/pages/user/order/order?type=1'
             })
+            
           }
         })
       } else {
+        // wx.hideLoading();
         wx.showToast({
+          mask:true,
           icon: "success",
           title: "支付成功"
         })
@@ -1005,8 +1010,9 @@ Page({
           user_id:that.data.userInfo.user_id
         });
       }
+      
     })
-  },500,true),
+  },500,false),
   inputCard: util.debounce(function (e) {
     console.log('inputCard')
     let temp = e.detail.value
