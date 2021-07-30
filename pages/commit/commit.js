@@ -391,10 +391,7 @@ Page({
       return {
         title:'恭喜您获得红包',
         path:"/pages/share/share?orderCode="+this.data.orderCode,
-        imageUrl:"https://api.withwheat.com/img/hongbao.jpg",
-        complate:function(){
-          console.log("111");
-        }
+        imageUrl:"https://api.withwheat.com/img/hongbao.jpg"
       }
     }
     if(res.from==='menu'){

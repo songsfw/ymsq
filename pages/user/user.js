@@ -161,7 +161,7 @@ Page({
         console.log(res);
         wx.navigateTo({
           url:"/pages/user/userInfo/userInfo"
-        }) 
+        })
       })
     }else{
       wx.navigateTo({
