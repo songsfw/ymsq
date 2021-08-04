@@ -64,6 +64,7 @@ Page({
     wx.showLoading()
     if(timer){
       clearTimeout(timer)
+      timer = null
     }
     api.getVipCard().then(res=>{
       wx.hideLoading()
@@ -119,6 +120,7 @@ Page({
   onHide: function () {
     if(timer){
       clearTimeout(timer)
+      timer = null
     }
     this.setData({
       canInterval: false
@@ -131,6 +133,7 @@ Page({
   onUnload: function () {
     if(timer){
       clearTimeout(timer)
+      timer=null
     }
     this.setData({
       canInterval: false

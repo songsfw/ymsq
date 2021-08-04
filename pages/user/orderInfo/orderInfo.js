@@ -158,7 +158,6 @@ Page({
     }
     api.payOrder(data).then(res=>{
       wx.hideLoading()
-      console.log(res);
       let jsApiParameters = res.jsApiParameters
       let {timeStamp, nonceStr, signType, paySign} = jsApiParameters
       wx.requestPayment({
