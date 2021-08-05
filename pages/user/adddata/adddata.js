@@ -140,10 +140,7 @@ Page({
             wx.setStorageSync("addressInfo", JSON.stringify(addressInfo))
             var pages = getCurrentPages();
             var prevPage = pages[pages.length - 3];//上一个页面
-            //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-            // prevPage.setData({
-            //   changedId: id
-            // })
+            //直接调用上一个页面的方法，把数据存到上一个页面中去
             prevPage.hasChangeAddress&&prevPage.hasChangeAddress()
             wx.navigateBack({
               delta: 2
@@ -183,9 +180,6 @@ Page({
             var pages = getCurrentPages();
             var prevPage = pages[pages.length - 3];//上一个页面
             //直接调用上一个页面的更改订单结算地址显示
-            // prevPage.setData({
-            //   changedId: ''
-            // })
             prevPage.hasChangeAddress&&prevPage.hasChangeAddress()
             wx.navigateBack({
               delta: 2

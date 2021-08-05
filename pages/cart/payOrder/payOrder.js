@@ -791,7 +791,7 @@ Page({
       pay_style
     } = this.data
     let balance_price = useBalance == "1" ? balanceTxt : 0
-    if (!address.address_allow_delivery) {
+    if (!address.address_allow_delivery || !addressInfo.id) {
       wx.showToast({
         icon: "none",
         title: "请选择可配送地址"
@@ -1400,7 +1400,7 @@ Page({
       this.setData({
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
-        address_id: addressInfo.id || 0,
+        address_id: addressInfo.id,
         addressInfo: addressInfo,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,
@@ -1427,7 +1427,7 @@ Page({
         changedId: addressInfo.id,
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id || 0,
-        address_id: addressInfo.id || 0,
+        address_id: addressInfo.id,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,
         addressInfo: addressInfo,
@@ -1466,7 +1466,7 @@ Page({
         this.setData({
           is_ziti: addressInfo.is_ziti,
           city_id: addressInfo.city_id,
-          address_id: addressInfo.id || 0,
+          address_id: addressInfo.id,
           addressInfo: addressInfo,
           zitiName: addressInfo.name,
           zitiPhone: addressInfo.mobile,
@@ -1487,24 +1487,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // let pages = getCurrentPages();
-    // let currentPage = pages[pages.length - 1];
-    // let type = currentPage.options.type
-    // console.log(type);
-    // //用户地址列表
-    // let addressInfo = wx.getStorageSync("addressInfo")
-    // addressInfo = addressInfo && JSON.parse(addressInfo)
-    // if (addressInfo) {
-    //   this.setData({
-    //     type: type,
-    //     is_ziti: addressInfo.is_ziti,
-    //     city_id: addressInfo.city_id,
-    //     address_id: addressInfo.id,
-    //     addressInfo: addressInfo,
-    //     'address.is_address': true
-    //   })
-
-    // }
     //关注公众号
     if(this.data.changeFollow){
       this.hasChangeFollow()
