@@ -198,6 +198,7 @@ Page({
             id: res.data[i].id,
             addr: res.data[i].address,
             city: res.data[i].city,
+            category: res.data[i].category,
             district: res.data[i].district,
             latitude: res.data[i].location.lat,
             longitude: res.data[i].location.lng

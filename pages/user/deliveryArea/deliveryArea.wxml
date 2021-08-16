@@ -1,7 +1,7 @@
 <!-- pages/user/user.wxml -->
 <!-- <official-account style="width:100px;height:100px;position:fixed:left:0;top:0;z-index:100000"></official-account> -->
 <view class="hd">
-  <view class="menu flex">
+  <view class="menu flex" wx:if="{{citys}}">
     <block wx:for="{{menu}}" wx:for-index="index">
       <view bind:tap="switchTab" class="flex-1 {{currentTab==index ? 'on' : ''}}" data-tabid="{{index}}">{{menu[index]}}</view>
     </block>

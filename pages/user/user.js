@@ -155,6 +155,9 @@ Page({
   },
   toUserInfo(){
     let userInfo = this.data.userInfo
+    if(!userInfo){
+      return
+    }
     let is_authed = userInfo.is_authed
     if(is_authed==0){
       auth.getUserProfile(userInfo).then(res=>{

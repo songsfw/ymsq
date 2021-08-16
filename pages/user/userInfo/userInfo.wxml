@@ -1,4 +1,5 @@
 <!-- pages/user/user.wxml -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
 <view class="address">
   <view class="userInfo" bind:tap="toUserInfo">
     <view class="photo">
@@ -30,7 +31,7 @@
   <view class="inputxt">
     <text>手机号</text>
     <view class="item flex-center flex-1" bindtap="bindPhone">
-      <input class="flex-1" disabled placeholder="请绑定手机号" value="{{userInfo.phone}}" placeholder-style="color:#aaa;font-weight:normal" />
+      <input class="flex-1" disabled placeholder="请绑定手机号" value="{{filter.hidenPhone(userInfo.phone)}}" placeholder-style="color:#aaa;font-weight:normal" />
       <view class="btn2">{{userInfo.is_mobile==0?'手机绑定':'重新绑定'}}</view>
     </view>
   </view>

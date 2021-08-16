@@ -16,7 +16,7 @@
 </view>
 <view class="suggestion" wx:if="{{suggestion.length>0}}">
   <scroll-view scroll-y="true" class="suggestion-scroll">
-    <view class="item" wx:for="{{suggestion}}" wx:key="index" data-address="{{item.addr}}" data-prov="{{item.city}}" data-district="{{item.district}}" data-lng = "{{item.longitude}}" data-lat = "{{item.latitude}}" data-title="{{item.title}}" bindtap="selectAdd">
+    <view class="item" wx:for="{{suggestion}}" wx:key="index" wx:if="{{item.category!='地名地址:行政地名'}}" data-address="{{item.addr}}" data-prov="{{item.city}}" data-district="{{item.district}}" data-lng = "{{item.longitude}}" data-lat = "{{item.latitude}}" data-title="{{item.title}}" bindtap="selectAdd">
       <view class="tit" id="{{index}}">{{item.title}}</view>
       <view>{{item.addr}}</view>
     </view>

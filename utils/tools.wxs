@@ -49,6 +49,9 @@ function paseIntNum(num){
 }
 
 function hidenPhone(tel) {
+    if(!tel){
+        return
+    }
     var reg = getRegExp('^(\d{3})\d{4}(\d{4})$');
     return tel.replace(reg, "$1****$2");
 }

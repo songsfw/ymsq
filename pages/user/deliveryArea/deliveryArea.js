@@ -47,7 +47,6 @@ Page({
       cityId:cityId,
       currentTab: currentId
     })
-    console.log(cakePoints);
     if(breadPosints.length>0 && currentId==1){
       this.setData({
         polygons:breadPosints
@@ -117,8 +116,6 @@ Page({
     console.log(e)
     let type = e.type, moving = false
     if (type == 'end') {
-      console.log("111")
-      //this.getCenterLocation()
       moving = true
     } else {
       this.setData({
@@ -133,26 +130,9 @@ Page({
 
   getPoi: util.debounce(function (lat, lng) {
     let { city } = this.data, location = null
-    //let polygons = this.data.polygons
-    //let hasAdd
     if (lat && lng) {
       location = `${lat},${lng}`
-      //for(let i = 0;i<polygons.length;i++){
-        // if(this.IsPtInPoly(lat,lng,polygons[i].points)){
-        //   hasAdd = true
-        //   this.setData({
-        //     hasAdd:true
-        //   })
-        //   break
-        // }
-      //}
     }
-    // if(!hasAdd){
-    //   this.setData({
-    //     hasAdd:false
-    //   })
-    //   return
-    // }
     qqmapsdk.reverseGeocoder({
 
       location: location || '', //获取表单传入的位置坐标,不填默认当前位置
@@ -192,29 +172,22 @@ Page({
     })
   }, 1000, false),
   getCenterLocation: function () {
-    console.log("22")
     this.mapCtx.getCenterLocation({
       success: res => {
-        console.log(res.longitude)
-        console.log(res.latitude)
-        // this.setData({
-        //   localLat:res.latitude,
-        //   localLng:res.longitude
-        // })
         this.getPoi(res.latitude, res.longitude)
       }
     })
   },
   getCity() {
+    wx.showLoading({mask:true})
     api.deliveryList().then(res => {
-      console.log(res);
+      wx.hideLoading()
       if (res) {
         let city = res.data
         city['2'].forEach(item=>{
           let key = item.city_id
           cakePoints[key]=[]
         })
-        console.log(city);
         this.setData({
           city,
           citys:city['2']
@@ -292,7 +265,14 @@ Page({
       key: 'PFTBZ-RUYWU-I64VW-2A3XS-AVAS7-4YBUB'
     });
     this.getCity()
-    this.deliveryPoints()
+    if(breadPosints.length==0){
+      this.deliveryPoints()
+    }else{
+      this.setData({
+        polygons:breadPosints
+      })
+    }
+
     util.getLocation().then(res => {
       console.log(res)
       this.setData({

@@ -9,7 +9,7 @@
       <view class="user-top flex">
         <view class="photo" bind:tap="toUserInfo">
           <!-- <view class="iconfont icon-edit"></view> -->
-          <open-data type="userAvatarUrl" ></open-data>
+          <open-data type="userAvatarUrl"></open-data>
         </view>
         <view class="name flex-1">
           <open-data  bind:tap="toUserInfo" type="userNickName" class="tit"></open-data>
