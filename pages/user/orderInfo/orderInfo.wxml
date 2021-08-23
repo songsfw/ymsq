@@ -272,4 +272,4 @@
     <view class="share-remark-save">保存海报</view>
   </view>
 </view>
-<canvas canvas-id="photo" ></canvas>
+<canvas canvas-id="photo" class="canvas"></canvas>

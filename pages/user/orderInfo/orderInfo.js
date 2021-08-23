@@ -405,7 +405,9 @@ Page({
     
     //this.setBalancePrice()
   },
-  getLocation(orderCode){
+  getLocation(){
+    let {orderCode,userInfo} = this.data
+    let _this = this
     if(!this.mapCtx){
       this.mapCtx = wx.createMapContext('myMap')
     }
@@ -418,94 +420,98 @@ Page({
     let marker = null
     api.getDeliveryLocal(data).then(res=>{
       wx.hideLoading()
-      console.log(res.dispatcher);
-      wx.hideLoading()
       if(!res){
         return
       }
-      timer2 = setTimeout(() => {
-        this.getLocation(orderCode)
-      }, 10000);
-      
+      let orderInfo = res
+
       this.mapCtx.includePoints({
         padding: [70],
         points: [{
-          latitude: res.order.lat,
-          longitude: res.order.lng
+          latitude: orderInfo.order.lat,
+          longitude: orderInfo.order.lng
         }, {
-          latitude: res.dispatcher.lat,
-          longitude: res.dispatcher.lng
+          latitude: orderInfo.dispatcher.lat,
+          longitude: orderInfo.dispatcher.lng
         }]
       })
-      marker = [{id:1,width:55,height:67, latitude:res.order.lat,longitude:res.order.lng,iconPath:userIcon},{id:2,width:55,height:67,latitude:res.dispatcher.lat,longitude:res.dispatcher.lng,iconPath:sendicon}]
+
+      if(!this.data.showMap){
+        var ctx = wx.createCanvasContext('photo');
+        let promise1 = new Promise(function(resolve, reject) {
+          wx.getImageInfo({
+            src: userInfo.head_url,
+            success: function(pic) {
+              console.log("promise1", pic)
+              resolve(pic);
+            },
+            fail:function(err){
+              console.log(err);
+            }
+          })
+        });
+        let promise2 = new Promise(function(resolve, reject) {
+          wx.getImageInfo({
+            src: userIcon,
+            success: function(pic) {
+              console.log(pic)
+              resolve(pic);
+            }
+          })
+        });
+        Promise.all([
+          promise1, promise2
+        ]).then(pics => {
+          ctx.drawImage(pics[1].path, 0, 0, 55, 67)
+          ctx.save();
+          
+          ctx.beginPath(); //开始绘制
+          ctx.arc(28, 27, 22, 0, Math.PI * 2, false);
+
+          ctx.clip();//画好了圆 剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内 这也是我们要save上下文的原因
+          
+          ctx.drawImage(pics[0].path, 6, 5, 44, 44)
+          ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 还可以继续绘制
+
+          //主要就是计算好各个图文的位置
+          
+          //ctx.stroke()
+          ctx.draw(false, () => {
+            wx.canvasToTempFilePath({
+              x: 0,
+              y: 0,
+              width: 55,
+              height: 67,
+              destWidth: 55,
+              destHeight: 67,
+              canvasId: 'photo',
+              success: function(tempFile) {
+                marker = [{id:1,width:55,height:67, latitude:orderInfo.order.lat,longitude:orderInfo.order.lng,iconPath:tempFile.tempFilePath},{id:2,width:55,height:67,latitude:orderInfo.dispatcher.lat,longitude:orderInfo.dispatcher.lng,iconPath:sendicon}]
+                _this.setData({
+                  marker:marker,
+                })
+                wx.hideLoading()
+              },
+              fail: function(res) {
+                wx.hideLoading()
+              }
+            },_this)
+          })
+        })
+      }
+
       this.setData({
         orderlocal:res.order,
-        marker:marker,
         showMap:true
       })
-      if(!this.data.showMap){
-        this.drawPhoto()
-      }
+
+      timer2 = setTimeout(() => {
+        this.getLocation()
+      }, 10000);
     })
   },
   drawPhoto(){
-    var ctx = wx.createCanvasContext('photo');
-    let promise1 = new Promise(function(resolve, reject) {
-      wx.getImageInfo({
-        src: userInfo.head_url,
-        success: function(res) {
-          console.log("promise1", res)
-          resolve(res);
-        }
-      })
-    });
-    let promise2 = new Promise(function(resolve, reject) {
-      wx.getImageInfo({
-        src: userIcon,
-        success: function(res) {
-          console.log(res)
-          resolve(res);
-        }
-      })
-    });
-    Promise.all([
-      promise1, promise2
-    ]).then(res => {
-      ctx.save();
-      ctx.beginPath(); //开始绘制
-      ctx.arc(50 + 10, 50 + 10, 50, 0, Math.PI * 2, false);
-
-      ctx.clip();//画好了圆 剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内 这也是我们要save上下文的原因
     
-      ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 还可以继续绘制
-
-      //主要就是计算好各个图文的位置
-      let num = 100;
-      
-      ctx.drawImage(res[0].path, 0, 0, num, num)
-      ctx.drawImage(res[1].path, 0, 0, num, num)
-      ctx.stroke()
-      ctx.draw(false, () => {
-        wx.canvasToTempFilePath({
-          x: 0,
-          y: 0,
-          width: num,
-          height: num,
-          destWidth: num,
-          destHeight: num,
-          canvasId: 'photo',
-          success: function(res) {
-            _this.setData({
-              'marker[0].iconPath': res.tempFilePath
-            })
-            wx.hideLoading()
-          },
-          fail: function(res) {
-            wx.hideLoading()
-          }
-        },_this)
-      })
-    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -520,8 +526,6 @@ Page({
         userInfo = wx.getStorageSync('userInfo')
     btmHolder = btmHolder>0?btmHolder:10
     userInfo = JSON.parse(userInfo)
-    //this.getLocation(orderCode)
-
     this.setData({
       stat:stat,
       userInfo,
@@ -529,6 +533,8 @@ Page({
       fixedTop,
       orderCode: orderCode
     })
+
+    this.getLocation()
   },
   share(){
     wx.showShareImageMenu({

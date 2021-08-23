@@ -166,3 +166,4 @@ page{background: #F6F6F6;height: auto;}
 .cancel-btn{background: #C1996B;margin: 0;height: 78rpx;line-height: 78rpx;color: #fff;border-radius: 36rpx;}
 
 .map{width: 100%;height: 400rpx;}
+.canvas{position: fixed;left: 0;bottom: 0; opacity: 0;width: 55px;height: 67px;pointer-events: none;}
