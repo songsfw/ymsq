@@ -420,6 +420,11 @@ const exChangeCoupon = (params) => {
   return POST(baseUrl + "/user-promotion/convert-code", params).then(res => returnData(res,true));
 }
 
+const getDeliveryLocal = (params) => {
+  //兑换优惠券
+  return POST(baseUrl + "/order/get-dispatcher-location", params).then(res => returnData(res,true));
+}
+
 module.exports = {
   getIndexInfo:getIndexInfo,
   getUserLocation:getUserLocation,
@@ -492,5 +497,6 @@ module.exports = {
   getGift,
   getGiftList,
   startGame,
-  exChangeCoupon
+  exChangeCoupon,
+  getDeliveryLocal
 }
