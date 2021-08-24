@@ -1,8 +1,8 @@
 <!-- cart -->
-<navBar navType="transparent" hasReturn isFold="{{isFold}}" title="订单详情"></navBar>
+<navBar navType="light" hasReturn title="订单详情"></navBar>
 <view class="banner-bg"></view>
 <view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
-  <view class="order-type">
+  <view class="order-type" wx:if="{{orderData.old_status!='DISPATCHING'}}">
     <view class="txt">
       <image wx:if="{{stat==4}}" mode="widthFix" src="../../../image/icon-od7.png"></image>
       <image wx:if="{{stat==2}}" mode="widthFix" src="../../../image/icon-od4.png"></image>
@@ -10,18 +10,11 @@
       {{status.title}}</view>
     <view class="status"><block wx:if="{{timingTxt}}">{{timingTxt}}</block> {{status.msg}}</view>
   </view>
+  <map class="map" wx:if="{{orderData.old_status=='DISPATCHING' && showMap}}" id="myMap" layer-style="1" longitude="{{orderlocal.lng}}" latitude="{{orderlocal.lat}}" markers="{{marker}}" subkey="PFTBZ-RUYWU-I64VW-2A3XS-AVAS7-4YBUB"></map>
   <view class="order-wp">
     <view class="pro-info">
-      <view class="delivery-info flex-center" bind:tap="showDelivery" wx:if="{{steps.length>0}}">
-        <image src="../../../image/icon-od5.png"></image>
-        <view class="txt flex-1">
-          <view>{{steps[0].msg}}</view>
-          <view>{{steps[0].time}}</view>
-        </view>
-        <view class="iconfont icon-arrow-r "></view>
-      </view>
       <view class="address flex-center">
-        <view class="local iconfont icon-local"></view>
+        <view class="local"><image src="" /></view>
         <view class="txt flex-1">
           <view class="tit flex">
             <text>{{orderData.username}}</text>
@@ -30,6 +23,14 @@
           </view>
           <view class="address-txt">{{orderData.address}}{{orderData.address_detail}}</view>
         </view>
+      </view>
+      <view class="delivery-info flex-center" wx:if="{{orderData.old_status=='DISPATCHING'}}">
+        <image src="../../../image/icon-od5.png"></image>
+        <view class="txt flex-1">
+          <view>{{steps.msg}}</view>
+          <view>{{steps.time}}</view>
+        </view>
+        <!-- <view class="iconfont icon-arrow-r "></view> -->
       </view>
     </view>
     <view class="pro-info">
@@ -121,10 +122,6 @@
         <view class="name">下单时间</view>
         <view class="val">{{orderData.create_time}}</view>
       </view>
-      <!-- <view class="flex-center ">
-        <view class="name">支付方式</view>
-        <view class="val">{{orderData.pay_mode_string}}</view>
-      </view> -->
       <view class="flex-center txtitem">
         <view class="name">配送方式</view>
         <view class="val">{{orderData.dispatch_company}}</view>
@@ -133,10 +130,10 @@
         <view class="name">配送时间</view>
         <view class="val">{{orderData.dispatch_date}} {{orderData.dispatch_time}}</view>
       </view>
-      <!-- <view class="flex-center txtitem" wx:if="{{orderData.order_type==2}}">
-        <view class="name">备注</view>
-        <view class="val">{{orderData.remark == ''?'-':orderData.remark}}</view>
-      </view> -->
+      <view class="flex-center txtitem addressitem">
+        <view class="name">配送地址</view>
+        <view class="val">{{orderData.address}}{{orderData.address_detail}} {{orderData.username}}{{orderData.mobile}}</view>
+      </view>
     </view>
     <view class="pay-info" style="padding-top:10px">
       <view class="flex-center txtitem">
@@ -150,14 +147,12 @@
       <view class="flex-center txtitem" wx:if="{{orderData.point_price!=0}}">
         <view class="name">
           麦点
-          <!-- <image src="../../../image/icon-mai.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.point_price}}</view>
       </view>
       <view class="flex-center txtitem" wx:if="{{orderData.promotion_price!=0}}">
         <view class="name">
           优惠券
-          <!-- <image src="../../../image/icon-coupon.png"></image> -->
         </view>
         <view class="val">-￥{{orderData.promotion_price}}</view>
       </view>
@@ -277,3 +272,4 @@
     <view class="share-remark-save">保存海报</view>
   </view>
 </view>
+<canvas canvas-id="photo" class="canvas"></canvas>

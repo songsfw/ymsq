@@ -1,7 +1,8 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
 let app = getApp()
-let timer =null,isPaying=false
+let timer =null,isPaying=false,timer2=null
+let userIcon = "https://api-beta.withwheat.com/img/marker1.png",sendicon="https://api-beta.withwheat.com/img/marker2.png"
 Page({
 
   /**
@@ -194,23 +195,6 @@ Page({
     })
   },500),
   bindcancel(e) {
-    // if(this.data.orderData.order_type==2){
-    //   wx.showModal({
-    //     content: '请联系客服取消订单，400-992-6632',
-    //     confirmText:"拨打",
-    //     cancelText:"再想想",
-    //     confirmColor:"#C1996B",
-    //     success (res) {
-    //       if (res.confirm) {
-    //         wx.makePhoneCall({
-    //           phoneNumber: '400-992-6632'
-    //         })
-    //         console.log('用户点击确定')
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
     this.setData({
       pop: "cancel"
     })
@@ -288,13 +272,9 @@ Page({
     }
   },
   showDelivery(){
-    console.log("123");
     wx.navigateTo({
       url:'/pages/user/delivery/delivery?orderCode='+this.data.orderCode
     })
-    // this.setData({
-    //   pop:"delivery"
-    // })
   },
   timing: function (remainTime) {
     if(remainTime==0){
@@ -425,39 +405,136 @@ Page({
     
     //this.setBalancePrice()
   },
+  getLocation(){
+    let {orderCode,userInfo} = this.data
+    let _this = this
+    if(!this.mapCtx){
+      this.mapCtx = wx.createMapContext('myMap')
+    }
+    if(!this.data.showMap){
+      wx.showLoading()
+    }
+    let data = {
+      order_code:orderCode
+    }
+    let marker = null
+    api.getDeliveryLocal(data).then(res=>{
+      wx.hideLoading()
+      if(!res){
+        return
+      }
+      let orderInfo = res
 
+      this.mapCtx.includePoints({
+        padding: [70],
+        points: [{
+          latitude: orderInfo.order.lat,
+          longitude: orderInfo.order.lng
+        }, {
+          latitude: orderInfo.dispatcher.lat,
+          longitude: orderInfo.dispatcher.lng
+        }]
+      })
+
+      if(!this.data.showMap){
+        var ctx = wx.createCanvasContext('photo');
+        let promise1 = new Promise(function(resolve, reject) {
+          wx.getImageInfo({
+            src: userInfo.head_url,
+            success: function(pic) {
+              console.log("promise1", pic)
+              resolve(pic);
+            },
+            fail:function(err){
+              console.log(err);
+            }
+          })
+        });
+        let promise2 = new Promise(function(resolve, reject) {
+          wx.getImageInfo({
+            src: userIcon,
+            success: function(pic) {
+              console.log(pic)
+              resolve(pic);
+            }
+          })
+        });
+        Promise.all([
+          promise1, promise2
+        ]).then(pics => {
+          ctx.drawImage(pics[1].path, 0, 0, 55, 67)
+          ctx.save();
+          
+          ctx.beginPath(); //开始绘制
+          ctx.arc(28, 27, 22, 0, Math.PI * 2, false);
+
+          ctx.clip();//画好了圆 剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内 这也是我们要save上下文的原因
+          
+          ctx.drawImage(pics[0].path, 6, 5, 44, 44)
+          ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 还可以继续绘制
+
+          //主要就是计算好各个图文的位置
+          
+          //ctx.stroke()
+          ctx.draw(false, () => {
+            wx.canvasToTempFilePath({
+              x: 0,
+              y: 0,
+              width: 55,
+              height: 67,
+              destWidth: 55,
+              destHeight: 67,
+              canvasId: 'photo',
+              success: function(tempFile) {
+                marker = [{id:1,width:55,height:67, latitude:orderInfo.order.lat,longitude:orderInfo.order.lng,iconPath:tempFile.tempFilePath},{id:2,width:55,height:67,latitude:orderInfo.dispatcher.lat,longitude:orderInfo.dispatcher.lng,iconPath:sendicon}]
+                _this.setData({
+                  marker:marker,
+                })
+                wx.hideLoading()
+              },
+              fail: function(res) {
+                wx.hideLoading()
+              }
+            },_this)
+          })
+        })
+      }
+
+      this.setData({
+        orderlocal:res.order,
+        showMap:true
+      })
+
+      timer2 = setTimeout(() => {
+        this.getLocation()
+      }, 10000);
+    })
+  },
+  drawPhoto(){
+    
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let _this = this
     let orderCode = options.code,stat = options.stat
     console.log(stat);
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    let btmHolder = wx.getStorageSync('btmHolder')
+    let btmHolder = wx.getStorageSync('btmHolder'),
+        userInfo = wx.getStorageSync('userInfo')
     btmHolder = btmHolder>0?btmHolder:10
+    userInfo = JSON.parse(userInfo)
     this.setData({
       stat:stat,
+      userInfo,
       btmHolder:btmHolder||0,
       fixedTop,
       orderCode: orderCode
     })
 
-    // let data = {
-    //   order_code:orderCode
-    // }
-
-    // api.preShareOrder(data).then(res=>{
-    //   console.log(res);
-    //   if(!res){
-    //     return
-    //   }
-    //   this.setData({
-    //     shareInfo:res
-    //   })
-    // })
-
-    // this.initOrderData();
+    this.getLocation()
   },
   share(){
     wx.showShareImageMenu({
@@ -547,7 +624,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.mapCtx = wx.createMapContext('myMap')
   },
 
   /**
@@ -563,6 +640,7 @@ Page({
         order_code:order_code
       }
       wx.showLoading({mask:true})
+
       api.preShareOrder(data).then(res=>{
         wx.hideLoading()
         console.log(res);
@@ -606,7 +684,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    clearTimeout(timer2)
   },
 
   /**

@@ -1,9 +1,9 @@
 page{background: #F6F6F6;height: auto;}
 .strongTxt{color: #F5222D !important;}
 .banner-bg{position: absolute;left: 0;top:0; width: 100%;height: 400rpx;z-index: -1;overflow:hidden;background: url(https://api.withwheat.com/img/bg1.png) center center no-repeat;background-size: cover;}
-.navBarWrap.fold .arrow-left:after{border-color: #000 !important;}
+
 .order-type{width: 100%;text-align: center;padding: 20rpx;box-sizing: border-box;color: #fff;}
-.return .arrow-left:after{border-color: #fff !important;border-width: 2px !important;}
+
 .order-type .txt{font-size:18px;font-weight: 500;}
 .order-type .txt image{width: 48rpx;vertical-align: bottom;}
 .order-type .status{font-size:14px;margin-top: 10px;}
@@ -63,8 +63,10 @@ page{background: #F6F6F6;height: auto;}
 .pay-info{padding: 0 20rpx 20rpx 20rpx;}
 .pay-info .hd{margin:0;margin-bottom: 10px;}
 .pay-info .txtitem{justify-content: space-between;height: 36px;line-height: 36px;}
+.pay-info .txtitem .val{width: 60%;text-align: right;}
+.pay-info .addressitem{line-height: 1.5;height: auto;}
 .pay-info>view .tip{color: #ccc;font-size: 12px;}
-.pay-info .name{font-size:13px;}
+.pay-info .name{font-size:13px;flex-shrink: 0;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
 .pay-info .icon-arrow-r{vertical-align: middle;margin-left: 20rpx;font-size: 30rpx;}
 .pay-info .val{font-size: 13px;color: #222;font-weight: 500;}
@@ -162,3 +164,6 @@ page{background: #F6F6F6;height: auto;}
 .checkbox.on view{display: block;}
 .reason-txt{height: 150rpx;width: 100%;background: #F6F6F6;font-size: 14px;padding:20rpx;box-sizing: border-box;margin:32rpx 0 60rpx 0;border-radius: 8rpx;}
 .cancel-btn{background: #C1996B;margin: 0;height: 78rpx;line-height: 78rpx;color: #fff;border-radius: 36rpx;}
+
+.map{width: 100%;height: 400rpx;}
+.canvas{position: fixed;left: 0;bottom: 0; opacity: 0;width: 55px;height: 67px;pointer-events: none;}
