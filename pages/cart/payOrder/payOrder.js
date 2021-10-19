@@ -471,6 +471,7 @@ Page({
           }
         })
 
+        console.log(txtCard);
 
         this.setData({
           biggest_discount: res.biggest_discount,
@@ -856,10 +857,6 @@ Page({
       }
     }
 
-    console.log(payQueue)
-    console.log(balance_price)
-
-    console.log(addressInfo)
     let deliveryPrice = Math.abs(payQueue[0])
     let data = {
       address_id: address_id,
@@ -913,11 +910,32 @@ Page({
     console.log(data)
     console.log('------')
     wx.showLoading({mask:true,title:'支付中...'})
-
     api.submmitOrder(data).then(res => {
       console.log(res)
-      if (!res) {
+      let orderRes = res
+      if (orderRes.status=="-1") {
+        wx.showModal({
+          content: orderRes.message,
+          showCancel:false,
+          confirmText:"去购物车",
+          success(res) {
+            if (res.confirm) {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          }
+        })
         wx.hideLoading();
+        return
+      }
+      if (orderRes.status&&orderRes.status!="-1") {
+        wx.hideLoading();
+        wx.showToast({
+          icon:"none",
+          title:orderRes.message,
+          duration:3000
+        })
         return
       }
       
@@ -1013,10 +1031,9 @@ Page({
       
     })
   },500,false),
-  inputCard: util.debounce(function (e) {
-    console.log('inputCard')
+  inputCard(e) {
     let temp = e.detail.value
-    let defTxt = e.currentTarget.dataset.default
+    let cartid = e.currentTarget.dataset.cartid
     if (temp.replace(/[^\x00-\xff]/g, "aa").length > 18) {
       let tlength = 0;
       let subLen = 0;
@@ -1035,8 +1052,9 @@ Page({
         subLen += 1;
       }
       temp = temp.substring(0, subLen);
+      txtCard[e.target.dataset.cartid] = temp
       this.setData({
-        ['txtCardObj[' + e.target.dataset.cartid + ']']: temp,
+        txtCardObj: txtCard,
       })
       wx.showToast({
         icon: "none",
@@ -1044,11 +1062,11 @@ Page({
       })
       return
     }
-    txt = temp == "" ? defTxt : temp,
-      cartid = e.currentTarget.dataset.cartid
-  }),
+    
+    txtCard[cartid] = temp
+  },
   setTxt(e) {
-    console.log('setTxt')
+    console.log('setTxt:',cartid)
     if (cartid) {
       txtCard[cartid] = txt
       this.setData({
@@ -1068,9 +1086,9 @@ Page({
     let defMsg = e.currentTarget.dataset.defaultmakemsg;
     let val = e.currentTarget.dataset.value;
     if (val == defMsg) {
-      this.data.txtCardObj[e.target.dataset.cartid] = '';
+      txtCard[e.target.dataset.cartid] = ''
       this.setData({
-        txtCardObj:this.data.txtCardObj,
+        txtCardObj:txtCard,
       })
     }
   },

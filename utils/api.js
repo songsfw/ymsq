@@ -20,10 +20,11 @@ const returnData = (res,needToast=false)=>{
     }else if(data.status==5016){
       return false
     }else{
-      //特殊状态统一处理
+      //特殊状态特殊处理
       if(needToast){
         return data
       }
+      //特殊状态统一处理
       if(data.message){
         wx.showToast({
           icon:"none",
@@ -71,6 +72,12 @@ const getVipCard = () => {
 const getAddress = (data) => {
   
   return POST(baseUrl+"/user-address/list", data).then(res => returnData(res))
+}
+
+//是否可配送
+const checkAddressInMap = (data) => {
+  
+  return POST(baseUrl+"/user-address/check-address", data).then(res => returnData(res))
 }
 
 //添加地址
@@ -244,7 +251,7 @@ const getOrderCake = (data) => {
 
 //提交订单
 const submmitOrder = (data) => {
-  return POST(baseUrl+"/order/submit-order",data).then(res => returnData(res))
+  return POST(baseUrl+"/order/submit-order",data).then(res => returnData(res,true))
 }
 
 //支付
@@ -498,5 +505,6 @@ module.exports = {
   getGiftList,
   startGame,
   exChangeCoupon,
-  getDeliveryLocal
+  getDeliveryLocal,
+  checkAddressInMap
 }

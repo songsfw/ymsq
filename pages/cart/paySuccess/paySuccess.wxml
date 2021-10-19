@@ -13,7 +13,7 @@
       </view>
       <view class="option flex">
         <navigator url="/pages/index/index" open-type="switchTab" class="btn">返回首页</navigator>
-        <navigator wx:if="{{order_code}}" open-type="redirect" url="/pages/user/orderInfo/orderInfo?code={{order_code}}" class="btn btn-light">
+        <navigator wx:if="{{order_code}}" open-type="redirect" url="/pages/user/orderInfo/orderInfo?code={{order_code}}&stat=2" class="btn btn-light">
           查看详情</navigator>
       </view>
     </view>

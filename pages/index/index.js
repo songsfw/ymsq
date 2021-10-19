@@ -6,7 +6,8 @@ const app = getApp()
 
 Page({
   data: {
-    showAct:true,
+    showAct:false,
+    subscribe:true,
     showNav: true,
     banner: [],
     autoplay: true,

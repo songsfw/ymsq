@@ -253,12 +253,6 @@ Page({
         // }
       //}
     }
-    // if(!hasAdd){
-    //   this.setData({
-    //     hasAdd:false
-    //   })
-    //   return
-    // }
     qqmapsdk.reverseGeocoder({
 
       location: location || '', //获取表单传入的位置坐标,不填默认当前位置

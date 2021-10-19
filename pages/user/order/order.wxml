@@ -66,7 +66,7 @@
         </block>
         <block wx:if="{{order.status==2}}">
           <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
-          <view class="btn pay-btn" bind:tap="showDelivery" data-code="{{order.order_code}}">查看物流</view>
+          <!-- <view class="btn pay-btn" bind:tap="showDelivery" data-code="{{order.order_code}}">查看物流</view> -->
         </block>
         <block wx:if="{{order.status==3}}">
           <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>

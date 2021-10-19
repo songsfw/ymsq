@@ -1,8 +1,12 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
+var qqmapsdk;
+
 let app = getApp()
 let timer =null,isPaying=false,timer2=null
-let userIcon = "https://api-beta.withwheat.com/img/marker1.png",sendicon="https://api-beta.withwheat.com/img/marker2.png"
+let userIcon = "https://api.withwheat.com/img/marker1.png",sendicon="https://api.withwheat.com/img/marker2.png"
+let iconW = 55,iconH=67
 Page({
 
   /**
@@ -242,7 +246,8 @@ Page({
         })
         this.setData({
           pop: 0,
-          stat:4
+          stat:4,
+          timingTxt: null
         })
         this.initOrderData()
       } else {
@@ -300,13 +305,33 @@ Page({
       this.timing(remainTime)
     }, 1000);
   },
+  showService(e){
+    let serviceMobile = e.currentTarget.dataset.mobile
+
+    wx.showModal({
+      title: '联系电话',
+      content: serviceMobile,
+      confirmText:"拨打",
+      cancelText:"取消",
+      confirmColor:"#C1996B",
+      success (res) {
+        if (res.confirm) {
+          wx.makePhoneCall({
+            phoneNumber: serviceMobile
+          })
+        }
+      }
+    })
+  },
   initOrderData() {
     let { orderCode } = this.data
-    
+    wx.showLoading()
     let data = {
       order_code: orderCode
     }
     api.getOrderInfo(data).then(res => {
+      wx.hideLoading()
+      wx.stopPullDownRefresh()
       console.log(res);
       let orderData = res.order
       let newOrderData = {
@@ -342,7 +367,7 @@ Page({
       if(timer){
         clearTimeout(timer)
       }
-      if(second&&second>0){
+      if(orderData.old_status=='UNPAID' && second>0){
         this.timing(second)
       }
 
@@ -355,6 +380,13 @@ Page({
         steps:res.steps
       })
 
+      if(orderData.old_status=='DISPATCHING'){
+        this.getLocation()
+      }else{
+        this.setData({
+          showMap:false
+        })
+      }
     })
   },
   onPageScroll: util.throttle(function (e) {
@@ -405,8 +437,27 @@ Page({
     
     //this.setBalancePrice()
   },
+  getDistance(start,dest){
+    let _this = this
+    qqmapsdk.calculateDistance({
+      from: start || '', //若起点有数据则采用起点坐标，若为空默认当前地址
+      to: dest, //终点坐标
+      success: function(res) {
+        console.log(res);
+        var res = res.result.elements;
+        let dist = res[0].distance
+        dist = dist<1000?dist+'米':util.toFixed(dist/1000,2)+'公里'
+        _this.setData({
+          'marker[1].callout.content':`距离您${dist}`
+        });
+      },
+      fail: function(error) {
+        console.error(error);
+      }
+    });
+  },
   getLocation(){
-    let {orderCode,userInfo} = this.data
+    let {orderCode,userInfo,orderData} = this.data
     let _this = this
     if(!this.mapCtx){
       this.mapCtx = wx.createMapContext('myMap')
@@ -420,49 +471,87 @@ Page({
     let marker = null
     api.getDeliveryLocal(data).then(res=>{
       wx.hideLoading()
-      if(!res){
+      let orderInfo = res
+      if(orderData.old_status=="PAID"){
+        this.setData({
+          showMap:false
+        })
         return
       }
-      let orderInfo = res
+      if(orderInfo.old_status=="RECEIVED" || orderInfo.old_status=="COMPLETE"){
+        wx.showModal({
+          title: '订单配送完成',
+          confirmText:"确定",
+          confirmColor:"#C1996B",
+          success (res) {
+            clearTimeout(timer2)
+            if (res.confirm) {
+              _this.setData({
+                showMap:false
+              })
+              _this.initOrderData()
+            }
+          }
+        })
+        return
+      }
 
-      this.mapCtx.includePoints({
-        padding: [70],
-        points: [{
-          latitude: orderInfo.order.lat,
-          longitude: orderInfo.order.lng
-        }, {
-          latitude: orderInfo.dispatcher.lat,
-          longitude: orderInfo.dispatcher.lng
-        }]
-      })
+      if(!orderInfo || !orderInfo.order || orderInfo.old_status===null){
+        this.setData({
+          showMap:false
+        })
+        return
+      }
 
-      if(!this.data.showMap){
-        var ctx = wx.createCanvasContext('photo');
+      
+      
+      console.log(orderInfo);
+      let start = `${orderInfo.order.lat},${orderInfo.order.lng}`
+      let dest = `${orderInfo.dispatcher.lat},${orderInfo.dispatcher.lng}`
+
+      if(!this.data.marker){
+        this.mapCtx.includePoints({
+          padding: [100],
+          points: [{
+            latitude: orderInfo.order.lat,
+            longitude: orderInfo.order.lng
+          }, {
+            latitude: orderInfo.dispatcher.lat,
+            longitude: orderInfo.dispatcher.lng
+          }]
+        })
+        var ctx = wx.createCanvasContext('photo',this);
         let promise1 = new Promise(function(resolve, reject) {
-          wx.getImageInfo({
-            src: userInfo.head_url,
+          wx.downloadFile({
+            url: userInfo.head_url,
             success: function(pic) {
               console.log("promise1", pic)
-              resolve(pic);
+              resolve(pic.tempFilePath);
             },
             fail:function(err){
+              resolve('../../../image/no-photo.png')
               console.log(err);
             }
           })
         });
         let promise2 = new Promise(function(resolve, reject) {
-          wx.getImageInfo({
-            src: userIcon,
+          wx.downloadFile({
+            url: userIcon,
             success: function(pic) {
-              console.log(pic)
-              resolve(pic);
+              console.log("promise2", pic)
+              resolve(pic.tempFilePath);
+            },
+            fail:function(err){
+              resolve("../../../image/marker1.png")
+              console.log(err);
             }
           })
         });
         Promise.all([
           promise1, promise2
         ]).then(pics => {
-          ctx.drawImage(pics[1].path, 0, 0, 55, 67)
+          console.log("生成临时图片")
+          ctx.drawImage(pics[1], 0, 0, iconW, iconH)
           ctx.save();
           
           ctx.beginPath(); //开始绘制
@@ -470,54 +559,62 @@ Page({
 
           ctx.clip();//画好了圆 剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内 这也是我们要save上下文的原因
           
-          ctx.drawImage(pics[0].path, 6, 5, 44, 44)
-          ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 还可以继续绘制
-
-          //主要就是计算好各个图文的位置
+          ctx.drawImage(pics[0], 6, 5, 44, 44)
+          ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 还可以继续绘制
           
           //ctx.stroke()
-          ctx.draw(false, () => {
-            wx.canvasToTempFilePath({
-              x: 0,
-              y: 0,
-              width: 55,
-              height: 67,
-              destWidth: 55,
-              destHeight: 67,
-              canvasId: 'photo',
-              success: function(tempFile) {
-                marker = [{id:1,width:55,height:67, latitude:orderInfo.order.lat,longitude:orderInfo.order.lng,iconPath:tempFile.tempFilePath},{id:2,width:55,height:67,latitude:orderInfo.dispatcher.lat,longitude:orderInfo.dispatcher.lng,iconPath:sendicon}]
-                _this.setData({
-                  marker:marker,
-                })
-                wx.hideLoading()
-              },
-              fail: function(res) {
-                wx.hideLoading()
-              }
-            },_this)
-          })
+          ctx.draw(false, function(){
+            console.log('开始画图');
+              wx.canvasToTempFilePath({
+                x: 0,
+                y: 0,
+                width: iconW,
+                height: iconH,
+                destWidth: iconW*3,
+                destHeight: iconW*3,
+                canvasId: 'photo',
+                success: function(tempFile) {
+                  console.log(tempFile);
+                  marker = [{id:1,width:iconW,height:iconH, latitude:orderInfo.order.lat,longitude:orderInfo.order.lng,iconPath:tempFile.tempFilePath},{id:2,width:iconW,height:iconH,latitude:orderInfo.dispatcher.lat,longitude:orderInfo.dispatcher.lng,iconPath:sendicon,callout:{padding:5,content:"距离您-米",display:"ALWAYS"}}]
+                  _this.setData({
+                    marker:marker,
+                  })
+                  _this.getDistance(start,dest)
+                  wx.hideLoading()
+                },
+                fail: function(res) {
+                  wx.hideLoading()
+                }
+              },_this)
+              
+          });
         })
+        this.setData({
+          orderlocal:res.order,
+          showMap:true
+        })
+      }else{
+        this.setData({
+          'marker[1].latitude':orderInfo.dispatcher.lat,
+          'marker[1].longitude':orderInfo.dispatcher.lng,
+        })
+        this.getDistance(start,dest)
       }
-
-      this.setData({
-        orderlocal:res.order,
-        showMap:true
-      })
+      
 
       timer2 = setTimeout(() => {
         this.getLocation()
-      }, 10000);
+      }, 30000);
     })
-  },
-  drawPhoto(){
-    
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let _this = this
+    qqmapsdk = new QQMapWX({
+      key: 'PFTBZ-RUYWU-I64VW-2A3XS-AVAS7-4YBUB'
+    });
     let orderCode = options.code,stat = options.stat
     console.log(stat);
     let sysInfo = app.globalSystemInfo;
@@ -533,8 +630,6 @@ Page({
       fixedTop,
       orderCode: orderCode
     })
-
-    this.getLocation()
   },
   share(){
     wx.showShareImageMenu({
@@ -619,7 +714,7 @@ Page({
       wx.hideLoading();
     }
   });
-},
+ },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -633,8 +728,9 @@ Page({
   onShow: function () {
     let pages = getCurrentPages();
     let currentPage = pages[pages.length-1];
-    console.log(currentPage.options)
-    let order_code = currentPage.options.code
+    let options = currentPage.options
+    let order_code = options.code
+    let stat = options.stat
     if(order_code){
       let data = {
         order_code:order_code
@@ -691,7 +787,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    clearTimeout(timer2)
+    this.initOrderData();
   },
 
   /**

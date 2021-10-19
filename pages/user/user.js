@@ -20,7 +20,10 @@ Page({
     user:null,
     order_unpaid:0,
     order_dispatching:0,
-    showAct:true
+    showAct:false,
+    user:{
+      subscribe:true
+    }
   },
   hideAct(){
     this.setData({

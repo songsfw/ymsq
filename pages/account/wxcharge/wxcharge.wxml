@@ -22,6 +22,12 @@
     </view>
   </view>
 </view>
+<view class="policy">
+  <view style="font-weight:500">充值说明：</view>
+  <view>· 充值赠券仅限线上小程序商城使用</view>
+<view>· 会员余额：除了北京十里堡门店、北京动物园门店不能使用外，其他北京门店和天津所有门店均可使用</view>
+<view>· 优惠券：除北京十里堡门店、动物园店、机场店、绿心店、 早餐门店和天津所有门店不可用外，其他门店均可使用。</view>
+</view>
 <view class="flex policy" bind:tap="getRead">
   <view class="checkbox {{read?'on':''}}" bind:tap="select" data-idx="{{index}}" data-type="1" data-id="{{item.cart_id}}">
     <view class="iconfont icon-check"></view>

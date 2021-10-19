@@ -1,12 +1,10 @@
 <!-- pages/user/user.wxml -->
 <view class="flex hd">
   <view class='city flex'>
-    <!-- <picker mode="multiSelector" class="citytxt flex-1" bindchange="selectCity" bindcolumnchange="selectZone" range-key="name" value="{{multiIndex}}" range="{{cityList}}">
-      <view class="picker">{{cityList[0][multiIndex[0]].name}}</view>
-    </picker> -->
-    <picker class="citytxt flex-1" bindchange="selectCity"  range-key="name" value="{{cityIndex}}" range="{{city}}">
+    <picker class="citytxt flex-1" bindchange="selectCity" range-key="name" value="{{cityIndex}}" range="{{city}}">
       <view class="picker">{{cityName}}</view>
     </picker>
+    <!-- <view class="citytxt flex-1"><view class="picker">北京</view></view> -->
     <view class='triangle-top'></view>
   </view>
   <view class="search">

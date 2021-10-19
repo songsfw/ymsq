@@ -1,38 +1,63 @@
 <!-- cart -->
-<navBar navType="light" hasReturn title="订单详情"></navBar>
-<view class="banner-bg"></view>
+<navBar navType="{{orderData.old_status!='DISPATCHING'?'transparent':'light'}}" isFold="{{isFold}}" hasReturn title="订单详情"></navBar>
+<view class="banner-bg" wx:if="{{!showMap}}"></view>
 <view class="wrap" style="padding-bottom:{{btmHolder||0}}px">
   <view class="order-type" wx:if="{{orderData.old_status!='DISPATCHING'}}">
     <view class="txt">
       <image wx:if="{{stat==4}}" mode="widthFix" src="../../../image/icon-od7.png"></image>
-      <image wx:if="{{stat==2}}" mode="widthFix" src="../../../image/icon-od4.png"></image>
+      <!-- <image wx:if="{{stat==2}}" mode="widthFix" src="../../../image/icon-od4.png"></image> -->
       <image wx:if="{{stat==3}}" mode="widthFix" src="../../../image/icon-od1.png"></image>
-      {{status.title}}</view>
+      {{status.title}}
+    </view>
     <view class="status"><block wx:if="{{timingTxt}}">{{timingTxt}}</block> {{status.msg}}</view>
   </view>
-  <map class="map" wx:if="{{orderData.old_status=='DISPATCHING' && showMap}}" id="myMap" layer-style="1" longitude="{{orderlocal.lng}}" latitude="{{orderlocal.lat}}" markers="{{marker}}" subkey="PFTBZ-RUYWU-I64VW-2A3XS-AVAS7-4YBUB"></map>
+  <view class="map-wp" wx:if="{{showMap}}">
+    <map class="map" id="myMap" layer-style="1" longitude="{{orderlocal.lng}}" latitude="{{orderlocal.lat}}" markers="{{marker}}" subkey="PFTBZ-RUYWU-I64VW-2A3XS-AVAS7-4YBUB">
+      <view slot="callout">
+        <view marker-id="2"></view>
+      </view>
+    </map>
+  </view>
+  
   <view class="order-wp">
-    <view class="pro-info">
+    <view class="pro-info delivery-txt {{showMap?'hasMap':''}}" wx:if="{{steps.type}}">
       <view class="address flex-center">
-        <view class="local"><image src="" /></view>
-        <view class="txt flex-1">
-          <view class="tit flex">
-            <text>{{orderData.username}}</text>
-            <text>{{orderData.mobile}}</text>
-            <view class="tag" wx:if="{{address.address_default}}">默认</view>
+        <view class="local"><image src="{{steps.type=='2'?'https://api.withwheat.com/img/stuff1.png':'https://api.withwheat.com/img/stuff2.png'}}"></image></view>
+        <view class="txt flex-1 flex-center">
+          <view class="flex-1">
+            <view class="tit">{{steps.name}}</view>
+            <view class="address-txt">原麦山丘</view>
           </view>
-          <view class="address-txt">{{orderData.address}}{{orderData.address_detail}}</view>
+          <view class="flex-center tel" bind:tap="showService" data-mobile="{{steps.mobile}}">
+            <image src="../../../image/tel.png"></image>
+            <text>联系{{steps.type=='2'?'客服':'骑手'}}</text>
+          </view>
         </view>
       </view>
+      <!-- <view class="address flex-center" wx:if="{{steps.type=='2'}}">
+        <view class="local"><image src="https://api.withwheat.com/img/stuff1.png"></image></view>
+        <view class="txt flex-1 flex-center">
+          <view class="flex-1">
+            <view class="tit">{{step}}</view>
+            <view class="address-txt">原麦山丘</view>
+          </view>
+          <view class="flex-center tel" bind:tap="showService" data-mobile="400-992-6632">
+            <image src="../../../image/tel.png"></image>
+            <text>联系客服</text>
+          </view>
+        </view>
+      </view> -->
       <view class="delivery-info flex-center" wx:if="{{orderData.old_status=='DISPATCHING'}}">
         <image src="../../../image/icon-od5.png"></image>
         <view class="txt flex-1">
+          <view class="h3">正在配送中</view>
           <view>{{steps.msg}}</view>
           <view>{{steps.time}}</view>
         </view>
         <!-- <view class="iconfont icon-arrow-r "></view> -->
       </view>
     </view>
+    <!-- <image src="{{marker[0].iconPath}}" style="width:55px;height:67px"></image> -->
     <view class="pro-info">
       <view class="hd flex-center">
         <view>商品信息</view>
@@ -166,7 +191,7 @@
       </view>
       <view class="flex-center balance txtitem" wx:if="{{orderData.balance_price>0}}">
         <view class="name">原麦余额</view>
-        <view class="val flex-center">-￥{{orderData.balance_price}}</view>
+        <view class="val">-￥{{orderData.balance_price}}</view>
       </view>
       <view class="total-price flex-center">
         <text wx:if="{{stat==4||stat==1}}">应付金额：</text>
@@ -181,16 +206,16 @@
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">
   <block wx:if="{{orderData.old_status=='UNPAID' || orderData.old_status=='PAID' || orderData.old_status=='DISPATCHING'}}"><view class="btn" bind:tap="bindcancel">取消订单</view></block>
   
-  <block wx:if="{{stat==2}}">
+  <block wx:if="{{orderData.old_status=='COMPLETE' || orderData.old_status=='RECEIVED' || orderData.old_status=='PAID' || orderData.old_status=='DISPATCHING'}}">
     <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
-    <view class="btn pay-btn" bind:tap="showDelivery">查看物流</view>
+    <!-- <view class="btn pay-btn" bind:tap="showDelivery">查看物流</view> -->
+    
   </block>
-  <block wx:if="{{stat==3}}">
-    <view class="btn" bind:tap="showPop" data-pop="showCoupon">分享给朋友</view>
+  <block wx:if="{{orderData.old_status=='COMPLETE' || orderData.old_status=='RECEIVED'}}">
     <view class="btn pay-btn" bind:tap="toComment">{{orderData.comment_status==1?'查看评价':'去评价'}}</view>
-
   </block>
-  <block wx:if="{{stat==1}}">
+ 
+  <block wx:if="{{stat==1 || orderData.old_status=='UNPAID'}}">
     <view class="btn main-btn" bind:tap="payOrder">去支付</view>
   </block>
 </view>

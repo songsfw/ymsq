@@ -1,5 +1,4 @@
 <!-- pages/user/user.wxml -->
-<!-- <official-account style="width:100px;height:100px;position:fixed:left:0;top:0;z-index:100000"></official-account> -->
 <view class="hd">
   <view class="menu flex" wx:if="{{citys}}">
     <block wx:for="{{menu}}" wx:for-index="index">
@@ -7,13 +6,27 @@
     </block>
   </view>
 </view>
-<map class="map" id="myMap" longitude="{{lng}}" latitude="{{lat}}" bindregionchange="changeRegion" scale="{{scale}}" polygons="{{polygons}}">
-  <!-- <image class="center-local animate {{moving?'bounce':''}}" src="../../../image/local.png"></image> -->
-  <!-- <image bind:tap="moveToUserLocal" class="local" src="../../../image/dingwei.png"></image> -->
-  <view class='city flex' wx:if="{{currentTab==2}}">
-    <picker class="citytxt" bindchange="selectCity"  range-key="city_nae" value="{{cityIndex}}" range="{{citys}}">
-      <view class="picker">{{cityName}}</view>
-    </picker>
-    <view class='triangle-top'></view>
+<map class="map" id="myMap" show-location longitude="{{lng}}" latitude="{{lat}}" bindregionchange="changeRegion" scale="{{scale}}" polygons="{{polygons}}" markers="{{markers}}">
+  <!-- <image wx:if="{{showMark}}" class="center-local animate {{moving?'bounce':''}}" src="../../../image/local.png"></image> -->
+  <view class="address"><input type="text" placeholder="搜索配送地址" bindinput="getsuggest" value="{{backfill}}" /></view>
+  <cover-image bind:tap="moveToUserLocal" class="local" src="../../../image/dingwei.png"></cover-image>
+  <view class='city flex'>
+    <block wx:if="{{currentTab==2}}">
+      <picker class="citytxt" bindchange="selectCity"  range-key="name" value="{{cityIndex}}" range="{{citys}}">
+        <view class="picker">{{cityName}}</view>
+      </picker>
+      <view class='triangle-top'></view>
+    </block>
+    <block wx:else>
+      <view class="citytxt" bind:tap="setCity">北京市</view>
+    </block>
   </view>
 </map>
+<view class="suggestion" wx:if="{{showSugg}}">
+  <scroll-view scroll-y="true" class="suggestion-scroll">
+    <view class="item" wx:for="{{suggestion}}" wx:key="index" wx:if="{{item.category!='地名地址:行政地名'}}" data-address="{{item.addr}}" data-prov="{{item.city}}" data-district="{{item.district}}" data-lng = "{{item.longitude}}" data-lat = "{{item.latitude}}" data-title="{{item.title}}" bindtap="selectAdd">
+      <view class="tit" id="{{index}}">{{item.title}}</view>
+      <view>{{item.addr}}</view>
+    </view>
+  </scroll-view>
+</view>

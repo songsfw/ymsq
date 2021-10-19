@@ -16,7 +16,7 @@ const checkSpecialStr=(str)=>{
 
 //验证手机正则
 const isMobile = (mobile) => {
-  return (/^(?:13\d|16\d|15\d|17\d|18\d|145|147)-?\d{5}(\d{3}|\*{3})$/.test(mobile));
+  return (/^(?:13\d|16\d|15\d|17\d|18\d|19\d|145|147)-?\d{5}(\d{3}|\*{3})$/.test(mobile));
 }
 
 const formatTime = date => {
@@ -306,7 +306,6 @@ function getLocation() {
           latitude: latitude,
           longitude: longitude
         }
-        console.log(location);
         resolve(location)
       },
       fail(err) {
@@ -318,7 +317,6 @@ function getLocation() {
           latitude: '39.8999',
           longitude: '116.3980'
         }
-        console.log(err)
         reject(location)
       }
     })
