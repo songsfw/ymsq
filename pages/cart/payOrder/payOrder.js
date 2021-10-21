@@ -97,11 +97,13 @@ Page({
     let newPayQueue = payQueue.slice(0)
     let useCoupon, couponCheck, useDiscount
     if (curId == -1) {
+      //未选优惠券
       coupon = 0
-      useCoupon = false,
-        couponCheck = -1
+      useCoupon = false
+      couponCheck = -1
       useDiscount = false //是否使用推荐优惠
     } else {
+      //选择优惠券
       console.log(curId);
       if (defaultCoupon == curId) {
         useDiscount = true
@@ -124,14 +126,18 @@ Page({
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let {
-      curId
-    } = this.data
-    console.log(id)
-    let {
-      couponList
-    } = this.data
-
+    let {curId,couponList,payQueue,useBalance} = this.data
+    console.log(payQueue);
+    console.log(useBalance);
+    let isCash = couponList[id].pay_restrict_list.includes('cash')
+    //微信支付专属优惠券
+    if(isCash && (payQueue[3]!=0 || payQueue[4]!=0 || useBalance)){
+      wx.showToast({
+        icon:"none",
+        title:"此优惠券只用于微信支付"
+      })
+      return
+    }
     if (this.data.curtabid == 1) {
       if (curId == id) {
         curId = -1
@@ -139,8 +145,7 @@ Page({
         curId = id
       }
       this.setData({
-        curId: curId,
-        couponList
+        curId: curId
       })
     }
   },
@@ -909,6 +914,7 @@ Page({
     console.log('---支付参数---')
     console.log(data)
     console.log('------')
+    return
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
