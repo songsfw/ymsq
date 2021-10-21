@@ -234,7 +234,6 @@
       <view class="name">原麦余额 <text class="tip">(共￥{{balance}})</text></view>
       <view class="val flex-center">
         <view>
-          <!-- <text><text style="color:{{balance != '0.00' && useBalance?'#F5222D':'#aaa'}}">{{balance != '0.00' && useBalance?'使用':'可用'}}</text>￥{{balance == '0.00'? balance:balanceTxt}}</text> -->
           <text wx:if="{{useBalance}}">使用￥{{balanceTxt}}</text>
           <text wx:else>可用￥{{balanceTxt}}</text>
           <!-- <view wx:else>余额：￥{{balance}}</view> -->
@@ -392,8 +391,7 @@
                     <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
                     <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
                     <view class="txt">
-                      <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text
-                            style="font-size:14px">张</text></text></view>
+                      <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text style="font-size:14px">张</text></text></view>
                       <view class="num" wx:else>￥<text>{{item.money}}</text></view>
 
                       <text>{{item.remark}}</text>

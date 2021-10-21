@@ -45,7 +45,7 @@ Page({
     hasCard: false,
     hasThirdCard: false,
     hasCoupon: false,
-    useBalance: true,
+    useBalance: false,
     hasPolicy: true,
 
     ziti: "0",
@@ -97,13 +97,11 @@ Page({
     let newPayQueue = payQueue.slice(0)
     let useCoupon, couponCheck, useDiscount
     if (curId == -1) {
-      //未选优惠券
       coupon = 0
       useCoupon = false
       couponCheck = -1
       useDiscount = false //是否使用推荐优惠
     } else {
-      //选择优惠券
       console.log(curId);
       if (defaultCoupon == curId) {
         useDiscount = true
@@ -111,8 +109,8 @@ Page({
         useDiscount = false
       }
       coupon = curId == 1 ? cart_data.default_delivery : couponPrice[curId].promotion_price
-      useCoupon = true,
-        couponCheck = curId
+      useCoupon = true
+      couponCheck = curId
     }
     newPayQueue[2] = util.formatePrice(coupon)
     this.setData({
@@ -128,21 +126,22 @@ Page({
     let id = e.currentTarget.dataset.id
     let {curId,couponList,payQueue,useBalance} = this.data
     console.log(payQueue);
-    console.log(useBalance);
-    let isCash = couponList[id].pay_restrict_list.includes('cash')
-    //微信支付专属优惠券
-    if(isCash && (payQueue[3]!=0 || payQueue[4]!=0 || useBalance)){
-      wx.showToast({
-        icon:"none",
-        title:"此优惠券只用于微信支付"
-      })
-      return
-    }
+    console.log(typeof payQueue[3]);
+    let isCash = false
     if (this.data.curtabid == 1) {
       if (curId == id) {
         curId = -1
       } else {
         curId = id
+        isCash = couponList[id].pay_restrict_list.includes('cash')
+        if(isCash && (payQueue[3]!==0 || payQueue[4]!==0 || useBalance)){
+          wx.showToast({
+            icon:"none",
+            title:"此优惠券只用于微信支付"
+          })
+          return
+        }
+        
       }
       this.setData({
         curId: curId
@@ -428,7 +427,7 @@ Page({
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
-          useBalance:res.pay_style.balance==1?true:false,
+          //useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -485,7 +484,7 @@ Page({
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
-          useBalance:res.pay_style.balance==1?true:false,
+          //useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -539,36 +538,36 @@ Page({
     }
 
     //初始优惠券
-    if (!biggest_discount.type) {
-      useCoupon = false
-      coupon = 0
-      this.setData({
-        useDiscount: false,
-        couponCheck: -1,
-        curId: -1
-      })
-    }
-    if (biggest_discount.type == 'promotion') {
-      let promotion = biggest_discount.promotion_info
-      useCoupon = true
-      coupon = promotion.promotion_price
-      this.setData({
-        useDiscount: true,
-        defaultCoupon: promotion.promotion_id,
-        couponCheck: promotion.promotion_id,
-        curId: promotion.promotion_id
-      })
-    }
-    if (biggest_discount.type == 'free_delivery') {
-      useCoupon = true
-      coupon = cart_data.default_delivery
-      this.setData({
-        useDiscount: true,
-        defaultCoupon: 1,
-        couponCheck: 1,
-        curId: 1
-      })
-    }
+    // if (!biggest_discount.type) {
+    //   useCoupon = false
+    //   coupon = 0
+    //   this.setData({
+    //     useDiscount: false,
+    //     couponCheck: -1,
+    //     curId: -1
+    //   })
+    // }
+    // if (biggest_discount.type == 'promotion') {
+    //   let promotion = biggest_discount.promotion_info
+    //   useCoupon = true
+    //   coupon = promotion.promotion_price
+    //   this.setData({
+    //     useDiscount: true,
+    //     defaultCoupon: promotion.promotion_id,
+    //     couponCheck: promotion.promotion_id,
+    //     curId: promotion.promotion_id
+    //   })
+    // }
+    // if (biggest_discount.type == 'free_delivery') {
+    //   useCoupon = true
+    //   coupon = cart_data.default_delivery
+    //   this.setData({
+    //     useDiscount: true,
+    //     defaultCoupon: 1,
+    //     couponCheck: 1,
+    //     curId: 1
+    //   })
+    // }
 
     //初始麦点抵扣
     if (hasMai) {
@@ -606,7 +605,7 @@ Page({
     //payPrice = parseFloat(payPrice)
     
     this.setData({
-      preUseBalancePrice: payPrice, //存一个初始可使用余额
+      preUseBalancePrice: payPrice, //存一个扣原麦减余额前合计支付金额
       payPrice: util.formatePrice(payPrice)
     })
     this.setBalancePrice()
@@ -638,27 +637,28 @@ Page({
       pwd_set
     } = this.data.balanceInfo, {
       useBalance,
-      verifyed
+      verifyed,
+      preUseBalancePrice
     } = this.data
     free_amount = parseFloat(free_amount)
 
-    if(this.data.pay_style.balance==10){
-      if (balanceNum >= payPrice) {
-        balanceTxt = this.data.payPrice
-      } else {
-        balanceTxt = balanceNum
-      }
-      this.setData({
-        balanceTxt:util.formatePrice(balanceTxt),
-      })
-      return
-    }
+    // if(this.data.pay_style.balance==10){
+    //   if (balanceNum >= payPrice) {
+    //     balanceTxt = this.data.payPrice
+    //   } else {
+    //     balanceTxt = balanceNum
+    //   }
+    //   this.setData({
+    //     balanceTxt:util.formatePrice(balanceTxt),
+    //   })
+    //   return
+    // }
 
     //扣除原麦余额
     if (useBalance) {
       if (balanceNum >= payPrice) {
         payPrice = 0
-        balanceTxt = this.data.preUseBalancePrice
+        balanceTxt = preUseBalancePrice
       } else {
         payPrice = util.floatObj().subtract(payPrice, balanceNum)
         balanceTxt = balanceNum
@@ -679,8 +679,14 @@ Page({
         payPrice: util.formatePrice(payPrice)      //合计需要支付
       })
     } else {
+      if (balanceNum >= preUseBalancePrice) {
+        balanceTxt = preUseBalancePrice
+      } else {
+        balanceTxt = balanceNum
+      }
       this.setData({
-        payPrice: util.formatePrice(this.data.preUseBalancePrice)
+        balanceTxt:util.formatePrice(balanceTxt),
+        payPrice: util.formatePrice(preUseBalancePrice)
       })
     }
   },
