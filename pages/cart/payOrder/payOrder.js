@@ -95,19 +95,22 @@ Page({
       cart_data
     } = this.data
     let newPayQueue = payQueue.slice(0)
-    let useCoupon, couponCheck, useDiscount
+    let useCoupon, couponCheck, useDiscount,isCouponForWx
     if (curId == -1) {
+      //未选择
       coupon = 0
       useCoupon = false
       couponCheck = -1
       useDiscount = false //是否使用推荐优惠
     } else {
-      console.log(curId);
+
+      console.log(                                                                       );
       if (defaultCoupon == curId) {
         useDiscount = true
       } else {
         useDiscount = false
       }
+      isCouponForWx = curId == 1?false:couponPrice[curId].pay_restrict==1
       coupon = curId == 1 ? cart_data.default_delivery : couponPrice[curId].promotion_price
       useCoupon = true
       couponCheck = curId
@@ -117,7 +120,8 @@ Page({
       useDiscount: useDiscount,
       useCoupon: useCoupon,
       couponCheck: couponCheck,
-      payQueue: newPayQueue
+      payQueue: newPayQueue,
+      isCouponForWx:isCouponForWx
     })
     //this.initOrderPrice()
     this.close()
@@ -125,20 +129,21 @@ Page({
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
     let {curId,couponList,payQueue,useBalance} = this.data
-    console.log(payQueue);
-    console.log(typeof payQueue[3]);
     let isCash = false
     if (this.data.curtabid == 1) {
       if (curId == id) {
         curId = -1
       } else {
+        //id==1 活动包邮
         curId = id
-        isCash = couponList[id].pay_restrict_list.includes('cash')
+        isCash = id==1?false:couponList.some(item=>{
+          return item.id == id && item.pay_restrict==1
+        })
         if(isCash && (payQueue[3]!==0 || payQueue[4]!==0 || useBalance)){
-          wx.showToast({
-            icon:"none",
-            title:"此优惠券只用于微信支付"
-          })
+          // wx.showToast({
+          //   icon:"none",
+          //   title:"此优惠券只用于微信支付"
+          // })
           return
         }
         
@@ -368,6 +373,7 @@ Page({
       choose_ziti: ziti,
       address_id: address_id
     }
+    let wxCouponNum = 0
     if (type == "1") {
       txtCard = null
       //面包
@@ -402,15 +408,17 @@ Page({
 
         let hasMai = res.jinmai.can
         //整理点击
-        var useShowStatus = {};
-        var unUsedShowStatus = {};
-        for (let index in cart_data.promotion_info) {
-          useShowStatus[index] = false;
-        }
+        let useShowStatus = {};
+        let unUsedShowStatus = {};
+        cart_data.promotion_info.forEach(item=>{
+          useShowStatus[item.id] = false;
+          if(item.pay_restrict==1){
+            wxCouponNum++
+          }
+        })
         for (let index in cart_data.promotion_info_unable) {
           unUsedShowStatus[index] = false;
         }
-
         let deliveryData = {};
         for(let deliveryDateIndex in res.delivery.delivery_times){
           for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
@@ -418,9 +426,7 @@ Page({
           }
         }
         this.data.deliveryData = deliveryData;
-        console.log(deliveryData)
-        console.log('---------------')
-        console.log(res.delivery);
+
         this.setData({
           biggest_discount: res.biggest_discount,
           hasMai: hasMai,
@@ -437,7 +443,8 @@ Page({
           unableCouponList: cart_data.promotion_info_unable,
           couponPrice: cart_data.promotion_price,
           useShowStatus,
-          unUsedShowStatus
+          unUsedShowStatus,
+          wxCouponNum
         })
         this.initOrderPrice()
         wx.reportAnalytics('payorder', {
@@ -468,6 +475,18 @@ Page({
 
         let hasMai = res.jinmai.can
         let detail = cart_data.detail
+        //整理点击
+        let useShowStatus = {};
+        let unUsedShowStatus = {};
+        cart_data.promotion_info.forEach(item=>{
+          useShowStatus[item.id] = false;
+          if(item.pay_restrict==1){
+            wxCouponNum++
+          }
+        })
+        for (let index in cart_data.promotion_info_unable) {
+          unUsedShowStatus[index] = false;
+        }
 
         detail.find(item => {
           if (item.is_fittings == 0 && item.is_mcake_message == 1) {
@@ -494,6 +513,11 @@ Page({
           unableCouponList: cart_data.promotion_info_unable,
           couponPrice: cart_data.promotion_price,
           txtCardObj: txtCard,
+          useShowStatus,
+          unUsedShowStatus,
+          useShowStatus,
+          unUsedShowStatus,
+          wxCouponNum
         })
         this.initOrderPrice()
         wx.reportAnalytics('payorder', {
@@ -611,13 +635,29 @@ Page({
     this.setBalancePrice()
   },
   switch (e) {
-    let useBalance = this.data.useBalance
+    let {useBalance,isCouponForWx} = this.data
     if (useBalance) {
       this.setData({
         useBalance: false,
         verifyed: true
       })
     } else {
+      if(isCouponForWx){
+        wx.showToast({
+          icon:"none",
+          title:"该券与原麦余额/现金卡/礼品卡不能共用"
+        })
+        this.setData({
+          shakeMotion:true,
+          useBalance: false
+        })
+        setTimeout(() => {
+          this.setData({
+            shakeMotion:false
+          })
+        }, 500);
+        return
+      }
       this.setData({
         useBalance: true,
         verifyed: false
@@ -638,7 +678,10 @@ Page({
     } = this.data.balanceInfo, {
       useBalance,
       verifyed,
-      preUseBalancePrice
+      preUseBalancePrice,
+      payQueue,
+      wxCouponNum,
+      cart_data
     } = this.data
     free_amount = parseFloat(free_amount)
 
@@ -689,6 +732,15 @@ Page({
         payPrice: util.formatePrice(preUseBalancePrice)
       })
     }
+    if(payQueue[3]!==0 || payQueue[4]!==0 || useBalance){
+      this.setData({
+        realCouponCount:cart_data.can_promotion_count-wxCouponNum
+      })
+    }else{
+      this.setData({
+        realCouponCount:cart_data.can_promotion_count
+      })
+    }
   },
   selectPolicy() {
     let hasPolicy = this.data.hasPolicy
@@ -706,6 +758,22 @@ Page({
   useCard(e) {
     let isUse = 0
     let type = e.currentTarget.dataset.type
+    if(this.data.isCouponForWx){
+      wx.showToast({
+        icon:"none",
+        title:"该券与原麦余额/现金卡/礼品卡不能共用"
+      })
+      this.setData({
+        shakeMotion:true,
+        useBalance: false
+      })
+      setTimeout(() => {
+        this.setData({
+          shakeMotion:false
+        })
+      }, 500);
+      return
+    }
     if (type == 1) {
       if (this.data.hasCard) {
         isUse = 1
@@ -920,7 +988,6 @@ Page({
     console.log('---支付参数---')
     console.log(data)
     console.log('------')
-    return
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
