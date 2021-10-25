@@ -271,6 +271,27 @@ Page({
     this.close()
   },
   close() {
+    let pop = this.data.pop
+    if(pop=='showCoupon'){
+      let {
+        couponCheck
+      } = this.data
+      if (couponCheck != -1) {
+        this.setData({
+          useCoupon: true,
+          curId: couponCheck,
+          pop: 0
+        })
+      } else {
+        this.setData({
+          useCoupon: false,
+          curId: -1,
+          couponCheck: -1,
+          pop: 0
+        })
+      }
+      return
+    }
     this.setData({
       startCheck:false,
       selectDate:this.data.checkDate,
@@ -728,6 +749,7 @@ Page({
         balanceTxt = balanceNum
       }
       this.setData({
+        verifyed:true,
         balanceTxt:util.formatePrice(balanceTxt),
         payPrice: util.formatePrice(preUseBalancePrice)
       })
@@ -987,7 +1009,6 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
-    console.log('------')
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
