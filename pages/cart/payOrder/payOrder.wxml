@@ -303,8 +303,6 @@
         </block>
       </scroll-view>
 
-      <!-- ---------------- -->
-
       <scroll-view class="time flex-1" scroll-y="{{true}}">
         <block wx:if="{{startCheck}}">
           <block wx:for="{{delivery.delivery_times[selectDate].time_range}}">

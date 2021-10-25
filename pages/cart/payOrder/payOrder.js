@@ -104,7 +104,6 @@ Page({
       useDiscount = false //是否使用推荐优惠
     } else {
 
-      console.log(                                                                       );
       if (defaultCoupon == curId) {
         useDiscount = true
       } else {
@@ -583,6 +582,8 @@ Page({
     }
 
     //初始优惠券
+    useCoupon = false
+    coupon = 0
     // if (!biggest_discount.type) {
     //   useCoupon = false
     //   coupon = 0
@@ -629,6 +630,9 @@ Page({
     console.log(newPayQueue)
 
     this.setData({
+      useDiscount: false,
+      couponCheck: -1,
+      curId: -1,
       useCoupon,
       hasDelivery,
       payQueue: newPayQueue,
@@ -653,7 +657,7 @@ Page({
       preUseBalancePrice: payPrice, //存一个扣原麦减余额前合计支付金额
       payPrice: util.formatePrice(payPrice)
     })
-    this.setBalancePrice()
+    this.setBalancePrice(payQueue)
   },
   switch (e) {
     let {useBalance,isCouponForWx} = this.data
@@ -687,7 +691,8 @@ Page({
     this.setBalancePrice()
   },
   //抵余额扣与否  
-  setBalancePrice() {
+  setBalancePrice(payQueue) {
+    let newPayQueue = payQueue || this.data.payQueue
     let balanceNum = parseFloat(this.data.balance),
       payPrice = parseFloat(this.data.payPrice),
       balanceTxt = ''
@@ -700,7 +705,6 @@ Page({
       useBalance,
       verifyed,
       preUseBalancePrice,
-      payQueue,
       wxCouponNum,
       cart_data
     } = this.data
@@ -754,7 +758,7 @@ Page({
         payPrice: util.formatePrice(preUseBalancePrice)
       })
     }
-    if(payQueue[3]!==0 || payQueue[4]!==0 || useBalance){
+    if(useBalance || newPayQueue[3]!==0 || newPayQueue[4]!==0){
       this.setData({
         realCouponCount:cart_data.can_promotion_count-wxCouponNum
       })
@@ -811,7 +815,7 @@ Page({
     })
   },
   setCardPrice(price, type, card_no, card_pwd) {
-    let payQueue = this.data.payQueue
+    let {payQueue} = this.data
     let newPayQueue = payQueue.slice(0)
     if (type == 1) {
       newPayQueue[3] = price
@@ -1345,7 +1349,6 @@ Page({
             verifyed: true
           })
           if (this.data.balanceInfo.pwd_set == 0) {
-            //this.setBalancePrice()
             this.setData({
               'balanceInfo.pwd_set': 1
             })
@@ -1387,7 +1390,6 @@ Page({
           unuse: true
         })
         if (this.data.balanceInfo.pwd_set == 0) {
-          //this.setBalancePrice()
           this.setData({
             'balanceInfo.pwd_set': 1
           })
