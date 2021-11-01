@@ -179,21 +179,22 @@ Page({
     })
   },
   Settlement(){
-    let {cakeLi,breadLi}=this.data
-    let isBread = breadLi.some(item => {
-      return item.is_selected == "1"
-    })
-    let isCake = cakeLi.some(item => {
-      return item.is_selected == "1"
-    })
-    if (isBread && isCake) {
-      this.setData({
-        pop:"order-panel"
-      })
+    // let {cakeLi,breadLi}=this.data
+    // let isBread = breadLi.some(item => {
+    //   return item.is_selected == "1"
+    // })
+    // let isCake = cakeLi.some(item => {
+    //   return item.is_selected == "1"
+    // })
+    // if (isBread && isCake) {
+    //   this.setData({
+    //     pop:"order-panel"
+    //   })
       
-    }else{
-      this.getOrder()
-    }
+    // }else{
+    //   this.getOrder()
+    // }
+    this.getOrder()
   },
   getOrder: util.debounce(function (e) {
     wx.showLoading({mask:true})
@@ -211,7 +212,7 @@ Page({
 
     let data = {
       city_id: city_id,
-      type: type
+      //type: type
     }
     if (parseFloat(totalPrice) == 0) {
       wx.showToast({
