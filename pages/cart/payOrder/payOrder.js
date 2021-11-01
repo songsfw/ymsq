@@ -45,7 +45,7 @@ Page({
     hasCard: false,
     hasThirdCard: false,
     hasCoupon: false,
-    useBalance: true,
+    useBalance: false,
     hasPolicy: true,
 
     ziti: "0",
@@ -95,52 +95,60 @@ Page({
       cart_data
     } = this.data
     let newPayQueue = payQueue.slice(0)
-    let useCoupon, couponCheck, useDiscount
+    let useCoupon, couponCheck, useDiscount,isCouponForWx
     if (curId == -1) {
+      //未选择
       coupon = 0
-      useCoupon = false,
-        couponCheck = -1
+      useCoupon = false
+      couponCheck = -1
       useDiscount = false //是否使用推荐优惠
     } else {
-      console.log(curId);
+
       if (defaultCoupon == curId) {
         useDiscount = true
       } else {
         useDiscount = false
       }
+      isCouponForWx = curId == 1?false:couponPrice[curId].pay_restrict==1
       coupon = curId == 1 ? cart_data.default_delivery : couponPrice[curId].promotion_price
-      useCoupon = true,
-        couponCheck = curId
+      useCoupon = true
+      couponCheck = curId
     }
     newPayQueue[2] = util.formatePrice(coupon)
     this.setData({
       useDiscount: useDiscount,
       useCoupon: useCoupon,
       couponCheck: couponCheck,
-      payQueue: newPayQueue
+      payQueue: newPayQueue,
+      isCouponForWx:isCouponForWx
     })
     //this.initOrderPrice()
     this.close()
   },
   selectCoupon(e) {
     let id = e.currentTarget.dataset.id
-    let {
-      curId
-    } = this.data
-    console.log(id)
-    let {
-      couponList
-    } = this.data
-
+    let {curId,couponList,payQueue,useBalance} = this.data
+    let isCash = false
     if (this.data.curtabid == 1) {
       if (curId == id) {
         curId = -1
       } else {
+        //id==1 活动包邮
         curId = id
+        isCash = id==1?false:couponList.some(item=>{
+          return item.id == id && item.pay_restrict==1
+        })
+        if(isCash && (payQueue[3]!==0 || payQueue[4]!==0 || useBalance)){
+          // wx.showToast({
+          //   icon:"none",
+          //   title:"此优惠券只用于微信支付"
+          // })
+          return
+        }
+        
       }
       this.setData({
-        curId: curId,
-        couponList
+        curId: curId
       })
     }
   },
@@ -262,6 +270,27 @@ Page({
     this.close()
   },
   close() {
+    let pop = this.data.pop
+    if(pop=='showCoupon'){
+      let {
+        couponCheck
+      } = this.data
+      if (couponCheck != -1) {
+        this.setData({
+          useCoupon: true,
+          curId: couponCheck,
+          pop: 0
+        })
+      } else {
+        this.setData({
+          useCoupon: false,
+          curId: -1,
+          couponCheck: -1,
+          pop: 0
+        })
+      }
+      return
+    }
     this.setData({
       startCheck:false,
       selectDate:this.data.checkDate,
@@ -364,6 +393,7 @@ Page({
       choose_ziti: ziti,
       address_id: address_id
     }
+    let wxCouponNum = 0
     if (type == "1") {
       txtCard = null
       //面包
@@ -398,15 +428,17 @@ Page({
 
         let hasMai = res.jinmai.can
         //整理点击
-        var useShowStatus = {};
-        var unUsedShowStatus = {};
-        for (let index in cart_data.promotion_info) {
-          useShowStatus[index] = false;
-        }
+        let useShowStatus = {};
+        let unUsedShowStatus = {};
+        cart_data.promotion_info.forEach(item=>{
+          useShowStatus[item.id] = false;
+          if(item.pay_restrict==1){
+            wxCouponNum++
+          }
+        })
         for (let index in cart_data.promotion_info_unable) {
           unUsedShowStatus[index] = false;
         }
-
         let deliveryData = {};
         for(let deliveryDateIndex in res.delivery.delivery_times){
           for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
@@ -414,16 +446,14 @@ Page({
           }
         }
         this.data.deliveryData = deliveryData;
-        console.log(deliveryData)
-        console.log('---------------')
-        console.log(res.delivery);
+
         this.setData({
           biggest_discount: res.biggest_discount,
           hasMai: hasMai,
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
-          useBalance:res.pay_style.balance==1?true:false,
+          //useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -433,7 +463,8 @@ Page({
           unableCouponList: cart_data.promotion_info_unable,
           couponPrice: cart_data.promotion_price,
           useShowStatus,
-          unUsedShowStatus
+          unUsedShowStatus,
+          wxCouponNum
         })
         this.initOrderPrice()
         wx.reportAnalytics('payorder', {
@@ -464,6 +495,18 @@ Page({
 
         let hasMai = res.jinmai.can
         let detail = cart_data.detail
+        //整理点击
+        let useShowStatus = {};
+        let unUsedShowStatus = {};
+        cart_data.promotion_info.forEach(item=>{
+          useShowStatus[item.id] = false;
+          if(item.pay_restrict==1){
+            wxCouponNum++
+          }
+        })
+        for (let index in cart_data.promotion_info_unable) {
+          unUsedShowStatus[index] = false;
+        }
 
         detail.find(item => {
           if (item.is_fittings == 0 && item.is_mcake_message == 1) {
@@ -480,7 +523,7 @@ Page({
           address: res.address,
           balance: res.balance,
           balanceInfo: res.balance_config,
-          useBalance:res.pay_style.balance==1?true:false,
+          //useBalance:res.pay_style.balance==1?true:false,
           pay_style: res.pay_style,
           jinmai: res.jinmai,
           delivery: res.delivery,
@@ -490,6 +533,11 @@ Page({
           unableCouponList: cart_data.promotion_info_unable,
           couponPrice: cart_data.promotion_price,
           txtCardObj: txtCard,
+          useShowStatus,
+          unUsedShowStatus,
+          useShowStatus,
+          unUsedShowStatus,
+          wxCouponNum
         })
         this.initOrderPrice()
         wx.reportAnalytics('payorder', {
@@ -534,36 +582,38 @@ Page({
     }
 
     //初始优惠券
-    if (!biggest_discount.type) {
-      useCoupon = false
-      coupon = 0
-      this.setData({
-        useDiscount: false,
-        couponCheck: -1,
-        curId: -1
-      })
-    }
-    if (biggest_discount.type == 'promotion') {
-      let promotion = biggest_discount.promotion_info
-      useCoupon = true
-      coupon = promotion.promotion_price
-      this.setData({
-        useDiscount: true,
-        defaultCoupon: promotion.promotion_id,
-        couponCheck: promotion.promotion_id,
-        curId: promotion.promotion_id
-      })
-    }
-    if (biggest_discount.type == 'free_delivery') {
-      useCoupon = true
-      coupon = cart_data.default_delivery
-      this.setData({
-        useDiscount: true,
-        defaultCoupon: 1,
-        couponCheck: 1,
-        curId: 1
-      })
-    }
+    useCoupon = false
+    coupon = 0
+    // if (!biggest_discount.type) {
+    //   useCoupon = false
+    //   coupon = 0
+    //   this.setData({
+    //     useDiscount: false,
+    //     couponCheck: -1,
+    //     curId: -1
+    //   })
+    // }
+    // if (biggest_discount.type == 'promotion') {
+    //   let promotion = biggest_discount.promotion_info
+    //   useCoupon = true
+    //   coupon = promotion.promotion_price
+    //   this.setData({
+    //     useDiscount: true,
+    //     defaultCoupon: promotion.promotion_id,
+    //     couponCheck: promotion.promotion_id,
+    //     curId: promotion.promotion_id
+    //   })
+    // }
+    // if (biggest_discount.type == 'free_delivery') {
+    //   useCoupon = true
+    //   coupon = cart_data.default_delivery
+    //   this.setData({
+    //     useDiscount: true,
+    //     defaultCoupon: 1,
+    //     couponCheck: 1,
+    //     curId: 1
+    //   })
+    // }
 
     //初始麦点抵扣
     if (hasMai) {
@@ -580,6 +630,9 @@ Page({
     console.log(newPayQueue)
 
     this.setData({
+      useDiscount: false,
+      couponCheck: -1,
+      curId: -1,
       useCoupon,
       hasDelivery,
       payQueue: newPayQueue,
@@ -601,19 +654,35 @@ Page({
     //payPrice = parseFloat(payPrice)
     
     this.setData({
-      preUseBalancePrice: payPrice, //存一个初始可使用余额
+      preUseBalancePrice: payPrice, //存一个扣原麦减余额前合计支付金额
       payPrice: util.formatePrice(payPrice)
     })
-    this.setBalancePrice()
+    this.setBalancePrice(payQueue)
   },
   switch (e) {
-    let useBalance = this.data.useBalance
+    let {useBalance,isCouponForWx} = this.data
     if (useBalance) {
       this.setData({
         useBalance: false,
         verifyed: true
       })
     } else {
+      if(isCouponForWx){
+        wx.showToast({
+          icon:"none",
+          title:"该券与原麦余额/现金卡/礼品卡不能共用"
+        })
+        this.setData({
+          shakeMotion:true,
+          useBalance: false
+        })
+        setTimeout(() => {
+          this.setData({
+            shakeMotion:false
+          })
+        }, 500);
+        return
+      }
       this.setData({
         useBalance: true,
         verifyed: false
@@ -622,7 +691,8 @@ Page({
     this.setBalancePrice()
   },
   //抵余额扣与否  
-  setBalancePrice() {
+  setBalancePrice(payQueue) {
+    let newPayQueue = payQueue || this.data.payQueue
     let balanceNum = parseFloat(this.data.balance),
       payPrice = parseFloat(this.data.payPrice),
       balanceTxt = ''
@@ -633,27 +703,30 @@ Page({
       pwd_set
     } = this.data.balanceInfo, {
       useBalance,
-      verifyed
+      verifyed,
+      preUseBalancePrice,
+      wxCouponNum,
+      cart_data
     } = this.data
     free_amount = parseFloat(free_amount)
 
-    if(this.data.pay_style.balance==10){
-      if (balanceNum >= payPrice) {
-        balanceTxt = this.data.payPrice
-      } else {
-        balanceTxt = balanceNum
-      }
-      this.setData({
-        balanceTxt:util.formatePrice(balanceTxt),
-      })
-      return
-    }
+    // if(this.data.pay_style.balance==10){
+    //   if (balanceNum >= payPrice) {
+    //     balanceTxt = this.data.payPrice
+    //   } else {
+    //     balanceTxt = balanceNum
+    //   }
+    //   this.setData({
+    //     balanceTxt:util.formatePrice(balanceTxt),
+    //   })
+    //   return
+    // }
 
     //扣除原麦余额
     if (useBalance) {
       if (balanceNum >= payPrice) {
         payPrice = 0
-        balanceTxt = this.data.preUseBalancePrice
+        balanceTxt = preUseBalancePrice
       } else {
         payPrice = util.floatObj().subtract(payPrice, balanceNum)
         balanceTxt = balanceNum
@@ -674,8 +747,24 @@ Page({
         payPrice: util.formatePrice(payPrice)      //合计需要支付
       })
     } else {
+      if (balanceNum >= preUseBalancePrice) {
+        balanceTxt = preUseBalancePrice
+      } else {
+        balanceTxt = balanceNum
+      }
       this.setData({
-        payPrice: util.formatePrice(this.data.preUseBalancePrice)
+        verifyed:true,
+        balanceTxt:util.formatePrice(balanceTxt),
+        payPrice: util.formatePrice(preUseBalancePrice)
+      })
+    }
+    if(useBalance || newPayQueue[3]!==0 || newPayQueue[4]!==0){
+      this.setData({
+        realCouponCount:cart_data.can_promotion_count-wxCouponNum
+      })
+    }else{
+      this.setData({
+        realCouponCount:cart_data.can_promotion_count
       })
     }
   },
@@ -695,6 +784,22 @@ Page({
   useCard(e) {
     let isUse = 0
     let type = e.currentTarget.dataset.type
+    if(this.data.isCouponForWx){
+      wx.showToast({
+        icon:"none",
+        title:"该券与原麦余额/现金卡/礼品卡不能共用"
+      })
+      this.setData({
+        shakeMotion:true,
+        useBalance: false
+      })
+      setTimeout(() => {
+        this.setData({
+          shakeMotion:false
+        })
+      }, 500);
+      return
+    }
     if (type == 1) {
       if (this.data.hasCard) {
         isUse = 1
@@ -710,7 +815,7 @@ Page({
     })
   },
   setCardPrice(price, type, card_no, card_pwd) {
-    let payQueue = this.data.payQueue
+    let {payQueue} = this.data
     let newPayQueue = payQueue.slice(0)
     if (type == 1) {
       newPayQueue[3] = price
@@ -908,7 +1013,6 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
-    console.log('------')
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
@@ -1245,7 +1349,6 @@ Page({
             verifyed: true
           })
           if (this.data.balanceInfo.pwd_set == 0) {
-            //this.setBalancePrice()
             this.setData({
               'balanceInfo.pwd_set': 1
             })
@@ -1287,7 +1390,6 @@ Page({
           unuse: true
         })
         if (this.data.balanceInfo.pwd_set == 0) {
-          //this.setBalancePrice()
           this.setData({
             'balanceInfo.pwd_set': 1
           })
