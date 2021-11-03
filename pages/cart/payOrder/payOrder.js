@@ -379,8 +379,6 @@ Page({
     })
     let {
       type,
-      useBalance,
-      verifyed,
       city_id,
       is_ziti,
       ziti,
@@ -397,155 +395,235 @@ Page({
     if (type == "1") {
       txtCard = null
       //面包
-      api.getOrderBread(data).then(res => {
-        console.log(res);
-        wx.hideLoading();
-        if (!res) {
-          return
-        }
+      // api.getOrderBread(data).then(res => {
+      //   console.log(res);
+      //   wx.hideLoading();
+      //   if (!res) {
+      //     return
+      //   }
 
-        if(res.address && res.address.is_address && !res.address.address_allow_delivery){
-          wx.showToast({
-            icon: "none",
-            title: "当前选中地址无法配送，请选择可用地址",
-            duration: 3000
-          })
-        }
+      //   if(res.address && res.address.is_address && !res.address.address_allow_delivery){
+      //     wx.showToast({
+      //       icon: "none",
+      //       title: "当前选中地址无法配送，请选择可用地址",
+      //       duration: 3000
+      //     })
+      //   }
 
-        let cart_data = res.cart_data
-        let newcart_data = {
-          can_promotion_count: cart_data.can_promotion_count,
-          can_use_promotion: cart_data.can_use_promotion,
-          change_delivery_price: cart_data.change_delivery_price,
-          default_delivery: cart_data.default_delivery,
-          delivery_price: cart_data.delivery_price,
-          free_msg: cart_data.free_msg,
-          free_type: cart_data.free_type,
-          number: cart_data.total_number,
-          price: cart_data.select_price,
-          total_price: cart_data.total_price
-        }
+      //   let cart_data = res.cart_data
+      //   let newcart_data = {
+      //     can_promotion_count: cart_data.can_promotion_count,
+      //     can_use_promotion: cart_data.can_use_promotion,
+      //     change_delivery_price: cart_data.change_delivery_price,
+      //     default_delivery: cart_data.default_delivery,
+      //     delivery_price: cart_data.delivery_price,
+      //     free_msg: cart_data.free_msg,
+      //     free_type: cart_data.free_type,
+      //     number: cart_data.total_number,
+      //     price: cart_data.select_price,
+      //     total_price: cart_data.total_price
+      //   }
 
-        let hasMai = res.jinmai.can
-        //整理点击
-        let useShowStatus = {};
-        let unUsedShowStatus = {};
-        cart_data.promotion_info.forEach(item=>{
-          useShowStatus[item.id] = false;
-          if(item.pay_restrict==1){
-            wxCouponNum++
-          }
-        })
-        for (let index in cart_data.promotion_info_unable) {
-          unUsedShowStatus[index] = false;
-        }
-        let deliveryData = {};
-        for(let deliveryDateIndex in res.delivery.delivery_times){
-          for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
-            deliveryData[deliveryDateIndex+"_"+deliveryTimeIndex] = res.delivery.delivery_times[deliveryDateIndex]['date']+'_'+res.delivery.delivery_times[deliveryDateIndex]['time_range'][deliveryTimeIndex]['range'];
-          }
-        }
-        this.data.deliveryData = deliveryData;
+      //   let hasMai = res.jinmai.can
+      //   //整理点击
+      //   let useShowStatus = {};
+      //   let unUsedShowStatus = {};
+      //   cart_data.promotion_info.forEach(item=>{
+      //     useShowStatus[item.id] = false;
+      //     if(item.pay_restrict==1){
+      //       wxCouponNum++
+      //     }
+      //   })
+      //   for (let index in cart_data.promotion_info_unable) {
+      //     unUsedShowStatus[index] = false;
+      //   }
+      //   let deliveryData = {};
+      //   for(let deliveryDateIndex in res.delivery.delivery_times){
+      //     for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
+      //       deliveryData[deliveryDateIndex+"_"+deliveryTimeIndex] = res.delivery.delivery_times[deliveryDateIndex]['date']+'_'+res.delivery.delivery_times[deliveryDateIndex]['time_range'][deliveryTimeIndex]['range'];
+      //     }
+      //   }
+      //   this.data.deliveryData = deliveryData;
 
-        this.setData({
-          biggest_discount: res.biggest_discount,
-          hasMai: hasMai,
-          address: res.address,
-          balance: res.balance,
-          balanceInfo: res.balance_config,
-          //useBalance:res.pay_style.balance==1?true:false,
-          pay_style: res.pay_style,
-          jinmai: res.jinmai,
-          delivery: res.delivery,
-          cart_data: newcart_data,
-          proList: cart_data.detail,
-          couponList: cart_data.promotion_info,
-          unableCouponList: cart_data.promotion_info_unable,
-          couponPrice: cart_data.promotion_price,
-          useShowStatus,
-          unUsedShowStatus,
-          wxCouponNum
-        })
-        this.initOrderPrice()
-        wx.reportAnalytics('payorder', {
-          type: "面包",
-          total_price: cart_data.total_price,
-        });
-      })
+      //   this.setData({
+      //     biggest_discount: res.biggest_discount,
+      //     hasMai: hasMai,
+      //     address: res.address,
+      //     balance: res.balance,
+      //     balanceInfo: res.balance_config,
+      //     //useBalance:res.pay_style.balance==1?true:false,
+      //     pay_style: res.pay_style,
+      //     jinmai: res.jinmai,
+      //     delivery: res.delivery,
+      //     cart_data: newcart_data,
+      //     proList: cart_data.detail,
+      //     couponList: cart_data.promotion_info,
+      //     unableCouponList: cart_data.promotion_info_unable,
+      //     couponPrice: cart_data.promotion_price,
+      //     useShowStatus,
+      //     unUsedShowStatus,
+      //     wxCouponNum
+      //   })
+      //   this.initOrderPrice()
+      //   wx.reportAnalytics('payorder', {
+      //     type: "面包",
+      //     total_price: cart_data.total_price,
+      //   });
+      // })
 
     } else {
       txtCard = {}
       //蛋糕
-      api.getOrderCake(data).then(res => {
-        wx.hideLoading();
-        console.log(res);
-        let cart_data = res.cart_data
-        let newcart_data = {
-          can_promotion_count: cart_data.can_promotion_count,
-          can_use_promotion: cart_data.can_use_promotion,
-          change_delivery_price: cart_data.change_delivery_price,
-          default_delivery: cart_data.default_delivery,
-          delivery_price: cart_data.delivery_price,
-          free_msg: cart_data.free_msg,
-          free_type: cart_data.free_type,
-          number: cart_data.total_number,
-          price: cart_data.select_price,
-          total_price: cart_data.total_price
-        }
+      // api.getOrderCake(data).then(res => {
+      //   wx.hideLoading();
+      //   console.log(res);
+      //   let cart_data = res.cart_data
+      //   let newcart_data = {
+      //     can_promotion_count: cart_data.can_promotion_count,
+      //     can_use_promotion: cart_data.can_use_promotion,
+      //     change_delivery_price: cart_data.change_delivery_price,
+      //     default_delivery: cart_data.default_delivery,
+      //     delivery_price: cart_data.delivery_price,
+      //     free_msg: cart_data.free_msg,
+      //     free_type: cart_data.free_type,
+      //     number: cart_data.total_number,
+      //     price: cart_data.select_price,
+      //     total_price: cart_data.total_price
+      //   }
 
-        let hasMai = res.jinmai.can
-        let detail = cart_data.detail
-        //整理点击
-        let useShowStatus = {};
-        let unUsedShowStatus = {};
-        cart_data.promotion_info.forEach(item=>{
-          useShowStatus[item.id] = false;
-          if(item.pay_restrict==1){
-            wxCouponNum++
-          }
-        })
-        for (let index in cart_data.promotion_info_unable) {
-          unUsedShowStatus[index] = false;
-        }
+      //   let hasMai = res.jinmai.can
+      //   let detail = cart_data.detail
+      //   //整理点击
+      //   let useShowStatus = {};
+      //   let unUsedShowStatus = {};
+      //   cart_data.promotion_info.forEach(item=>{
+      //     useShowStatus[item.id] = false;
+      //     if(item.pay_restrict==1){
+      //       wxCouponNum++
+      //     }
+      //   })
+      //   for (let index in cart_data.promotion_info_unable) {
+      //     unUsedShowStatus[index] = false;
+      //   }
 
-        detail.find(item => {
-          if (item.is_fittings == 0 && item.is_mcake_message == 1) {
-            txtCard[item.cart_id] = item.default_mcake_message
-          }
-        })
+      //   detail.find(item => {
+      //     if (item.is_fittings == 0 && item.is_mcake_message == 1) {
+      //       txtCard[item.cart_id] = item.default_mcake_message
+      //     }
+      //   })
 
-        console.log(txtCard);
+      //   console.log(txtCard);
 
-        this.setData({
-          biggest_discount: res.biggest_discount,
-          hasMai: hasMai,
-          fittings_desc: res.fittings_desc,
-          address: res.address,
-          balance: res.balance,
-          balanceInfo: res.balance_config,
-          //useBalance:res.pay_style.balance==1?true:false,
-          pay_style: res.pay_style,
-          jinmai: res.jinmai,
-          delivery: res.delivery,
-          cart_data: newcart_data,
-          proList: cart_data.detail,
-          couponList: cart_data.promotion_info,
-          unableCouponList: cart_data.promotion_info_unable,
-          couponPrice: cart_data.promotion_price,
-          txtCardObj: txtCard,
-          useShowStatus,
-          unUsedShowStatus,
-          useShowStatus,
-          unUsedShowStatus,
-          wxCouponNum
-        })
-        this.initOrderPrice()
-        wx.reportAnalytics('payorder', {
-          type: "蛋糕",
-          total_price: cart_data.total_price,
-        });
-      })
+      //   this.setData({
+      //     biggest_discount: res.biggest_discount,
+      //     hasMai: hasMai,
+      //     fittings_desc: res.fittings_desc,
+      //     address: res.address,
+      //     balance: res.balance,
+      //     balanceInfo: res.balance_config,
+      //     //useBalance:res.pay_style.balance==1?true:false,
+      //     pay_style: res.pay_style,
+      //     jinmai: res.jinmai,
+      //     delivery: res.delivery,
+      //     cart_data: newcart_data,
+      //     proList: cart_data.detail,
+      //     couponList: cart_data.promotion_info,
+      //     unableCouponList: cart_data.promotion_info_unable,
+      //     couponPrice: cart_data.promotion_price,
+      //     txtCardObj: txtCard,
+      //     useShowStatus,
+      //     unUsedShowStatus,
+      //     wxCouponNum
+      //   })
+      //   this.initOrderPrice()
+      //   wx.reportAnalytics('payorder', {
+      //     type: "蛋糕",
+      //     total_price: cart_data.total_price,
+      //   });
+      // })
     }
+    api.getMixOrder(data).then(res => {
+      console.log(res);
+      wx.hideLoading();
+      if (!res) {
+        return
+      }
+
+      if(res.address && res.address.is_address && !res.address.address_allow_delivery){
+        wx.showToast({
+          icon: "none",
+          title: "当前选中地址无法配送，请选择可用地址",
+          duration: 3000
+        })
+      }
+
+      let cart_data = res.cart_data
+      let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
+      let {promotion_info,promotion_info_unable,promotion_price} = res
+      // let newcart_data = {
+      //   can_promotion_count: cart_data.can_promotion_count,
+      //   can_use_promotion: cart_data.can_use_promotion,
+      //   change_delivery_price: cart_data.change_delivery_price,
+      //   default_delivery: cart_data.default_delivery,
+      //   delivery_price: cart_data.delivery_price,
+      //   free_msg: cart_data.free_msg,
+      //   free_type: cart_data.free_type,
+      //   number: cart_data.total_number,
+      //   price: cart_data.select_price,
+      //   total_price: cart_data.total_price
+      // }
+
+      let hasMai = res.jinmai.can
+      let detail = cakeOrder.detail
+      //整理点击
+      let useShowStatus = {};
+      let unUsedShowStatus = {};
+      promotion_info.forEach(item=>{
+        useShowStatus[item.id] = false;
+        if(item.pay_restrict==1){
+          wxCouponNum++
+        }
+      })
+      for (let index in promotion_info_unable) {
+        unUsedShowStatus[index] = false;
+      }
+      detail.find(item => {
+        if (item.is_fittings == 0 && item.is_mcake_message == 1) {
+          txtCard[item.cart_id] = item.default_mcake_message
+        }
+      })
+      // let deliveryData = {};
+      // for(let deliveryDateIndex in res.delivery.delivery_times){
+      //   for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
+      //     deliveryData[deliveryDateIndex+"_"+deliveryTimeIndex] = res.delivery.delivery_times[deliveryDateIndex]['date']+'_'+res.delivery.delivery_times[deliveryDateIndex]['time_range'][deliveryTimeIndex]['range'];
+      //   }
+      // }
+      // this.data.deliveryData = deliveryData;
+
+      this.setData({
+        biggest_discount: res.biggest_discount,
+        hasMai: hasMai,
+        fittings_desc: res.fittings_desc,
+        address: res.address,
+        balance: res.balance,
+        balanceInfo: res.balance_config,
+        pay_style: res.pay_style,
+        jinmai: res.jinmai,
+        delivery: res.delivery,
+        //cart_data: cart_data,
+        breadOrder:breadOrder,
+        cakeOrder:cakeOrder,
+        collect:res.collect,
+        couponList: promotion_info,
+        unableCouponList: promotion_info_unable,
+        couponPrice: promotion_price,
+        txtCardObj: txtCard,
+        useShowStatus,
+        unUsedShowStatus,
+        wxCouponNum
+      })
+      this.initOrderPrice()
+    })
   },
   //初始化订单金额 扣除麦点 余额
   //hasDelivery false 免邮 10
@@ -642,7 +720,7 @@ Page({
     
   },
   setPayPrice(payQueue) {
-    let payPrice = this.data.cart_data.price
+    let payPrice = this.data.collect.select_price
     //初始总价依次减去支付队列中的抵扣额
     payPrice = payQueue.reduce((pre, cur) => {
       return util.floatObj().subtract(pre, cur)
@@ -1533,7 +1611,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //this.getUserLocation()
     let userInfo = wx.getStorageSync('userInfo')
     let btmHolder = wx.getStorageSync('btmHolder')
     let type = options.type

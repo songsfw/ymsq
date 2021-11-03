@@ -179,18 +179,18 @@ Page({
     })
   },
   Settlement(){
-    // let {cakeLi,breadLi}=this.data
-    // let isBread = breadLi.some(item => {
-    //   return item.is_selected == "1"
-    // })
-    // let isCake = cakeLi.some(item => {
-    //   return item.is_selected == "1"
-    // })
-    // if (isBread && isCake) {
-    //   this.setData({
-    //     pop:"order-panel"
-    //   })
-      
+    let {cakeLi,breadLi}=this.data
+    let isBread = breadLi.some(item => {
+      return item.is_selected == "1"
+    })
+    let isCake = cakeLi.some(item => {
+      return item.is_selected == "1"
+    })
+    if (isBread && isCake) {
+      this.setData({
+        type:20
+      })
+    }
     // }else{
     //   this.getOrder()
     // }
@@ -209,7 +209,6 @@ Page({
       totalPrice,
       city_id
     } = this.data
-
     let data = {
       city_id: city_id,
       //type: type

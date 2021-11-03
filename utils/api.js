@@ -240,6 +240,11 @@ const commitChart = (data) => {
   return POST(baseUrl+"/cart/commit",data).then(res => returnData(res))
 }
 
+//混合订单
+const getMixOrder = (data) => {
+  return POST(baseUrl+"/order/cart",data).then(res => returnData(res))
+}
+
 //面包订单
 const getOrderBread = (data) => {
   return POST(baseUrl+"/order/bread-cart",data).then(res => returnData(res))
@@ -506,5 +511,6 @@ module.exports = {
   startGame,
   exChangeCoupon,
   getDeliveryLocal,
-  checkAddressInMap
+  checkAddressInMap,
+  getMixOrder
 }

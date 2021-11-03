@@ -70,13 +70,76 @@
       <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
     </view>
   </view>
-  <view class="pro-info">
+  <view class="pro-info" wx:if="{{breadOrder}}">
     <view class="hd flex-center">
       <view>商品信息</view>
-      <text>共计{{cart_data.number}}件商品</text>
+      <text>共计{{breadOrder.total_number}}件商品</text>
     </view>
     <view class="pro-wp">
-      <view class="item" wx:if="{{index<3}}" wx:for="{{proList}}">
+      <view class="item" wx:if="{{index<3}}" wx:for="{{breadOrder.detail}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+                <text>约{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+              <text>{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{proList.length>3}}" bind:tap="showAllPro">
+      <view wx:if="{{!showAll}}">查看更多商品</view>
+      <view wx:else>收起</view>
+      <text class="iconfont icon-arrow-btm"></text>
+    </view>
+  </view>
+  <view class="pro-info" wx:if="{{cakeOrder}}">
+    <view class="hd flex-center">
+      <view>商品信息</view>
+      <text>共计{{cakeOrder.total_number}}件商品</text>
+    </view>
+    <view class="pro-wp">
+      <view class="item" wx:if="{{index<3}}" wx:for="{{cakeOrder.detail}}">
         <view class="flex">
           <view class="pic">
             <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
@@ -162,33 +225,23 @@
       <view wx:for="{{fittings_desc}}" class="flex"><image src="../../../image/icon-dot.png" wx:if="{{item.marked==0}}"></image><image src="../../../image/icon-dot2.png" wx:else></image> <view>{{item.desc}}</view></view>
     </view>
   </view>
-  <!-- <view class="inputbox flex-center" wx:if="{{type==2}}">
-    <view>订单备注</view>
-    <input class="flex-1" type="text" placeholder="请输入内容" maxlength="200" bindinput="inputRemark"
-      placeholder-style="color:#aaa" />
-  </view> -->
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>
-      <view class="val"><text style="color:#222">￥{{cart_data.price}}</text><text class="arrow-r"></text></view>
+      <view class="val"><text style="color:#222">￥{{collect.price}}</text><text class="arrow-r"></text></view>
     </view>
     <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
         配送费
-        <text wx:if="{{cart_data.free_msg!=''}}">{{cart_data.free_msg}}</text>
+        <text wx:if="{{breadOrder.free_msg!=''}}">{{breadOrder.free_msg}}</text>
       </view>
       <view class="val strongTxt">
-        <text style="color:#222">￥{{hasDelivery?cart_data.delivery_price:'0'}}.00</text><text class="arrow-r"></text>
+        <text style="color:#222">￥{{hasDelivery?collect.delivery_price:'0'}}.00</text><text class="arrow-r"></text>
       </view>
     </view>
-    <!-- <view class="delivery-tip" wx:if="{{useCoupon}}">
-      <text class="iconfont icon-notice"></text>
-      {{delivertTip}}
-    </view> -->
     <view class="flex-center" bind:tap="showPop" data-pop="showScore" wx:if="{{pay_style.point==1}}">
       <view class="name">
         麦点 <text style="font-size:12px;color:#aaa">(共：{{jinmai.total_point <=0 ?'0':jinmai.total_point}})</text>
-        <!-- <image src="../../../image/icon-mai.png"></image> -->
       </view>
       <view class="val">
         <block wx:if="{{hasMai}}"><text class="strongTxt">-￥{{payQueue[1]}}</text></block>
@@ -206,7 +259,7 @@
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
         <block wx:if="{{useCoupon}}"><text>-￥{{payQueue[2]}}</text></block>
-        <block wx:else><text style="color:red">{{realCouponCount+(cart_data.free_type==2?1:0)}}张可用</text>
+        <block wx:else><text style="color:red">{{realCouponCount+(breadOrder.free_type==2?1:0)}}张可用</text>
         </block>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
@@ -280,9 +333,6 @@
   <view class="pop-con">
     <view class="flex time-box">
       <scroll-view class="date" scroll-y="{{true}}">
-        <!-- <view class="{{checkDate!==null && checkDate==index?'on':''}}" bind:tap="selectDate" wx:for="{{delivery.delivery_times}}" data-idx="{{index}}">
-          {{item.date_desc}}
-        </view> -->
         <block wx:if="{{startCheck}}">
           <!-- 开始选择 -->
           <block wx:for="{{delivery.delivery_times}}">
@@ -345,11 +395,11 @@
 
     <view class="coupon-box">
       <scroll-view class="list" scroll-y="{{true}}">
-        <view class="discount_tips flex-center" wx:if="{{curtabid==1 && cart_data.free_type==2}}"><text
+        <view class="discount_tips flex-center" wx:if="{{curtabid==1 && breadOrder.free_type==2}}"><text
             class="iconfont icon-notice"></text> {{biggest_discount.discount_info.discount_tips}}</view>
         <view class='coupon-padding'>
           <block wx:if="{{curtabid==1}}">
-            <view class="item act" data-id="1" wx:if="{{cart_data.free_type==2}}">
+            <view class="item act" data-id="1" wx:if="{{breadOrder.free_type==2}}">
               <view class="h5">
                 <image src="../../../image/icon-tag.png" mode="aspectFill"></image>活动专享
               </view>
@@ -471,12 +521,6 @@
                   </view>
                 </view>
               </view>
-              <!-- <view class="flex tips {{item.showTip?'show':''}}" bind:tap="showTips" data-idx="{{index}}">
-                <view class="txt flex-1">
-                  {{item.desc2}}
-                </view>
-                <view class="arrow-bottom"></view>
-              </view> -->
             </view>
           </block>
         </view>
