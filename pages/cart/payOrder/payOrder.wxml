@@ -101,7 +101,7 @@
           </view>
         </view>
       </view>
-      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{breadOrder.detail}}">
         <view class="flex">
           <view class="pic">
             <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
@@ -127,7 +127,7 @@
         </view>
       </view>
     </view>
-    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{proList.length>3}}" bind:tap="showAllPro">
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{breadOrder.detail.length>3}}" bind:tap="showAllPro">
       <view wx:if="{{!showAll}}">查看更多商品</view>
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
@@ -175,7 +175,7 @@
         <view class="spec-txt" wx:if="{{item.special_message}}"><text
             class="iconfont icon-notice"></text>{{item.special_message}}</view>
       </view>
-      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{proList}}">
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{cakeOrder.detail}}">
         <view class="flex">
           <view class="pic">
             <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
@@ -211,7 +211,7 @@
             class="iconfont icon-notice"></text>{{item.special_message}}</view>
       </view>
     </view>
-    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{proList.length>3}}" bind:tap="showAllPro">
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{cakeOrder.detail.length>3}}" bind:tap="showAllPro">
       <view wx:if="{{!showAll}}">查看更多商品</view>
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
