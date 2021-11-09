@@ -344,6 +344,7 @@ Page({
         address_detail: orderData.address_detail,
         city_name: orderData.city_name,
         area_name: orderData.area_name,
+        cancel_time:orderData.cancel_time,
         mobile: orderData.mobile,
         remark: orderData.remark,
         username:orderData.username,
