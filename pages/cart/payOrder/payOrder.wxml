@@ -1,5 +1,7 @@
 <!-- cart -->
 <wxs module="filter" src="../../../utils/tools.wxs"></wxs>
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
 <view class="send-type" wx:if="{{is_ziti==1}}">
   <view class="flex">
     <text class="{{ziti=='0'?'on':''}} flex-1" data-stype="0" bind:tap="selectType"
@@ -53,27 +55,23 @@
       <input class="flex-1" type="number" value="{{addressInfo.mobile}}" placeholder="请输入提货人手机号"
         bindinput="inputZitiPhone" />
     </view>
-    <view class="inputbox flex-center" data-pop="showTime" bind:tap="showPop">
+    <view class="inputbox flex-center" data-type="3"  bind:tap="showTimeTbl">
       <view>提货时间</view>
       <view class="time flex-center flex-1">
-        <text wx:if="{{selectTime!=-1}}">{{dateStr}} {{selectTimeTxt}}</text>
+        <text wx:if="{{selectTime['3']!=-1}}">{{zitiTimes.dateStr}} {{zitiTimes.selectTimeTxt}}</text>
         <text wx:else>请选择自提时间</text>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
   </view>
-  <view class="send-time flex-center" data-pop="showTime" bind:tap="showPop" wx:if="{{ziti=='0'}}">
-    <text class="tit">配送时间</text>
-    <view class="time flex-center">
-      <text wx:if="{{selectTime!==-1}}">{{dateStr}} {{selectTimeTxt}}</text>
-      <text wx:else>请选择配送时间</text>
-      <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
-    </view>
-  </view>
-  <view class="pro-info" wx:if="{{breadOrder}}">
+  <view class="pro-info {{breadOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{breadOrder}}">
     <view class="hd flex-center">
-      <view>商品信息</view>
+      <view>面包</view>
       <text>共计{{breadOrder.total_number}}件商品</text>
+    </view>
+    <view class="flex-center tips" wx:if="{{!breadOrder.address_allow_delivery}}">
+      <view class="iconfont icon-notice2"></view>
+      <view>该类商品无法配送至您所在地址，查看<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
     </view>
     <view class="pro-wp">
       <view class="item" wx:if="{{index<3}}" wx:for="{{breadOrder.detail}}">
@@ -132,11 +130,27 @@
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
+    <block wx:if="{{breadOrder.address_allow_delivery}}">
+      <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
+        <text class="tit">配送时间</text>
+        <view class="time flex-center">
+          <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+          <text wx:else>请选择配送时间</text>
+          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+        </view>
+      </view>
+      <view class="total">合计：￥<text>{{breadOrder.total_price}}</text></view>
+    </block>
+    
   </view>
-  <view class="pro-info" wx:if="{{cakeOrder}}">
+  <view class="pro-info {{cakeOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{cakeOrder}}">
     <view class="hd flex-center">
-      <view>商品信息</view>
+      <view>蛋糕</view>
       <text>共计{{cakeOrder.total_number}}件商品</text>
+    </view>
+    <view class="flex-center tips" wx:if="{{!cakeOrder.address_allow_delivery}}">
+      <view class="iconfont icon-notice2"></view>
+      <view>该类商品无法配送至您所在地址，查看<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
     </view>
     <view class="pro-wp">
       <view class="item" wx:if="{{index<3}}" wx:for="{{cakeOrder.detail}}">
@@ -216,27 +230,37 @@
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
-  </view>
-  <view class="pro-info fittings-info" wx:if="{{fittings_desc}}">
-    <view class="hd">
-      <view>配件说明</view>
+    <view class="pro-info fittings-info flex" wx:if="{{cakeOrder.fittings_desc}}">
+      <view class="tit">配件说明</view>
+      <view class="txt flex-1">
+        <view wx:for="{{cakeOrder.fittings_desc}}" class="flex"><image src="../../../image/icon-dot.png"></image> <view>{{item.desc}}</view></view>
+      </view>
     </view>
-    <view class="txt flex-1">
-      <view wx:for="{{fittings_desc}}" class="flex"><image src="../../../image/icon-dot.png" wx:if="{{item.marked==0}}"></image><image src="../../../image/icon-dot2.png" wx:else></image> <view>{{item.desc}}</view></view>
-    </view>
+    <block wx:if="{{cakeOrder.address_allow_delivery}}">
+      <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
+        <text class="tit">配送时间</text>
+        <view class="time flex-center">
+          <text wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
+          <text wx:else>请选择配送时间</text>
+          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+        </view>
+      </view>
+      <view class="total">合计：￥<text>{{cakeOrder.total_price}}</text></view>
+    </block>
   </view>
+  
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>
-      <view class="val"><text style="color:#222">￥{{collect.price}}</text><text class="arrow-r"></text></view>
+      <view class="val"><text style="color:#222">￥{{collect.total_price}}</text><text class="arrow-r"></text></view>
     </view>
     <view class="flex-center" wx:if="{{ziti!=1}}">
       <view class="name delivery">
         配送费
-        <text wx:if="{{breadOrder.free_msg!=''}}">{{breadOrder.free_msg}}</text>
+        <text wx:if="{{!cakeOrder && breadOrder.free_msg!=''}}">{{breadOrder.free_msg}}</text>
       </view>
       <view class="val strongTxt">
-        <text style="color:#222">￥{{hasDelivery?collect.delivery_price:'0'}}.00</text><text class="arrow-r"></text>
+        <text style="color:#222">￥{{hasDelivery?breadOrder.delivery_price:'0'}}.00</text><text class="arrow-r"></text>
       </view>
     </view>
     <view class="flex-center" bind:tap="showPop" data-pop="showScore" wx:if="{{pay_style.point==1}}">
@@ -302,12 +326,12 @@
       wx:if="{{pay_style.balance == 10}}">关注公众号使用原麦余额<image class="arrow-r" src="../../../image/icon-arrow-right.png">
       </image>
     </navigator>
-    <view class="total-price flex">
+    <!-- <view class="total-price flex">
       <text>合计：</text>
       <view>
         <text>￥</text>{{payPrice}}<text class="arrow-r"></text>
       </view>
-    </view>
+    </view> -->
   </view>
 </view>
 <view class="policy flex-center" bind:tap="selectPolicy">
@@ -327,58 +351,28 @@
 </view>
 <view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px" catch:touchmove="{{true}}">
   <view class="iconfont icon-close close" bind:tap="close"></view>
-  <view class="tit">选择<block wx:if="{{ziti!=1}}">送达</block>
+  <view class="tit">选择<block wx:if="{{ziti!=1}}">{{timeType==1?'面包':'蛋糕'}}送达</block>
     <block wx:else>自提</block>时间
   </view>
   <view class="pop-con">
     <view class="flex time-box">
       <scroll-view class="date" scroll-y="{{true}}">
-        <block wx:if="{{startCheck}}">
-          <!-- 开始选择 -->
-          <block wx:for="{{delivery.delivery_times}}">
-            <view class="{{(selectDate==index)?'on':''}}" bind:tap="selectDate" data-idx="{{index}}">
-              {{item.date_desc}}
-            </view>
-          </block>
-        </block>
-
-        <block wx:else>
-          <!-- 默认选中 -->
-
-          <block wx:for="{{delivery.delivery_times}}">
-            <view class="{{checkDate == index?'on':''}}" bind:tap="selectDate" data-idx="{{index}}">
-              {{item.date_desc}}
-            </view>
-          </block>
+        <block wx:for="{{delivery_times}}">
+          <view class="a {{(selectDate[timeType]==index)?'on':''}}" bind:tap="selectDate" data-idx="{{index}}">
+            {{item.date_desc}}
+          </view>
         </block>
       </scroll-view>
 
       <scroll-view class="time flex-1" scroll-y="{{true}}">
-        <block wx:if="{{startCheck}}">
-          <block wx:for="{{delivery.delivery_times[selectDate].time_range}}">
-            <view class="item flex {{selectDate == checkDate && selectTime == index?'on':''}}" bind:tap="selectTime" data-idx="{{index}}">
+        <block wx:for="{{delivery_times[selectDate[timeType]].time_range}}">
+          <view class="item flex {{selectDate[timeType] == checkDate[timeType] && selectTime[timeType] == index?'on':''}}" bind:tap="selectTime" data-idx="{{index}}">
               <text>{{item.range}}</text>
               <view class="checkbox">
                 <view class="iconfont icon-check"></view>
               </view>
             </view>
           </block>
-
-        </block>
-
-        <block wx:else>
-          <!-- 默认选中 -->
-          <block wx:for="{{delivery.delivery_times[checkDate].time_range}}">
-            <view class="item flex {{(checkTime==index) ?'on':''}}" bind:tap="selectTime" data-idx="{{index}}">
-              <text>{{item.range}}</text>
-              <view class="checkbox">
-                <view class="iconfont icon-check"></view>
-              </view>
-            </view>
-          </block>
-
-        </block>
-
       </scroll-view>
     </view>
   </view>

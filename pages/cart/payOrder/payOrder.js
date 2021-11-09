@@ -19,17 +19,41 @@ Page({
     proNum: 2,
     showAll: false,
 
-    //样式选中变量
-    selectDate: 0,
-    selectTime: -1,
+    timeType:null,
+    selectDate: {
+      '1':0,
+      '2':0,
+      '3':0
+    },
+    selectTime:{
+      '1':-1,
+      '2':-1,
+      '3':-1
+    },
+    checkDate: {
+      '1':0,
+      '2':0,
+      '3':0
+    },
 
-    //确定选中变量
-    checkDate: 0,
-    checkTime: -1,
-
-    //开始选择
-    startCheck : false,
-
+    breadTimes:{
+      dateStr: '',
+      selectDateTxt: '',
+      selectTimeTxt: '',
+      stock_type: ''
+    },
+    cakeTimes:{
+      dateStr: '',
+      selectDateTxt: '',
+      selectTimeTxt: '',
+      stock_type: ''
+    },
+    zitiTimes:{
+      dateStr: '',
+      selectDateTxt: '',
+      selectTimeTxt: '',
+      stock_type: ''
+    },
     // checkChange: true,
     // checkDateChange: true,
 
@@ -92,7 +116,8 @@ Page({
       couponPrice,
       payQueue,
       defaultCoupon,
-      cart_data
+      cart_data,
+      breadOrder
     } = this.data
     let newPayQueue = payQueue.slice(0)
     let useCoupon, couponCheck, useDiscount,isCouponForWx
@@ -110,7 +135,7 @@ Page({
         useDiscount = false
       }
       isCouponForWx = curId == 1?false:couponPrice[curId].pay_restrict==1
-      coupon = curId == 1 ? cart_data.default_delivery : couponPrice[curId].promotion_price
+      coupon = curId == 1 ? breadOrder.default_delivery : couponPrice[curId].promotion_price
       useCoupon = true
       couponCheck = curId
     }
@@ -223,21 +248,29 @@ Page({
     //this.initOrderPrice()
   },
   showPop(e) {
-    let pop = e.currentTarget.dataset.pop
-    let delivery = this.data.delivery
-    let delivery_times = delivery.delivery_times || []
-    if (pop == "showTime" && delivery_times.length == 0) {
+    let pop = e.currentTarget ? e.currentTarget.dataset.pop : e
+    this.setData({
+      pop: pop
+    })
+  },
+  showTimeTbl(e){
+    //1 面包  2蛋糕 混合
+    let type = e.currentTarget ? e.currentTarget.dataset.type : e
+    //单独处理时间弹窗
+
+    let delivery_times = type==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
+    if (delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
         title: "不可配送，更换地址或删除不可配送商品"
       })
       return
     }
-
     this.setData({
-      pop: pop
+      timeType:type,
+      delivery_times
     })
-
+    this.showPop('showTime')
   },
   //麦点抵扣
   selectMai() {
@@ -271,6 +304,8 @@ Page({
   },
   close() {
     let pop = this.data.pop
+
+    //优惠券
     if(pop=='showCoupon'){
       let {
         couponCheck
@@ -292,28 +327,43 @@ Page({
       return
     }
     this.setData({
-      startCheck:false,
-      selectDate:this.data.checkDate,
       pop: 0
     })
   },
   selectDate(e) {
-    let selectDate = e.currentTarget.dataset.idx
+    let curIdx = e.currentTarget.dataset.idx
+    let timeType = this.data.timeType
+    let selectDate = Object.assign({},this.data.selectDate)
+    selectDate[timeType]=curIdx
     this.setData({
-      startCheck:true,
       selectDate: selectDate,
     })
   },
+  selectTime(e) {
+    console.log(e);
+    let curIdx = e.currentTarget.dataset.idx
+    let timeType = this.data.timeType
+    let selectTime = Object.assign({},this.data.selectTime)
+    selectTime[timeType]=curIdx
+    this.setData({
+      selectTime: selectTime,
+      checkDate:this.data.selectDate,
+    })
+    this.confirmDate();
+  },
   confirmDate() {
     let {
-      delivery,
+      delivery_times,
+      selectTime,
+      selectDate,
       checkDate,
-      checkTime,
+      timeType
     } = this.data
 
-    let selectDateTxt = util.formatDate(delivery.delivery_times[checkDate].date)
-    let selectTimeTxt = delivery.delivery_times[checkDate].time_range[checkTime].range
-    let stock_type = delivery.delivery_times[checkDate].time_range[checkTime].stock_type
+    let curItem = delivery_times[selectDate[timeType]]
+    let selectDateTxt = util.formatDate(curItem.date)
+    let selectTimeTxt = curItem.time_range[selectTime[timeType]].range
+    let stock_type = curItem.time_range[selectTime[timeType]].stock_type
 
     let dateStr = ''
     let d1 = new Date(util.formatTime(new Date())).getTime()
@@ -328,36 +378,29 @@ Page({
     }
 
     dateStr += util.getDate(selectDateTxt)
-
-    this.setData({
+    let data = {
       dateStr: dateStr,
-      selectDateTxt: delivery.delivery_times[checkDate].date,
+      selectDateTxt: curItem.date,
       selectTimeTxt: selectTimeTxt,
       stock_type: stock_type
-    })
+    }
+    if(timeType==1){
+      this.setData({
+        breadTimes:data
+      })
+    }
+    if(timeType==2){
+      this.setData({
+        cakeTimes:data
+      })
+    }
+    if(timeType==3){
+      this.setData({
+        zitiTimes:data
+      })
+    }
+
     this.close()
-  },
-  selectTime(e) {
-    console.log(e);
-    
-    let selectTime = e.currentTarget.dataset.idx
-    this.setData({
-      startCheck:true,
-      selectTime: selectTime,
-      // selectDate:this.data.selectDate,
-      checkDate:this.data.selectDate,
-      checkTime:selectTime,
-    })
-    this.confirmDate();
-    // this.close();
-  },
-  selectTimeOld(e) {
-    let selectTime = e.currentTarget.dataset.idx
-    this.setData({
-      selectTime: selectTime,
-      checkChange: false,
-      tempDate: this.data.selectDate,
-    })
   },
   selectAdd(e) {
     if (this.data.ziti == '1') {
@@ -373,9 +416,12 @@ Page({
     })
   },
   initOrderData() {
-    wx.showLoading({
-      mask:true,
-      title: '加载中...'
+    // wx.showLoading({
+    //   mask:true,
+    //   title: '加载中...'
+    // })
+    this.setData({
+      showLoading: true
     })
     let {
       type,
@@ -395,89 +441,16 @@ Page({
     if (type == "1") {
       txtCard = null
       //面包
-      // api.getOrderBread(data).then(res => {
-      //   console.log(res);
-      //   wx.hideLoading();
-      //   if (!res) {
-      //     return
-      //   }
-
-      //   if(res.address && res.address.is_address && !res.address.address_allow_delivery){
-      //     wx.showToast({
-      //       icon: "none",
-      //       title: "当前选中地址无法配送，请选择可用地址",
-      //       duration: 3000
-      //     })
-      //   }
-
-      //   let cart_data = res.cart_data
-      //   let newcart_data = {
-      //     can_promotion_count: cart_data.can_promotion_count,
-      //     can_use_promotion: cart_data.can_use_promotion,
-      //     change_delivery_price: cart_data.change_delivery_price,
-      //     default_delivery: cart_data.default_delivery,
-      //     delivery_price: cart_data.delivery_price,
-      //     free_msg: cart_data.free_msg,
-      //     free_type: cart_data.free_type,
-      //     number: cart_data.total_number,
-      //     price: cart_data.select_price,
-      //     total_price: cart_data.total_price
-      //   }
-
-      //   let hasMai = res.jinmai.can
-      //   //整理点击
-      //   let useShowStatus = {};
-      //   let unUsedShowStatus = {};
-      //   cart_data.promotion_info.forEach(item=>{
-      //     useShowStatus[item.id] = false;
-      //     if(item.pay_restrict==1){
-      //       wxCouponNum++
-      //     }
-      //   })
-      //   for (let index in cart_data.promotion_info_unable) {
-      //     unUsedShowStatus[index] = false;
-      //   }
-      //   let deliveryData = {};
-      //   for(let deliveryDateIndex in res.delivery.delivery_times){
-      //     for(let deliveryTimeIndex in res.delivery.delivery_times[deliveryDateIndex]['time_range']){
-      //       deliveryData[deliveryDateIndex+"_"+deliveryTimeIndex] = res.delivery.delivery_times[deliveryDateIndex]['date']+'_'+res.delivery.delivery_times[deliveryDateIndex]['time_range'][deliveryTimeIndex]['range'];
-      //     }
-      //   }
-      //   this.data.deliveryData = deliveryData;
-
-      //   this.setData({
-      //     biggest_discount: res.biggest_discount,
-      //     hasMai: hasMai,
-      //     address: res.address,
-      //     balance: res.balance,
-      //     balanceInfo: res.balance_config,
-      //     //useBalance:res.pay_style.balance==1?true:false,
-      //     pay_style: res.pay_style,
-      //     jinmai: res.jinmai,
-      //     delivery: res.delivery,
-      //     cart_data: newcart_data,
-      //     proList: cart_data.detail,
-      //     couponList: cart_data.promotion_info,
-      //     unableCouponList: cart_data.promotion_info_unable,
-      //     couponPrice: cart_data.promotion_price,
-      //     useShowStatus,
-      //     unUsedShowStatus,
-      //     wxCouponNum
-      //   })
-      //   this.initOrderPrice()
-      //   wx.reportAnalytics('payorder', {
-      //     type: "面包",
-      //     total_price: cart_data.total_price,
-      //   });
-      // })
-
     } else {
       txtCard = {}
       //蛋糕
     }
     api.getMixOrder(data).then(res => {
       console.log(res);
-      wx.hideLoading();
+      //wx.hideLoading();
+      this.setData({
+        showLoading: false
+      })
       if (!res) {
         return
       }
@@ -493,7 +466,6 @@ Page({
       let cart_data = res.cart_data
       let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
       let {promotion_info,promotion_info_unable,promotion_price} = res
-
       let hasMai = res.jinmai.can
       //整理点击
       let useShowStatus = {};
@@ -516,13 +488,11 @@ Page({
       this.setData({
         biggest_discount: res.biggest_discount,
         hasMai: hasMai,
-        fittings_desc: res.fittings_desc,
         address: res.address,
         balance: res.balance,
         balanceInfo: res.balance_config,
         pay_style: res.pay_style,
         jinmai: res.jinmai,
-        delivery: res.delivery,
         breadOrder:breadOrder,
         cakeOrder:cakeOrder,
         collect:res.collect,
@@ -557,7 +527,7 @@ Page({
     if (ziti == "1") {
       hasDelivery = false
     } else {
-      if (breadOrder && breadOrder.free_type == 1) {
+      if (cakeOrder || breadOrder && breadOrder.free_type == 1) {
         hasDelivery = false
       } else {
         hasDelivery = true
@@ -569,42 +539,12 @@ Page({
       //2 单品+x 可免邮  1 满减免邮  可与优惠券同用    0 
       delivery = 0
     } else { //加邮费
-      delivery = -parseInt(cart_data.default_delivery)
+      delivery = -parseInt(breadOrder.default_delivery)
     }
 
     //初始优惠券
     useCoupon = false
     coupon = 0
-    // if (!biggest_discount.type) {
-    //   useCoupon = false
-    //   coupon = 0
-    //   this.setData({
-    //     useDiscount: false,
-    //     couponCheck: -1,
-    //     curId: -1
-    //   })
-    // }
-    // if (biggest_discount.type == 'promotion') {
-    //   let promotion = biggest_discount.promotion_info
-    //   useCoupon = true
-    //   coupon = promotion.promotion_price
-    //   this.setData({
-    //     useDiscount: true,
-    //     defaultCoupon: promotion.promotion_id,
-    //     couponCheck: promotion.promotion_id,
-    //     curId: promotion.promotion_id
-    //   })
-    // }
-    // if (biggest_discount.type == 'free_delivery') {
-    //   useCoupon = true
-    //   coupon = cart_data.default_delivery
-    //   this.setData({
-    //     useDiscount: true,
-    //     defaultCoupon: 1,
-    //     couponCheck: 1,
-    //     curId: 1
-    //   })
-    // }
 
     //初始麦点抵扣
     if (hasMai) {
@@ -633,7 +573,7 @@ Page({
     
   },
   setPayPrice(payQueue) {
-    let payPrice = this.data.collect.select_price
+    let payPrice = this.data.collect.total_price
     //初始总价依次减去支付队列中的抵扣额
     payPrice = payQueue.reduce((pre, cur) => {
       return util.floatObj().subtract(pre, cur)
@@ -697,7 +637,7 @@ Page({
       verifyed,
       preUseBalancePrice,
       wxCouponNum,
-      cart_data
+      collect
     } = this.data
     free_amount = parseFloat(free_amount)
 
@@ -751,11 +691,11 @@ Page({
     }
     if(useBalance || newPayQueue[3]!==0 || newPayQueue[4]!==0){
       this.setData({
-        realCouponCount:cart_data.can_promotion_count-wxCouponNum
+        realCouponCount:collect.can_promotion_count-wxCouponNum
       })
     }else{
       this.setData({
-        realCouponCount:cart_data.can_promotion_count
+        realCouponCount:collect.can_promotion_count
       })
     }
   },
@@ -863,15 +803,14 @@ Page({
     let hasSpecial = null,message=null
     let that = this
     let {
-      cart_data,
+      collect,
       address,
       addressInfo,
       address_id,
-      selectDateTxt,
-      selectTimeTxt,
+      breadTimes,
+      cakeTimes,
+      zitiTimes,
       type,
-      stock_type,
-      delivery,
       ziti,
       payQueue,
       balanceTxt,
@@ -919,11 +858,21 @@ Page({
       return
     }
 
-    if (!selectDateTxt || !selectTimeTxt) {
-      this.setData({
-        pop: 'showTime'
-      })
+    if(ziti=='1' && (!zitiTimes.selectDateTxt || !zitiTimes.selectTimeTxt)){
+      this.showTimeTbl(3)
       return
+    } 
+    if(ziti=='0' && (!breadTimes.selectDateTxt || !breadTimes.selectTimeTxt)){
+      if(type==1 || type==20){
+        this.showTimeTbl(1)
+        return
+      }
+    }
+    if(ziti=='0' && (!cakeTimes.selectDateTxt || !cakeTimes.selectTimeTxt)){
+      if(type==2 || type==20){
+        this.showTimeTbl(2)
+        return
+      }
     }
 
     if (!hasPolicy) {
@@ -952,15 +901,17 @@ Page({
         return
       }
     }
-
+    let stock_type = breadTimes.stock_type || cakeTimes.stock_type || 2
     let deliveryPrice = Math.abs(payQueue[0])
     let data = {
       address_id: address_id,
-      delivery_date: selectDateTxt,
-      delivery_time: selectTimeTxt,
+      delivery_bread_date: breadTimes.selectDateTxt,
+      delivery_bread_time:breadTimes.selectTimeTxt,
+      delivery_cake_date: cakeTimes.selectDateTxt || zitiTimes.selectDateTxt,
+      delivery_cake_time:cakeTimes.selectTimeTxt || zitiTimes.selectTimeTxt,
       cart_type: type,
       stock_type: stock_type,
-      delivery_type: delivery.delivery_type,
+      delivery_type: collect.delivery_type,
       delivery_price: deliveryPrice,
       balance_price: balance_price,
       point_price: payQueue[1],
@@ -1080,7 +1031,7 @@ Page({
                   delivery_price:data.delivery_price,
                   point_price:data.point_price,
                   wx_price:res["to_pay_price "],
-                  total_price:cart_data.total_price,
+                  total_price:collect.total_price,
                   user_id:that.data.userInfo.user_id
                 });
               }
@@ -1118,7 +1069,7 @@ Page({
           delivery_price:data.delivery_price,
           point_price:data.point_price,
           promotion_price:data.promotion_price,
-          total_price:cart_data.total_price,
+          total_price:collect.total_price,
           wx_price:'0',
           user_id:that.data.userInfo.user_id
         });

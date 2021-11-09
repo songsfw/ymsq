@@ -1,5 +1,7 @@
+@import "../../../template/loading/loading.wxss";
 page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .strongTxt{color: #F5222D !important;}
+.pro-info{padding-bottom: 26rpx;}
 .order-wp{padding:0 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;border-top: 1rpx solid #F6F6F6;}
@@ -24,15 +26,21 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
     color: #ccc;
     font-size: 30rpx;}
 .arrow-r{display: inline-block; width: 8px;height: 14px;vertical-align: middle;margin-left: 20rpx;}
+.undelivery .tips{padding:24rpx;background: #FEFBF3;color: #FA603D;}
+.undelivery .tips .iconfont{margin-right: 10rpx;}
+.undelivery .tips navigator{display: inline;}
+.undelivery.pro-info .item{opacity: .5;}
 .address .txt{width: 498rpx;}
 .address .tit text{margin-right: 20rpx;font-weight: 500;}
 .address .tit .tag{font-size: 11px;color: #fff; padding:0 5px; line-height: 16px; background: #C1996B;border-radius: 4px;}
 .address-txt{color:#666 ;font-size: 13px;word-break: break-all;}
 .inputbox .time{font-size: 15px;justify-content: flex-end;}
-.send-time{padding: 0 20rpx;height: 50px;justify-content: space-between;}
+.send-time{padding: 0 18rpx;height: 50px;justify-content: space-between;}
 .send-time text{font-size: 15px;font-weight: 500;}
+.send-time .tit{font-size: 14px;}
 .send-time .time text,.inputbox .time text{color: #C1996B;margin-right: 20rpx;}
-.pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 92rpx;margin:0 20rpx 30rpx 20rpx;box-sizing: border-box;}
+.pro-wp{margin-top: 30rpx;}
+.pro-info .hd{justify-content: space-between;border-bottom: 1px solid #F6F6F6;line-height: 92rpx;margin:0 20rpx 0 20rpx;box-sizing: border-box;}
 .pro-info .hd view{font-size: 15px;font-weight: 500;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .item{margin-bottom: 25rpx;padding: 0 18rpx;padding-bottom: 25rpx;}
@@ -50,7 +58,8 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .pro-info .price .num{font-size: 11px;}
 .pro-info .price .num text{font-size:14px}
 .pro-info .price .count{color: #999;}
-.pro-wp{padding-bottom: 26rpx;}
+.total{text-align: right;padding: 0 18rpx;font-size: 13px}
+.total text{font-size: 16px;}
 .pro-wp .item:last-child{margin-bottom: 0;}
 .more-pro{text-align: center;color: #C1996B;font-size: 14px;justify-content: center;padding-bottom: 36rpx;}
 .more-pro .icon-arrow-btm{transition: all linear .3s;}
@@ -187,11 +196,10 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
 .get-code{margin: 38rpx 0 0 0;}
 .add-address{text-align: center;color:#C1996B;font-size: 15px;font-weight: 500;}
-
-.fittings-info{margin-top: 20rpx;}
-.fittings-info .tit{font-size: 13px;margin-right: 40rpx;}
-.fittings-info .txt{color: #666;padding: 0 20rpx 30rpx 20rpx;}
-.fittings-info .txt image{margin: 0 10px 0 18px;width: 10px;height: 10px;}
+.fittings-info{padding: 0 18rpx;}
+.fittings-info .tit{font-size: 14px;margin-right:20px;}
+.fittings-info .txt{color: #666;padding: 0 0 30rpx 0;}
+.fittings-info .txt image{margin: 0 10px 0 0;width: 10px;height: 10px;}
 .fittings-info .txt>view{margin-bottom:25rpx ;font-size: 12px;align-items: baseline;}
 .fittings-info .txt>view:last-child{margin: 0;}
 .fittings-info .txt .on,

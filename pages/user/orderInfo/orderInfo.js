@@ -377,9 +377,9 @@ Page({
         status:res.status,
         is_ziti:res.is_ziti,
         orderData:newOrderData,
-        steps:res.steps
+        steps:res.steps,
+        refund_info:res.refund_info
       })
-
       if(orderData.old_status=='DISPATCHING'){
         this.getLocation()
       }else{

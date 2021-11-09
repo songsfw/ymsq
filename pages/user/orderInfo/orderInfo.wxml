@@ -201,6 +201,37 @@
         </view>
       </view>
     </view>
+    <view class="pro-info pay-info" wx:if="{{refund_info.length>0}}">
+      <view class="hd flex-center">
+        <view>退款金额明细</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">订单取消时间</view>
+        <view class="val">
+          {{refund_info[0].create_time}}
+        </view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">优惠券</view>
+        <view class="val">￥{{refund_info[0].num}}</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">现金卡</view>
+        <view class="val">￥{{refund_info[0].num}}</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">多美味卡</view>
+        <view class="val">￥{{refund_info[0].num}}</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">原麦余额</view>
+        <view class="val">￥{{refund_info[0].num}}</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">微信支付</view>
+        <view class="val">￥{{refund_info[0].num}}</view>
+      </view>
+    </view>
   </view>
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">
