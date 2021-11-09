@@ -180,15 +180,13 @@ Page({
       return
     }
     if (!e.detail.value) return
-    // let cityName = this.data.cityName
-    // console.log(cityName);
-    console.log(e.detail.value)
+    let cityName = this.data.cityName
     var _this = this;
     //调用关键词提示接口
     qqmapsdk.getSuggestion({
       //获取输入框值并设置keyword参数
       keyword: e.detail.value, //用户输入的关键词，可设置固定值
-      //region: cityName, //设置城市名，限制关键词所示的地域范围，非必填参数
+      region: cityName, //设置城市名，限制关键词所示的地域范围，非必填参数
       success: function (res) {
         console.log(res);
         var sug = [];
