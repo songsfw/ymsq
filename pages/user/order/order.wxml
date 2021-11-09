@@ -27,10 +27,10 @@
   <block wx:for="{{orderList}}">
     <view class="item" wx:for="{{item}}" wx:for-item="order">
       <block wx:if="{{order.child_order.length>0}}">
-        <view class="mix-order">
+        <view class="mix-order" wx:if="{{order.main_order_status!=1}}">
           <view class="order-code">订单编号：{{order.order_code}}</view>
           <block wx:for="{{order.child_order}}" wx:for-item="child">
-            <navigator hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{child.order_code}}&stat={{order.status}}">
+            <navigator class="order-wp" hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{child.order_code}}&stat={{child.status}}">
               <view class="flex hd">
                 <view class="order-info">
                   <view class="order-code">分单号：{{child.order_code}}</view>
@@ -40,13 +40,13 @@
               </view>
               <scroll-view scroll-x="{{true}}" class="pic-box">
                 <view class="flex">
-                  <view class="pic1 flex" wx:if="{{child.detail.length==1}}">
+                  <view class="pic1 flex" wx:if="{{child.details.length==1}}">
                     <view class="pic">
-                      <image src="{{child.detail[0].image_url2}}" mode="aspectFill"></image>
+                      <image src="{{child.details[0].image_url2}}" mode="aspectFill"></image>
                     </view>
                     <view class="flex">
-                      <view class="h3">{{child.detail[0].name}}</view>
-                      <view class="num">X{{child.detail[0].count}}</view>
+                      <view class="h3">{{child.details[0].name}}</view>
+                      <view class="num">X{{child.details[0].count}}</view>
                     </view>
                   </view>
                   <block wx:else>
@@ -60,7 +60,7 @@
               <view class="total">{{child.status==2|| child.status==3?'实付金额':'应付金额'}}：￥<text>{{child.pay_price}}</text></view>
             </navigator>
             <view class="option flex">
-              <block wx:if="{{child.old_status=='UNPAID' || child.old_status=='PAID' || child.old_status=='DISPATCHING'}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{child.order_type}}" data-code="{{child.order_code}}">取消订单</view></block>
+              <block wx:if="{{child.status==1 || child.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{child.order_type}}" data-code="{{child.order_code}}">取消订单</view></block>
               <block wx:if="{{child.status==1}}">
                 <view class="btn pay-btn" catch:tap="payOrder" data-code="{{child.order_code}}">立即支付</view>
               </block>
@@ -75,6 +75,49 @@
           </block>
           
         </view>
+        <view wx:else class="mix-order">
+          <!-- <view class="order-code">订单编号：{{order.order_code}}</view> -->
+          <view class="order-wp">
+            <view class="flex hd">
+              <view class="order-info">
+                <view class="order-code">订单编号：{{order.child_order[0].order_code}}</view>
+                <view class="date">{{order.child_order[0].create_time}}</view>
+              </view>
+              <view class="status">{{order.child_order[0].status_text}}</view>
+            </view>
+            <scroll-view scroll-x="{{true}}" class="pic-box">
+              <view class="flex">
+                <view class="pic1 flex" wx:if="{{order.pic.length==1}}">
+                  <view class="pic">
+                    <image src="{{order.pic[0].image_url2}}" mode="aspectFill"></image>
+                  </view>
+                  <view class="flex">
+                    <view class="h3">{{order.pic[0].name}}</view>
+                    <view class="num">X{{order.pic[0].count}}</view>
+                  </view>
+                </view>
+                <block wx:else>
+                  <block wx:for="{{order.child_order}}" wx:for-item="details">
+                    <block wx:for="{{details.details}}" wx:for-item="pic">
+                      <view class="pic">
+                        <image src="{{pic.image_url2}}" mode="aspectFill"></image>
+                        <view class="count">X{{pic.count}}</view>
+                      </view>
+                    </block>
+                  </block>
+                  
+                </block>
+              </view>
+            </scroll-view>
+            <view class="total">{{order.main_order_status==2|| order.main_order_status==3?'实付金额':'应付金额'}}：￥<text>{{order.total_price}}</text></view>
+          </view>
+          <view class="option flex">
+              <view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view>
+
+              <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
+
+            </view>
+        </view>
       </block>
       <navigator wx:else hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{order.order_code}}&stat={{order.status}}">
         <view class="flex hd">
@@ -86,13 +129,13 @@
         </view>
         <scroll-view scroll-x="{{true}}" class="pic-box">
           <view class="flex">
-            <view class="pic1 flex" wx:if="{{order.detail.length==1}}">
+            <view class="pic1 flex" wx:if="{{order.details.length==1}}">
               <view class="pic">
-                <image src="{{order.detail[0].image_url2}}" mode="aspectFill"></image>
+                <image src="{{order.details[0].image_url2}}" mode="aspectFill"></image>
               </view>
               <view class="flex">
-                <view class="h3">{{order.detail[0].name}}</view>
-                <view class="num">X{{order.detail[0].count}}</view>
+                <view class="h3">{{order.details[0].name}}</view>
+                <view class="num">X{{order.details[0].count}}</view>
               </view>
             </view>
             <block wx:else>
@@ -108,7 +151,7 @@
         <view class="total">{{order.status==2|| order.status==3?'实付金额':'应付金额'}}：￥<text>{{order.pay_price}}</text></view>
       </navigator>
       <view class="option flex" wx:if="{{!order.child_order}}">
-        <block wx:if="{{order.old_status=='UNPAID' || order.old_status=='PAID' || order.old_status=='DISPATCHING'}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view></block>
+        <block wx:if="{{order.status==1 || order.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view></block>
         <block wx:if="{{order.status==1}}">
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>

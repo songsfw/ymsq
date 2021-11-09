@@ -214,12 +214,10 @@ Page({
     })
     if (isBread && isCake) {
       this.setData({
-        pop:"order-panel"
+        type:20
       })
-      
-    }else{
-      this.getOrder()
     }
+    this.getOrder()
   },
   getOrder: util.debounce(function (e) {
     wx.showLoading({mask:true})
@@ -238,7 +236,7 @@ Page({
 
     let data = {
       city_id: city_id,
-      type: type
+      //type: type
     }
     if (parseFloat(totalPrice) == 0) {
       wx.showToast({

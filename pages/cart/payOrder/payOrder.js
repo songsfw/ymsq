@@ -809,6 +809,8 @@ Page({
       address_id,
       breadTimes,
       cakeTimes,
+      breadOrder,
+      cakeOrder,
       zitiTimes,
       type,
       ziti,
@@ -826,6 +828,7 @@ Page({
       balanceInfo,
       pay_style
     } = this.data
+    let newType = type==20 && !breadOrder.address_allow_delivery ? 2 : type
     let balance_price = useBalance == "1" ? balanceTxt : 0
     if (!address.address_allow_delivery || !addressInfo.id) {
       wx.showToast({
@@ -861,18 +864,24 @@ Page({
     if(ziti=='1' && (!zitiTimes.selectDateTxt || !zitiTimes.selectTimeTxt)){
       this.showTimeTbl(3)
       return
-    } 
-    if(ziti=='0' && (!breadTimes.selectDateTxt || !breadTimes.selectTimeTxt)){
-      if(type==1 || type==20){
+    }
+    if(ziti=='0'){
+      if(breadOrder && breadOrder.address_allow_delivery && !breadTimes.selectTimeTxt){
         this.showTimeTbl(1)
         return
       }
-    }
-    if(ziti=='0' && (!cakeTimes.selectDateTxt || !cakeTimes.selectTimeTxt)){
-      if(type==2 || type==20){
+      if(cakeOrder && cakeOrder.address_allow_delivery && !cakeTimes.selectTimeTxt){
         this.showTimeTbl(2)
         return
       }
+      // if(type==1){
+      //   this.showTimeTbl(1)
+      //   return
+      // }
+      // if(type==2 || type==20){
+      //   this.showTimeTbl(2)
+      //   return
+      // }
     }
 
     if (!hasPolicy) {
@@ -902,6 +911,7 @@ Page({
       }
     }
     let stock_type = breadTimes.stock_type || cakeTimes.stock_type || 2
+
     let deliveryPrice = Math.abs(payQueue[0])
     let data = {
       address_id: address_id,
@@ -909,7 +919,7 @@ Page({
       delivery_bread_time:breadTimes.selectTimeTxt,
       delivery_cake_date: cakeTimes.selectDateTxt || zitiTimes.selectDateTxt,
       delivery_cake_time:cakeTimes.selectTimeTxt || zitiTimes.selectTimeTxt,
-      cart_type: type,
+      cart_type: newType,
       stock_type: stock_type,
       delivery_type: collect.delivery_type,
       delivery_price: deliveryPrice,
@@ -1076,7 +1086,7 @@ Page({
       }
       
     })
-  },500,false),
+  },500,true),
   inputCard(e) {
     let temp = e.detail.value
     let cartid = e.currentTarget.dataset.cartid
