@@ -6,7 +6,6 @@ var baseUrl = ENV == 'pro' ? 'https://api.withwheat.com/v1' : 'https://api-beta.
 const returnData = (res,needToast=false)=>{
   if(res.statusCode == 200){
     let data = res.data
-    console.log(data)
     if(data.status==0){
       var result = data.result
       return result
@@ -32,7 +31,6 @@ const returnData = (res,needToast=false)=>{
           duration:2000
         })
       }
-      console.log("111");
       return false
     }
   }else if(res.statusCode == 500){

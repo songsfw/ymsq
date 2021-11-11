@@ -67,7 +67,7 @@ image{width: 100%;height: 100%}
 .set-chart{border-radius: 4rpx;overflow: hidden;}
 .logo{width: 130rpx;height: 54rpx;margin: 102rpx auto;}
 
-.option{background: #fff;justify-content: flex-end;align-items: center;padding:7px 20rpx;box-sizing: border-box;border-top: 1rpx solid #F6F6F6;}
+.option{background: #fff;justify-content: space-between;align-items: center;padding:7px 20rpx;box-sizing: border-box;border-top: 1rpx solid #F6F6F6;}
 
 .option .select text{font-size: 14px;color: #999;}
 .option .price{align-items: center;}

@@ -120,7 +120,7 @@ Page({
       breadOrder
     } = this.data
     let newPayQueue = payQueue.slice(0)
-    let useCoupon, couponCheck, useDiscount,isCouponForWx
+    let useCoupon, couponCheck, useDiscount,isCouponForWx,promotion_type
     if (curId == -1) {
       //未选择
       coupon = 0
@@ -138,6 +138,7 @@ Page({
       coupon = curId == 1 ? breadOrder.default_delivery : couponPrice[curId].promotion_price
       useCoupon = true
       couponCheck = curId
+      promotion_type = curId == 1 ? 1 : couponPrice[curId].scope
     }
     newPayQueue[2] = util.formatePrice(coupon)
     this.setData({
@@ -145,6 +146,7 @@ Page({
       useCoupon: useCoupon,
       couponCheck: couponCheck,
       payQueue: newPayQueue,
+      promotion_type:promotion_type,
       isCouponForWx:isCouponForWx
     })
     //this.initOrderPrice()
@@ -486,7 +488,7 @@ Page({
       })
 
       this.setData({
-        biggest_discount: res.biggest_discount,
+        biggest_discount: res.activity_info,
         hasMai: hasMai,
         address: res.address,
         balance: res.balance,
@@ -826,7 +828,8 @@ Page({
       zitiName,
       zitiPhone,
       balanceInfo,
-      pay_style
+      pay_style,
+      promotion_type
     } = this.data
     let newType = type==20 && !breadOrder.address_allow_delivery ? 2 : type
     let balance_price = useBalance == "1" ? balanceTxt : 0
@@ -866,22 +869,14 @@ Page({
       return
     }
     if(ziti=='0'){
-      if(breadOrder && breadOrder.address_allow_delivery && !breadTimes.selectTimeTxt){
-        this.showTimeTbl(1)
-        return
-      }
       if(cakeOrder && cakeOrder.address_allow_delivery && !cakeTimes.selectTimeTxt){
         this.showTimeTbl(2)
         return
       }
-      // if(type==1){
-      //   this.showTimeTbl(1)
-      //   return
-      // }
-      // if(type==2 || type==20){
-      //   this.showTimeTbl(2)
-      //   return
-      // }
+      if(breadOrder && breadOrder.address_allow_delivery && !breadTimes.selectTimeTxt){
+        this.showTimeTbl(1)
+        return
+      }
     }
 
     if (!hasPolicy) {
@@ -925,6 +920,7 @@ Page({
       delivery_price: deliveryPrice,
       balance_price: balance_price,
       point_price: payQueue[1],
+      promotion_type:promotion_type
     }
     if (ziti != "0") {
       data.ziti = '1'
@@ -1030,7 +1026,7 @@ Page({
               duration: 1000,
               success: function () {
                 wx.redirectTo({
-                  url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code,
+                  url: '/pages/cart/paySuccess/paySuccess?orderCode=' + order_code+'&type='+type,
                 })
                 wx.hideLoading();
                 wx.reportAnalytics('payinfo', {

@@ -64,93 +64,27 @@
       </view>
     </view>
   </view>
-  <view class="pro-info {{breadOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{breadOrder}}">
-    <view class="hd flex-center">
-      <view>面包</view>
-      <text>共计{{breadOrder.total_number}}件商品</text>
-    </view>
-    <view class="flex-center tips" wx:if="{{!breadOrder.address_allow_delivery}}">
-      <view class="iconfont icon-notice2"></view>
-      <view>该类商品无法配送至您所在地址，查看<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
-    </view>
-    <view class="pro-wp">
-      <view class="item" wx:if="{{index<3}}" wx:for="{{breadOrder.detail}}">
-        <view class="flex">
-          <view class="pic">
-            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
-          </view>
-          <view class="info flex-1 flex">
-            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
-            </view>
-            <view class="tag" wx:if="{{item.is_fittings==0}}">
-              <text wx:if="{{item.size}}">{{item.size}}</text>
-              <text wx:if="{{item.spec}}">{{item.spec}}</text>
-              <text wx:if="{{item.edible}}">{{item.edible}}</text>
-              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
-            </view>
-            <view class="tag flex-wrap" wx:if="{{item.weight}}">
-                <text>约{{item.weight}}</text>
-            </view>
-            <view class="price flex">
-              <view class="num">￥<text>{{item.sku_price}}</text>
-              </view>
-              <view class="count">x{{item.sku_number}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{breadOrder.detail}}">
-        <view class="flex">
-          <view class="pic">
-            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
-          </view>
-          <view class="info flex-1 flex">
-            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
-            </view>
-            <view class="tag" wx:if="{{item.is_fittings==0}}">
-              <text wx:if="{{item.size}}">{{item.size}}</text>
-              <text wx:if="{{item.spec}}">{{item.spec}}</text>
-              <text wx:if="{{item.edible}}">{{item.edible}}</text>
-              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
-            </view>
-            <view class="tag flex-wrap" wx:if="{{item.weight}}">
-              <text>{{item.weight}}</text>
-            </view>
-            <view class="price flex">
-              <view class="num">￥<text>{{item.sku_price}}</text>
-              </view>
-              <view class="count">x{{item.sku_number}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{breadOrder.detail.length>3}}" bind:tap="showAllPro">
-      <view wx:if="{{!showAll}}">查看更多商品</view>
-      <view wx:else>收起</view>
-      <text class="iconfont icon-arrow-btm"></text>
-    </view>
-    <block wx:if="{{breadOrder.address_allow_delivery}}">
-      <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
-        <text class="tit">配送时间</text>
-        <view class="time flex-center">
-          <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
-          <text wx:else>请选择配送时间</text>
-          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
-        </view>
-      </view>
-      <view class="total">合计：￥<text>{{breadOrder.total_price}}</text></view>
-    </block>
-    
-  </view>
+  
   <view class="pro-info {{cakeOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{cakeOrder}}">
     <view class="hd flex-center">
       <view>蛋糕</view>
-      <text>共计{{cakeOrder.total_number}}件商品</text>
+      <block wx:if="{{cakeOrder.address_allow_delivery}}">
+        <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
+          <view class="time flex-center">
+            <text wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
+            <text wx:else>请选择【蛋糕】配送时间</text>
+            <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+          </view>
+        </view>
+      </block>
+      <view class="send-time flex-center" wx:else>
+        <text>配送日期不可选</text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+      </view>
     </view>
     <view class="flex-center tips" wx:if="{{!cakeOrder.address_allow_delivery}}">
       <view class="iconfont icon-notice2"></view>
-      <view>该类商品无法配送至您所在地址，查看<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
+      <view>因配送范围导致以下商品失效。<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
     </view>
     <view class="pro-wp">
       <view class="item" wx:if="{{index<3}}" wx:for="{{cakeOrder.detail}}">
@@ -226,10 +160,11 @@
       </view>
     </view>
     <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{cakeOrder.detail.length>3}}" bind:tap="showAllPro">
-      <view wx:if="{{!showAll}}">查看更多商品</view>
+      <view wx:if="{{!showAll}}">共计{{cakeOrder.total_number}}件商品</view>
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
+    <view wx:else class="more-pro flex-center">共计{{cakeOrder.total_number}}件商品</view>
     <view class="pro-info fittings-info flex" wx:if="{{cakeOrder.fittings_desc}}">
       <view class="tit">配件说明</view>
       <view class="txt flex-1">
@@ -237,18 +172,110 @@
       </view>
     </view>
     <block wx:if="{{cakeOrder.address_allow_delivery}}">
-      <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
+      <!-- <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
         <text class="tit">配送时间</text>
         <view class="time flex-center">
           <text wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
           <text wx:else>请选择配送时间</text>
           <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
         </view>
-      </view>
-      <view class="total">合计：￥<text>{{cakeOrder.total_price}}</text></view>
+      </view> -->
+      <view class="total">合计：<text>￥</text><text>{{cakeOrder.total_price}}</text></view>
     </block>
   </view>
-  
+  <view class="pro-info {{breadOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{breadOrder}}">
+    <view class="hd flex-center">
+      <view>面包</view>
+      <block wx:if="{{breadOrder.address_allow_delivery}}">
+        <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
+          <text class="tit">配送时间</text>
+          <view class="time flex-center">
+            <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+            <text wx:else>请选择【面包】配送时间</text>
+            <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+          </view>
+        </view>
+      </block>
+      <view class="send-time flex-center" wx:else>
+        <text>配送日期不可选</text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+      </view>
+    </view>
+    <view class="flex-center tips" wx:if="{{!breadOrder.address_allow_delivery}}">
+      <view class="iconfont icon-notice2"></view>
+      <view>因配送范围导致以下商品失效。<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
+    </view>
+    <view class="pro-wp">
+      <view class="item" wx:if="{{index<3}}" wx:for="{{breadOrder.detail}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+                <text>约{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{breadOrder.detail}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+              <text>{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{breadOrder.detail.length>3}}" bind:tap="showAllPro">
+      <view wx:if="{{!showAll}}">共计{{breadOrder.total_number}}件商品</view>
+      <view wx:else>收起</view>
+      <text class="iconfont icon-arrow-btm"></text>
+    </view>
+    <view class="more-pro flex-center" wx:else>共计{{breadOrder.total_number}}件商品</view>
+    <block wx:if="{{breadOrder.address_allow_delivery}}">
+      <!-- <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
+        <text class="tit">配送时间</text>
+        <view class="time flex-center">
+          <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+          <text wx:else>请选择配送时间</text>
+          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+        </view>
+      </view> -->
+      <view class="total">合计：￥<text>{{breadOrder.total_price}}</text></view>
+    </block>
+    
+  </view>
   <view class="pay-info">
     <view class="flex-center ">
       <view class="name">商品金额</view>

@@ -76,7 +76,9 @@ Page({
   initCartData(res){
     let bread = res.bread,
           cake = res.cake,
-          total_num = res.total_number
+          total_num = res.total_number,
+          select_number = res.select_number
+    let selectAll = total_num == select_number ? true : false
 
     wx.setStorageSync('total_num', total_num)
     let selectType = this.getSelectType(bread,cake)
@@ -88,6 +90,7 @@ Page({
       type:selectType.type,
       noallBread: selectType.noallBread,
       noallCake: selectType.noallCake,
+      selectAll:selectAll,
       cakeSelectedNum:cake.select_number,
       breadSelectedNum:bread.select_number,
       cakeSelectedPrice:cake.select_price,
@@ -123,33 +126,6 @@ Page({
             wx.hideLoading()
             if(res){
               this.initCartData(res)
-              // let bread = res.bread,
-              //     cake = res.cake,
-              //     total_num = res.total_number
-
-              // var pages = getCurrentPages();
-              // if(pages.length > 1){
-              //   app.inCartRefreshList({type:type,proId:proId,selected:0});
-              // }
-              // wx.setStorageSync('total_num', total_num)
-              // let selectType = this.getSelectType(bread,cake)
-              // let hasActive = bread.detail.some(item=>{
-              //   return item.special_tag=="活动商品"
-              // })
-              // this.setData({
-              //   hasActive,
-              //   type:selectType.type,
-              //   noallBread: selectType.noallBread,
-              //   noallCake: selectType.noallCake,
-              //   cakeSelectedNum:cake.select_number,
-              //   breadSelectedNum:bread.select_number,
-              //   cakeSelectedPrice:cake.select_price,
-              //   breadSelectedPrice:bread.select_price,
-              //   breadLi: bread.detail,
-              //   totalPrice:res.select_price,
-              //   cakeLi: cake.detail,
-              //   fittingsList: res.fittings,
-              // })
             } else {
               wx.showToast({
                 title: '删除失败',
@@ -416,7 +392,6 @@ Page({
       console.log(res);
       if (res) {
         this.initCartData(res)
-        //this.getChartData(data.tab_id,data.type,spuid)
       }
     })
   },
@@ -429,27 +404,21 @@ Page({
         breadSelectedNum = 0,
         cakeSelectedNum = 0
 
-    function getSelected(type) {
-      return pro => pro.is_selected == type;
-    }
-
     if (breadLi&&breadLi.length > 0) {
-      breadSelectedNum = breadLi.filter(getSelected("1")).length
-      noallBread = breadSelectedNum == breadLi.length ? false : true
+      breadSelectedNum = bread.select_number
+      noallBread = breadSelectedNum == bread.total_number ? false : true
     }
     if (cakeLi&&cakeLi.length > 0) {
-      cakeSelectedNum = cakeLi.filter(getSelected("1")).length
-      noallCake = cakeSelectedNum == cakeLi.length ? false : true
+      cakeSelectedNum = cake.select_number
+      noallCake = cakeSelectedNum == cake.total_number ? false : true
     }
     if(breadSelectedNum>0 && cakeSelectedNum>0){
-      type=''
+      type='20'
     }else{
       type = breadSelectedNum > 0 ? "1" : "2"
     }
 
     return {
-      cakeSelectedNum,
-      breadSelectedNum,
       type,
       noallBread,
       noallCake
@@ -543,9 +512,13 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
+        let total_num = res.total_number,
+        select_number = res.select_number
+        let selectAll = total_num == select_number ? true : false
 
         console.log(selectType);
         this.setData({
+          selectAll:selectAll,
           cakeSelectedNum:cake.select_number,
           breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,
@@ -567,7 +540,8 @@ Page({
     let {
       city_id,
       noallBread,
-      noallCake
+      noallCake,
+      selectAll
     } = this.data
     let data = {
       city_id:city_id,
@@ -588,6 +562,13 @@ Page({
         data.action = "0"
       }
     }
+    if (type == "20") {
+      if (selectAll) {
+        data.action = "0"
+      } else {
+        data.action = "1"
+      }
+    }
 
     api.selectAllPro(data).then(res => {
       console.log(res);
@@ -599,8 +580,12 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
+        let total_num = res.total_number,
+        select_number = res.select_number
+        let selectAll = total_num == select_number ? true : false
 
         this.setData({
+          selectAll:selectAll,
           cakeSelectedNum:cake.select_number,
           breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,

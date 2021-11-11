@@ -15,7 +15,7 @@ Page({
   data: {
     stype: "0",
     proNum: 2,
-    showAll: false,
+    showAll: true,
     address: {
       name: null,
       mobile: null,

@@ -76,7 +76,10 @@ Page({
   initCartData(res){
     let bread = res.bread,
         cake = res.cake,
-        total_num = res.total_number
+        total_num = res.total_number,
+        select_number = res.select_number
+    let selectAll = total_num == select_number ? true : false
+
     util.setTabBarBadge(total_num)
     wx.setStorageSync('total_num', total_num)
     let selectType = this.getSelectType(bread,cake)
@@ -86,6 +89,7 @@ Page({
     this.setData({
       hasActive,
       type:selectType.type,
+      selectAll:selectAll,
       noallBread: selectType.noallBread,
       noallCake: selectType.noallCake,
       cakeSelectedNum:cake.select_number,
@@ -191,9 +195,6 @@ Page({
         type:20
       })
     }
-    // }else{
-    //   this.getOrder()
-    // }
     this.getOrder()
   },
   getOrder: util.debounce(function (e) {
@@ -385,31 +386,26 @@ Page({
         breadSelectedNum = 0,
         cakeSelectedNum = 0
 
-    function getSelected(type) {
-      return pro => pro.is_selected == type;
-    }
-
     if (breadLi&&breadLi.length > 0) {
-      breadSelectedNum = breadLi.filter(getSelected("1")).length
-      noallBread = breadSelectedNum == breadLi.length ? false : true
+      breadSelectedNum = bread.select_number
+      noallBread = breadSelectedNum == bread.total_number ? false : true
     }
     if (cakeLi&&cakeLi.length > 0) {
-      cakeSelectedNum = cakeLi.filter(getSelected("1")).length
-      noallCake = cakeSelectedNum == cakeLi.length ? false : true
+      cakeSelectedNum = cake.select_number
+      noallCake = cakeSelectedNum == cake.total_number ? false : true
     }
     if(breadSelectedNum>0 && cakeSelectedNum>0){
-      type=''
+      type='20'
     }else{
       type = breadSelectedNum > 0 ? "1" : "2"
     }
 
     return {
-      cakeSelectedNum,
-      breadSelectedNum,
       type,
       noallBread,
       noallCake
     }
+
   },
   getChartData() {
     let data = {
@@ -459,8 +455,12 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
+        let total_num = res.total_number,
+        select_number = res.select_number
+        let selectAll = total_num == select_number ? true : false
 
         this.setData({
+          selectAll:selectAll,
           cakeSelectedNum:cake.select_number,
           breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,
@@ -483,7 +483,8 @@ Page({
     let {
       city_id,
       noallBread,
-      noallCake
+      noallCake,
+      selectAll
     } = this.data
     let data = {
       city_id:city_id,
@@ -492,33 +493,24 @@ Page({
 
     if (type == "1") {
       if (noallBread) {
-        // this.setData({
-        //   noallBread: false,
-        //   noallCake: true,
-        //   fittings: false
-        // })
         data.action = "1"
       } else {
-        // this.setData({
-        //   noallBread: true
-        // })
         data.action = "0"
       }
     }
     if (type == "2") {
       if (noallCake) {
-        // this.setData({
-        //   noallBread: true,
-        //   noallCake: false,
-        //   fittings: true
-        // })
         data.action = "1"
       } else {
-        // this.setData({
-        //   noallCake: true,
-        //   fittings: false
-        // })
         data.action = "0"
+      }
+    }
+
+    if (type == "20") {
+      if (selectAll) {
+        data.action = "0"
+      } else {
+        data.action = "1"
       }
     }
 
@@ -532,8 +524,12 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
+        let total_num = res.total_number,
+        select_number = res.select_number
+        let selectAll = total_num == select_number ? true : false
 
         this.setData({
+          selectAll:selectAll,
           cakeSelectedNum:cake.select_number,
           breadSelectedNum:bread.select_number,
           cakeSelectedPrice:cake.select_price,

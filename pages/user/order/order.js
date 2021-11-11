@@ -185,7 +185,10 @@ Page({
     })
   },
   payOrder:util.debounce(function (e) {
-    wx.showLoading({mask:true,title:'正在支付'})
+    // wx.showLoading({mask:true,title:'正在支付'})
+    this.setData({
+      showLoading: true
+    })
     let code = e.currentTarget.dataset.code
     let data = {
       order_code: code
@@ -196,8 +199,9 @@ Page({
     // isPaying=true  //正在支付
 
     api.payOrder(data).then(res => {
-      wx.hideLoading()
-      console.log(res);
+      this.setData({
+        showLoading: false
+      })
       if (res) {
         //isPaying=false
         let jsApiParameters = res.jsApiParameters
@@ -214,7 +218,6 @@ Page({
           signType: signType,
           paySign: paySign,
           success(payres) {
-            console.log(payres);
             wx.showToast({
               title: '支付成功',
               icon: 'none',
@@ -230,7 +233,6 @@ Page({
 
           },
           fail(res) {
-            console.log(res)
             wx.showToast({
               title: "支付失败",
               icon: 'none',
@@ -255,7 +257,6 @@ Page({
       limit: 20
     }
     api.orderList(data).then(res => {
-      console.log(res);
       if (!res) {
         return
       }
