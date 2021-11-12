@@ -846,7 +846,7 @@ Page({
       pay_style,
       promotion_type
     } = this.data
-    let newType = type==20 && !breadOrder.address_allow_delivery ? 2 : type
+
     let balance_price = useBalance == "1" ? balanceTxt : 0
     if (!address.address_allow_delivery || !addressInfo.id) {
       wx.showToast({
@@ -922,6 +922,17 @@ Page({
     }
     let stock_type = breadTimes.stock_type || cakeTimes.stock_type || 2
 
+    let newType = type
+
+    if(type==20){
+      if(!breadOrder.address_allow_delivery){
+        newType = 2
+      }
+      if(!cakeOrder.address_allow_delivery){
+        newType = 1
+      }
+    }
+
     let deliveryPrice = Math.abs(payQueue[0])
     let data = {
       address_id: address_id,
@@ -935,7 +946,7 @@ Page({
       delivery_price: deliveryPrice,
       balance_price: balance_price,
       point_price: payQueue[1],
-      promotion_type:promotion_type
+      promotion_type:promotion_type || 0
     }
     if (ziti != "0") {
       data.ziti = '1'
@@ -976,6 +987,7 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
+    return
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)

@@ -28,7 +28,10 @@
     <view class="item" wx:for="{{item}}" wx:for-item="order">
       <block wx:if="{{order.child_order.length>0}}">
         <view class="mix-order" wx:if="{{order.main_order_status!=1}}">
-          <view class="order-code">订单编号：{{order.order_code}}</view>
+          <view class="order-code flex-center">
+            <view>订单编号：{{order.order_code}}</view>
+            <view wx:if="{{order.main_order_status==2 || order.main_order_status==3}}" class="btn btn1" data-code="{{order.child_order[0].id}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+          </view>
           <block wx:for="{{order.child_order}}" wx:for-item="child">
             <navigator class="order-wp" hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{child.order_code}}&stat={{child.status}}">
               <view class="flex hd">
@@ -64,11 +67,7 @@
               <block wx:if="{{child.status==1}}">
                 <view class="btn pay-btn" catch:tap="payOrder" data-code="{{child.order_code}}">立即支付</view>
               </block>
-              <block wx:if="{{child.status==2}}">
-                <view class="btn btn1" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
-              </block>
               <block wx:if="{{child.status==3}}">
-                <view class="btn btn1" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
                 <navigator url="/pages/commit/commit?orderCode={{child.order_code}}" class="btn pay-btn">{{child.comment_status==1?'查看评价':'去评价'}}</navigator>
               </block>
             </view>
@@ -76,7 +75,6 @@
           
         </view>
         <view wx:else class="mix-order">
-          <!-- <view class="order-code">订单编号：{{order.order_code}}</view> -->
           <view class="order-wp">
             <view class="flex hd">
               <view class="order-info">
