@@ -472,7 +472,7 @@ Page({
 
       if((breadOrder&&!breadOrder.address_allow_delivery) || (cakeOrder&&!cakeOrder.address_allow_delivery)){
         wx.showModal({
-          content: '因配送范围导致以下商品失效',
+          content: '因配送范围导致部分商品失效',
           cancelText: "更改地址",
           confirmText: "继续支付",
           confirmColor: "#C1996B",
@@ -987,7 +987,7 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
-    return
+return
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)

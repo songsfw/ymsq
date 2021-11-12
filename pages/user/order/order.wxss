@@ -120,3 +120,5 @@ page{background: #F6F6F6;padding-top: 48px;}
 .mix-order .order-wp{padding:40rpx 20rpx 0 20rpx;}
 .mix-order .option{padding-bottom: 40rpx; border-bottom: 1px dotted #F6F6F6;}
 .mix-order .option:last-child{border: none;}
+
+.share-btn{background: #c1996b;color: #fff;border: 1px solid #c1996b;}

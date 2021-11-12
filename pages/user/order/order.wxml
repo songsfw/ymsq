@@ -23,15 +23,12 @@
     <text></text>
   </view>
 </view>
-<view class="card" wx:if="{{count&&count>0}}">
+<view class="card" wx:if="{{!nodata}}">
   <block wx:for="{{orderList}}">
     <view class="item" wx:for="{{item}}" wx:for-item="order">
       <block wx:if="{{order.child_order.length>0}}">
         <view class="mix-order" wx:if="{{order.main_order_status!=1}}">
-          <view class="order-code flex-center">
-            <view>订单编号：{{order.order_code}}</view>
-            <view wx:if="{{order.main_order_status==2 || order.main_order_status==3}}" class="btn btn1" data-code="{{order.child_order[0].id}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
-          </view>
+          <view class="order-code flex-center">订单编号：{{order.order_code}}</view>
           <block wx:for="{{order.child_order}}" wx:for-item="child">
             <navigator class="order-wp" hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{child.order_code}}&stat={{child.status}}">
               <view class="flex hd">
@@ -67,7 +64,11 @@
               <block wx:if="{{child.status==1}}">
                 <view class="btn pay-btn" catch:tap="payOrder" data-code="{{child.order_code}}">立即支付</view>
               </block>
+              <block wx:if="{{child.status==2}}">
+                <view class="btn btn1 share-btn" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+              </block>
               <block wx:if="{{child.status==3}}">
+                <view class="btn btn1 share-btn" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
                 <navigator url="/pages/commit/commit?orderCode={{child.order_code}}" class="btn pay-btn">{{child.comment_status==1?'查看评价':'去评价'}}</navigator>
               </block>
             </view>
@@ -78,7 +79,7 @@
           <view class="order-wp">
             <view class="flex hd">
               <view class="order-info">
-                <view class="order-code">订单编号：{{order.child_order[0].order_code}}</view>
+                <view class="order-code">订单编号：{{order.order_code}}</view>
                 <view class="date">{{order.child_order[0].create_time}}</view>
               </view>
               <view class="status">{{order.child_order[0].status_text}}</view>
@@ -154,7 +155,7 @@
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
         </block>
         <block wx:if="{{order.status==2}}">
-          <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+          <view class="btn btn1 share-btn" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
         </block>
         <block wx:if="{{order.status==3}}">
           <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
@@ -165,10 +166,10 @@
   </block>
   <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
 </view>
-<block wx:if="{{count==0&&!showLoading}}">
+<block wx:if="{{nodata&&!showLoading}}">
   <view class="nodata">
     <view><image src="../../../image/no-order.png"></image></view>
-    <block wx:if="{{totalNum==0}}">
+    <block wx:if="{{currentTab==0}}">
       <view class="txt">现在还没有订单，快去下单吧～</view>
       <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去点单</navigator>
     </block>

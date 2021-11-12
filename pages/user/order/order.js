@@ -266,12 +266,13 @@ Page({
         })
         return false
       }
-      let totalNum = res.total_num[0]
-      let list = res.order,
-        count = parseInt(res.total_num[currentTab])
-      let noMoreData = count - page * 20 <= 0
+      
+      let list = res.order
+      let count = list.length
+      let nodata = page==1&&count==0?true:false
+      let noMoreData = count < 20 ? true : false
       this.setData({
-        totalNum: totalNum,
+        nodata: nodata,
         showLoading: false,
         noMoreData: noMoreData,
         count: count,
