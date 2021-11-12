@@ -71,7 +71,7 @@
       <block wx:if="{{cakeOrder.address_allow_delivery}}">
         <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
           <view class="time flex-center">
-            <text wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
+            <text class="time-txt" wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
             <text wx:else>请选择【蛋糕】配送时间</text>
             <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
           </view>
@@ -164,7 +164,6 @@
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
-    <view wx:else class="more-pro flex-center">共计{{cakeOrder.total_number}}件商品</view>
     <view class="pro-info fittings-info flex" wx:if="{{cakeOrder.fittings_desc}}">
       <view class="tit">配件说明</view>
       <view class="txt flex-1">
@@ -172,14 +171,6 @@
       </view>
     </view>
     <block wx:if="{{cakeOrder.address_allow_delivery}}">
-      <!-- <view class="send-time flex-center" bind:tap="showTimeTbl" data-type="2" wx:if="{{ziti=='0'}}">
-        <text class="tit">配送时间</text>
-        <view class="time flex-center">
-          <text wx:if="{{selectTime['2']!==-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
-          <text wx:else>请选择配送时间</text>
-          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
-        </view>
-      </view> -->
       <view class="total">合计：<text>￥</text><text>{{cakeOrder.total_price}}</text></view>
     </block>
   </view>
@@ -188,9 +179,8 @@
       <view>面包</view>
       <block wx:if="{{breadOrder.address_allow_delivery}}">
         <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
-          <text class="tit">配送时间</text>
           <view class="time flex-center">
-            <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+            <text class="time-txt" wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
             <text wx:else>请选择【面包】配送时间</text>
             <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
           </view>
@@ -262,16 +252,7 @@
       <view wx:else>收起</view>
       <text class="iconfont icon-arrow-btm"></text>
     </view>
-    <view class="more-pro flex-center" wx:else>共计{{breadOrder.total_number}}件商品</view>
     <block wx:if="{{breadOrder.address_allow_delivery}}">
-      <!-- <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
-        <text class="tit">配送时间</text>
-        <view class="time flex-center">
-          <text wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
-          <text wx:else>请选择配送时间</text>
-          <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
-        </view>
-      </view> -->
       <view class="total">合计：￥<text>{{breadOrder.total_price}}</text></view>
     </block>
     

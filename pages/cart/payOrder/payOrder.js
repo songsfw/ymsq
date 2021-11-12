@@ -412,7 +412,7 @@ Page({
       })
       return
     }
-    let source = e.currentTarget.dataset.source
+    let source = e.currentTarget ? e.currentTarget.dataset.source : e
     wx.navigateTo({
       url: '/pages/user/address/address?source=' + source + '&cartType=' + this.data.type
     })
@@ -450,6 +450,11 @@ Page({
     api.getMixOrder(data).then(res => {
       console.log(res);
       //wx.hideLoading();
+      let cart_data = res.cart_data
+      let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
+      let {promotion_info,promotion_info_unable,promotion_price} = res
+      let hasMai = res.jinmai.can
+
       this.setData({
         showLoading: false
       })
@@ -457,18 +462,28 @@ Page({
         return
       }
 
-      if(res.address && res.address.is_address && !res.address.address_allow_delivery){
-        wx.showToast({
-          icon: "none",
-          title: "当前选中地址无法配送，请选择可用地址",
-          duration: 3000
+      // if(res.address && res.address.is_address && !res.address.address_allow_delivery){
+      //   wx.showToast({
+      //     icon: "none",
+      //     title: "当前选中地址无法配送，请选择可用地址",
+      //     duration: 3000
+      //   })
+      // }
+
+      if((breadOrder&&!breadOrder.address_allow_delivery) || (cakeOrder&&!cakeOrder.address_allow_delivery)){
+        wx.showModal({
+          content: '因配送范围导致以下商品失效',
+          cancelText: "更改地址",
+          confirmText: "继续支付",
+          confirmColor: "#C1996B",
+          success: res => {
+            if (res.cancel) {
+              this.selectAdd(1)
+            }
+          }
         })
       }
 
-      let cart_data = res.cart_data
-      let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
-      let {promotion_info,promotion_info_unable,promotion_price} = res
-      let hasMai = res.jinmai.can
       //整理点击
       let useShowStatus = {};
       let unUsedShowStatus = {};

@@ -46,6 +46,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .pro-info .hd text{color: #999;font-size: 13px;}
 .pro-info .hd .send-time text{font-size: 14px;color: #222;}
 .pro-info .hd .send-time .time text{color: #f11616;margin-right: 0;}
+.send-time .time text.time-txt{color: #C1996B !important;}
 .pro-info .item{margin-bottom: 25rpx;padding: 0 18rpx;padding-bottom: 25rpx;}
 .pro-info .item:last-child{border: none;}
 .pro-info .item .pic{position: relative; width: 140rpx;height: 140rpx;overflow: hidden;background-color: #F6F6F6;margin-right: 10px;flex-shrink: 0;border-radius: 8rpx;}

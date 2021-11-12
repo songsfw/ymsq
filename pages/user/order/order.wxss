@@ -117,5 +117,5 @@ page{background: #F6F6F6;padding-top: 48px;}
 
 .mix-order>.order-code{padding-left:20rpx; color: #C1996B;font-size: 15px;padding-bottom: 16rpx;border-bottom: 1px solid #F6F6F6;}
 .mix-order .order-wp{padding:40rpx 20rpx 0 20rpx;}
-.mix-order .option{padding-bottom: 40rpx; border-bottom: 1px dotted #ccc;}
+.mix-order .option{padding-bottom: 40rpx; border-bottom: 1px dotted #F6F6F6;}
 .mix-order .option:last-child{border: none;}
