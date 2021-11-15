@@ -22,18 +22,15 @@ Page({
     timeType:null,
     selectDate: {
       '1':0,
-      '2':0,
-      '3':0
+      '2':0
     },
     selectTime:{
       '1':-1,
-      '2':-1,
-      '3':-1
+      '2':-1
     },
     checkDate: {
       '1':0,
-      '2':0,
-      '3':0
+      '2':0
     },
 
     breadTimes:{
@@ -244,6 +241,30 @@ Page({
   selectType(e) {
     let ziti = e.currentTarget.dataset.stype
     this.setData({
+      breadTimes:{
+        dateStr: '',
+        selectDateTxt: '',
+        selectTimeTxt: '',
+        stock_type: ''
+      },
+      cakeTimes:{
+        dateStr: '',
+        selectDateTxt: '',
+        selectTimeTxt: '',
+        stock_type: ''
+      },
+      selectDate: {
+        '1':0,
+        '2':0
+      },
+      selectTime:{
+        '1':-1,
+        '2':-1
+      },
+      checkDate: {
+        '1':0,
+        '2':0
+      },
       ziti: ziti,
     })
     this.initOrderData()
@@ -256,18 +277,10 @@ Page({
     })
   },
   showTimeTbl(e){
-    let delivery_times = null
-    let orderType = this.data.type
     let type = e.currentTarget ? e.currentTarget.dataset.type : e
     //单独处理时间弹窗
-    //自提使用当前订单类型时间 1 面包 2 20 蛋糕
-    if(type==3){
-      delivery_times = orderType==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
-    }else{
-      //非自提使用类型点击时间 1 面包 2蛋糕
-      delivery_times = type==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
-    }
-
+    let delivery_times = type==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
+    
     if (delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
@@ -362,6 +375,7 @@ Page({
   },
   confirmDate() {
     let {
+      type,
       delivery_times,
       selectTime,
       selectDate,
@@ -403,11 +417,20 @@ Page({
         cakeTimes:data
       })
     }
-    if(timeType==3){
-      this.setData({
-        zitiTimes:data
-      })
-    }
+    // if(timeType==3){
+    //   if(type==1){
+    //     this.setData({
+    //       breadTimes:data
+    //     })
+    //   }else{
+    //     this.setData({
+    //       cakeTimes:data
+    //     })
+    //   }
+    //   // this.setData({
+    //   //   zitiTimes:data
+    //   // })
+    // }
 
     this.close()
   },
@@ -886,9 +909,15 @@ Page({
       return
     }
 
-    if(ziti=='1' && (!zitiTimes.selectDateTxt || !zitiTimes.selectTimeTxt)){
-      this.showTimeTbl(3)
-      return
+    if(ziti=='1'){
+      if(type==1 && !breadTimes.selectTimeTxt){
+        this.showTimeTbl(1)
+        return
+      }
+      if(type!=1 && !cakeTimes.selectTimeTxt){
+        this.showTimeTbl(2)
+        return
+      }
     }
     if(ziti=='0'){
       if(cakeOrder && cakeOrder.address_allow_delivery && !cakeTimes.selectTimeTxt){
@@ -945,8 +974,8 @@ Page({
       address_id: address_id,
       delivery_bread_date: breadTimes.selectDateTxt,
       delivery_bread_time:breadTimes.selectTimeTxt,
-      delivery_cake_date: cakeTimes.selectDateTxt || zitiTimes.selectDateTxt,
-      delivery_cake_time:cakeTimes.selectTimeTxt || zitiTimes.selectTimeTxt,
+      delivery_cake_date: cakeTimes.selectDateTxt,
+      delivery_cake_time:cakeTimes.selectTimeTxt,
       cart_type: newType,
       stock_type: stock_type,
       delivery_type: collect.delivery_type,
@@ -994,6 +1023,7 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
+    return 
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)

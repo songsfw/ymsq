@@ -55,11 +55,17 @@
       <input class="flex-1" type="number" value="{{addressInfo.mobile}}" placeholder="请输入提货人手机号"
         bindinput="inputZitiPhone" />
     </view>
-    <view class="inputbox flex-center" data-type="3"  bind:tap="showTimeTbl">
+    <view class="inputbox flex-center" data-type="{{type==1?1:2}}"  bind:tap="showTimeTbl">
       <view>提货时间</view>
       <view class="time flex-center flex-1">
-        <text wx:if="{{selectTime['3']!=-1}}">{{zitiTimes.dateStr}} {{zitiTimes.selectTimeTxt}}</text>
-        <text wx:else>请选择自提时间</text>
+        <block wx:if="{{type==1}}">
+          <text wx:if="{{selectTime['1']!=-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+          <text wx:else>请选择自提时间</text>
+        </block>
+        <block wx:else>
+          <text wx:if="{{selectTime['2']!=-1}}">{{cakeTimes.dateStr}} {{cakeTimes.selectTimeTxt}}</text>
+          <text wx:else>请选择自提时间</text>
+        </block>
         <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
       </view>
     </view>
