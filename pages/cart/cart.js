@@ -608,36 +608,25 @@ Page({
     let btmHolder = wx.getStorageSync('btmHolder')
     let instructions = wx.getStorageSync('instructions')
 
-    if(instructions){
-      instructions = JSON.parse(instructions)
-      let txt =instructions['cart-top'],
-          // tipsBread = instructions['cart-bread-tips'],
-          tipsCake = instructions['cart-cake-tips'],
-          special_tips =instructions['special_tips']
-      this.setData({
-        tipsCake,
-        instructions:txt,
-        special_tips
-      })
-    }else{
-      api.getIntroduction().then(res=>{
-        console.log(res);
-        if(res){
-          instructions = res.instructions
-          let txt =instructions['cart-top'],
-          //tipsBread = instructions['cart-bread-tips'],
-          tipsCake = instructions['cart-cake-tips'],
-          special_tips =instructions['special_tips']
-          this.setData({
-            tipsCake,
-            instructions:txt,
-            special_tips
-          })
-          wx.setStorageSync("instructions", JSON.stringify(res.instructions))
-          
-        }
-      })
-    }
+    
+    api.getIntroduction().then(res=>{
+      console.log(res);
+      if(res){
+        instructions = res.instructions
+        let txt =instructions['cart-top'],
+        //tipsBread = instructions['cart-bread-tips'],
+        tipsCake = instructions['cart-cake-tips'],
+        special_tips =instructions['special_tips']
+        this.setData({
+          tipsCake,
+          instructions:txt,
+          special_tips
+        })
+        wx.setStorageSync("instructions", JSON.stringify(res.instructions))
+        
+      }
+    })
+    
   
 
     this.setData({

@@ -256,11 +256,18 @@ Page({
     })
   },
   showTimeTbl(e){
-    //1 面包  2蛋糕 混合
+    let delivery_times = null
+    let orderType = this.data.type
     let type = e.currentTarget ? e.currentTarget.dataset.type : e
     //单独处理时间弹窗
+    //自提使用当前订单类型时间 1 面包 2 20 蛋糕
+    if(type==3){
+      delivery_times = orderType==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
+    }else{
+      //非自提使用类型点击时间 1 面包 2蛋糕
+      delivery_times = type==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
+    }
 
-    let delivery_times = type==1?this.data.breadOrder.delivery_time:this.data.cakeOrder.delivery_time
     if (delivery_times.length == 0) {
       wx.showToast({
         icon: "none",
