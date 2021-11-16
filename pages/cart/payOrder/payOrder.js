@@ -1023,7 +1023,6 @@ Page({
 
     console.log('---支付参数---')
     console.log(data)
-    return 
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
