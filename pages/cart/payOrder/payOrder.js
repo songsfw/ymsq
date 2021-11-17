@@ -452,6 +452,7 @@ Page({
     //   mask:true,
     //   title: '加载中...'
     // })
+    console.log(this.data.address_id)
     this.setData({
       showLoading: true
     })
@@ -477,6 +478,7 @@ Page({
       txtCard = {}
       //蛋糕
     }
+    console.log(data);
     api.getMixOrder(data).then(res => {
       console.log(res);
       //wx.hideLoading();
@@ -1563,6 +1565,7 @@ Page({
         'address.is_address': true
       })
     }
+    console.log(this.data.address_id);
     this.initOrderData();
     this.getWxUrl()
     util.setWatcher(this);

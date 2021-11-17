@@ -59,7 +59,7 @@
               </scroll-view>
               <view class="total">{{child.status==2|| child.status==3?'实付金额':'应付金额'}}：￥<text>{{child.pay_price}}</text></view>
             </navigator>
-            <view class="option flex">
+            <view class="option flex" wx:if="{{order.main_order_status!=4}}">
               <block wx:if="{{child.status==1 || child.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{child.order_type}}" data-code="{{child.order_code}}">取消订单</view></block>
               <block wx:if="{{child.status==1}}">
                 <view class="btn pay-btn" catch:tap="payOrder" data-code="{{child.order_code}}">立即支付</view>
@@ -149,7 +149,7 @@
         </scroll-view>
         <view class="total">{{order.status==2|| order.status==3?'实付金额':'应付金额'}}：￥<text>{{order.pay_price}}</text></view>
       </navigator>
-      <view class="option flex" wx:if="{{!order.child_order}}">
+      <view class="option flex" id="{{order.status}}" wx:if="{{!order.child_order && order.status!=4}}">
         <block wx:if="{{order.status==1 || order.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view></block>
         <block wx:if="{{order.status==1}}">
           <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
