@@ -142,7 +142,7 @@ Page({
         console.log(selectAddress)
         let addressInfo = {
           address: addresstxt,
-          id: id,
+          address_id: id,
           area_id: area_id,
           area_name: area_name,
           city_id: old_city_id,
@@ -194,11 +194,11 @@ Page({
       if(res){
         let selectAddress = addressLi[idx]
         let default_address = res.default_address
-        if(selectAddress.id==addressInfo.id){
+        if(selectAddress.id==addressInfo.address_id){
           if(default_address.address){
             addressInfo = {
               address: default_address.address,
-              id: default_address.id,
+              address_id: default_address.id,
               area_id: default_address.area_id,
               area_name: default_address.area_name,
               city_id: default_address.old_city_id,
@@ -331,23 +331,11 @@ Page({
           name
         } = selectAddress
         // console.log(addresstxt)
-        console.log(selectAddress)
-        // console.log(address);
-
-        // return 
-        console.log(this.data)
-        // selectAddress.old_city_id != 
-        // let selectA;
-        // for (let tmlVal of this.data.address) {
-        //   if (tmlVal['id'] == this.data.addressInfo.id) {
-        //     selectA = tmlVal;
-        //   }
-        // }
 
         if (cacheAddressInfo.city_id == selectAddress.old_city_id) {
           let addressInfo = {
             address: addresstxt,
-            id: id,
+            address_id: id,
             area_id: area_id,
             area_name: area_name,
             city_id: old_city_id,
@@ -417,7 +405,7 @@ Page({
             //首页逻辑
             let addressInfo = {
               address: addresstxt,
-              id: id,
+              address_id: id,
               area_id: area_id,
               area_name: area_name,
               city_id: old_city_id,
@@ -447,7 +435,7 @@ Page({
 
           let addressInfo = {
             address: addresstxt,
-            id: id,
+            address_id: id,
             area_id: area_id,
             area_name: area_name,
             city_id: old_city_id,

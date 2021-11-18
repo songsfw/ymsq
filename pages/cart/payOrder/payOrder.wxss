@@ -1,7 +1,7 @@
 @import "../../../template/loading/loading.wxss";
 page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .strongTxt{color: #F5222D !important;}
-.pro-info{padding-bottom: 26rpx;}
+.pro-info{padding-bottom: 22rpx;}
 .order-wp{padding:0 24rpx;}
 .order-wp>view{background: #fff;border-radius: 8rpx;margin-bottom:20rpx;}
 .option{background: #fff; position: fixed;left: 0;bottom:0; width: 100%;height:100rpx;z-index: 20;justify-content: space-between;align-items: center;border-top: 1rpx solid #F6F6F6;}
@@ -205,9 +205,9 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .notice{color: #999;color: 14px;margin: 30rpx 0;}
 .get-code{margin: 38rpx 0 0 0;}
 .add-address{text-align: center;color:#C1996B;font-size: 15px;font-weight: 500;}
-.fittings-info{padding: 15px 0 18px 0;margin: 9px 18rpx 14px 18rpx;border-top: 1px solid #f6f6f6;border-bottom: 1px solid #f6f6f6;}
+.fittings-info{padding: 15px 0 18px 0;margin: 9px 18rpx 12px 18rpx;border-top: 1px solid #f6f6f6;border-bottom: 1px solid #f6f6f6;}
 .fittings-info .tit{font-size: 14px;margin-right:20px;}
-.fittings-info .txt{color: #666;}
+.fittings-info .txt{color: #666;padding-right: 20rpx;}
 .fittings-info .txt image{margin: 0 10px 0 0;width: 10px;height: 10px;}
 .fittings-info .txt>view{margin-bottom:25rpx ;font-size: 12px;align-items: baseline;}
 .fittings-info .txt>view:last-child{margin: 0;}

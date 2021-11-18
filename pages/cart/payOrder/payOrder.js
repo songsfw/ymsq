@@ -452,7 +452,6 @@ Page({
     //   mask:true,
     //   title: '加载中...'
     // })
-    console.log(this.data.address_id)
     this.setData({
       showLoading: true
     })
@@ -860,7 +859,6 @@ Page({
       cakeTimes,
       breadOrder,
       cakeOrder,
-      zitiTimes,
       type,
       ziti,
       payQueue,
@@ -880,7 +878,7 @@ Page({
     } = this.data
 
     let balance_price = useBalance == "1" ? balanceTxt : 0
-    if (!address.address_allow_delivery || !addressInfo.id) {
+    if (!address.address_allow_delivery || !addressInfo.address_id) {
       wx.showToast({
         icon: "none",
         title: "请选择可配送地址"
@@ -1532,7 +1530,7 @@ Page({
       this.setData({
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id,
-        address_id: addressInfo.id,
+        address_id: addressInfo.address_id,
         addressInfo: addressInfo,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,
@@ -1555,17 +1553,16 @@ Page({
     if (addressInfo) {
       this.setData({
         type: type,
-        changedId: addressInfo.id,
+        changedId: addressInfo.address_id,
         is_ziti: addressInfo.is_ziti,
         city_id: addressInfo.city_id || 0,
-        address_id: addressInfo.id,
+        address_id: addressInfo.address_id,
         zitiName: addressInfo.name,
         zitiPhone: addressInfo.mobile,
         addressInfo: addressInfo,
         'address.is_address': true
       })
     }
-    console.log(this.data.address_id);
     this.initOrderData();
     this.getWxUrl()
     util.setWatcher(this);
@@ -1598,7 +1595,7 @@ Page({
         this.setData({
           is_ziti: addressInfo.is_ziti,
           city_id: addressInfo.city_id,
-          address_id: addressInfo.id,
+          address_id: addressInfo.address_id,
           addressInfo: addressInfo,
           zitiName: addressInfo.name,
           zitiPhone: addressInfo.mobile,

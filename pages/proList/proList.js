@@ -1036,7 +1036,6 @@ Page({
     }
     let fixedTop = sysInfo.navBarHeight;
     let addressInfo = wx.getStorageSync("addressInfo")
-    console.log(addressInfo)
     let city_id = addressInfo && JSON.parse(addressInfo).city_id
     let btmHolder = wx.getStorageSync('btmHolder')
 

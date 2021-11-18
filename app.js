@@ -87,7 +87,7 @@ App({
       } = user_info.default_address
       addressInfo = {
         address: addresstxt,
-        id: id,
+        address_id: id,
         area_id: area_id,
         area_name: area_name,
         city_id: old_city_id,
