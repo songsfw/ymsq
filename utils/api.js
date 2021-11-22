@@ -254,7 +254,7 @@ const getOrderCake = (data) => {
 
 //提交订单
 const submmitOrder = (data) => {
-  return POST(baseUrl+"/order/submit-order",data).then(res => returnData(res,true))
+  return POST(baseUrl+"/order/submit-mix-order",data).then(res => returnData(res,true))
 }
 
 //支付
@@ -298,7 +298,7 @@ const getUserLocation = (data) => {
 //订单列表
 const orderList = (params) => {
   console.log(JSON.stringify(params))
-  return POST(baseUrl + "/order/list", params)
+  return POST(baseUrl + "/order/mix-list", params)
   .then(res => returnData(res))
 }
 
