@@ -293,7 +293,6 @@
       <view class="name coupon">
         优惠券
         <text wx:if="{{useDiscount}}">已选择最佳优惠</text>
-        <!-- <image src="../../../image/icon-coupon.png"></image> -->
       </view>
       <view class="val {{useCoupon?'strongTxt':''}}">
         <block wx:if="{{useCoupon}}"><text>-￥{{payQueue[2]}}</text></block>

@@ -66,7 +66,7 @@ Page({
     hasCard: false,
     hasThirdCard: false,
     hasCoupon: false,
-    useBalance: false,
+    useBalance: true,
     hasPolicy: true,
 
     ziti: "0",
@@ -493,14 +493,6 @@ Page({
         return
       }
 
-      // if(res.address && res.address.is_address && !res.address.address_allow_delivery){
-      //   wx.showToast({
-      //     icon: "none",
-      //     title: "当前选中地址无法配送，请选择可用地址",
-      //     duration: 3000
-      //   })
-      // }
-
       if((breadOrder&&!breadOrder.address_allow_delivery) || (cakeOrder&&!cakeOrder.address_allow_delivery)){
         wx.showModal({
           content: '因配送范围导致部分商品失效',
@@ -688,18 +680,6 @@ Page({
       collect
     } = this.data
     free_amount = parseFloat(free_amount)
-
-    // if(this.data.pay_style.balance==10){
-    //   if (balanceNum >= payPrice) {
-    //     balanceTxt = this.data.payPrice
-    //   } else {
-    //     balanceTxt = balanceNum
-    //   }
-    //   this.setData({
-    //     balanceTxt:util.formatePrice(balanceTxt),
-    //   })
-    //   return
-    // }
 
     //扣除原麦余额
     if (useBalance) {
@@ -1481,7 +1461,7 @@ Page({
   },
   hasChangeFollow(){
     let {
-      type,
+
       useBalance,
       verifyed,
       city_id,
@@ -1496,32 +1476,17 @@ Page({
       choose_ziti:ziti,
       address_id: address_id
     }
-
-    if (type == "1") {
-      //面包
-      api.getOrderBread(data).then(res => {
-        console.log(res);
-        if (!res) {
-          return
-        }
-        this.setData({
-          pay_style: res.pay_style,
-          useBalance:res.pay_style.balance==1?true:false,
-        })
-        this.initOrderPrice()
+    api.getMixOrder(data).then(res => {
+      console.log(res);
+      if (!res) {
+        return
+      }
+      this.setData({
+        pay_style: res.pay_style,
+        useBalance:res.pay_style.balance==1?true:false,
       })
-
-    } else {
-      //蛋糕
-      api.getOrderCake(data).then(res => {
-        console.log(res);
-        this.setData({
-          pay_style: res.pay_style,
-          useBalance:res.pay_style.balance==1?true:false,
-        })
-        this.initOrderPrice()
-      })
-    }
+      this.initOrderPrice()
+    })
   },
   hasChangeAddress(){
     let addressInfo = wx.getStorageSync("addressInfo")

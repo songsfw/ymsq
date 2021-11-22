@@ -79,8 +79,8 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .inputbox input{text-align: right;}
 .inputbox input::placeholder{color: #ccc;font-size: 13px;}
 .inputbox.on{color: #F5222D;}
-.order-wp .pay-info{padding: 20px 20rpx 0 20rpx;margin-bottom: 0;}
-.pay-info>view{justify-content: space-between;margin-bottom: 30rpx}
+.order-wp .pay-info{padding:15rpx 20rpx 0 20rpx;margin-bottom: 0;}
+.pay-info>view{justify-content: space-between;padding: 15rpx 0}
 .pay-info>view .tip{color: #aaa;font-size: 12px;}
 .pay-info .name{font-size:13px;}
 .pay-info .name image{width: 50rpx;height: 30rpx;background: #F6F6F6;vertical-align: sub;margin-left: 10rpx;}
