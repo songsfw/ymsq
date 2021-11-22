@@ -199,6 +199,24 @@ Page({
     })
   },500),
   bindcancel(e) {
+    let type = this.data.orderData.type
+    if(type==2){
+      wx.showModal({
+        content: '请联系客服取消订单，400-992-6632',
+        confirmText:"拨打",
+        cancelText:"再想想",
+        confirmColor:"#C1996B",
+        success (res) {
+          if (res.confirm) {
+            wx.makePhoneCall({
+              phoneNumber: '400-992-6632'
+            })
+            console.log('用户点击确定')
+          }
+        }
+      })
+      return
+    }
     this.setData({
       pop: "cancel"
     })
