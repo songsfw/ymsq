@@ -199,7 +199,7 @@ Page({
     })
   },500),
   bindcancel(e) {
-    let type = this.data.orderData.type
+    let type = this.data.orderData.order_type
     if(type==2){
       wx.showModal({
         content: '请联系客服取消订单，400-992-6632',
