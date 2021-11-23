@@ -485,7 +485,8 @@ Page({
       let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
       let {promotion_info,promotion_info_unable,promotion_price} = res
       let hasMai = res.jinmai.can
-
+      let pay_style = res.pay_style
+      let useBalance = pay_style.balance == 0 ? false : true
       this.setData({
         showLoading: false
       })
@@ -531,7 +532,7 @@ Page({
         address: res.address,
         balance: res.balance,
         balanceInfo: res.balance_config,
-        pay_style: res.pay_style,
+        pay_style: pay_style,
         jinmai: res.jinmai,
         breadOrder:breadOrder,
         cakeOrder:cakeOrder,
@@ -542,7 +543,8 @@ Page({
         txtCardObj: txtCard,
         useShowStatus,
         unUsedShowStatus,
-        wxCouponNum
+        wxCouponNum,
+        useBalance
       })
       this.initOrderPrice()
     })
