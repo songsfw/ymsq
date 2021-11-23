@@ -485,7 +485,7 @@
           </block>
           <block wx:else>
             <view class="item" wx:for="{{unableCouponList}}">
-              <view class="item-wrap">
+              <view class="item-wrap wx-coupon">
                 <view class="{{item.tag == ''? '' : (item.tag=='快过期'?'tag tag1':'tag')}}">{{!item.tag?'':item.tag}}
                 </view>
                 <view class="flex">

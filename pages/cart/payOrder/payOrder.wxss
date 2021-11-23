@@ -208,7 +208,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .fittings-info{padding: 15px 0 18px 0;margin: 9px 18rpx 12px 18rpx;border-top: 1px solid #f6f6f6;border-bottom: 1px solid #f6f6f6;}
 .fittings-info .tit{font-size: 14px;margin-right:20px;}
 .fittings-info .txt{color: #666;padding-right: 20rpx;}
-.fittings-info .txt image{margin: 0 10px 0 0;width: 10px;height: 10px;}
+.fittings-info .txt image{margin: 0 10px 0 0;width: 10px;height: 10px;flex-shrink: 0;}
 .fittings-info .txt>view{margin-bottom:25rpx ;font-size: 12px;align-items: baseline;}
 .fittings-info .txt>view:last-child{margin: 0;}
 .fittings-info .txt .on,
