@@ -43,7 +43,6 @@ Page({
           curItemId:id,
           ['breadLi[' + idx + '].txtStyle']: txtStyle
         })
-        console.log(breadLi);
       } else {
         that.setData({
           curItemId:id,
@@ -78,15 +77,21 @@ Page({
         cake = res.cake,
         total_num = res.total_number,
         select_number = res.select_number
-    let selectAll = total_num == select_number ? true : false
+
+    let noStockList = bread.detail.filter(item => {
+      return item.has_stock==0
+    });
+    let noStockNum = noStockList.length
+    let selectAll = total_num-noStockNum == select_number ? true : false
 
     util.setTabBarBadge(total_num)
     wx.setStorageSync('total_num', total_num)
-    let selectType = this.getSelectType(bread,cake)
+    let selectType = this.getSelectType(bread,cake,noStockNum)
     let hasActive = bread.detail.some(item=>{
       return item.special_tag=="活动商品"
     })
     this.setData({
+      noStockNum,
       hasActive,
       type:selectType.type,
       selectAll:selectAll,
@@ -377,7 +382,7 @@ Page({
       }
     })
   },
-  getSelectType(bread,cake){
+  getSelectType(bread,cake,num){
     let type = "",
         noallBread = true,
         noallCake = true
@@ -385,11 +390,13 @@ Page({
         cakeLi = cake.detail,
         breadSelectedNum = 0,
         cakeSelectedNum = 0
-
+    let noStockNum = num!=undefined ? num : this.data.noStockNum
+    
     if (breadLi&&breadLi.length > 0) {
       breadSelectedNum = bread.select_number
-      noallBread = breadSelectedNum == bread.total_number ? false : true
+      noallBread = breadSelectedNum == bread.total_number-noStockNum ? false : true
     }
+
     if (cakeLi&&cakeLi.length > 0) {
       cakeSelectedNum = cake.select_number
       noallCake = cakeSelectedNum == cake.total_number ? false : true
@@ -439,7 +446,7 @@ Page({
   },
   //选中/撤销选中
   selectPro(cartId, action) {
-    let { city_id } = this.data
+    let { city_id,noStockNum } = this.data
     let data = {
       city_id:city_id,
       cart_id: cartId,
@@ -455,9 +462,8 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
-        let total_num = res.total_number,
-        select_number = res.select_number
-        let selectAll = total_num == select_number ? true : false
+        let select_number = res.select_number
+        let selectAll = res.total_number - noStockNum == select_number ? true : false
 
         this.setData({
           selectAll:selectAll,
@@ -484,7 +490,8 @@ Page({
       city_id,
       noallBread,
       noallCake,
-      selectAll
+      selectAll,
+      noStockNum
     } = this.data
     let data = {
       city_id:city_id,
@@ -524,9 +531,8 @@ Page({
       } else {
         let bread =  res.bread,cake = res.cake
         let selectType = this.getSelectType(bread,cake)
-        let total_num = res.total_number,
-        select_number = res.select_number
-        let selectAll = total_num == select_number ? true : false
+        let select_number = res.select_number
+        let selectAll = res.total_number-noStockNum == select_number ? true : false
 
         this.setData({
           selectAll:selectAll,

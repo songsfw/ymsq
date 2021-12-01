@@ -94,19 +94,16 @@
         <view class="iconAll user-service"></view>
         <text>联系客服</text>
       </view>
-      <view data-url="{{group_chat}}" data-type="1" bind:tap="toPro">
+      <!-- <view data-url="{{group_chat}}" data-type="1" bind:tap="toPro">
         <view class="iconAll wechat"></view>
         <text>加入群聊</text>
-      </view>
+      </view> -->
       <navigator hover-class="none" url="/pages/user/exCoupon/exCoupon" >
         <view class="iconAll user-coupon"></view>
         <text>兑换码</text>
       </navigator>
     </view>
   </view>
-  <!-- <view class="logo">
-    <image src="../../image/logo.png"></image>
-  </view> -->
   <!-- <view style="height:{{50+btmHolder}}px"></view> -->
 
 </view>
