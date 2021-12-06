@@ -1,5 +1,6 @@
 const api = require("../../../utils/api")
 const util = require('../../../utils/util.js')
+var log = require('../../../utils/log.js')
 const app = getApp()
 Page({
 
@@ -64,7 +65,7 @@ Page({
     })
   },
   chashCharge:util.debounce(function(){
-    let {result,pwd,use,type}=this.data
+    let {result,pwd,use,type,cardPrice}=this.data
     
     if(result==""){
       wx.showToast({
@@ -90,9 +91,9 @@ Page({
         card_no:result,
         card_pwd:pwd,
         type:type,
-        pay_price:this.data.cardPrice
+        pay_price:cardPrice || 0
       }
-      console.log(data)
+      log.info(data)
       api.useCard(data).then(res=>{
         //wx.hideLoading();
         this.setData({
@@ -139,7 +140,7 @@ Page({
         card:result,
         pwd:pwd
       }
-      
+      log.info(data)
       api.chashCharge(data).then(res=>{
         //wx.hideLoading();
         this.setData({

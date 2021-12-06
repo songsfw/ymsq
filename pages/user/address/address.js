@@ -286,7 +286,6 @@ Page({
       cartType,
       addressInfo:cacheAddressInfo
     } = this.data
-    console.log("11111")
     if (source != 0) {
       let data = {
         address_id: id,
