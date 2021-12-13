@@ -42,11 +42,21 @@ Page({
     })
   },
   inputPwd(e){
+    if(this.data.showPriceInfo){
+      this.setData({
+        showPriceInfo:false
+      })
+    }
     this.setData({
       pwd: e.detail.value
     })
   },
   inputRes(e){
+    if(this.data.showPriceInfo){
+      this.setData({
+        showPriceInfo:false
+      })
+    }
     this.setData({
       result: e.detail.value
     })
