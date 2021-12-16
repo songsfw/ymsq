@@ -1,5 +1,6 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+var log = require('../../../utils/log.js')
 let delivery = 10,
   mai = 0,
   coupon = 0
@@ -146,7 +147,6 @@ Page({
       promotion_type:promotion_type,
       isCouponForWx:isCouponForWx
     })
-    //this.initOrderPrice()
     this.close()
   },
   selectCoupon(e) {
@@ -268,7 +268,6 @@ Page({
       ziti: ziti,
     })
     this.initOrderData()
-    //this.initOrderPrice()
   },
   showPop(e) {
     let pop = e.currentTarget ? e.currentTarget.dataset.pop : e
@@ -319,7 +318,6 @@ Page({
       payQueue: newPayQueue,
       oldMaiPrice:oldMaiPrice,
     })
-    //this.initOrderPrice()
   },
   confirmSore() {
     this.close()
@@ -477,10 +475,19 @@ Page({
       txtCard = {}
       //蛋糕
     }
-    console.log(data);
+    console.log(type);
     api.getMixOrder(data).then(res => {
       console.log(res);
       //wx.hideLoading();
+      if(type=='1'){
+        if(!res || !res.cart_data || !res.cart_data.bread){
+          log.info(data,res.cart_data.bread)
+        }
+      }
+      
+      if (!res) {
+        return
+      }
       let cart_data = res.cart_data
       let breadOrder = cart_data.bread,cakeOrder = cart_data.cake
       let {promotion_info,promotion_info_unable,promotion_price} = res
@@ -490,9 +497,6 @@ Page({
       this.setData({
         showLoading: false
       })
-      if (!res) {
-        return
-      }
 
       if((breadOrder&&!breadOrder.address_allow_delivery) || (cakeOrder&&!cakeOrder.address_allow_delivery)){
         wx.showModal({
@@ -1008,6 +1012,9 @@ Page({
     wx.showLoading({mask:true,title:'支付中...'})
     api.submmitOrder(data).then(res => {
       console.log(res)
+      if(!res || typeof res.status!='undefined'){
+        log.info(data,res)
+      }
       let orderRes = res
       if (orderRes.status=="-1") {
         wx.showModal({

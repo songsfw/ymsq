@@ -1,6 +1,5 @@
 const api = require("../../../utils/api")
 const util = require('../../../utils/util.js')
-var log = require('../../../utils/log.js')
 const app = getApp()
 Page({
 
@@ -103,7 +102,6 @@ Page({
         type:type,
         pay_price:cardPrice || 0
       }
-      log.info(data)
       api.useCard(data).then(res=>{
         //wx.hideLoading();
         this.setData({
@@ -113,12 +111,6 @@ Page({
         if(!res){
           return
         }
-        // if(res==app.globalData.bindPhoneStat){
-        //   this.setData({
-        //     popShow:true
-        //   })
-        //   return
-        // }
 
         let usePrice = res.use_card
         if(type==1){
@@ -128,11 +120,7 @@ Page({
           app.globalData.thirdCardNo = result
           app.globalData.thirdCardPwd = pwd
         }
-        // wx.showToast({
-        //   title: `成功抵扣${usePrice}元`,
-        //   icon: 'none',
-        //   duration: 2000
-        // })
+
         this.setData({
           showPriceInfo:true,
           pay_price:res.pay_price,
@@ -150,7 +138,6 @@ Page({
         card:result,
         pwd:pwd
       }
-      log.info(data)
       api.chashCharge(data).then(res=>{
         //wx.hideLoading();
         this.setData({
