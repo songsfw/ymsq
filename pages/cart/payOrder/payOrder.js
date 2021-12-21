@@ -749,6 +749,7 @@ Page({
   useCard(e) {
     let isUse = 0
     let type = e.currentTarget.dataset.type
+    let orderType = this.data.type
     if(this.data.isCouponForWx){
       wx.showToast({
         icon:"none",
@@ -776,7 +777,7 @@ Page({
     }
     let preUseBalancePrice = this.data.preUseBalancePrice
     wx.navigateTo({
-      url: '/pages/account/cashcharge/cashcharge?use=1&type=' + type + '&cardPrice=' + preUseBalancePrice + '&isUse=' + isUse
+      url: '/pages/account/cashcharge/cashcharge?use=1&type=' + type + '&cardPrice=' + preUseBalancePrice + '&isUse=' + isUse + '&ordertype=' + orderType
     })
   },
   setCardPrice(price, type, card_no, card_pwd) {

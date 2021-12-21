@@ -28,7 +28,7 @@ const returnData = (res,needToast=false)=>{
         wx.showToast({
           icon:"none",
           title:data.message,
-          duration:2000
+          duration:3000
         })
       }
       return false

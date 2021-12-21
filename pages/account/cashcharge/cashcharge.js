@@ -74,7 +74,7 @@ Page({
     })
   },
   chashCharge:util.debounce(function(){
-    let {result,pwd,use,type,cardPrice}=this.data
+    let {result,pwd,use,type,cardPrice,orderType}=this.data
     
     if(result==""){
       wx.showToast({
@@ -100,6 +100,7 @@ Page({
         card_no:result,
         card_pwd:pwd,
         type:type,
+        order_type:orderType,
         pay_price:cardPrice || 0
       }
       api.useCard(data).then(res=>{
@@ -207,6 +208,7 @@ Page({
    */
   onLoad: function (options) {
     let use = options.use,type=options.type||1,cardPrice=options.cardPrice,isUse = options.isUse
+    let ordertype = options.ordertype
     console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder==0?12:btmHolder
@@ -227,6 +229,7 @@ Page({
     
     if(use==1){
       this.setData({
+        orderType:ordertype,
         isUse:isUse,
         use:use,
         type:type,
