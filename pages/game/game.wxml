@@ -6,7 +6,7 @@
 </navigator>
 <view class="lay-left">
     <view class="game-wp">
-        <image src="../../image/game-bg.png" class="game-bg"></image>
+        <image src="../../image/game-bg-c.png" class="game-bg"></image>
         <view class="wawa-wrap">
             <view class="paw animate_paw {{start?'animate_pawMotion':''}} {{isGrabbing?'animate_pause':''}}">
                 <view class="paw-top"><image src="../../image/game5.png"></image></view>
@@ -33,6 +33,7 @@
     </view>
     <view class="title" style="margin-top:-55rpx"><image src="https://api.withwheat.com/img/game-title0.png"></image></view>
    <view class="box-wp box-wp2">
+       <image src="../../image/hat-c.png" class="staff"></image>
        <view class="box gift-list flex">
             <image wx:for="{{detail}}" src="{{item.image_url}}" mode="widthFix"></image>
             <view class="txt2">【有效期：优惠券有效期自领取之日起14日内有效】</view>
@@ -41,6 +42,7 @@
    </view>
     <view class="title" style="margin-top:-30rpx"><image src="https://api.withwheat.com/img/t1.png"></image></view>
     <view class="box-wp box-wp2">
+        <image src="../../image/hat-c.png" class="staff staff-r"></image>
        <view class="box notice">
            <block wx:for="{{rule}}">
                 <view class="h3">{{item[0]}}</view>
@@ -51,6 +53,7 @@
    </view>
     <view class="title" style="margin-top:-30rpx"><image src="https://api.withwheat.com/img/t2.png"></image></view>
     <view class="box-wp box-wp2">
+        <image src="../../image/hat-c.png" class="staff"></image>
        <view class="box">
            <view class="pic-box flex">
 
