@@ -17,7 +17,7 @@ page{background: #F6F6F6;height: auto;padding-top: 20rpx;}
 .option .num text{font-size:20px;font-weight: 500;}
 .buy-btn{width: 88px;height: 36px;background:#C1996B;color: #fff;text-align: center;line-height: 36px;border-radius: 18px;margin:0 20rpx;font-size: 13px;font-weight: 500;}
 .buy-btn.on{background-color: rgba(193, 153, 107, 0.5)}
-.address{padding:34rpx 20rpx;margin-bottom: 20rpx;border-radius: 8rpx;background:#fff url(https://api-beta.withwheat.com/img/bar.png) left bottom repeat-x !important;background-size:29px 4px !important;}
+.address{padding:34rpx 20rpx;margin-bottom: 20rpx;border-radius: 8rpx;background:#fff url(https://api.withwheat.com/img/bar.png) left bottom repeat-x !important;background-size:29px 4px !important;}
 .address .local{color: #999;font-size: 40rpx;margin-right: 24rpx;}
 .address .tit{font-size: 14px;margin-bottom: 6rpx;}
 .icon-arrow-r{width: 18rpx;
