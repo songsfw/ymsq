@@ -35,7 +35,8 @@
     "pages/game/game",
     "pages/user/exCoupon/exCoupon",
     "pages/user/exRule/exRule",
-    "pages/giftList/giftList"
+    "pages/giftList/giftList",
+    "pages/account/company/company"
   ],
   
   "tabBar": {

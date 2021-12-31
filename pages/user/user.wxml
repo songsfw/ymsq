@@ -102,6 +102,10 @@
         <view class="iconAll user-coupon"></view>
         <text>兑换码</text>
       </navigator>
+      <navigator hover-class="none" url="/pages/account/company/company" >
+        <view class="iconAll user-vip"></view>
+        <text>企业入口</text>
+      </navigator>
     </view>
   </view>
   <!-- <view style="height:{{50+btmHolder}}px"></view> -->

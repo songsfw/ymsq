@@ -480,8 +480,8 @@ Page({
       console.log(res);
       //wx.hideLoading();
       if(type=='1'){
-        if(!res || !res.cart_data || !res.cart_data.bread){
-          log.info(data,res.cart_data.bread)
+        if(!res.cart_data){
+          log.info(data,res.cart_data)
         }
       }
       

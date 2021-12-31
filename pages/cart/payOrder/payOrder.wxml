@@ -32,9 +32,13 @@
             <text>{{addressInfo.name}}</text>
             <text>{{addressInfo.mobile}}</text>
             <view class="tag" wx:if="{{addressInfo.is_default==1}}">默认</view>
+            <view class="tag special" wx:if="{{address.addressInfo.special}}">{{address.addressInfo.special.sign}}</view>
           </view>
           <view class="address-txt">
             {{addressInfo.address}}{{addressInfo.address_detail}}
+          </view>
+          <view class="address-txt special-txt" wx:if="{{address.addressInfo.special}}">
+            {{address.addressInfo.special.desc}}
           </view>
         </view>
       </block>

@@ -164,6 +164,11 @@ const chashCharge = (data) => {
   return POST(baseUrl+"/user-balance/recharge-cash-card",data).then(res => returnData(res))
 }
 
+//企业充值卡
+const companyCharge = (data) => {
+  return POST(baseUrl+"/user-balance/recharge-cash-card",data).then(res => returnData(res,true))
+}
+
 //校验密码
 const verifyPwd = (data) => {
   return POST(baseUrl+"/user/check-pay-pwd",data).then(res => returnData(res))
@@ -455,6 +460,7 @@ module.exports = {
   getVipCard:getVipCard,
   wxCharge:wxCharge,
   chashCharge:chashCharge,
+  companyCharge,
   verifyPwd,
   changeFreePay,
   setAmount,
