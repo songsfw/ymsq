@@ -16,7 +16,7 @@
     <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
     <view class="icon iconfont icon-scan" bind:tap="scan"></view>
   </view>
-  <view class="inputxt">
+  <view class="inputxt" style="margin-bottom:0">
     <text>卡密码</text>
     <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡密码" password="{{!show}}" type="number" value="{{pwd}}" class="flex-1" bindinput="inputPwd" />
     <view class="icon" bindtap="changeShow">
