@@ -35,7 +35,7 @@ vertical-align: middle;}
 .item .price .num text{font-size: 14px;font-weight: 500;margin-left:-2px;}
 .item .price .add{position: absolute;right: 0;top: 0; width:41px;height: 41px;color: #C1996B;font-size: 24px;text-align: center;line-height: 44px;}
 .item .price .add.unuse{color: #ccc}
-.menu{width: 100%;z-index: 11;border-top: 1rpx solid #F9F9F9;height: 46px;}
+.menu{position: sticky;width: 100%;z-index: 13;border-top: 1rpx solid #F9F9F9;height: 46px;}
 .isFixed{position: fixed;left:0;width: 100%;box-sizing: border-box;}
 
 .main view{position: relative; height:46px;line-height: 46px; text-align: center;font-size: 16px;color: #666;background-color: #fff;}
@@ -51,7 +51,7 @@ vertical-align: middle;}
 .sub{ width: 100%;box-sizing: border-box; background: #F9F9F9;padding: 12px 24rpx 12px 24rpx;}
 .sub.fixed{position: fixed;left: 0;top: 0;width: 100%;z-index: 13;}
 .sub text{padding: 0 12px;line-height: 30px;background: #fff;border-radius: 15px;margin-right: 10px;flex-shrink: 0;font-size: 14px;}
-.sub-wrap{height: 42px;position: sticky;z-index: 20;}
+.sub-wrap{height: 42px;}
 .sub text.on{background:#C1996B;color: #fff;}
 .sub-wrap>.sub.sub-cake{padding: 0; }
 .moreBtn{text-align: center;padding-top: 20rpx}

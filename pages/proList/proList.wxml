@@ -3,7 +3,7 @@
 <template is="loading" data="{{showLoading}}"></template>
 <wxs module="filter" src="../../utils/tools.wxs"></wxs>
 <navBar hasSearch></navBar>
-<view class="menu">
+<view class="menu" style="top:{{fixedTop}}px">
     <view class="main flex">
       <block wx:for="{{menu}}" wx:for-index="index">
         <view style="z-index:1;" bind:tap="switchTab" class="flex-1 {{currentTab==item.value ? 'on' : ''}}"
@@ -60,7 +60,6 @@
 <block wx:if="{{currentTab != 4}}">
   <view class="pro-box" style="padding-top:{{currentTab!=2? 24:0}}rpx;" wx:if="{{showList[currentTab].length > 0}}">
     <block wx:if="{{!showList[currentTab]}}">
-      不存在
       <view class="nodata">
         <image src="../../image/no-data.png"></image>
         <view class="txt">暂无内容</view>
@@ -73,7 +72,7 @@
           <block wx:for="{{item}}" wx:for-item="pro" wx:for-index="itemIdx">
             <view class="item" bind:tap="toProInfo" data-name="{{pro.name}}" data-idx="{{idx}}" data-itemidx="{{itemIdx}}" data-proid="{{pro.meal_id}}" data-spuid="{{pro.spu_id}}" data-currenttab="{{currentTab}}"
               data-type="{{pro.type}}">
-              <view class="pic {{showStock[currentTab][pro.meal_id]==0?'sold-out':''}}">
+              <view class="pic {{showStock[currentTab][pro.meal_id]<=0?'sold-out':''}}">
                 <image class="pro-logo" src="../../image/cake-logo.png" wx:if="{{pro.type==2}}"></image>
                 <view class="tag">已售罄</view>
                 <image src="{{pro.img}}" lazy-load="{{true}}" mode="aspectFill"></image>
