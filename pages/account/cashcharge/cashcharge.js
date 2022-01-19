@@ -209,6 +209,11 @@ Page({
   onLoad: function (options) {
     let use = options.use,type=options.type||1,cardPrice=options.cardPrice,isUse = options.isUse
     let ordertype = options.ordertype
+    //外部来源
+    let source = options.source
+    wx.reportAnalytics('charge_source', {
+      source: source,
+    });
     console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder==0?12:btmHolder

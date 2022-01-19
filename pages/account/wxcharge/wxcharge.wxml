@@ -16,6 +16,11 @@
         <text>{{item.desc2}}</text>
         {{item.promotion_name}}{{item.promotion_num}}
       </view>
+      
+      <!-- <view class="tag flex-center" data-idx="{{index}}" catch:tap="popDetail">
+        <rich-text nodes="{{item.desc}}"></rich-text>
+        <text class="">查看</text>
+      </view> -->
     </view>
     <view class="checkbox {{item.checked?'on':''}}">
       <view class="iconfont icon-check"></view>
@@ -42,3 +47,13 @@
 <view style="height:{{60+btmHolder}}px"></view>
 
 <phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
+
+<view class="mask" wx:if="{{pop}}" bind:tap="close"></view>
+<view class="rule-panel" wx:if="{{pop}}">
+  
+  <view class="pop-title">礼包内容</view>
+  <scroll-view class="pop-con">
+    <view wx:for="{{chargeList[curIdx].promotion_info}}">赠送{{item.name}} *{{item.number}}</view>
+  </scroll-view>
+  <view class="btn" bind:tap="close">知道了</view>
+</view>
