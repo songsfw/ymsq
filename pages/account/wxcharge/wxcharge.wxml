@@ -11,16 +11,10 @@
   <view class="item flex {{item.checked?'checked':''}}" bind:tap="setDefault" wx:for="{{chargeList}}" data-idx="{{index}}" data-id="{{item.recharge_id}}" wx:key="recharge_id">
     <view class="money">
       <view class="num">￥<text>{{item.money}}</text></view>
-      <view class="tag">
-        {{item.desc1}}
-        <text>{{item.desc2}}</text>
-        {{item.promotion_name}}{{item.promotion_num}}
-      </view>
-      
-      <!-- <view class="tag flex-center" data-idx="{{index}}" catch:tap="popDetail">
+      <view class="tag flex-center" data-idx="{{index}}" catch:tap="popDetail">
         <rich-text nodes="{{item.desc}}"></rich-text>
         <text class="">查看</text>
-      </view> -->
+      </view>
     </view>
     <view class="checkbox {{item.checked?'on':''}}">
       <view class="iconfont icon-check"></view>

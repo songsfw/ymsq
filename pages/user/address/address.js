@@ -1,5 +1,6 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+const log = require('../../../utils/log.js')
 const app = getApp()
 var startX = 0
 Page({
@@ -352,6 +353,14 @@ Page({
           var pages = getCurrentPages();
           var prevPage = pages[pages.length - 2]; //上一个页面
           //直接调用上一个页面的方法，把数据存到上一个页面中去
+          if(prevPage.setData==undefined){
+            let url = []
+            pages.forEach(item=>{
+              url.push(item.route)
+            })
+            log.info(pages.length,url)
+          }
+          
           prevPage.setData({
             changedId: id
           })

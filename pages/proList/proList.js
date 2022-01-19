@@ -779,10 +779,7 @@ Page({
     let cakeTempParams = {
       proId: proId,
       proInPage,
-      proInPage,
       itemIdx,
-      itemIdx,
-      curType,
       curType,
       curSpuid,
       selected: product.selected
