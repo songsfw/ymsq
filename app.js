@@ -192,7 +192,7 @@ App({
     userInfo: null,
     cityId: null,
     cityName: null,
-    isShowBalance: false,
+    isShowBalance: true,
     isShowScore: true,
     cardNo: null,
     cardPwd: null,

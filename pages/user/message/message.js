@@ -27,11 +27,19 @@ Page({
     })
   },300),
   submit(){
+    let txt = this.data.txt
     let data = {
-      content:this.data.txt
+      content:txt
     }
-    let hasSpecial = util.checkSpecialStr(this.data.txt)
+    let hasSpecial = util.checkSpecialStr(txt)
     console.log(hasSpecial);
+    if(txt==''){
+      wx.showToast({
+        icon:'none',
+        title:"请填写内容"
+      })
+      return
+    }
     if(hasSpecial){
       wx.showToast({
         icon:'none',

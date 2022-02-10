@@ -1,5 +1,6 @@
 // pages/user/user.js
 const api = require('../../utils/api.js')
+const log = require('../../utils/log.js')
 const app = getApp()
 Page({
 
@@ -56,6 +57,9 @@ Page({
     //自定义tabbar选中
     api.getAccount().then(res=>{
       console.log(res);
+      if(!res.balance){
+        log.info('account',res)
+      }
       this.setData({
         money:res.balance
       })

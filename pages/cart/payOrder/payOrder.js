@@ -1043,6 +1043,7 @@ Page({
         return
       }
       
+      //res==1022
       if (res == app.globalData.bindPhoneStat) {
         this.setData({
           phoneStat: 1,

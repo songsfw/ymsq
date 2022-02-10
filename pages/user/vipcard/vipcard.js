@@ -1,5 +1,6 @@
 const api = require('../../../utils/api.js')
 const wxbarcode = require('../../../utils/initBarCode.js')
+const log = require('../../../utils/log.js')
 var timer = null
 const app = getApp()
 Page({
@@ -70,6 +71,9 @@ Page({
       wx.hideLoading()
       console.log(res);
       const { pay_code, card_no ,balance,subscribe} = res;
+      if(!pay_code){
+        log.info("会员卡",res)
+      }
       //const codeStr = `${code.slice(0, 4)}****${code.slice(20)}`;
       wxbarcode.barcode('barcode', pay_code, 588, 300);
       this.setData({
