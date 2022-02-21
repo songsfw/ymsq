@@ -1,5 +1,6 @@
 const api = require('../../../utils/api.js')
 const util = require('../../../utils/util.js')
+const log = require('../../../utils/log.js')
 const app = getApp()
 var startX = 0
 Page({
@@ -142,7 +143,7 @@ Page({
         console.log(selectAddress)
         let addressInfo = {
           address: addresstxt,
-          id: id,
+          address_id: id,
           area_id: area_id,
           area_name: area_name,
           city_id: old_city_id,
@@ -194,11 +195,11 @@ Page({
       if(res){
         let selectAddress = addressLi[idx]
         let default_address = res.default_address
-        if(selectAddress.id==addressInfo.id){
+        if(selectAddress.id==addressInfo.address_id){
           if(default_address.address){
             addressInfo = {
               address: default_address.address,
-              id: default_address.id,
+              address_id: default_address.id,
               area_id: default_address.area_id,
               area_name: default_address.area_name,
               city_id: default_address.old_city_id,
@@ -286,7 +287,6 @@ Page({
       cartType,
       addressInfo:cacheAddressInfo
     } = this.data
-    console.log("11111")
     if (source != 0) {
       let data = {
         address_id: id,
@@ -331,23 +331,11 @@ Page({
           name
         } = selectAddress
         // console.log(addresstxt)
-        console.log(selectAddress)
-        // console.log(address);
-
-        // return 
-        console.log(this.data)
-        // selectAddress.old_city_id != 
-        // let selectA;
-        // for (let tmlVal of this.data.address) {
-        //   if (tmlVal['id'] == this.data.addressInfo.id) {
-        //     selectA = tmlVal;
-        //   }
-        // }
 
         if (cacheAddressInfo.city_id == selectAddress.old_city_id) {
           let addressInfo = {
             address: addresstxt,
-            id: id,
+            address_id: id,
             area_id: area_id,
             area_name: area_name,
             city_id: old_city_id,
@@ -365,6 +353,14 @@ Page({
           var pages = getCurrentPages();
           var prevPage = pages[pages.length - 2]; //上一个页面
           //直接调用上一个页面的方法，把数据存到上一个页面中去
+          if(prevPage == undefined || prevPage.setData==undefined){
+            let url = []
+            pages.forEach(item=>{
+              url.push(item.route)
+            })
+            log.info(pages.length,url)
+          }
+          
           prevPage.setData({
             changedId: id
           })
@@ -417,7 +413,7 @@ Page({
             //首页逻辑
             let addressInfo = {
               address: addresstxt,
-              id: id,
+              address_id: id,
               area_id: area_id,
               area_name: area_name,
               city_id: old_city_id,
@@ -447,7 +443,7 @@ Page({
 
           let addressInfo = {
             address: addresstxt,
-            id: id,
+            address_id: id,
             area_id: area_id,
             area_name: area_name,
             city_id: old_city_id,

@@ -239,10 +239,14 @@ Page({
     // })
   },
   onUnload(){
-  }
+  },
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage: function () {
-  // }
+  onShareAppMessage: function () {
+    return {
+      title: '玩转娃娃机',
+      imageUrl:"http://images.imianfen.com/mall/202201/65/12/9743961d80304b7829.png"
+    }
+  }
 })

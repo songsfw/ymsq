@@ -74,7 +74,7 @@ Page({
     })
   },
   chashCharge:util.debounce(function(){
-    let {result,pwd,use,type,cardPrice,orderType}=this.data
+    let {result,pwd}=this.data
     
     if(result==""){
       wx.showToast({
@@ -95,67 +95,46 @@ Page({
     this.setData({
       showLoading:true
     })
-    if(use==1){
-      let data = {
-        card_no:result,
-        card_pwd:pwd,
-        type:type,
-        order_type:orderType,
-        pay_price:cardPrice || 0
-      }
-      api.useCard(data).then(res=>{
-        //wx.hideLoading();
-        this.setData({
-          showLoading:false
-        })
-        console.log(res)
-        if(!res){
-          return
-        }
-
-        let usePrice = res.use_card
-        if(type==1){
-          app.globalData.cardNo = result
-          app.globalData.cardPwd = pwd
-        }else{
-          app.globalData.thirdCardNo = result
-          app.globalData.thirdCardPwd = pwd
-        }
-
-        this.setData({
-          showPriceInfo:true,
-          pay_price:res.pay_price,
-          card_balance:res.card_balance,
-          usePrice:usePrice
-        })
-        // setTimeout(() => {
-        //   wx.navigateBack({
-        //     delta: 1
-        //   })
-        // }, 1000);
+    
+    let data = {
+      card:result,
+      pwd:pwd,
+      company:1
+    }
+    api.companyCharge(data).then(res=>{
+      this.setData({
+        showLoading:false
       })
-    }else{
-      let data = {
-        card:result,
-        pwd:pwd
+      console.log(res)
+      if(!res){
+        return
       }
-      api.chashCharge(data).then(res=>{
-        //wx.hideLoading();
-        this.setData({
-          showLoading:false
+      if(res.status=='-1'){
+        wx.showToast({
+          title: res.message,
+          icon: 'none',
+          duration: 3000
         })
-        console.log(res)
-        if(!res){
-          return
-        }
-        // if(res==app.globalData.bindPhoneStat){
-        //   this.setData({
-        //     popShow:true
-        //   })
-        //   return
-        // }
-        // app.globalData.cardNo = result
-        // app.globalData.cardPwd = pwd
+        return
+      }
+      if(res.status=='-2'){
+        wx.showModal({
+          content: res.message,
+          cancelText: "去充值",
+          confirmText: "知道了",
+          success: res => {
+            if (res.cancel) {
+              wx.redirectTo({
+                url: '/pages/account/cashcharge/cashcharge',
+              })
+            } else if (res.cancel) {
+              
+            }
+          }
+        })
+        return
+      }
+      
         wx.showToast({
           title: '充值成功',
           icon: 'none',
@@ -165,8 +144,9 @@ Page({
           result:'',
           pwd:""
         })
-      })
-    }
+      
+    })
+    
 
   },300,false),
   useChashCharge(){
@@ -207,62 +187,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let use = options.use,type=options.type||1,cardPrice=options.cardPrice,isUse = options.isUse
-    let ordertype = options.ordertype
-    //外部来源
-    let source = options.source
-    wx.reportAnalytics('charge_source', {
-      source: source,
-    });
-    console.log(isUse);
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder==0?12:btmHolder
-
-    api.getIntroduction().then(res=>{
-      console.log(res);
-      if(res){
-        let txt = type==1?res.instructions['cash-card']:res.instructions.duomeiwei
+    let txt = [
+      '1、 此卡（券）充值成功后额度将会转移到会员的余额账户，本卡（券）失去价值 ',
+'2、余额支持原麦山丘微信商城、线下门店消费时使用；',
+'3、卡（券）充值前已经开具发票，在微信商城和门店使用将不再开具；',
+'4、余额不兑换现金、不参与积分、不与其他优惠活动同享；',
+'5、蛋糕产品六环内请至少提前5小时订购；其他订单请至少提前24小时订购；',
+'6、如有订单变更需进行退款的，余额支付部分将退回原账户；',
+'7、余额使用不限次数、暂不设置有效期。'
+    ]
+    // api.getIntroduction().then(res=>{
+    //   console.log(res);
+    //   if(res){
+    //     let txt = res.instructions['cash-card']
         this.setData({
           instructions:txt
         })
-      }
-    })
+    //   }
+    // })
     
     this.setData({
       btmHolder:btmHolder||0,
     })
-    
-    if(use==1){
-      this.setData({
-        orderType:ordertype,
-        isUse:isUse,
-        use:use,
-        type:type,
-        cardPrice:cardPrice
-      })
-    }
-
-    if(type==2){
-      if(app.globalData.thirdCardNo){
-        this.setData({
-          result:app.globalData.thirdCardNo,
-          pwd:app.globalData.thirdCardPwd
-        })
-      }
-      wx.setNavigationBarTitle({
-        title: '多美味卡'
-      })
-    }else{
-      if(app.globalData.cardNo){
-        this.setData({
-          result:app.globalData.cardNo,
-          pwd:app.globalData.cardPwd
-        })
-      } 
-      wx.setNavigationBarTitle({
-        title: '现金卡'
-      })
-    }
   },
 
   /**
@@ -275,16 +223,8 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-   async onShow () {
-     //登录逻辑
-    let userInfo = wx.getStorageSync('userInfo')
-    let loginInfo = null
-    if(!userInfo){
-      wx.showLoading({mask:true})
-      loginInfo = await app.wxLogin()
-      await app.getAddress(loginInfo)
-      wx.hideLoading()
-    }
+  onShow: function () {
+    
   },
 
   /**

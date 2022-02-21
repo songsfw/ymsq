@@ -201,6 +201,45 @@
         </view>
       </view>
     </view>
+    <view class="pro-info pay-info" wx:if="{{orderData.old_status=='CANCELLED'}}">
+      <view class="hd flex-center">
+        <view>退款金额明细</view>
+      </view>
+      <view class="flex-center txtitem">
+        <view class="name">订单取消时间</view>
+        <view class="val">
+          {{orderData.cancel_time}}
+        </view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.POINT}}">
+        <view class="name">麦点</view>
+        <view class="val">￥{{refund_info.POINT}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.PROMOTION}}">
+        <view class="name">卡券</view>
+        <view class="val">￥{{refund_info.PROMOTION}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.CODE}}">
+        <view class="name">优惠券</view>
+        <view class="val">￥{{refund_info.CODE}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.CASHCARD}}">
+        <view class="name">现金卡</view>
+        <view class="val">￥{{refund_info.CASHCARD}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.THIRDCARD}}">
+        <view class="name">多美味卡</view>
+        <view class="val">￥{{refund_info.THIRDCARD}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.BALANCE}}">
+        <view class="name">原麦余额</view>
+        <view class="val">￥{{refund_info.BALANCE}}</view>
+      </view>
+      <view class="flex-center txtitem" wx:if="{{refund_info.MONEY}}">
+        <view class="name">微信支付</view>
+        <view class="val">￥{{refund_info.MONEY}}</view>
+      </view>
+    </view>
   </view>
 </view>
 <view class="option flex-center" style="padding-bottom:{{btmHolder}}px" wx:if="{{stat!=4}}">

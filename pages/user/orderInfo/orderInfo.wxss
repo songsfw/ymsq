@@ -22,6 +22,7 @@ page{background: #F6F6F6;height: auto;}
 .option .price .num text{font-size:16px;}
 .btn{width: auto;margin-left: 10px;min-width:60px ; height: 30px;line-height: 30px;background:#fff;border-radius: 15px;padding: 0 15px;color: #222;border: 1px solid #ccc;font-size: 14px;}
 .main-btn{background: #C1996B;color: #fff;border-color: #C1996B;}
+.fold .return .arrow-left:after {border-color: #222;}
 
 .copy-btn{margin-right: 20rpx; display: inline-block; color: #C1996B;background: #F6F6F6;width: 36px;height: 18px;line-height: 18px;border-radius: 9px;text-align: center;font-size: 12px;}
 .delivery-info{color:#64BF00;font-size: 13px;margin-top: 9px;border-top: 1px solid #f6f6f6;padding-top: 9px;}

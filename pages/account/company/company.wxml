@@ -1,0 +1,46 @@
+<!-- pages/cashcharge/cashcharge.wxml -->
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
+<view class="card">
+  <image class="bg" src="../../../image/companybg.png"></image>
+  <view class="card-logo"><image src="../../../image/companylogo.png"></image></view>
+  <view class="card-wp">
+    <image src="../../../image/company1.png" />
+
+    <view class="rule-btn" bind:tap="showRule">使用规则</view>
+  </view>
+</view>
+<view class="form">
+  <view class="inputxt">
+    <text>卡号</text>
+    <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡号" value="{{result}}" class="flex-1" type="number" bindinput="inputRes" />
+    <view class="icon iconfont icon-scan" bind:tap="scan"></view>
+  </view>
+  <view class="inputxt" style="margin-bottom:0">
+    <text>卡密码</text>
+    <input placeholder-style="color:#aaa;font-weight:normal" placeholder="请输入现金卡密码" password="{{!show}}" type="number" value="{{pwd}}" class="flex-1" bindinput="inputPwd" />
+    <view class="icon" bindtap="changeShow">
+      <text class="iconfont icon-eye" wx:if="{{show}}"></text>
+      <text class="iconfont icon-eye2" wx:else></text>
+    </view>
+  </view>
+</view>
+<view class="tips" wx:if="{{use!=1}}">
+  <view >1、请使用原麦山丘现金卡卡密进行充值，其他卡片不能充值</view>
+  <view >2、当你充值成功后请核对账户余额是否到账</view>
+</view>
+<view class="fixedBtn" style="padding-bottom:{{btmHolder}}px">
+  <view class="btn" bindtap="chashCharge">充值</view>
+</view>
+<view style="height:{{60+btmHolder}}px"></view>
+<phonePanel popShow="{{popShow}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
+
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+
+<view class="rule-panel" wx:if="{{pop=='rules'}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-title">使用规则</view>
+  <scroll-view class="pop-con">
+    <view wx:for="{{instructions}}">{{item}}</view>
+  </scroll-view>
+</view>

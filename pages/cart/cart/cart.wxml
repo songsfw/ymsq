@@ -133,12 +133,12 @@
 </view>
 <view class="ios-padding option-wp">
   <view class="option flex-center" wx:if="{{breadLi.length>0 || cakeLi.length>0}}">
-    <!-- <view class="select flex-center">
-      <view class="checkbox">
+    <view class="select flex-center" bind:tap="selectAll" data-type="20">
+      <view class="checkbox {{selectAll?'on':''}}">
         <view class="iconfont icon-check"></view>
       </view>
       <text>全选</text>
-    </view> -->
+    </view>
     <view class="price flex">
       <view class="flex-center"><text>合计：</text>
         <view class="num">￥<text>{{totalPrice}}</text></view>

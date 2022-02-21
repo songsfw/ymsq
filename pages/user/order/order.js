@@ -100,23 +100,23 @@ Page({
   },
   bindcancel(e) {
     let code = e.currentTarget.dataset.code,type = e.currentTarget.dataset.type
-    // if(type==2){
-    //   wx.showModal({
-    //     content: '请联系客服取消订单，400-992-6632',
-    //     confirmText:"拨打",
-    //     cancelText:"再想想",
-    //     confirmColor:"#C1996B",
-    //     success (res) {
-    //       if (res.confirm) {
-    //         wx.makePhoneCall({
-    //           phoneNumber: '400-992-6632'
-    //         })
-    //         console.log('用户点击确定')
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
+    if(type==2){
+      wx.showModal({
+        content: '请联系客服取消订单，400-992-6632',
+        confirmText:"拨打",
+        cancelText:"再想想",
+        confirmColor:"#C1996B",
+        success (res) {
+          if (res.confirm) {
+            wx.makePhoneCall({
+              phoneNumber: '400-992-6632'
+            })
+            console.log('用户点击确定')
+          }
+        }
+      })
+      return
+    }
 
     this.setData({
       curOrderCode: code,
@@ -185,7 +185,10 @@ Page({
     })
   },
   payOrder:util.debounce(function (e) {
-    wx.showLoading({mask:true,title:'正在支付'})
+    // wx.showLoading({mask:true,title:'正在支付'})
+    this.setData({
+      showLoading: true
+    })
     let code = e.currentTarget.dataset.code
     let data = {
       order_code: code
@@ -196,8 +199,9 @@ Page({
     // isPaying=true  //正在支付
 
     api.payOrder(data).then(res => {
-      wx.hideLoading()
-      console.log(res);
+      this.setData({
+        showLoading: false
+      })
       if (res) {
         //isPaying=false
         let jsApiParameters = res.jsApiParameters
@@ -214,7 +218,6 @@ Page({
           signType: signType,
           paySign: paySign,
           success(payres) {
-            console.log(payres);
             wx.showToast({
               title: '支付成功',
               icon: 'none',
@@ -230,7 +233,6 @@ Page({
 
           },
           fail(res) {
-            console.log(res)
             wx.showToast({
               title: "支付失败",
               icon: 'none',
@@ -255,7 +257,6 @@ Page({
       limit: 20
     }
     api.orderList(data).then(res => {
-      console.log(res);
       if (!res) {
         return
       }
@@ -265,12 +266,13 @@ Page({
         })
         return false
       }
-      let totalNum = res.total_num[0]
-      let list = res.order,
-        count = parseInt(res.total_num[currentTab])
-      let noMoreData = count - page * 20 <= 0
+      
+      let list = res.order
+      let count = list.length
+      let nodata = page==1&&count==0?true:false
+      let noMoreData = count < 20 ? true : false
       this.setData({
-        totalNum: totalNum,
+        nodata: nodata,
         showLoading: false,
         noMoreData: noMoreData,
         count: count,

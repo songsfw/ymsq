@@ -6,7 +6,6 @@ var baseUrl = ENV == 'pro' ? 'https://api.withwheat.com/v1' : 'https://api-beta.
 const returnData = (res,needToast=false)=>{
   if(res.statusCode == 200){
     let data = res.data
-    console.log(data)
     if(data.status==0){
       var result = data.result
       return result
@@ -29,10 +28,9 @@ const returnData = (res,needToast=false)=>{
         wx.showToast({
           icon:"none",
           title:data.message,
-          duration:2000
+          duration:3000
         })
       }
-      console.log("111");
       return false
     }
   }else if(res.statusCode == 500){
@@ -166,6 +164,11 @@ const chashCharge = (data) => {
   return POST(baseUrl+"/user-balance/recharge-cash-card",data).then(res => returnData(res))
 }
 
+//企业充值卡
+const companyCharge = (data) => {
+  return POST(baseUrl+"/user-balance/recharge-cash-card",data).then(res => returnData(res,true))
+}
+
 //校验密码
 const verifyPwd = (data) => {
   return POST(baseUrl+"/user/check-pay-pwd",data).then(res => returnData(res))
@@ -240,6 +243,11 @@ const commitChart = (data) => {
   return POST(baseUrl+"/cart/commit",data).then(res => returnData(res))
 }
 
+//混合订单
+const getMixOrder = (data) => {
+  return POST(baseUrl+"/order/cart",data).then(res => returnData(res))
+}
+
 //面包订单
 const getOrderBread = (data) => {
   return POST(baseUrl+"/order/bread-cart",data).then(res => returnData(res))
@@ -251,7 +259,7 @@ const getOrderCake = (data) => {
 
 //提交订单
 const submmitOrder = (data) => {
-  return POST(baseUrl+"/order/submit-order",data).then(res => returnData(res,true))
+  return POST(baseUrl+"/order/submit-mix-order",data).then(res => returnData(res,true))
 }
 
 //支付
@@ -295,7 +303,7 @@ const getUserLocation = (data) => {
 //订单列表
 const orderList = (params) => {
   console.log(JSON.stringify(params))
-  return POST(baseUrl + "/order/list", params)
+  return POST(baseUrl + "/order/mix-list", params)
   .then(res => returnData(res))
 }
 
@@ -452,6 +460,7 @@ module.exports = {
   getVipCard:getVipCard,
   wxCharge:wxCharge,
   chashCharge:chashCharge,
+  companyCharge,
   verifyPwd,
   changeFreePay,
   setAmount,
@@ -506,5 +515,6 @@ module.exports = {
   startGame,
   exChangeCoupon,
   getDeliveryLocal,
-  checkAddressInMap
+  checkAddressInMap,
+  getMixOrder
 }

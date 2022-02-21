@@ -15,7 +15,7 @@ Page({
   data: {
     stype: "0",
     proNum: 2,
-    showAll: false,
+    showAll: true,
     address: {
       name: null,
       mobile: null,
@@ -199,6 +199,24 @@ Page({
     })
   },500),
   bindcancel(e) {
+    let type = this.data.orderData.order_type
+    if(type==2){
+      wx.showModal({
+        content: '请联系客服取消订单，400-992-6632',
+        confirmText:"拨打",
+        cancelText:"再想想",
+        confirmColor:"#C1996B",
+        success (res) {
+          if (res.confirm) {
+            wx.makePhoneCall({
+              phoneNumber: '400-992-6632'
+            })
+            console.log('用户点击确定')
+          }
+        }
+      })
+      return
+    }
     this.setData({
       pop: "cancel"
     })
@@ -344,6 +362,7 @@ Page({
         address_detail: orderData.address_detail,
         city_name: orderData.city_name,
         area_name: orderData.area_name,
+        cancel_time:orderData.cancel_time,
         mobile: orderData.mobile,
         remark: orderData.remark,
         username:orderData.username,
@@ -377,9 +396,9 @@ Page({
         status:res.status,
         is_ziti:res.is_ziti,
         orderData:newOrderData,
-        steps:res.steps
+        steps:res.steps,
+        refund_info:res.refund_info
       })
-
       if(orderData.old_status=='DISPATCHING'){
         this.getLocation()
       }else{

@@ -219,12 +219,13 @@ Page({
     let fixedTop = sysInfo.navBarHeight;
     let btmHolder = wx.getStorageSync('btmHolder')
     btmHolder = btmHolder>0?btmHolder:12
-    let order_code = options.orderCode
+    let order_code = options.orderCode,type=options.type
     console.log(order_code)
     let data = {
       order_code: order_code
     }
     this.setData({
+      type,
       fixedTop,
       btmHolder: btmHolder,
       order_code: order_code

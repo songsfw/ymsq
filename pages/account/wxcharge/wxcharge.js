@@ -8,11 +8,24 @@ Page({
   data: {
     chargeList:[],
     money:"---",
-    read:true
+    read:true,
+    curIdx:null
   },
   /**
    * 生命周期函数--监听页面加载
    */
+  close(){
+    this.setData({
+      pop:false
+    })
+  },
+  popDetail(e){
+    let idx = e.currentTarget.dataset.idx
+    this.setData({
+      pop:true,
+      curIdx:idx
+    })
+  },
   setDefault(e){
     let idx = e.currentTarget.dataset.idx
     let chargeList = this.data.chargeList
@@ -97,7 +110,7 @@ Page({
 
           wx.showModal({
             title: '充值成功',
-            content: '恭喜您获得一张优惠券呦,可在会员中心 > 优惠券，查看使用',
+            content: '恭喜您获得奖励优惠券,可在会员中心 > 优惠券，查看使用',
             showCancel: false,
             confirmText: '我知道了',
             success: function success(res) {

@@ -125,7 +125,7 @@ Page({
           
           let addressInfo = {
             address: address,
-            id: id,
+            address_id: id,
             city_id: res.city_id,
             address_detail:address_detail,
             is_default:is_default,
@@ -165,7 +165,7 @@ Page({
           
           let addressInfo = {
             address: address,
-            id: res.address_id,
+            address_id: res.address_id,
             city_id: res.city_id,
             address_detail:address_detail,
             is_default:is_default,

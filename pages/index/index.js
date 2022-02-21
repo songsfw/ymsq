@@ -221,12 +221,9 @@ Page({
     return false;
   },
   async onShow() {
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];
-    let options = currPage.options
+
     let userInfo = wx.getStorageSync('userInfo')
     let addressInfo = wx.getStorageSync("addressInfo")
-    let reported = wx.getStorageSync("reported")
     let loginInfo = null
     if(!userInfo || !addressInfo){
       loginInfo = await app.wxLogin()
@@ -235,7 +232,7 @@ Page({
     }
     let sysInfo = app.globalSystemInfo;
     let fixedTop = sysInfo.navBarHeight;
-    let enterSource =options.from
+    
     
     userInfo = JSON.parse(wx.getStorageSync('userInfo'))
 
@@ -251,16 +248,15 @@ Page({
       addressInfo: addressInfo,
       fixedTop: fixedTop
     })
-    if(!reported && enterSource=='0'){
-      wx.reportAnalytics('enter_source', {
-        from: 0,
-        user_id: userInfo.user_id || 0,
-      });
-      wx.setStorageSync('reported','1')
-    }
+
   },
   onLoad (options) {
-    
+    let enterSource =options.from
+    let userInfo = wx.getStorageSync('userInfo')
+    wx.reportAnalytics('enter_source', {
+      from: enterSource,
+      user_id: userInfo.user_id || 0,
+    });
     this.setData({
       showAct:true
     })

@@ -1,5 +1,6 @@
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
+var log = require('../../utils/log.js')
 const app = getApp()
 let initScore = [0,0,0,0,0],tags=null,status=[],selectTagArr=[],selectTag = [],delivery_status=0,old_status=''
 let num=0,contentTxt="网络繁忙，刷新页面？",confirmTxt="刷新"
@@ -32,6 +33,14 @@ Page({
       }
     })
     selectTagArr=[]
+    if(!tags[idx+1]){
+      log.warn({
+        selectTagArr,
+        star:idx+1,
+        score:initScore,
+        tags:tags
+      })
+    }
     tags[idx+1].forEach(item=>{
       selectTagArr.push(0)
     })

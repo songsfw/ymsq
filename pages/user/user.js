@@ -2,6 +2,7 @@
 const api = require('../../utils/api.js')
 const util = require('../../utils/util.js')
 const auth = require('../../utils/auth.js')
+var log = require('../../utils/log.js')
 const app = getApp()
 Page({
 
@@ -190,6 +191,9 @@ Page({
     api.getUserCenter().then(res=>{
       console.log(res);
       wx.hideLoading()
+      if(!res.user){
+        log.info('user',res)
+      }
       if(res.user.subscribe){
         this.setData({
           popShow:false
