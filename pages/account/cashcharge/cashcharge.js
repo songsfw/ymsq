@@ -275,8 +275,16 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    
+   async onShow () {
+     //登录逻辑
+    let userInfo = wx.getStorageSync('userInfo')
+    let loginInfo = null
+    if(!userInfo){
+      wx.showLoading({mask:true})
+      loginInfo = await app.wxLogin()
+      await app.getAddress(loginInfo)
+      wx.hideLoading()
+    }
   },
 
   /**
