@@ -62,6 +62,9 @@ Page({
   },
   bindPhoneSucess(){
     this.chashCharge()
+    this.setData({
+      popShow:false
+    })
   },
   closePhonePanel(){
     this.setData({
