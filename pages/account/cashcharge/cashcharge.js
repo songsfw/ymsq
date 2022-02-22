@@ -63,6 +63,11 @@ Page({
   bindPhoneSucess(){
     this.chashCharge()
   },
+  closePhonePanel(){
+    this.setData({
+      popShow:false
+    })
+  },
   showRule(){
     this.setData({
       pop:"rules"
@@ -148,12 +153,13 @@ Page({
         if(!res){
           return
         }
-        // if(res==app.globalData.bindPhoneStat){
-        //   this.setData({
-        //     popShow:true
-        //   })
-        //   return
-        // }
+        //res==1022
+        if(res==app.globalData.bindPhoneStat){
+          this.setData({
+            popShow:true
+          })
+          return
+        }
         // app.globalData.cardNo = result
         // app.globalData.cardPwd = pwd
         wx.showToast({
@@ -275,7 +281,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-   async onShow () {
+  async onShow () {
      //登录逻辑
     let userInfo = wx.getStorageSync('userInfo')
     let loginInfo = null
@@ -284,7 +290,13 @@ Page({
       loginInfo = await app.wxLogin()
       await app.getAddress(loginInfo)
       wx.hideLoading()
+      if(loginInfo.is_mobile==0){
+        this.setData({
+          popShow:true
+        })
+      }
     }
+    
   },
 
   /**
