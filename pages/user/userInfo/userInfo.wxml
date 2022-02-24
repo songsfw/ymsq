@@ -6,7 +6,7 @@
       <view class="iconAll level level-{{user.level || 0}}"></view>
       <image src="{{userInfo.photo}}"></image>
     </view>
-    <open-data type="userNickName" class="name text-overflow"></open-data>
+    <text class="name text-overflow">{{userInfo.nickname}}</text>
   </view>
   <view class="inputxt text-overflow">
     <text>昵称</text>
