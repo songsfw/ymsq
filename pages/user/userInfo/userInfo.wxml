@@ -4,13 +4,13 @@
   <view class="userInfo" bind:tap="toUserInfo">
     <view class="photo">
       <view class="iconAll level level-{{user.level || 0}}"></view>
-      <open-data type="userAvatarUrl" class=""></open-data>
+      <image src="{{userInfo.photo}}"></image>
     </view>
     <open-data type="userNickName" class="name text-overflow"></open-data>
   </view>
   <view class="inputxt text-overflow">
     <text>昵称</text>
-    <open-data type="userNickName" class="name"></open-data>
+    <text class="name">{{userInfo.nickname}}</text>
   </view>
   <view class="inputxt sex-item">
     <text>性别</text>
