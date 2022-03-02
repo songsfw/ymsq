@@ -4,7 +4,7 @@
   <view class="userInfo" bind:tap="toUserInfo">
     <view class="photo">
       <view class="iconAll level level-{{user.level || 0}}"></view>
-      <image src="{{userInfo.photo}}"></image>
+      <image src="{{userInfo.head_url}}"></image>
     </view>
     <text class="name text-overflow">{{userInfo.nickname}}</text>
   </view>

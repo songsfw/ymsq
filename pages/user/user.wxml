@@ -9,7 +9,7 @@
       <view class="user-top flex">
         <view class="photo" bind:tap="toUserInfo">
           <!-- <view class="iconfont icon-edit"></view> -->
-          <image src="{{userInfo.photo || '../../image/no-photo.png'}}"></image>
+          <image src="{{userInfo.head_url || '../../image/no-photo.png'}}"></image>
         </view>
         <view class="name flex-1">
           <text bind:tap="toUserInfo" class="tit">{{userInfo.nickname || '更新个人信息'}}</text>

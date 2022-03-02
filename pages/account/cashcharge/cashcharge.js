@@ -198,8 +198,17 @@ Page({
     let {type}=this.data
     var pages = getCurrentPages();
     this.setData({
+      result:'',
+      pwd:"",
       isUse:false
     })
+    if(type==1){
+      app.globalData.cardNo = ''
+      app.globalData.cardPwd = ''
+    }else{
+      app.globalData.thirdCardNo = ''
+      app.globalData.thirdCardPwd = ''
+    }
     if(pages.length > 1){
       //上一个页面实例对象
       var prePage = pages[pages.length - 2];
