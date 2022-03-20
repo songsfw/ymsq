@@ -440,6 +440,20 @@ const getDeliveryLocal = (params) => {
   return POST(baseUrl + "/order/get-dispatcher-location", params).then(res => returnData(res,true));
 }
 
+const coffeeList = (params) => {
+  //咖啡home
+  return POST(baseUrl + "/shop-product/coffee-list", params).then(res => returnData(res));
+}
+
+const coffeeInfo = (params) => {
+  //咖啡home
+  return POST(baseUrl + "/shop-product/coffee-detail", params).then(res => returnData(res));
+}
+const getCoffeeOrder = (params) => {
+  //咖啡home
+  return POST(baseUrl + "/shop-order/cart", params).then(res => returnData(res));
+}
+
 module.exports = {
   getIndexInfo:getIndexInfo,
   getUserLocation:getUserLocation,
@@ -516,5 +530,8 @@ module.exports = {
   exChangeCoupon,
   getDeliveryLocal,
   checkAddressInMap,
-  getMixOrder
+  getMixOrder,
+  coffeeList,
+  coffeeInfo,
+  getCoffeeOrder
 }

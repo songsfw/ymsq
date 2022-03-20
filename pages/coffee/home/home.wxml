@@ -1,0 +1,119 @@
+<!-- index.wxml -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
+<view class="store flex-center">
+  <view class="address" bind:tap="changeShop">
+    <view>{{userShop.name}} <text class="iconfont icon-arrow-r"></text></view>
+    <text>距离您{{userShop.distance || '--米'}}</text>
+  </view>
+
+  <view class="buy-btn">自取</view>
+</view>
+<view class="content" style="padding-bottom:{{btmHolder+22}}px">
+  <view class="wrap flex">
+    <scroll-view class="menu" scroll-y="{{true}}">
+      <view class="{{curMenu==index?'on':''}}" data-id="{{item.id}}" data-idx="{{index}}" wx:for="{{category}}">{{item.name}}</view>
+    </scroll-view>
+    <scroll-view class="prolist" scroll-y="{{true}}" scroll-into-view="{{cid}}" enhanced="{{true}}" scroll-with-animation bindscroll="listScroll">
+      <view class="poster" wx:if="{{poster}}">
+        <image src="../../../image/card.png"></image>
+      </view>
+      <view class="list-wrap">
+        <block wx:for="{{proList}}">
+          <view class="list-tit" id="c-{{item.cId}}">
+            <view>{{item.name}}</view>
+            <!-- <text>当季新品</text> -->
+          </view>
+          <navigator class="item flex" url="/pages/coffee/coffeeInfo/coffeeInfo?spuId={{pro.id}}" wx:for="{{item.list}}" wx:for-item="pro">
+            <view class="pic"><image src="{{pro.image_url}}" mode="aspectFill"></image></view>
+            <view class="pro-info flex flex-1">
+              <view>
+                <view class="tit">{{pro.name}}</view>
+                <text class="txt">{{pro.description}}</text>
+              </view>
+              <view class="price flex">
+                <view class="num"><text>￥</text>{{pro.market_price}}</view>
+                <view class="pro-btn">选规格</view>
+              </view>
+            </view>
+          </navigator>
+        </block>
+        
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<view class="option flex" style="padding-bottom:{{btmHolder}}px;">
+  <view class="flex-center option-box">
+    <view  class="cart" bind:tap="showCart">
+      <block wx:if="{{2>0}}">
+        <view class="num" wx:if="{{totalNum<100}}">{{totalNum}}</view>
+        <view class="num num99" wx:else>99+</view>
+      </block>
+      <view class="icon"><image src="../../../image/icon-cart3.png"></image></view>
+    </view>
+    <view class="cart-info flex flex-1">
+      <view class="price"><text>￥</text>2000</view>
+      <view class="count">共计3件</view>
+    </view>
+    <view class="buy-btn" bind:tap="getOrder">去结算</view>
+  </view>
+</view>
+
+<view catch:touchmove="{{true}}" class="pop-panel btm-panel score-panel {{pop=='cake-panel'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="pop-con">
+    <view class="info flex">
+      <view class="pic"><image src="{{proInfo.img}}" ></image></view>
+      <view class="h3 flex">
+        <view class="tit">{{proInfo.name}}</view>
+        <view class="price"><text>￥</text>{{selectSku.price}}</view>
+        <view class="tip">{{selectSku.spec}}</view>
+      </view>
+    </view>
+    <view class="h4"><text>蛋糕尺寸</text><text class="tip">{{selectSku.ahead}}</text></view>
+    <view class="sku-list flex">
+      <view class="{{key==selectSku.sku_id?'on':''}}" wx:for="{{proInfo.sku_list}}" wx:for-index="key" data-skuid="{{key}}" bind:tap="selectSku">{{item.spec}}<block wx:if="{{item.weight}}">({{item.weight}})</block></view>
+    </view>
+    <!-- <view class="h4"><text>标配餐具</text><text class="tip default-tip">免费</text></view> -->
+    <view class="default-fitts flex">
+      <view class="" wx:if="{{selectSku.size}}"><image src="../../image/icon-c1.png"></image> {{selectSku.size}}</view>
+      <view class="" ><image src="../../image/icon-c2.png"></image> {{selectSku.edible}}</view>
+      <view class="" ><image src="../../image/icon-c3.png"></image> {{selectSku.use_fittings}}</view>
+    </view>
+    <view class="h4 flex" style="margin-top:40rpx">
+      <text>购买数量</text>
+      <view class="set-chart flex">
+        <text class="iconfont icon-minus {{skuNum==1?'one':''}}" bind:tap="minusFitting" data-type="2" data-idx="{{index}}"></text>
+        <text class="count">{{skuNum}}</text>
+        <text class="iconfont icon-plus" bind:tap="addFitting" data-type="2" data-idx="{{index}}"></text>
+      </view>
+    </view>
+    <view class="confirm-btn btn" bind:tap="confirmCake" data-sku="{{selectSku.sku}}">确定</view>
+  </view>
+  
+</view>
+<view catch:touchmove="{{true}}" class="pop-panel   center-panel shop-panel {{pop=='shop-panel'?'show':''}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="h3">附近门店</view>
+  <view class="pop-con">
+    <scroll-view class="shop-list" scroll-y="{{true}}" wx:if="{{initShopInfo}}">
+      <view class="shop-item {{userShop.id==item.id?'on':''}}" bind:tap="selectShop" wx:for="{{initShopInfo}}" data-id="{{item.id}}" data-name="">
+        <view class="tit flex">
+          <view class="h4">{{item.name}}</view>
+          <text >{{item.distance || '--米'}}</text>
+        </view>
+        <view class="flex info">
+          <view class="txt">
+            <view >营业时间：{{item.business_hours}}</view>
+            <view >{{item.address}}{{item.address_detail}}</view>
+          </view>
+          <view class="nav" bind:tap="toLocation" data-lat="{{item.local.lat}}" data-name="{{item.name}}" data-lng="{{item.local.lng}}">导航 <text class="iconfont icon-arrow-r"></text></view>
+        </view>
+        <view class="check">选中</view>
+      </view>
+    </scroll-view>
+    <view class="confirm-btn btn" bind:tap="confirmShop" data-shopid="{{shopId}}">确定</view>
+  </view>
+  
+</view>
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close" catch:touchmove="{{true}}"></view>

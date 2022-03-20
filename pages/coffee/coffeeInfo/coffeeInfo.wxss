@@ -1,0 +1,66 @@
+/**index.wxss**/
+view{font-size:12px}
+page{background:#F6F6F6;}
+.wrap{padding:0 26rpx;}
+.wrap-all{padding: 10px;}
+
+.item{box-sizing: border-box}
+.proInfo{position: relative; padding: 40rpx 30rpx 30rpx 30rpx;background: #fff;margin-bottom: 20rpx;margin-top: -30rpx; border-radius: 32rpx 32rpx 0 0;z-index: 2;}
+.proInfo .tit{justify-content: space-between;align-items: baseline;}
+.proInfo .tit .h3{font-size: 18px;font-weight: bold;line-height: 1;}
+.proInfo .tit .price{font-size: 12px;}
+.proInfo .tit .price text{font-size: 20px;line-height: 1;}
+.proInfo .desc{color: #666;font-size: 14px;margin-top: 11px;}
+
+.pro-config{padding: 40rpx 30rpx 0 30rpx;background: #fff;margin-bottom: 20rpx;background-color: #fff;}
+.pro-config .h4{font-size: 14px;color: #333;line-height: 1;font-weight: 500;}
+.pro-config .count{justify-content: space-between;align-items: center;margin-bottom: 52rpx;}
+.pro-option .h4{margin-bottom: 30rpx;}
+.content{background-color: #fff;}
+.content .tit{padding: 30rpx; font-size: 14px;font-weight: 500; color: #333;}
+.banner{width: 750rpx;height: 750rpx;}
+.banner swiper{width: 100%;height: 100%;}
+.option{position: fixed;width: 100%;height: 100rpx;justify-content: space-between;left: 0;bottom: 0;padding: 0 20rpx 0 0;background: #fff;
+    box-shadow: 0px -4px 10px 0px rgba(102, 102, 102, 0.05);align-items: center;z-index: 11;}
+
+
+.option .btn{height: 76rpx;line-height: 76rpx;color: #fff;text-align: center;font-weight: 500;border-radius: 38rpx;}
+.option .add-btn{margin-right: 20rpx;background: #333;}
+.option .buy-btn{margin: 0 20rpx;background: #C1996B;color: #fff;}
+
+.option .cart .num{position: absolute;
+    right: 12px;
+    top: -3px;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    line-height: 18px;
+    text-align: center;
+    background-color: #F75353;}
+.option .cart .num99{width: 30px;}
+
+.default-fitts{margin-top: 20rpx;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    color: #999;
+    font-size: 13px;
+    background: #f6f6f6;
+    padding: 30rpx 20rpx 14rpx 20rpx;}
+.set-chart text,
+.set-chart .count{    width: 27px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #C1996B;
+    background-color: #F6F6F6;}
+
+.icon-minus.one{
+    background: #FAFAFA !important;
+    color: #ccc !important;
+}
+.set-chart .count{color: #333;border-left: 0;border-right: 0;margin: 0 4rpx;}
+
+.sku-list{flex-wrap: wrap;}
+.sku-list view{margin: 0 15px 15px 0;padding: 6px 12px; border-radius: 4px;background: #F6F6F6;color: #333;font-size: 13px;}
+.sku-list view.on{color: #fff;background: #C1996B;}

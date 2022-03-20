@@ -36,7 +36,12 @@
     "pages/user/exCoupon/exCoupon",
     "pages/user/exRule/exRule",
     "pages/giftList/giftList",
-    "pages/account/company/company"
+    "pages/account/company/company",
+    "pages/coffee/home/home",
+    "pages/coffee/coffeeInfo/coffeeInfo",
+    "pages/coffee/order/order",
+    "pages/coffee/orderInfo/orderInfo",
+    "pages/coffee/payOrder/payOrder"
   ],
   
   "tabBar": {

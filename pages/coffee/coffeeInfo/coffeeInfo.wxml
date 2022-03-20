@@ -1,0 +1,55 @@
+<!-- index.wxml -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
+<view class="banner">
+  <!-- <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{currentSwiper}}" indicator-dots>
+    <block wx:for="{{proInfo.banner}}" wx:for-index="index">
+      <swiper-item>
+        <image src="{{item}}" data-src="{{item}}" bind:tap="preview"  class="slide-image" mode="aspectFill" />
+      </swiper-item>
+    </block>
+  </swiper> -->
+  <image src="{{proInfo.spuData.image_url}}" mode="aspectFill"></image>
+</view>
+<view class="proInfo">
+  <view class="tit flex">
+    <view class="h3">{{proInfo.spuData.name}}</view>
+    <view class="price">￥<text>{{proInfo.spuData.market_price}}</text></view>
+  </view>
+  <view class="desc">{{proInfo.spuData.description}}</view>
+</view>
+<view class="pro-config">
+  <view class="count flex">
+    <view class="h4">购买数量</view>
+    <view class="set-chart flex">
+      <text class="iconfont icon-minus {{item.sku_number==1?'one':''}}" data-skuid="{{item.sku_id}}" catch:tap="minusNum" data-type="1" data-idx="{{index}}" data-num="{{item.sku_number}}"></text>
+      <text class="count">{{item.sku_number}}</text>
+      <text class="iconfont icon-plus" data-skuid="{{item.sku_id}}" catch:tap="plusNum" data-type="1" data-idx="{{index}}"></text>
+    </view>
+  </view>
+  <view class="pro-option cup">
+    <view class="h4">杯型 <text class="tip">正常(123)</text></view>
+    <view class="sku-list flex">
+      <view class="{{key==selectSku.sku_id?'on':''}}" wx:for="{{proInfo.attr['13'].value}}" wx:for-index="key" data-skuid="{{key}}" bind:tap="selectSku">{{item}}</view>
+    </view>
+  </view>
+  <view class="pro-option temp">
+    <view class="h4">温度</view>
+    <view class="sku-list flex">
+      <view class="{{key==selectSku.sku_id?'on':''}}" wx:for="{{proInfo.attr['14'].value}}" wx:for-index="key" data-skuid="{{key}}" bind:tap="selectSku">{{item}}</view>
+    </view>
+  </view>
+</view>
+<view class="content">
+  <block wx:if="{{proInfo.spuData.spu_image.length>0}}">
+    <view class="tit">产品详情</view>
+    <view class="flex">
+      <view class="flex-1">
+        <image lazy-load src="{{proInfo.spuData.spu_image[0].image_url}}" mode="widthFix" ></image>
+      </view>
+    </view>
+  </block>
+</view>
+<view class="option flex" style="padding-bottom:{{btmHolder}}px;">
+  <view class="btn buy-btn">加入购物车</view>
+</view>
+<view style="height:{{60+btmHolder}}px"></view>

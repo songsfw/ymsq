@@ -1,0 +1,257 @@
+<!-- pages/user/order.wxml -->
+<import src="../../../template/loading/loading.wxml"/>
+<template is="loading" data="{{showLoading}}"></template>
+<view class="menu flex">
+  <view bind:tap="switchTab" class="{{currentTab==0 ? 'on' : ''}}" data-tabid="0">
+    <view>全部</view>
+    <text></text>
+  </view>
+  <view bind:tap="switchTab" class="{{currentTab==1 ? 'on' : ''}}" data-tabid="1">
+    <view>待付款</view>
+    <text></text>
+  </view>
+  <view bind:tap="switchTab" class="{{currentTab==2 ? 'on' : ''}}" data-tabid="2">
+    <view>待收货</view>
+    <text></text>
+  </view>
+  <view bind:tap="switchTab" class="{{currentTab==3 ? 'on' : ''}}" data-tabid="3">
+    <view>已完成</view>
+    <text></text>
+  </view>
+  <view bind:tap="switchTab" class="{{currentTab==4 ? 'on' : ''}}" data-tabid="4">
+    <view>已取消</view>
+    <text></text>
+  </view>
+</view>
+<view class="card" wx:if="{{!nodata}}">
+  <block wx:for="{{orderList}}">
+    <view class="item" wx:for="{{item}}" wx:for-item="order">
+      <block wx:if="{{order.child_order.length>0}}">
+        <view class="mix-order" wx:if="{{order.main_order_status==2 || order.main_order_status==3 || (order.main_order_status==4&&order.is_timeout==false)}}">
+          <view class="order-code flex-center">订单编号：{{order.order_code}}</view>
+          <block wx:for="{{order.child_order}}" wx:for-item="child">
+            <navigator class="order-wp" hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{child.order_code}}&stat={{child.status}}">
+              <view class="flex hd">
+                <view class="order-info">
+                  <view class="order-code">分单号：{{child.order_code}}</view>
+                  <view class="date">{{child.create_time}}</view>
+                </view>
+                <view class="status">{{child.status_text}}</view>
+              </view>
+              <scroll-view scroll-x="{{true}}" class="pic-box">
+                <view class="flex">
+                  <view class="pic1 flex" wx:if="{{child.details.length==1}}">
+                    <view class="pic">
+                      <image src="{{child.details[0].image_url2}}" mode="aspectFill"></image>
+                    </view>
+                    <view class="flex">
+                      <view class="h3">{{child.details[0].name}}</view>
+                      <view class="num">X{{child.details[0].count}}</view>
+                    </view>
+                  </view>
+                  <block wx:else>
+                    <view class="pic" wx:for="{{child.details}}" wx:for-item="pic">
+                      <image src="{{pic.image_url2}}" mode="aspectFill"></image>
+                      <view class="count">X{{pic.count}}</view>
+                    </view>
+                  </block>
+                </view>
+              </scroll-view>
+              <view class="total">{{child.status==2|| child.status==3?'实付金额':'应付金额'}}：￥<text>{{child.pay_price}}</text></view>
+            </navigator>
+            <view class="option flex" wx:if="{{order.main_order_status!=4}}">
+              <block wx:if="{{child.status==1 || child.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{child.order_type}}" data-code="{{child.order_code}}">取消订单</view></block>
+              <block wx:if="{{child.status==1}}">
+                <view class="btn pay-btn" catch:tap="payOrder" data-code="{{child.order_code}}">立即支付</view>
+              </block>
+              <block wx:if="{{child.status==2}}">
+                <view class="btn btn1 share-btn" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+              </block>
+              <block wx:if="{{child.status==3}}">
+                <view class="btn btn1 share-btn" data-code="{{child.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+                <navigator url="/pages/commit/commit?orderCode={{child.order_code}}" class="btn pay-btn">{{child.comment_status==1?'查看评价':'去评价'}}</navigator>
+              </block>
+            </view>
+          </block>
+          
+        </view>
+        <view wx:else class="mix-order">
+          <view class="order-wp">
+            <view class="flex hd">
+              <view class="order-info">
+                <view class="order-code">订单编号：{{order.order_code}}</view>
+                <view class="date">{{order.child_order[0].create_time}}</view>
+              </view>
+              <view class="status">{{order.child_order[0].status_text}}</view>
+            </view>
+            <scroll-view scroll-x="{{true}}" class="pic-box">
+              <view class="flex">
+                <view class="pic1 flex" wx:if="{{order.pic.length==1}}">
+                  <view class="pic">
+                    <image src="{{order.pic[0].image_url2}}" mode="aspectFill"></image>
+                  </view>
+                  <view class="flex">
+                    <view class="h3">{{order.pic[0].name}}</view>
+                    <view class="num">X{{order.pic[0].count}}</view>
+                  </view>
+                </view>
+                <block wx:else>
+                  <block wx:for="{{order.child_order}}" wx:for-item="details">
+                    <block wx:for="{{details.details}}" wx:for-item="pic">
+                      <view class="pic">
+                        <image src="{{pic.image_url2}}" mode="aspectFill"></image>
+                        <view class="count">X{{pic.count}}</view>
+                      </view>
+                    </block>
+                  </block>
+                  
+                </block>
+              </view>
+            </scroll-view>
+            <view class="total">{{order.main_order_status==2|| order.main_order_status==3?'实付金额':'应付金额'}}：￥<text>{{order.total_price}}</text></view>
+          </view>
+          <view class="option flex" wx:if="{{order.main_order_status!=4}}">
+              <view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view>
+
+              <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
+
+            </view>
+        </view>
+      </block>
+      <navigator wx:else hover-class="none" url="/pages/user/orderInfo/orderInfo?code={{order.order_code}}&stat={{order.status}}">
+        <view class="flex hd">
+          <view class="order-info">
+            <view class="order-code">订单编号：{{order.order_code}}</view>
+            <view class="date">{{order.create_time}}</view>
+          </view>
+          <view class="status">{{order.status_text}}</view>
+        </view>
+        <scroll-view scroll-x="{{true}}" class="pic-box">
+          <view class="flex">
+            <view class="pic1 flex" wx:if="{{order.details.length==1}}">
+              <view class="pic">
+                <image src="{{order.details[0].image_url2}}" mode="aspectFill"></image>
+              </view>
+              <view class="flex">
+                <view class="h3">{{order.details[0].name}}</view>
+                <view class="num">X{{order.details[0].count}}</view>
+              </view>
+            </view>
+            <block wx:else>
+              <view class="pic" wx:for="{{order.details}}" wx:for-item="pic">
+                <image src="{{pic.image_url2}}" mode="aspectFill"></image>
+                <view class="count">X{{pic.count}}</view>
+              </view>
+            </block>
+            
+            
+          </view>
+        </scroll-view>
+        <view class="total">{{order.status==2|| order.status==3?'实付金额':'应付金额'}}：￥<text>{{order.pay_price}}</text></view>
+      </navigator>
+      <view class="option flex" id="{{order.status}}" wx:if="{{!order.child_order && order.status!=4}}">
+        <block wx:if="{{order.status==1 || order.status==2}}"><view class="btn btn1 cancel-btn" catch:tap="bindcancel" data-type="{{order.order_type}}" data-code="{{order.order_code}}">取消订单</view></block>
+        <block wx:if="{{order.status==1}}">
+          <view class="btn pay-btn" catch:tap="payOrder" data-code="{{order.order_code}}">立即支付</view>
+        </block>
+        <block wx:if="{{order.status==2}}">
+          <view class="btn btn1 share-btn" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+        </block>
+        <block wx:if="{{order.status==3}}">
+          <view class="btn btn1" data-code="{{order.order_code}}" data-pop="showCoupon" bind:tap="showPop">分享给朋友</view>
+          <navigator url="/pages/commit/commit?orderCode={{order.order_code}}" class="btn pay-btn">{{order.comment_status==1?'查看评价':'去评价'}}</navigator>
+        </block>
+      </view>
+    </view>
+  </block>
+  <view wx:if="{{noMoreData}}" class="more-btn">我可是有底线的</view>
+</view>
+<block wx:if="{{nodata&&!showLoading}}">
+  <view class="nodata">
+    <view><image src="../../../image/no-order.png"></image></view>
+    <block wx:if="{{currentTab==0}}">
+      <view class="txt">现在还没有订单，快去下单吧～</view>
+      <navigator url="/pages/proList/proList" open-type="switchTab" class="btn">去点单</navigator>
+    </block>
+    <block wx:else>
+      <view class="txt">暂时没有相关订单～</view>
+    </block>
+  </view>
+</block>
+
+<view class="mask" wx:if="{{pop!=0}}" bind:tap="close"></view>
+
+<view class="pop-panel coupon-panel {{pop=='showCoupon'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="tit flex">分享好友您可以获取优惠券</view>
+
+  <view class="pop-con">
+    <view class="coupon-box">
+        <scroll-view class="list" scroll-y="{{true}}">
+          <view class="item" data-id="{{shareInfo.promotion_info.id}}">
+            <view class="tag {{shareInfo.promotion_info.tag=='快过期'?'tag1':''}}" wx:if="{{shareInfo.promotion_info.tag}}">{{item.tag}}</view>
+            <view class="flex">
+              <view class="coupon-num flex">
+                <image wx:if="{{shareInfo.promotion_info.place_type==1}}" src="../../../image/coupon1.png"></image>
+                <image wx:if="{{shareInfo.promotion_info.place_type==2}}" src="../../../image/coupon2.png"></image>
+                <view class="txt">
+                  <view class="num" wx:if="{{shareInfo.promotion_info.cost_type==1}}"><text>{{item.cost_value}}张</text></view>
+                  <view class="num" wx:else>￥<text>{{shareInfo.promotion_info.money}}</text></view>
+                  
+                  <text>{{shareInfo.promotion_info.remark}}</text>
+                </view>
+              </view>
+              <view class="coupon-info flex-1">
+                <view class="name">{{shareInfo.promotion_info.name}}</view>
+                <view class="date">{{shareInfo.promotion_info.valid_time}}</view>
+                <view class="txt flex">
+                  <text>{{shareInfo.promotion_info.desc1}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="border">
+              <view></view>
+            </view>
+            <view class="flex tips {{showTip?'show':''}}" catch:tap="showTips">
+              <view class="txt flex-1">
+                {{shareInfo.promotion_info.desc2}}
+              </view>
+              <view class="arrow-bottom"></view>
+            </view>
+          </view>
+          <view class="desc">
+            <view class="h3">奖励说明</view>
+            <view class="txt">
+              <view >● 分享成功后分享者可获得{{shareInfo.promotion_info.name}}，将自动发放至账户.</view>
+              <view >● 期间最多可获得1次奖励.</view>
+            </view>
+          </view>
+        </scroll-view>
+    </view>
+  </view>
+  <view class="confirm-btn btn" bind:tap="confirmCoupon">分享给朋友</view>
+</view>
+
+<view class="pop-panel cancel-panel" wx:if="{{pop=='cancel'}}">
+  <view class="tit">请选择取消的理由</view>
+  <view class="flex item" wx:for="{{reason}}" bind:tap="bindSelect" data-idx="{{index}}">
+    <text class="{{index==curRes?'on-text':''}}">{{item}}</text>
+    <view class="checkbox {{index==curRes?'on':''}}">
+      <view class="iconfont icon-check" style="line-height:{{index!=2?1.04:1.05}}"></view>
+    </view>
+  </view>
+  <view wx:if="{{curRes==2}}">
+    <textarea class="reason-txt" bindinput="inputReason" placeholder="请填写理由" placeholder-style="color:#ccc;"  />
+  </view>
+  <view class="cancel-btn btn" bind:tap="cancelOrder">确定取消</view>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+</view>
+
+<view class="pop-panel post-panel" style="position:fixed;top:47%;left:50%;" wx:if="{{pop=='showPoster'}}">
+  <image src="{{poster}}" data-src="{{poster}}" bindtap="previewImage"></image>
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="share-remark" bind:tap="saveImg">
+    <view class="share-remark-tip">保存分享给好友</view>
+    <view class="share-remark-save">保存海报</view>
+  </view>
+</view>

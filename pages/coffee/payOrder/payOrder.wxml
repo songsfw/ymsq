@@ -1,0 +1,370 @@
+<!-- cart -->
+<wxs module="filter" src="../../../utils/tools.wxs"></wxs>
+<import src="../../../template/loading/loading.wxml" />
+<template is="loading" data="{{showLoading}}"></template>
+<view class="store flex-center">
+  <view class="address">
+    <view>{{userShop.name}} <text class="iconfont icon-arrow-r"></text></view>
+    <text>距离您{{userShop.distance || '--米'}}</text>
+    <text >{{userShop.address}}</text>
+  </view>
+
+  <view class="buy-btn">自取</view>
+</view>
+<view class="order-wp">
+  
+  <view class="pro-info {{breadOrder.address_allow_delivery==false?'undelivery':''}}" wx:if="{{breadOrder}}">
+    <view class="hd flex-center">
+      <view>咖啡</view>
+      <block wx:if="{{breadOrder.address_allow_delivery}}">
+        <view class="send-time flex-center" data-type="1"  bind:tap="showTimeTbl" wx:if="{{ziti=='0'}}">
+          <view class="time flex-center">
+            <text class="time-txt" wx:if="{{selectTime['1']!==-1}}">{{breadTimes.dateStr}} {{breadTimes.selectTimeTxt}}</text>
+            <text wx:else>请选择【面包】配送时间</text>
+            <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+          </view>
+        </view>
+      </block>
+      <view class="send-time flex-center" wx:else>
+        <text>配送日期不可选</text>
+        <image class="arrow-r" src="../../../image/icon-arrow-right.png"></image>
+      </view>
+    </view>
+    <view class="flex-center tips" wx:if="{{!breadOrder.address_allow_delivery}}">
+      <view class="iconfont icon-notice2"></view>
+      <view>因配送范围导致以下商品失效。<navigator url="/pages/user/deliveryArea/deliveryArea">【配送范围说明】</navigator></view>
+    </view>
+    <view class="pro-wp">
+      <view class="item" wx:if="{{index<3}}" wx:for="{{breadOrder.detail}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+                <text>约{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="item" wx:if="{{index>=3 && showAll}}" wx:for="{{breadOrder.detail}}">
+        <view class="flex">
+          <view class="pic">
+            <image src="{{item.sku_image_url}}" mode="aspectFill"></image>
+          </view>
+          <view class="info flex-1 flex">
+            <view class="tit">{{item.sku_name}} <block wx:if="{{item.sku_unit!=''}}">({{item.sku_unit}})</block>
+            </view>
+            <view class="tag" wx:if="{{item.is_fittings==0}}">
+              <text wx:if="{{item.size}}">{{item.size}}</text>
+              <text wx:if="{{item.spec}}">{{item.spec}}</text>
+              <text wx:if="{{item.edible}}">{{item.edible}}</text>
+              <text wx:if="{{item.use_fittings}}">{{item.use_fittings}}</text>
+            </view>
+            <view class="tag flex-wrap" wx:if="{{item.weight}}">
+              <text>{{item.weight}}</text>
+            </view>
+            <view class="price flex">
+              <view class="num">￥<text>{{item.sku_price}}</text>
+              </view>
+              <view class="count">x{{item.sku_number}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="more-pro flex-center {{showAll?'on':''}}" wx:if="{{breadOrder.detail.length>3}}" bind:tap="showAllPro">
+      <view wx:if="{{!showAll}}">共计{{breadOrder.total_number}}件商品</view>
+      <view wx:else>收起</view>
+      <text class="iconfont icon-arrow-btm"></text>
+    </view>
+    <block wx:if="{{breadOrder.address_allow_delivery}}">
+      <view class="total">合计：￥<text>{{breadOrder.total_price}}</text></view>
+    </block>
+    
+  </view>
+  <view class="pay-info">
+    <view class="flex-center ">
+      <view class="name">商品金额</view>
+      <view class="val"><text style="color:#222">￥{{collect.total_price}}</text><text class="arrow-r"></text></view>
+    </view>
+
+    <view class="flex-center balance" wx:if="{{pay_style.balance!=0}}">
+      <view class="name">原麦余额 <text class="tip">(共￥{{balance}})</text></view>
+      <view class="val flex-center">
+        <view>
+          <text wx:if="{{useBalance}}">使用￥{{balanceTxt}}</text>
+          <text wx:else>可用￥{{balanceTxt}}</text>
+          <!-- <view wx:else>余额：￥{{balance}}</view> -->
+        </view>
+
+        <image wx:if="{{pay_style.balance == 10}}" class="arrow-r" style="width:15px;height:15px;margin-left:3px;"
+          src="../../../image/disabled1.png"></image>
+        <switch wx:else checked="{{useBalance}}" bindchange="switch" color="#C1996B" />
+
+      </view>
+    </view>
+    <navigator hover-class="none" url="../../web/web?toFollow=1&url={{wxUrl}}" class="toFollow color-b"
+      wx:if="{{pay_style.balance == 10}}">关注公众号使用原麦余额<image class="arrow-r" src="../../../image/icon-arrow-right.png">
+      </image>
+    </navigator>
+    <!-- <view class="total-price flex">
+      <text>合计：</text>
+      <view>
+        <text>￥</text>{{payPrice}}<text class="arrow-r"></text>
+      </view>
+    </view> -->
+  </view>
+</view>
+<view class="option flex-center" style="padding-bottom:{{btmHolder}}px">
+  <view class="flex">
+    <text>合计：</text>
+    <view class="num">￥<text>{{payPrice}}</text>
+    </view>
+  </view>
+  <view class="buy-btn {{!hasPolicy?'on':''}}" bind:tap="submmitOrder">支付</view>
+</view>
+<view class="pop-panel btm-panel time-panel {{pop=='showTime'?'upPanel':''}}" style="padding-bottom:{{btmHolder}}px" catch:touchmove="{{true}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="tit">选择<block wx:if="{{ziti!=1}}">{{timeType==1?'面包':'蛋糕'}}送达</block>
+    <block wx:else>自提</block>时间
+  </view>
+  <view class="pop-con">
+    <view class="flex time-box">
+      <scroll-view class="date" scroll-y="{{true}}">
+        <block wx:for="{{delivery_times}}">
+          <view class="a {{(selectDate[timeType]==index)?'on':''}}" bind:tap="selectDate" data-idx="{{index}}">
+            {{item.date_desc}}
+          </view>
+        </block>
+      </scroll-view>
+
+      <scroll-view class="time flex-1" scroll-y="{{true}}">
+        <block wx:for="{{delivery_times[selectDate[timeType]].time_range}}">
+          <view class="item flex {{selectDate[timeType] == checkDate[timeType] && selectTime[timeType] == index?'on':''}}" bind:tap="selectTime" data-idx="{{index}}">
+              <text>{{item.range}}</text>
+              <view class="checkbox">
+                <view class="iconfont icon-check"></view>
+              </view>
+            </view>
+          </block>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<view style="padding-bottom:{{btmHolder}}px"
+  class="pop-panel coupon-panel btm-panel {{pop=='showCoupon'?'upPanel':''}}">
+  <view class="iconfont icon-close close" bind:tap="closeCoupon"></view>
+  <view class="tit flex">优惠券</view>
+  <view class="flex hd">
+    <view class="{{curtabid==1?'on':''}} flex-1" bind:tap="tabCoupon" data-tabid="1">可使用</view>
+    <view class="{{curtabid==2?'on':''}} flex-1" bind:tap="tabCoupon" data-tabid="2">不可用</view>
+  </view>
+  <view class="pop-con">
+
+    <view class="coupon-box">
+      <scroll-view class="list" scroll-y="{{true}}">
+        <view class="discount_tips flex-center" wx:if="{{curtabid==1 && breadOrder.free_type==2}}"><text
+            class="iconfont icon-notice"></text> {{biggest_discount.discount_info.discount_tips}}</view>
+        <view class='coupon-padding'>
+          <block wx:if="{{curtabid==1}}">
+            <view class="item act" data-id="1" wx:if="{{breadOrder.free_type==2}}">
+              <view class="h5">
+                <image src="../../../image/icon-tag.png" mode="aspectFill"></image>活动专享
+              </view>
+              <view class="item-wrap">
+                <view class="flex" catch:tap="selectCoupon" data-id="1">
+                  <view class="coupon-num flex">
+                    <image src="../../../image/coupon0.png"></image>
+                    <view class="txt">
+                      <view class="num">￥<text>10</text></view>
+                      <text>可免邮费</text>
+                    </view>
+                  </view>
+                  <view class="coupon-info flex-1">
+                    <view class="name">{{biggest_discount.discount_info.discount_title}}</view>
+                    <view class="date">{{biggest_discount.discount_info.discount_range_msg}}</view>
+                    <view class="txt flex">
+                      <text>可用优惠券</text>
+                    </view>
+                  </view>
+
+                  <view class="checkbox {{curId==1?'on':''}}">
+                    <view class="iconfont icon-check"></view>
+                  </view>
+                </view>
+                <view class="border">
+                  <view></view>
+                </view>
+                <view class="flex tips">注：{{biggest_discount.discount_info.discount_tips}}</view>
+              </view>
+            </view>
+            <view class="item" wx:for="{{couponList}}" data-id="{{item.id}}">
+              <view class="item-wrap {{item.pay_restrict==1&& (payQueue[3]!==0 || payQueue[4]!==0 || useBalance)?'wx-coupon':''}}">
+                <view class="{{item.tag == ''? '' : (item.tag=='快过期'?'tag tag1':'tag')}}">{{!item.tag?'':item.tag}}
+                </view>
+                <view class="flex" catch:tap="selectCoupon" data-id="{{item.id}}">
+                  <view class="coupon-num flex">
+                    <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
+                    <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
+                    <view class="txt">
+                      <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text style="font-size:14px">张</text></text></view>
+                      <view class="num" wx:else>￥<text>{{item.money}}</text></view>
+
+                      <text>{{item.remark}}</text>
+                    </view>
+                  </view>
+                  <view class="coupon-info flex-1">
+                    <view class="name">{{item.name}}</view>
+                    <view class="date">{{item.valid_time}}</view>
+                    <view class="txt flex">
+                      <text>{{item.desc1}}</text>
+                    </view>
+                  </view>
+
+                  <view class="checkbox {{item.id==curId ?'on':''}}">
+                    <view class="iconfont icon-check"></view>
+                  </view>
+                </view>
+                <view class="border">
+                  <view></view>
+                </view>
+                <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}" data-type="canuse">
+                  <view class="show-more">
+                    <view id="desc2MallFont_{{item.id}}">使用规则</view>
+                    <view class="show-more">
+                      <view>{{!useShowStatus[item.id] ?'展开': '收起'}}</view>
+                      <view class="arrow-bottom {{!useShowStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}">
+                      </view>
+                    </view>
+                  </view>
+                  <view class="flex-view-item {{!useShowStatus[item.id]?'show-more-false':'show-more-true'}}">
+                    {{item.desc2}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <block wx:else>
+            <view class="item" wx:for="{{unableCouponList}}">
+              <view class="item-wrap wx-coupon">
+                <view class="{{item.tag == ''? '' : (item.tag=='快过期'?'tag tag1':'tag')}}">{{!item.tag?'':item.tag}}
+                </view>
+                <view class="flex">
+                  <view class="coupon-num flex">
+                    <image wx:if="{{item.place_type==1}}" src="../../../image/coupon1.png"></image>
+                    <image wx:if="{{item.place_type==2}}" src="../../../image/coupon2.png"></image>
+                    <view class="txt">
+
+                      <view class="num" wx:if="{{item.cost_type==1}}"><text>{{item.cost_value}}<text
+                            style="font-size:14px">张</text></text></view>
+                      <view class="num" wx:else>￥<text>{{item.money}}</text></view>
+                      <text>{{item.remark}}</text>
+                    </view>
+                  </view>
+                  <view class="coupon-info flex-1">
+                    <view class="name">{{item.name}}</view>
+                    <view class="date">{{item.valid_time}}</view>
+                    <view class="txt flex">
+                      <text>{{item.desc1}}</text>
+                    </view>
+                  </view>
+                </view>
+                <view class="border">
+                  <view></view>
+                </view>
+                <!-- {{useShowStatus[item.id]}}
+                {{unUseShowStatus[item.id]}} -->
+                <view class="flex tips {{tips?'on':''}} show-more-main" bind:tap="showTips" data-id="{{item.id}}"
+                  data-type="uncanuse">
+                  <view class="show-more">
+                    <view id="desc2MallFont_{{item.id}}">使用规则</view>
+                    <view class="show-more">
+                      <view>{{!unUsedShowStatus[item.id] ?'展开': '收起'}}</view>
+                      <view class="arrow-bottom {{!unUsedShowStatus[item.id] ?'': 'rotateLeft'}}" data-id="{{item.id}}">
+                      </view>
+                    </view>
+                  </view>
+                  <view class="flex-view-item {{!unUsedShowStatus[item.id]?'show-more-false':'show-more-true'}}">
+                    {{item.desc2}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="confirm-btn btn" bind:tap="confirmCoupon">确定</view>
+</view>
+<view style="padding-bottom:{{btmHolder}}px" class="pop-panel score-panel" wx:if="{{pop=='showScore'}}">
+  <view class="iconfont icon-close close" bind:tap="close"></view>
+  <view class="tit flex">
+    <text>麦点</text>
+    <!-- <view>使用规则</view> -->
+  </view>
+  <view class="pop-con">
+    <view class="mai-info flex">
+      <view class="">账户麦点：{{jinmai.total_point}}</view>
+      <view wx:if="{{hasMai}}">本单<text>抵扣￥{{payQueue[1]}}</text></view>
+    </view>
+    <view class="mai-price flex" bind:tap="selectMai">
+      <view>抵扣<text>￥{{oldMaiPrice}}</text>使用{{jinmai.now_point}}麦点</view>
+      <view class="checkbox {{hasMai?'on':''}}">
+        <view class="iconfont icon-check"></view>
+      </view>
+    </view>
+  </view>
+  <view class="confirm-btn btn" bind:tap="confirmSore">确定</view>
+</view>
+<view class="mask" catch:touchmove="{{true}}" wx:if="{{pop!=0}}" bind:tap="close"></view>
+
+
+<pop-panel title="{{poptitle}}" showbody showCancel="{{false}}" popShow="{{popShow}}" confirmText="{{confirmText}}"
+  class="popPanel" maskTouch="{{false}}" bind:confirm="confirm" bind:close="closePanel" unuse="{{unuse}}">
+  <view slot="setPwd" wx:if="{{step==1}}">
+    <view class="inputxt flex">
+      <text style="width:50px">密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="pwdInput" placeholder-style="color:#aaa"
+        value="{{pwdVal}}" password placeholder="请输入6位数字密码" />
+    </view>
+    <view class="changepwd color-b" bind:tap="forgetPwd">忘记密码</view>
+  </view>
+  <view slot="setNewPwd" wx:if="{{step==2}}">
+    <view class="inputxt flex">
+      <text>密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="initPwdInput" placeholder-style="color:#aaa"
+        value="{{initPwd}}" password placeholder="请输入6位数字密码" />
+    </view>
+    <view class="inputxt flex">
+      <text>确认密码</text>
+      <input class="flex-1" type="number" maxlength='6' bindinput="confirmInput" placeholder-style="color:#aaa"
+        value="{{confirmPwd}}" password placeholder="请再次输入密码" />
+    </view>
+  </view>
+  <view slot="verify" class="verify" wx:if="{{step==3}}">
+    <view class="notice">验证码发送至{{filter.hidenPhone(userInfo.phone)}}</view>
+    <view class="inputxt flex">
+      <input class="flex-1" type="number" maxlength='6' bindinput="verifyInput" placeholder-style="color:#aaa"
+        placeholder="请输入验证码" />
+    </view>
+    <view class="get-code color-b" bind:tap="getCode" wx:if="{{!isSend}}"><text>{{tips}}</text></view>
+    <view class="get-code color-b" wx:else><text>{{second}}</text></view>
+  </view>
+</pop-panel>
+<view style="height:{{50+btmHolder}}px"></view>
+<phonePanel class="phonePanel" popShow="{{showPhonePanel}}" bind:phoneSucess="bindPhoneSucess"></phonePanel>
